@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      database: fitness
+      host: localhost
+      port: ${mongodb.container.port}
