@@ -1,10 +1,9 @@
 package irdcat.fitness.controller
 
-import irdcat.fitness.exception.ErrorMessage
-import irdcat.fitness.exception.ExerciseNotFoundException
-import irdcat.fitness.exception.ExerciseTypeNotFoundException
-import irdcat.fitness.model.ExerciseDTO
-import irdcat.fitness.model.ExerciseTypeDTO
+import irdcat.fitness.exception.*
+import irdcat.fitness.model.ExerciseDto
+import irdcat.fitness.model.ExerciseFilterDto
+import irdcat.fitness.model.ExerciseTypeDto
 import irdcat.fitness.service.ExerciseService
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -13,12 +12,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import java.time.Instant
+import java.util.Date
 
 @RestController
 @RequestMapping("/api/exercises",
@@ -28,18 +30,39 @@ class ExerciseController(
 ) {
 
     @GetMapping
-    fun getAllExercises() : Flux<ExerciseDTO> {
+    fun getAllExercises() : Flux<ExerciseDto> {
         return exerciseService.getExercises()
     }
 
     @GetMapping("/{id}")
-    fun getExercise(@PathVariable id: String) : Mono<ExerciseDTO> {
+    fun getExercise(@PathVariable id: String) : Mono<ExerciseDto> {
         return exerciseService.getExercise(id)
     }
 
-    @PostMapping
-    fun addExercise(@RequestBody exerciseDTO: ExerciseDTO) : Mono<ExerciseDTO> {
-        return exerciseService.addExercise(exerciseDTO)
+    @PostMapping("/filter")
+    fun filterExercises(@RequestBody exerciseFilterDto: ExerciseFilterDto) : Flux<ExerciseDto> {
+        val (typeId, from, to) = exerciseFilterDto
+        return if (typeId == null) {
+            if (from == null) {
+                exerciseService.getExercises()
+            } else {
+                exerciseService.getExercisesBetweenDates(from, to ?: Date.from(Instant.now()))
+            }
+        } else if (from == null) {
+            exerciseService.getExercisesForTypeId(typeId)
+        } else {
+            exerciseService.getExercisesForTypeBetweenDates(typeId, from, to ?: Date.from(Instant.now()))
+        }
+    }
+
+    @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun addExercise(@RequestBody exerciseDto: ExerciseDto) : Mono<ExerciseDto> {
+        return exerciseService.saveExercise(exerciseDto)
+    }
+
+    @PutMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun updateExercise(@RequestBody exerciseDto: ExerciseDto) : Mono<ExerciseDto> {
+        return exerciseService.updateExercise(exerciseDto)
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -50,25 +73,46 @@ class ExerciseController(
         return ErrorMessage.fromThrowable(exception, serverHttpRequest)
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidExerciseException::class)
+    private fun invalidExerciseException(
+        exception: InvalidExerciseException,
+        serverHttpRequest: ServerHttpRequest) : ErrorMessage {
+        return ErrorMessage.fromThrowable(exception, serverHttpRequest)
+    }
+
     @GetMapping("/types")
-    fun getExerciseTypes() : Flux<ExerciseTypeDTO> {
+    fun getExerciseTypes() : Flux<ExerciseTypeDto> {
         return exerciseService.getExerciseTypes()
     }
 
     @GetMapping("/types/{id}")
-    fun getExerciseType(@PathVariable id: String) : Mono<ExerciseTypeDTO> {
+    fun getExerciseType(@PathVariable id: String) : Mono<ExerciseTypeDto> {
         return exerciseService.getExerciseType(id)
     }
 
-    @PostMapping("/types")
-    fun addExerciseType(@RequestBody exerciseTypeDTO: ExerciseTypeDTO) : Mono<ExerciseTypeDTO> {
-        return exerciseService.addExerciseType(exerciseTypeDTO)
+    @PostMapping("/types", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun addExerciseType(@RequestBody exerciseTypeDto: ExerciseTypeDto) : Mono<ExerciseTypeDto> {
+        return exerciseService.saveExerciseType(exerciseTypeDto)
+    }
+
+    @PutMapping("/types", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun updateExerciseType(@RequestBody exerciseTypeDto: ExerciseTypeDto) : Mono<ExerciseTypeDto> {
+        return exerciseService.updateExerciseType(exerciseTypeDto)
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ExerciseTypeNotFoundException::class)
     private fun exerciseTypeNotFoundException(
         exception: ExerciseTypeNotFoundException,
+        serverHttpRequest: ServerHttpRequest) : ErrorMessage {
+        return ErrorMessage.fromThrowable(exception, serverHttpRequest)
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidExerciseTypeException::class)
+    private fun invalidExerciseTypeException(
+        exception: InvalidExerciseTypeException,
         serverHttpRequest: ServerHttpRequest) : ErrorMessage {
         return ErrorMessage.fromThrowable(exception, serverHttpRequest)
     }

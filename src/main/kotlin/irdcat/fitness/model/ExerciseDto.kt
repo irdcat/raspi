@@ -3,7 +3,7 @@ package irdcat.fitness.model
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.util.*
 
-data class ExerciseDTO(
+data class ExerciseDto(
     val id: String,
     val typeId: String,
     @field:JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -13,8 +13,8 @@ data class ExerciseDTO(
     val sets: List<ExerciseSet>
 ) {
     companion object {
-        fun fromExercise(exercise: Exercise) : ExerciseDTO {
-            return ExerciseDTO(
+        fun fromExercise(exercise: Exercise) : ExerciseDto {
+            return ExerciseDto(
                 exercise.id,
                 exercise.typeId,
                 exercise.date,
@@ -27,7 +27,7 @@ data class ExerciseDTO(
 
     fun toExercise() : Exercise {
         return Exercise(
-            id,
+            id.ifBlank { UUID.randomUUID().toString() },
             typeId,
             date,
             order,
