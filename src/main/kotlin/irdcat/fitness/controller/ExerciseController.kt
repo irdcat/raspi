@@ -41,18 +41,7 @@ class ExerciseController(
 
     @PostMapping("/filter")
     fun filterExercises(@RequestBody exerciseFilterDto: ExerciseFilterDto) : Flux<ExerciseDto> {
-        val (typeId, from, to) = exerciseFilterDto
-        return if (typeId == null) {
-            if (from == null) {
-                exerciseService.getExercises()
-            } else {
-                exerciseService.getExercisesBetweenDates(from, to ?: Date.from(Instant.now()))
-            }
-        } else if (from == null) {
-            exerciseService.getExercisesForTypeId(typeId)
-        } else {
-            exerciseService.getExercisesForTypeBetweenDates(typeId, from, to ?: Date.from(Instant.now()))
-        }
+        return exerciseService.filterExercises(exerciseFilterDto)
     }
 
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])

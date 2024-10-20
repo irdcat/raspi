@@ -4,20 +4,25 @@ import irdcat.fitness.exception.ExerciseNotFoundException
 import irdcat.fitness.exception.ExerciseTypeNotFoundException
 import irdcat.fitness.exception.InvalidExerciseException
 import irdcat.fitness.exception.InvalidExerciseTypeException
+import irdcat.fitness.model.Exercise
 import irdcat.fitness.model.ExerciseDto
+import irdcat.fitness.model.ExerciseFilterDto
 import irdcat.fitness.model.ExerciseTypeDto
 import irdcat.fitness.repository.ExerciseRepository
 import irdcat.fitness.repository.ExerciseTypeRepository
-import org.springframework.data.domain.Sort
+import org.springframework.data.mongodb.core.ReactiveMongoTemplate
+import org.springframework.data.mongodb.core.query.Criteria
+import org.springframework.data.mongodb.core.query.Query
+import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import java.util.Date
 
 @Service
 class ExerciseService(
     private val exerciseRepository: ExerciseRepository,
-    private val exerciseTypeRepository: ExerciseTypeRepository
+    private val exerciseTypeRepository: ExerciseTypeRepository,
+    private val reactiveMongoTemplate: ReactiveMongoTemplate
 ) {
 
     fun getExercises() : Flux<ExerciseDto> {
@@ -33,21 +38,23 @@ class ExerciseService(
             .switchIfEmpty(Mono.error(ExerciseNotFoundException("No exercise with id $id")))
     }
 
-    fun getExercisesBetweenDates(from: Date, to: Date) : Flux<ExerciseDto> {
-        return exerciseRepository
-            .findBetweenDates(from, to, Sort.by(Sort.Direction.DESC, "date"))
-            .map(ExerciseDto::fromExercise)
-    }
+    fun filterExercises(exerciseFilterDto: ExerciseFilterDto) : Flux<ExerciseDto> {
 
-    fun getExercisesForTypeBetweenDates(typeId: String, from: Date, to: Date) : Flux<ExerciseDto> {
-        return exerciseRepository
-            .findByTypeIdBetweenDates(typeId, from, to, Sort.by(Sort.Direction.DESC, "date"))
-            .map(ExerciseDto::fromExercise)
-    }
+        var query = Query()
 
-    fun getExercisesForTypeId(typeId: String) : Flux<ExerciseDto> {
-        return exerciseRepository
-            .findByTypeId(typeId, Sort.by(Sort.Direction.DESC, "date"))
+        exerciseFilterDto.typeId?.let {
+            query = query.addCriteria(Criteria.where("typeId").isEqualTo(it))
+        }
+        exerciseFilterDto.from?.let {
+            query = if (exerciseFilterDto.to != null) {
+                query.addCriteria(Criteria.where("date").gte(it).lte(exerciseFilterDto.to))
+            } else {
+                query.addCriteria(Criteria.where("date").gte(it))
+            }
+        }
+
+        return reactiveMongoTemplate
+            .find(query, Exercise::class.java)
             .map(ExerciseDto::fromExercise)
     }
 
