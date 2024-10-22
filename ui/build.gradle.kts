@@ -1,7 +1,6 @@
 import com.github.gradle.node.npm.task.NpmTask
 
 plugins {
-    kotlin("jvm") version "1.9.25"
     id("com.github.node-gradle.node") version "7.1.0"
 }
 
@@ -9,20 +8,14 @@ repositories {
     mavenCentral()
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
-}
-
 node {
     version = "20.15.1"
     download = true
 }
 
-tasks.register<NpmTask>("npmRunDev") {
+tasks.register<NpmTask>("npmStart") {
     dependsOn(tasks.npmInstall)
-    args.set(listOf("run", "dev"))
+    args.set(listOf("start"))
 }
 
 tasks.register<NpmTask>("npmRunBuild") {
@@ -30,7 +23,6 @@ tasks.register<NpmTask>("npmRunBuild") {
     args.set(listOf("run", "build"))
 }
 
-tasks.register<NpmTask>("npmRunPreview") {
-    dependsOn(tasks.npmInstall)
-    args.set(listOf("run", "preview"))
+tasks.register<Task>("runLocal") {
+    dependsOn(tasks.named("npmStart"))
 }

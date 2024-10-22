@@ -8,6 +8,7 @@ import irdcat.fitness.service.ExerciseService
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.server.reactive.ServerHttpRequest
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -23,6 +24,7 @@ import reactor.core.publisher.Mono
 @RestController
 @RequestMapping("/api/exercises",
     produces = [MediaType.APPLICATION_JSON_VALUE])
+@CrossOrigin(origins = ["http://localhost:5173"])
 class ExerciseController(
     private val exerciseService: ExerciseService
 ) {

@@ -60,3 +60,7 @@ kover {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+tasks.register<Task>("runLocal") {
+	dependsOn(tasks.bootTestRun)
+}
