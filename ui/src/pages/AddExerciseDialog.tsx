@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import { Exercise } from "../types";
 import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, TextField } from "@mui/material";
 
@@ -16,6 +16,7 @@ export const AddExerciseDialog = (props: AddExerciseDialogProps) => {
     });
 
     const showDialog = () => {
+        setExercise({ id: "", name: "", isBodyWeight: false })
         setOpen(true);
     }
 

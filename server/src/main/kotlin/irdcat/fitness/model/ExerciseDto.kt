@@ -1,38 +1,23 @@
 package irdcat.fitness.model
 
-import com.fasterxml.jackson.annotation.JsonFormat
-import java.util.*
+import java.util.UUID
 
-data class ExerciseDto(
+data class ExerciseTypeDto(
     val id: String,
-    val typeId: String,
-    @field:JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    val date: Date,
-    val order: Int,
-    val bodyWeight: Float,
-    val sets: List<ExerciseSet>
+    val name: String,
+    val isBodyWeight: Boolean
 ) {
     companion object {
-        fun fromExercise(exercise: Exercise) : ExerciseDto {
-            return ExerciseDto(
-                exercise.id,
-                exercise.typeId,
-                exercise.date,
-                exercise.order,
-                exercise.bodyWeight,
-                exercise.sets
+        fun fromExerciseType(exerciseType: ExerciseType) : ExerciseTypeDto {
+            return ExerciseTypeDto(
+                exerciseType.id,
+                exerciseType.name,
+                exerciseType.isBodyWeight
             )
         }
     }
 
-    fun toExercise() : Exercise {
-        return Exercise(
-            id.ifBlank { UUID.randomUUID().toString() },
-            typeId,
-            date,
-            order,
-            bodyWeight,
-            sets
-        )
+    fun toExerciseType() : ExerciseType {
+        return ExerciseType(id.ifBlank { UUID.randomUUID().toString() }, name, isBodyWeight)
     }
 }
