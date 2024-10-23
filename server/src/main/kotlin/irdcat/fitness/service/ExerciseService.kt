@@ -101,4 +101,8 @@ class ExerciseService(
             .map(ExerciseTypeDto::fromExerciseType)
             .switchIfEmpty(Mono.error(InvalidExerciseTypeException("Attempting to edit exercise type without id")))
     }
+
+    fun deleteExerciseType(id: String) : Mono<Void> {
+        return exerciseTypeRepository.deleteById(id)
+    }
 }

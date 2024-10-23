@@ -9,11 +9,8 @@ import { AddExerciseDialog } from "./AddExerciseDialog";
 export const Exercises = () => {
     const [ exerciseList, setExerciseList ] = useState(new Array<Exercise>());
     const navigate = useNavigate();
-    const [ exerciseToDelete, setExerciseToDelete ] = useState<string | null>(null);
-    const [ exerciseToEdit, setExerciseToEdit ] = useState<string | null>(null);
 
     useEffect(() => {
-        const exercises = [];
         async function fetchExercises() {
             const result = await fetch("/api/exercises/types")
                 .then(response => response.json());
@@ -51,16 +48,19 @@ export const Exercises = () => {
         .then(response => response.json())
         .then(updated => {
             const newList = [...exerciseList];
-            newList[exerciseList.findIndex(e => e.id == updated.id)] = updated;
+            newList[exerciseList.findIndex(e => e.id === updated.id)] = updated;
             setExerciseList(newList);
         });
     }
 
     const onDeleteExercise = (id: string) => {
-        async function deleteExercise() {
-            await fetch(`/api/exercises/types/${id}`, { method: "delete" });
-        }
-        deleteExercise();
+        fetch(`/api/exercises/types/${id}`, { 
+            method: "delete" 
+        })
+        .then(response => response.text())
+        .then(deletedId => {
+            setExerciseList(exerciseList.filter(e => e.id !== deletedId))
+        });
     }
 
     return (
