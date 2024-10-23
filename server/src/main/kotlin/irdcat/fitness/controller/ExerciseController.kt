@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -88,6 +89,11 @@ class ExerciseController(
     @PutMapping("/types", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun updateExerciseType(@RequestBody exerciseTypeDto: ExerciseTypeDto) : Mono<ExerciseTypeDto> {
         return exerciseService.updateExerciseType(exerciseTypeDto)
+    }
+
+    @DeleteMapping("/types/{id}")
+    fun deleteExerciseType(@PathVariable id: String) : Mono<String> {
+        return exerciseService.deleteExerciseType(id).then(Mono.just(id))
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
