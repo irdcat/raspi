@@ -1,8 +1,9 @@
 package irdcat.fitness.controller
 
-import irdcat.fitness.exception.*
-import irdcat.fitness.model.ExerciseDto
-import irdcat.fitness.service.ExerciseService
+import irdcat.fitness.exception.InvalidTrainingException
+import irdcat.fitness.exception.TrainingNotFoundException
+import irdcat.fitness.model.TrainingDto
+import irdcat.fitness.service.TrainingService
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.server.reactive.ServerHttpRequest
@@ -20,52 +21,50 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @RestController
-@RequestMapping("/api/exercises",
+@RequestMapping("/api/trainings",
     produces = [MediaType.APPLICATION_JSON_VALUE])
-class ExerciseController(
-    private val exerciseService: ExerciseService
+class TrainingController(
+    private val trainingService: TrainingService
 ) {
-    
+
     @GetMapping
-    fun getExercises() : Flux<ExerciseDto> {
-        return exerciseService.getExercises()
+    fun getTrainings(): Flux<TrainingDto> {
+        return trainingService.getTrainings()
     }
 
     @GetMapping("/{id}")
-    fun getExercise(@PathVariable id: String) : Mono<ExerciseDto> {
-        return exerciseService.getExercise(id)
+    fun getTraining(@PathVariable id: String): Mono<TrainingDto> {
+        return trainingService.getTraining(id)
     }
 
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun addExercise(@RequestBody exercise: ExerciseDto) : Mono<ExerciseDto> {
-        return exerciseService.saveExercise(exercise)
+    fun addTraining(@RequestBody trainingDto: TrainingDto): Mono<TrainingDto> {
+        return trainingService.saveTraining(trainingDto)
     }
 
     @PutMapping("/{id}", consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun updateExercise(
-        @PathVariable id: String,
-        @RequestBody exercise: ExerciseDto) : Mono<ExerciseDto> {
-        return exerciseService.updateExercise(id, exercise)
+    fun updateTraining(@PathVariable id: String, @RequestBody trainingDto: TrainingDto): Mono<TrainingDto> {
+        return trainingService.updateTraining(id, trainingDto)
     }
 
     @DeleteMapping("/{id}")
-    fun deleteExercise(@PathVariable id: String) : Mono<ExerciseDto> {
-        return exerciseService.deleteExercise(id)
+    fun deleteTraining(@PathVariable id: String): Mono<TrainingDto> {
+        return trainingService.deleteTraining(id)
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(ExerciseNotFoundException::class)
-    private fun exerciseTypeNotFoundException(
-        exception: ExerciseNotFoundException,
-        serverHttpRequest: ServerHttpRequest) : Mono<ErrorResponse> {
+    @ExceptionHandler(TrainingNotFoundException::class)
+    fun trainingNotFoundException(
+        exception: TrainingNotFoundException,
+        serverHttpRequest: ServerHttpRequest): Mono<ErrorResponse> {
         return Mono.just(ErrorResponse.fromThrowable(exception, serverHttpRequest))
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(InvalidExerciseException::class)
-    private fun invalidExerciseException(
-        exception: InvalidExerciseException,
-        serverHttpRequest: ServerHttpRequest) : Mono<ErrorResponse> {
+    @ExceptionHandler(InvalidTrainingException::class)
+    fun invalidTrainingException(
+        exception: InvalidTrainingException,
+        serverHttpRequest: ServerHttpRequest): Mono<ErrorResponse> {
         return Mono.just(ErrorResponse.fromThrowable(exception, serverHttpRequest))
     }
 }

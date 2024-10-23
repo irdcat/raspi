@@ -1,3 +1,3 @@
 package irdcat.fitness.exception
 
-class ExerciseTypeNotFoundException(message: String) : RuntimeException(message)
+class ExerciseNotFoundException(message: String) : RuntimeException(message)

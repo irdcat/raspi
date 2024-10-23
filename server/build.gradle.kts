@@ -33,6 +33,7 @@ dependencies {
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:mongodb")
 	testImplementation("io.rest-assured:rest-assured")
+	testImplementation("jakarta.servlet:jakarta.servlet-api")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

@@ -2,22 +2,31 @@ package irdcat.fitness.model
 
 import java.util.UUID
 
-data class ExerciseTypeDto(
-    val id: String,
-    val name: String,
-    val isBodyWeight: Boolean
+data class ExerciseDto(
+    val id: String? = null,
+    val name: String? = null,
+    val isBodyWeight: Boolean? = null
 ) {
     companion object {
-        fun fromExerciseType(exerciseType: ExerciseType) : ExerciseTypeDto {
-            return ExerciseTypeDto(
-                exerciseType.id,
-                exerciseType.name,
-                exerciseType.isBodyWeight
+        fun fromExercise(exercise: Exercise) : ExerciseDto {
+            return ExerciseDto(
+                exercise.id,
+                exercise.name,
+                exercise.isBodyWeight
             )
         }
     }
 
-    fun toExerciseType() : ExerciseType {
-        return ExerciseType(id.ifBlank { UUID.randomUUID().toString() }, name, isBodyWeight)
+    fun toExercise() : Exercise {
+        val newId = if (id.isNullOrBlank()) {
+            UUID.randomUUID().toString()
+        } else {
+            id
+        }
+        return toExercise(newId)
+    }
+
+    fun toExercise(newId: String) : Exercise {
+        return Exercise(newId, name!!, isBodyWeight!!)
     }
 }
