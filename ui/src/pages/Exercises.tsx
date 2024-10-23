@@ -12,7 +12,7 @@ export const Exercises = () => {
 
     useEffect(() => {
         async function fetchExercises() {
-            const result = await fetch("/api/exercises/types")
+            const result = await fetch("/api/exercises")
                 .then(response => response.json());
             setExerciseList(result);
         }
@@ -20,11 +20,11 @@ export const Exercises = () => {
     }, []);
 
     const handleSummaryClick = (id: string) => {
-        navigate(`/exercise/summary/${id}`)
+        navigate(`/exercise/${id}`)
     }
 
     const onAddExercise = (exercise: Exercise) => {
-        fetch("/api/exercises/types", {
+        fetch("/api/exercises", {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export const Exercises = () => {
     }
 
     const onEditExercise = (exercise: Exercise) => {
-        fetch("/api/exercises/types", { 
+        fetch(`/api/exercises/${exercise.id}`, {
             method: "put", 
             headers: {
                 "Content-Type": "application/json",
@@ -54,13 +54,11 @@ export const Exercises = () => {
     }
 
     const onDeleteExercise = (id: string) => {
-        fetch(`/api/exercises/types/${id}`, { 
+        fetch(`/api/exercises/${id}`, {
             method: "delete" 
         })
-        .then(response => response.text())
-        .then(deletedId => {
-            setExerciseList(exerciseList.filter(e => e.id !== deletedId))
-        });
+        .then(response => response.json())
+        .then(deleted => setExerciseList(exerciseList.filter(e => e.id !== deleted.id)));
     }
 
     return (

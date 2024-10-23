@@ -2,21 +2,14 @@ package irdcat.fitness.model
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
-import java.util.Date
 
-@Document("exercise")
-data class Exercise(
+@Document("exerciseType")
+data class ExerciseType(
 
-    @field: Id
+    @field:Id
     val id: String,
 
-    val typeId: String,
+    val name: String,
 
-    val date: Date,
-
-    val order: Int,
-
-    val bodyWeight: Float,
-
-    val sets: List<ExerciseSet>
+    val isBodyWeight: Boolean,
 )
