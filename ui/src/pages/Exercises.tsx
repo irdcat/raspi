@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from "@mui/material"
+import { Box, Button, ButtonGroup, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { Exercise } from "../types";
 import { useNavigate } from "react-router-dom";
@@ -27,35 +27,33 @@ export const Exercises = () => {
     }
 
     const onAddExercise = (exercise: Exercise) => {
-        async function addExercise() {
-            await fetch("/api/exercises/types", {
-                method: "post",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify(exercise)
-            })
-        }
-        addExercise();
-        setExerciseList([...exerciseList, exercise]);
+        fetch("/api/exercises/types", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(exercise)
+        })
+        .then(response => response.json())
+        .then(e => setExerciseList([...exerciseList, e]));
     }
 
     const onEditExercise = (exercise: Exercise) => {
-        async function updateExercise() {
-            await fetch("/api/exercises/types", { 
-                method: "put", 
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify(exercise)
-            })
-        }
-        updateExercise();
-        const newList = [...exerciseList];
-        newList[exerciseList.findIndex(e => e.id == exercise.id)] = exercise;
-        setExerciseList(newList);
+        fetch("/api/exercises/types", { 
+            method: "put", 
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(exercise)
+        })
+        .then(response => response.json())
+        .then(updated => {
+            const newList = [...exerciseList];
+            newList[exerciseList.findIndex(e => e.id == updated.id)] = updated;
+            setExerciseList(newList);
+        });
     }
 
     const onDeleteExercise = (id: string) => {
