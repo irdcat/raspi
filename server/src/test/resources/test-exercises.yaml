@@ -1,0 +1,63 @@
+- id: "1"
+  name: Deadlift
+  isBodyWeight: false
+- id: "2"
+  name: Barbell Row
+  isBodyWeight: false
+- id: "3"
+  name: Lat Pullover
+  isBodyWeight: false
+- id: "4"
+  name: Incline Bench Press (Machine)
+  isBodyWeight: false
+- id: "5"
+  name: Bulgarian Split Squat
+  isBodyWeight: false
+- id: "6"
+  name: Face pull
+  isBodyWeight: false
+- id: "7"
+  name: Bicep Curl (Cable Machine)
+  isBodyWeight: false
+- id: "8"
+  name: Bench Press
+  isBodyWeight: false
+- id: "9"
+  name: Overhead Press
+  isBodyWeight: false
+- id: "10"
+  name: Seated Row (Machine)
+  isBodyWeight: false
+- id: "11"
+  name: Leg Press
+  isBodyWeight: false
+- id: "12"
+  name: Seated Hamstring Curl
+  isBodyWeight: false
+- id: "13"
+  name: Lateral Raises
+  isBodyWeight: false
+- id: "14"
+  name: Tricep Pushdown
+  isBodyWeight: false
+- id: "15"
+  name: Squat
+  isBodyWeight: false
+- id: "16"
+  name: Romanian Deadlift
+  isBodyWeight: false
+- id: "17"
+  name: Seated Row (Cable Machine)
+  isBodyWeight: false
+- id: "18"
+  name: Seated Overhead Press (Machine)
+  isBodyWeight: false
+- id: "19"
+  name: Bicep Curl (Machine)
+  isBodyWeight: false
+- id: "20"
+  name: Tricep Pushdown (Machine)
+  isBodyWeight: false
+- id: "21"
+  name: Hip Thrust
+  isBodyWeight: false
