@@ -1,0 +1,211 @@
+- id: "1"
+  date: 2022-01-17
+  bodyWeight: 69.0
+  exercises:
+    - order: 0
+      exerciseId: "1"
+      sets:
+        - reps: 4
+          weight: 107.5
+        - reps: 4
+          weight: 107.5
+        - reps: 4
+          weight: 107.5
+        - reps: 4
+          weight: 107.5
+    - order: 1
+      exerciseId: "2"
+      sets:
+        - reps: 8
+          weight: 65.0
+        - reps: 8
+          weight: 65.0
+        - reps: 8
+          weight: 65.0
+    - order: 2
+      exerciseId: "3"
+      sets:
+        - reps: 10
+          weight: 52.0
+        - reps: 10
+          weight: 52.0
+        - reps: 10
+          weight: 52.0
+    - order: 3
+      exerciseId: "4"
+      sets:
+        - reps: 10
+          weight: 60.0
+        - reps: 10
+          weight: 60.0
+        - reps: 10
+          weight: 60.0
+    - order: 4
+      exerciseId: "5"
+      sets:
+        - reps: 10
+          weight: 25.0
+        - reps: 10
+          weight: 25.0
+        - reps: 10
+          weight: 25.0
+    - order: 5
+      exerciseId: "6"
+      sets:
+        - reps: 15
+          weight: 25.0
+        - reps: 15
+          weight: 25.0
+        - reps: 15
+          weight: 25.0
+    - order: 6
+      exerciseId: "7"
+      sets:
+        - reps: 10
+          weight: 35.0
+        - reps: 10
+          weight: 35.0
+        - reps: 10
+          weight: 35.0
+- id: "2"
+  date: 2022-01-19
+  bodyWeight: 69.0
+  exercises:
+    - order: 0
+      exerciseId: "8"
+      sets:
+        - reps: 4
+          weight: 75.0
+        - reps: 3
+          weight: 72.5
+        - reps: 4
+          weight: 72.5
+        - reps: 3
+          weight: 72.5
+    - order: 1
+      exerciseId: "9"
+      sets:
+        - reps: 7
+          weight: 40.0
+        - reps: 6
+          weight: 40.0
+        - reps: 6
+          weight: 40.0
+        - reps: 4
+          weight: 40.0
+    - order: 2
+      exerciseId: "10"
+      sets:
+        - reps: 10
+          weight: 55.0
+        - reps: 10
+          weight: 55.0
+        - reps: 10
+          weight: 55.0
+    - order: 3
+      exerciseId: "11"
+      sets:
+        - reps: 10
+          weight: 115.0
+        - reps: 10
+          weight: 115.0
+        - reps: 10
+          weight: 115.0
+    - order: 4
+      exerciseId: "12"
+      sets:
+        - reps: 12
+          weight: 45.0
+        - reps: 12
+          weight: 45.0
+        - reps: 12
+          weight: 45.0
+    - order: 5
+      exerciseId: "13"
+      sets:
+        - reps: 12
+          weight: 16.0
+        - reps: 12
+          weight: 16.0
+        - reps: 12
+          weight: 16.0
+    - order: 6
+      exerciseId: "14"
+      sets:
+        - reps: 10
+          weight: 37.5
+        - reps: 10
+          weight: 37.5
+        - reps: 10
+          weight: 37.5
+- id: "3"
+  date: 2022-01-21
+  bodyWeight: 69.0
+  exercises:
+    - order: 0
+      exerciseId: "15"
+      sets:
+        - reps: 5
+          weight: 82.5
+        - reps: 5
+          weight: 82.5
+        - reps: 5
+          weight: 82.5
+        - reps: 5
+          weight: 82.5
+    - order: 1
+      exerciseId: "16"
+      sets:
+        - reps: 6
+          weight: 70.0
+        - reps: 6
+          weight: 70.0
+        - reps: 6
+          weight: 70.0
+        - reps: 6
+          weight: 70.0
+    - order: 2
+      exerciseId: "8"
+      sets:
+        - reps: 8
+          weight: 65.0
+        - reps: 8
+          weight: 65.0
+        - reps: 8
+          weight: 65.0
+    - order: 3
+      exerciseId: "17"
+      sets:
+        - reps: 10
+          weight: 55.0
+        - reps: 10
+          weight: 55.0
+        - reps: 10
+          weight: 55.0
+    - order: 4
+      exerciseId: "18"
+      sets:
+        - reps: 10
+          weight: 45.0
+        - reps: 9
+          weight: 45.0
+        - reps: 8
+          weight: 40.0
+    - order: 5
+      exerciseId: "19"
+      sets:
+        - reps: 15
+          weight: 20.0
+        - reps: 12
+          weight: 20.0
+        - reps: 12
+          weight: 20.0
+    - order: 6
+      exerciseId: "20"
+      sets:
+        - reps: 15
+          weight: 62.5
+        - reps: 12
+          weight: 65.0
+        - reps: 12
+          weight: 65.0
