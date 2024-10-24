@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { DeleteExerciseDialog } from "./DeleteExerciseDialog";
 import { EditExerciseDialog } from "./EditExerciseDialog";
 import { AddExerciseDialog } from "./AddExerciseDialog";
+import useWindowDimensions from "../utils/useWindowDimensions";
 
 export const Exercises = () => {
     const [ exerciseList, setExerciseList ] = useState(new Array<Exercise>());
     const navigate = useNavigate();
+    const { width, height } = useWindowDimensions();
 
     useEffect(() => {
         async function fetchExercises() {
@@ -73,7 +75,7 @@ export const Exercises = () => {
                     )}
                 </AddExerciseDialog>
             </Box>
-            <TableContainer component={Paper}>
+            <TableContainer sx={{ maxHeight: height - 160 }} component={Paper}>
                 <Table stickyHeader aria-label="exercises table">
                     <TableHead>
                         <TableRow>
