@@ -6,6 +6,6 @@ import org.springframework.boot.with
 fun main(args: Array<String>) {
 	
 	fromApplication<FitnessApplication>()
-		.with(TestContainersConfiguration::class)
+		.with(TestContainersConfiguration::class, LocalApplicationInitializer::class)
 		.run(*args)
 }
