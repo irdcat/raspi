@@ -6,6 +6,9 @@ plugins {
 	id("org.jetbrains.kotlinx.kover") version "0.9.0-RC"
 }
 
+group = "irdcat"
+version = "0.0.1-SNAPSHOT"
+
 repositories {
 	mavenCentral()
 }
