@@ -1,8 +1,15 @@
-import { AppBar, Box, IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material"
+import { 
+    AppBar, 
+    Box, 
+    IconButton, 
+    Menu, 
+    MenuItem, 
+    Toolbar, 
+    Typography 
+} from "@mui/material"
 import { MouseEvent, useState } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
 import MenuIcon from '@mui/icons-material/Menu'
-import { useTheme } from '@mui/material/styles'
 
 export const Layout = () => {
     const [ menuAnchorEl, setMenuAnchorEl ] = useState<null | HTMLElement>(null);
@@ -18,7 +25,6 @@ export const Layout = () => {
         handleMenuClose();
         navigate("/exercises");
     }
-    const theme = useTheme();
 
     return (
         <Box sx={{ flexGrow: 1 }}>

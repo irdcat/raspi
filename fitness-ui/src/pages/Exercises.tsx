@@ -1,4 +1,16 @@
-import { Box, Button, ButtonGroup, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
+import { 
+    Box, 
+    Button, 
+    ButtonGroup, 
+    Paper, 
+    Table, 
+    TableBody, 
+    TableCell, 
+    TableContainer, 
+    TableHead, 
+    TableRow, 
+    Typography 
+} from "@mui/material"
 import { useEffect, useState } from "react"
 import { Exercise } from "../types";
 import { useNavigate } from "react-router-dom";
@@ -6,19 +18,17 @@ import { DeleteExerciseDialog } from "./DeleteExerciseDialog";
 import { EditExerciseDialog } from "./EditExerciseDialog";
 import { AddExerciseDialog } from "./AddExerciseDialog";
 import useWindowDimensions from "../utils/useWindowDimensions";
+import ExercisesApi from "../api/ExercisesApi";
 
 export const Exercises = () => {
     const [ exerciseList, setExerciseList ] = useState(new Array<Exercise>());
     const navigate = useNavigate();
-    const { width, height } = useWindowDimensions();
+    const { height } = useWindowDimensions();
 
     useEffect(() => {
-        async function fetchExercises() {
-            const result = await fetch("/api/exercises")
-                .then(response => response.json());
-            setExerciseList(result);
-        }
-        fetchExercises();
+        ExercisesApi
+            .get()
+            .then(exercises => setExerciseList(exercises));
     }, []);
 
     const handleSummaryClick = (id: string) => {
@@ -26,41 +36,25 @@ export const Exercises = () => {
     }
 
     const onAddExercise = (exercise: Exercise) => {
-        fetch("/api/exercises", {
-            method: "post",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify(exercise)
-        })
-        .then(response => response.json())
-        .then(e => setExerciseList([...exerciseList, e]));
+        ExercisesApi
+            .add(exercise)
+            .then(e => setExerciseList([...exerciseList, e]));
     }
 
     const onEditExercise = (exercise: Exercise) => {
-        fetch(`/api/exercises/${exercise.id}`, {
-            method: "put", 
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify(exercise)
-        })
-        .then(response => response.json())
-        .then(updated => {
-            const newList = [...exerciseList];
-            newList[exerciseList.findIndex(e => e.id === updated.id)] = updated;
-            setExerciseList(newList);
-        });
+        ExercisesApi
+            .update(exercise.id, exercise)
+            .then(updated => {
+                const newList = [...exerciseList];
+                newList[exerciseList.findIndex(e => e.id === updated.id)] = updated;
+                setExerciseList(newList);
+            });
     }
 
     const onDeleteExercise = (id: string) => {
-        fetch(`/api/exercises/${id}`, {
-            method: "delete" 
-        })
-        .then(response => response.json())
-        .then(deleted => setExerciseList(exerciseList.filter(e => e.id !== deleted.id)));
+        ExercisesApi
+            .delete(id)
+            .then(deleted => setExerciseList(exerciseList.filter(e => e.id !== deleted.id)));
     }
 
     return (
