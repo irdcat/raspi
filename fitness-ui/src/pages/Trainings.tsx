@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import TrainingsApi from "../api/TrainingsApi";
 
 export const Trainings = () => {
-    const [ trainingList, setTrainingList ] = useState(new Array<Training>);
+    const [ trainingList, setTrainingList ] = useState(new Array<Training>());
     const navigate = useNavigate();
     const { height } = useWindowDimensions();
 

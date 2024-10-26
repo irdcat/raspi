@@ -1,6 +1,15 @@
+import { 
+    Button, 
+    Checkbox, 
+    Dialog, 
+    DialogActions, 
+    DialogContent, 
+    DialogTitle, 
+    FormControlLabel, 
+    TextField 
+} from "@mui/material";
 import { ReactElement, useState } from "react"
 import { Exercise } from "../types";
-import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, FormGroup, TextField } from "@mui/material";
 
 type EditExerciseDialogProps = {
     exercise: Exercise,
@@ -32,7 +41,7 @@ export const EditExerciseDialog = (props: EditExerciseDialogProps) => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { target } = event;
-        if (target.name == "isBodyWeight") {
+        if (target.name === "isBodyWeight") {
             setExercise((prevState) => ({
                 ...prevState,
                 [target.name]: target.checked
