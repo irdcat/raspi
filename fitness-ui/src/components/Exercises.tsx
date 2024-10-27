@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { DeleteExerciseDialog } from "./DeleteExerciseDialog";
 import { EditExerciseDialog } from "./EditExerciseDialog";
 import { AddExerciseDialog } from "./AddExerciseDialog";
-import useWindowDimensions from "../utils/useWindowDimensions";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 import ExercisesApi from "../api/ExercisesApi";
 
 export const Exercises = () => {
