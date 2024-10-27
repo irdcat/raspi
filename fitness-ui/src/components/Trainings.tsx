@@ -11,7 +11,7 @@ import {
     TableRow, 
     Typography 
 } from "@mui/material";
-import useWindowDimensions from "../utils/useWindowDimensions";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 import { useEffect, useState } from "react";
 import { Training } from "../types";
 import { useNavigate } from "react-router-dom";

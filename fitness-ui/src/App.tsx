@@ -1,11 +1,10 @@
-import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Layout } from './pages/Layout';
-import { Home } from './pages/Home';
-import { Exercises } from './pages/Exercises';
+import { Layout } from './components/Layout';
+import { Home } from './components/Home';
+import { Exercises } from './components/Exercises';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
-import { Trainings } from './pages/Trainings';
+import { Trainings } from './components/Trainings';
 
 const darkTheme = createTheme({
   palette: {
@@ -13,7 +12,7 @@ const darkTheme = createTheme({
   }
 });
 
-export const App = () => {
+const App = () => {
   return (
     <ThemeProvider theme={ darkTheme }>
       <CssBaseline/>
@@ -29,3 +28,5 @@ export const App = () => {
     </ThemeProvider>
   );
 }
+
+export default App;
