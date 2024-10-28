@@ -295,7 +295,7 @@ class TrainingApiTests: AbstractIntegrationTest() {
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .bodyValue(TrainingSummaryParamsDto(
-                listOf("1"),
+                listOf("1", "2"),
                 LocalDate.now().minusDays(30),
                 LocalDate.now()))
             .exchange()
@@ -356,5 +356,6 @@ class TrainingApiTests: AbstractIntegrationTest() {
             .jsonPath("$.[0].parameters.%s.averageIntensity", formattedDates[1]).isEqualTo(40)
             .jsonPath("$.[0].parameters.%s.minIntensity", formattedDates[1]).isEqualTo(40)
             .jsonPath("$.[0].parameters.%s.maxIntensity", formattedDates[1]).isEqualTo(40)
+            .jsonPath("$.[1].id").doesNotExist()
     }
 }

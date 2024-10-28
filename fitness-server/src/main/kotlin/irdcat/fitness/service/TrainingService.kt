@@ -73,5 +73,6 @@ class TrainingService(
                     .collectList()
                     .map { ExerciseSummaryDto(grouped.key(), it.associate { (k, v) -> k to v }) }
             }
+            .filter { exerciseIds.contains(it.id) }
     }
 }
