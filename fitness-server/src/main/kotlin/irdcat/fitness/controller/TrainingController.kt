@@ -2,7 +2,9 @@ package irdcat.fitness.controller
 
 import irdcat.fitness.exception.InvalidTrainingException
 import irdcat.fitness.exception.TrainingNotFoundException
+import irdcat.fitness.model.ExerciseSummaryDto
 import irdcat.fitness.model.TrainingDto
+import irdcat.fitness.model.TrainingSummaryParamsDto
 import irdcat.fitness.service.TrainingService
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -50,6 +52,11 @@ class TrainingController(
     @DeleteMapping("/{id}")
     fun deleteTraining(@PathVariable id: String): Mono<TrainingDto> {
         return trainingService.deleteTraining(id)
+    }
+
+    @PostMapping("/summary", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun getSummary(@RequestBody params: TrainingSummaryParamsDto): Flux<ExerciseSummaryDto> {
+        return trainingService.getExerciseSummaries(params.exerciseIds, params.from, params.to)
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)

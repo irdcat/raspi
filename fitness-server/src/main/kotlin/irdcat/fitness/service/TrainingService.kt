@@ -2,11 +2,15 @@ package irdcat.fitness.service
 
 import irdcat.fitness.exception.InvalidTrainingException
 import irdcat.fitness.exception.TrainingNotFoundException
+import irdcat.fitness.model.ExerciseParametersDto
+import irdcat.fitness.model.ExerciseSummaryDto
 import irdcat.fitness.model.TrainingDto
 import irdcat.fitness.repository.TrainingRepository
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toFlux
+import java.time.LocalDate
 
 @Service
 class TrainingService(
@@ -46,5 +50,28 @@ class TrainingService(
         return trainingRepository
             .deleteById(id)
             .then(Mono.just(TrainingDto(id)))
+    }
+
+    fun getExerciseSummaries(
+        exerciseIds: List<String>,
+        from: LocalDate,
+        to: LocalDate): Flux<ExerciseSummaryDto> {
+
+        return trainingRepository
+            .findByExerciseIdsFromDate(exerciseIds, from, to)
+            .map { Pair(it.date, it.exercises) }
+            .collectList()
+            .flatMapMany {
+                it.flatMap { (key, values) ->
+                    values.map { e -> key to e }
+                }.toFlux()
+            }
+            .groupBy { it.second.exerciseId }
+            .flatMap { grouped ->
+                grouped
+                    .map { it.first to ExerciseParametersDto.fromTrainingExercise(it.second) }
+                    .collectList()
+                    .map { ExerciseSummaryDto(grouped.key(), it.associate { (k, v) -> k to v }) }
+            }
     }
 }
