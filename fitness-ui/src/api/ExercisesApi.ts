@@ -7,6 +7,11 @@ export default class ExercisesApi {
             .then(response => response.json())
     }
 
+    static async getById(id: string): Promise<Exercise> {
+        return fetch(`/api/exercises/${id}`)
+            .then(response => response.json())
+    }
+
     static async add(exercise: Exercise): Promise<Exercise> {
         return fetch("/api/exercises", {
             method: "post",

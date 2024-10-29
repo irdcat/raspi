@@ -1,4 +1,4 @@
-import { Training } from "../types";
+import { ExerciseSummary, ExerciseSummaryQuery, Training } from "../types";
 
 export default class TrainingsApi {
     private static reviver = (key: string, value: any): any => {
@@ -13,10 +13,14 @@ export default class TrainingsApi {
     };
 
     private static replacer = (key: string, value: any) => {
-        if (value instanceof Date) {
-            let date = value as Date;
-            return `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
+        if (typeof value === 'string') {
+            let regex = /([0-9]{4})-([0-9]{2})-([0-9]{2})[TZ:0-9]*/;
+            let result = regex.exec(value);
+            if (result) {
+                return value.substring(0, 10)
+            }
         }
+        return value;
     };
 
     static async get(): Promise<Array<Training>> {
@@ -60,5 +64,18 @@ export default class TrainingsApi {
         })
         .then(response => response.text())
         .then(responseText => JSON.parse(responseText, TrainingsApi.reviver));
+    }
+
+    static async getSummary(query: ExerciseSummaryQuery): Promise<Array<ExerciseSummary>> {
+        return fetch("/api/trainings/summary", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(query, TrainingsApi.replacer)
+        })
+        .then(response => response.text())
+        .then(responseText => JSON.parse(responseText, TrainingsApi.reviver))
     }
 }

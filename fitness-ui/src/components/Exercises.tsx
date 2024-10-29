@@ -32,7 +32,7 @@ export const Exercises = () => {
     }, []);
 
     const handleSummaryClick = (id: string) => {
-        navigate(`/exercise/${id}`)
+        navigate(`/exercises/${id}`)
     }
 
     const onAddExercise = (exercise: Exercise) => {
