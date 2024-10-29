@@ -17,7 +17,7 @@ data class ExerciseParametersDto (
                 .map { it.weight }
                 .sum()
             val avgInt = sumInt / exercise.sets.size
-            val minInt = exercise.sets.maxOf { it.weight }
+            val minInt = exercise.sets.minOf { it.weight }
             val maxInt = exercise.sets.maxOf { it.weight }
 
             return ExerciseParametersDto(sumVol, avgVol, avgInt, minInt, maxInt)
