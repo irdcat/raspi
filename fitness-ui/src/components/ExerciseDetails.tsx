@@ -4,9 +4,8 @@ import { useParams } from "react-router-dom";
 import ExercisesApi from "../api/ExercisesApi";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import TrainingsApi from "../api/TrainingsApi";
-import EChartsReact from "echarts-for-react";
-import { Exercise, ExerciseParameters, ExerciseSummary } from "../types";
-import { EChartsOption, SeriesOption } from "echarts";
+import { Exercise, ExerciseSummary } from "../types";
+import ExerciseChart from "./ExerciseChart";
 
 type ExerciseDetailsData = {
     exercise: Exercise,
@@ -20,79 +19,6 @@ const ExerciseDetails = () => {
         exercise: { id: "", name: "", isBodyWeight: false },
         summary: { id: "", parameters: new Map() }
     }) 
-
-    const paramsToData = (params: ExerciseParameters[]): { [key: string]: number[] } => {
-        const data: { [key: string]: number[] } = {};
-        params.forEach((param) => {
-            Object.keys(param).forEach(k => {
-                if (data[k] === undefined) {
-                    data[k] = [param[k as keyof ExerciseParameters]]
-                } else {
-                    data[k].push(param[k as keyof ExerciseParameters])
-                }
-            })
-        })
-        return data;
-    }
-
-    const formatFieldName = (name: string): string => {
-        const result = name.replace(/([A-Z])/g, ' $1');
-        return result.charAt(0).toUpperCase() + result.slice(1);
-    }
-
-    const dataToSeries = (data: { [key: string]: number[] }): SeriesOption[] => {
-        const series: SeriesOption[] = [];
-        for (const [key, value] of Object.entries(data)) {
-            const formattedName = formatFieldName(key);
-            series.push({
-                name: formattedName,
-                type: 'line',
-                data: value,
-            })
-        }
-        return series;
-    }
-
-    const dataToLegendData = (data: { [key: string]: number[] }): string[] => {
-        const legendData: string[] = [];
-        for (const key of Object.keys(data)) {
-            const name = formatFieldName(key);
-            legendData.push(name)
-        }
-        return legendData;
-    }
-
-    const summaryToEChartsOption = (data: ExerciseDetailsData): EChartsOption => {
-        const name = data.exercise.name;
-        const params = data.summary.parameters;
-        const paramData = paramsToData(Object.values(params));
-        return {
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'cross'
-                }
-            },
-            legend: {
-                data: dataToLegendData(paramData)
-            },
-            xAxis: {
-                data: Object.keys(params),
-                axisTick: {
-                    alignWithLabel: true
-                }
-            },
-            yAxis: {
-                type: 'value',
-                alignTicks: true,
-                maxInterval: 50,
-                axisLabel: {
-                    formatter: "{value} kg"
-                }
-            },
-            series: dataToSeries(paramData)
-        };
-    }
 
     useEffect(() => {
         async function fetchData() {
@@ -122,10 +48,7 @@ const ExerciseDetails = () => {
                 </Typography>
             </Box>
             <Paper sx={{ height: height - 160 }}>
-                <EChartsReact 
-                    style={{ height: "100%" }} 
-                    option={summaryToEChartsOption(data)}
-                    theme={'dark'}/>
+                <ExerciseChart parameters={data.summary.parameters} height="100%"/>
             </Paper>
         </Box>
     )
