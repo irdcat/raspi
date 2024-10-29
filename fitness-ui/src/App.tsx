@@ -5,6 +5,7 @@ import { Exercises } from './components/Exercises';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { Trainings } from './components/Trainings';
+import ExerciseDetails from './components/ExerciseDetails';
 
 const darkTheme = createTheme({
   palette: {
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/" element={<Layout/>}>
             <Route index element={<Home/>}/>
             <Route path="exercises" element={<Exercises/>}/>
+            <Route path="exercises/:id" element={<ExerciseDetails/>}/>
             <Route path="trainings" element={<Trainings/>}/>
           </Route>
         </Routes>
