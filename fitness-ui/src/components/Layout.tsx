@@ -25,6 +25,10 @@ export const Layout = () => {
         handleMenuClose();
         navigate("/exercises");
     }
+    const handleMenuTrainingsClick = () => {
+        handleMenuClose();
+        navigate("/trainings");
+    }
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -51,6 +55,7 @@ export const Layout = () => {
                             "aria-labelledby": "main-menu-button"
                         }}>
                         <MenuItem onClick={ handleMenuExercisesClick }>Exercises</MenuItem>
+                        <MenuItem onClick={ handleMenuTrainingsClick }>Trainings</MenuItem>
                     </Menu>
                     <Typography 
                         variant="h5" 
