@@ -12,6 +12,11 @@ export default class ExercisesApi {
             .then(response => response.json())
     }
 
+    static async getByIds(ids: Array<string>): Promise<Array<Exercise>> {
+        const arrayOfExercisePromises = ids.map(id => this.getById(id));
+        return Promise.all(arrayOfExercisePromises);
+    }
+
     static async add(exercise: Exercise): Promise<Exercise> {
         return fetch("/api/exercises", {
             method: "post",
