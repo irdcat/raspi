@@ -5,6 +5,7 @@ import EChartsReact from "echarts-for-react"
 type ExerciseChartProps = {
     parameters: Map<Date, ExerciseParameters>,
     height?: string | number,
+    width?: string | number
 }
 
 const ExerciseChart = (props: ExerciseChartProps) => {
@@ -86,9 +87,16 @@ const ExerciseChart = (props: ExerciseChartProps) => {
         };
     }
 
+    const propsToStyle = (props: ExerciseChartProps): React.CSSProperties => {
+        return ({
+            ...(props.height !== undefined) && {height: props.height},
+            ...(props.width !== undefined) && {width: props.width},
+        });
+    }
+
     return (
         <EChartsReact 
-            style={ props.height !== undefined ? { height: props.height} : {}} 
+            style={propsToStyle(props)} 
             option={parametersToEChartsOption(props.parameters)}
             theme={'dark'}/>
     )

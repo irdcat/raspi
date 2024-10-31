@@ -29,6 +29,12 @@ export default class TrainingsApi {
             .then(responseText => JSON.parse(responseText, TrainingsApi.reviver));
     }
 
+    static async getById(id: string): Promise<Training> {
+        return fetch(`/api/trainings/${id}`)
+            .then(response => response.text())
+            .then(responseText => JSON.parse(responseText, TrainingsApi.reviver));
+    }
+
     static async add(training: Training): Promise<Training> {
         return fetch("/api/trainings", {
             method: "post",
