@@ -11,7 +11,7 @@ import {
     TableRow, 
     Typography 
 } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Exercise } from "../types";
 import { useNavigate } from "react-router-dom";
 import { DeleteExerciseDialog } from "./DeleteExerciseDialog";
@@ -19,16 +19,18 @@ import { EditExerciseDialog } from "./EditExerciseDialog";
 import { AddExerciseDialog } from "./AddExerciseDialog";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import ExercisesApi from "../api/ExercisesApi";
+import useAsyncEffect from "../hooks/useAsyncEffect";
 
 export const Exercises = () => {
     const [ exerciseList, setExerciseList ] = useState(new Array<Exercise>());
     const navigate = useNavigate();
     const { height } = useWindowDimensions();
 
-    useEffect(() => {
-        ExercisesApi
-            .get()
+    useAsyncEffect(async () => {
+        await ExercisesApi.get()
             .then(exercises => setExerciseList(exercises));
+    }, async () => {
+        // NOOP
     }, []);
 
     const handleSummaryClick = (id: string) => {

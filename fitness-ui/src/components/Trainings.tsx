@@ -12,21 +12,23 @@ import {
     Typography 
 } from "@mui/material";
 import useWindowDimensions from "../hooks/useWindowDimensions";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Training } from "../types";
 import { useNavigate } from "react-router-dom";
 import TrainingsApi from "../api/TrainingsApi";
+import useAsyncEffect from "../hooks/useAsyncEffect";
 
 export const Trainings = () => {
     const [ trainingList, setTrainingList ] = useState(new Array<Training>());
     const navigate = useNavigate();
     const { height } = useWindowDimensions();
 
-    useEffect(() => {
-        TrainingsApi
-            .get()
+    useAsyncEffect(async () => {
+        await TrainingsApi.get()
             .then(trainings => trainings.sort((a, b) => b.date.getTime() - a.date.getTime()))
             .then(trainings => setTrainingList(trainings))
+    }, async () => {
+        // NOOP
     }, []);
 
     const onClickSummary = (id: string) => {
