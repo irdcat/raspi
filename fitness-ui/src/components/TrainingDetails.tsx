@@ -1,12 +1,12 @@
 import { Box, Paper, Tab, Tabs, Typography } from "@mui/material"
 import { useParams } from "react-router-dom"
 import { Exercise, ExerciseSummary, Training } from "../types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TrainingsApi from "../api/TrainingsApi";
 import ExercisesApi from "../api/ExercisesApi";
 import ExerciseChart from "./ExerciseChart";
 import useWindowDimensions from "../hooks/useWindowDimensions";
-import { Height } from "@mui/icons-material";
+import useAsyncEffect from "../hooks/useAsyncEffect";
 
 type TabPanelProps = {
     children?: React.ReactNode;
@@ -38,7 +38,7 @@ type TrainingDetailsData = {
 
 const TrainingDetails = () => {
     const { id } = useParams();
-    const { width, height } = useWindowDimensions();
+    const { height } = useWindowDimensions();
     const [ data, setData ] = useState<TrainingDetailsData>({
         exercises: [],
         training: { id: "", date: new Date(), bodyWeight: 0, exercises: [] },
@@ -46,33 +46,32 @@ const TrainingDetails = () => {
     });
     const [ tab, setTab ] = useState(0);
 
-    useEffect(() => {
-        async function fetchData() {
-            if (id === undefined) {
-                return;
-            }
-            const from = new Date(Date.UTC(2022, 0, 1));
-            const to = new Date(Date.UTC(2022, 3, 1));
-
-            const training = await TrainingsApi.getById(id);
-            const exerciseIds = training.exercises.map(exercise => exercise.exerciseId);
-            const exercises = await ExercisesApi.getByIds(exerciseIds);
-            const summaries = await TrainingsApi.getSummary({
-                exerciseIds: exerciseIds,
-                from: from,
-                to: to
-            })
-            summaries.sort((a, b) => {
-                return training.exercises.filter(e => e.exerciseId === a.id)[0].order
-                    - training.exercises.filter(e => e.exerciseId === b.id)[0].order;
-            });
-            setData({
-                exercises: exercises,
-                training: training,
-                exerciseSummaries: summaries
-            });
+    useAsyncEffect(async () => {
+        if (id === undefined) {
+            return;
         }
-        fetchData();   
+        const from = new Date(Date.UTC(2022, 0, 1));
+        const to = new Date(Date.UTC(2022, 3, 1));
+
+        const training = await TrainingsApi.getById(id);
+        const exerciseIds = training.exercises.map(exercise => exercise.exerciseId);
+        const exercises = await ExercisesApi.getByIds(exerciseIds);
+        const summaries = await TrainingsApi.getSummary({
+            exerciseIds: exerciseIds,
+            from: from,
+            to: to
+        })
+        summaries.sort((a, b) => {
+            return training.exercises.filter(e => e.exerciseId === a.id)[0].order
+                - training.exercises.filter(e => e.exerciseId === b.id)[0].order;
+        });
+        setData({
+            exercises: exercises,
+            training: training,
+            exerciseSummaries: summaries
+        });
+    }, async () => {
+        // NOOP
     }, [id])
 
     const onTabChange = (event: React.SyntheticEvent, newValue: number) => {
