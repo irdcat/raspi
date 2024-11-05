@@ -8,7 +8,10 @@ import {
     FormControlLabel, 
     TextField 
 } from "@mui/material";
-import { ReactElement, useState } from "react";
+import { 
+    ReactElement, 
+    useState 
+} from "react";
 import { Exercise } from "../types";
 
 type AddExerciseDialogProps = {

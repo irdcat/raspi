@@ -1,4 +1,8 @@
-import { ExerciseSummary, ExerciseSummaryQuery, Training } from "../types";
+import { 
+    ExerciseSummary, 
+    ExerciseSummaryQuery, 
+    Training 
+} from "../types";
 
 export default class TrainingsApi {
     private static reviver = (key: string, value: any): any => {

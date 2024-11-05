@@ -1,6 +1,16 @@
-import { Box, Paper, Tab, Tabs, Typography } from "@mui/material"
+import { 
+    Box, 
+    Paper, 
+    Tab, 
+    Tabs, 
+    Typography 
+} from "@mui/material"
 import { useParams } from "react-router-dom"
-import { Exercise, ExerciseSummary, Training } from "../types";
+import { 
+    Exercise, 
+    ExerciseSummary, 
+    Training 
+} from "../types";
 import { useState } from "react";
 import TrainingsApi from "../api/TrainingsApi";
 import ExercisesApi from "../api/ExercisesApi";

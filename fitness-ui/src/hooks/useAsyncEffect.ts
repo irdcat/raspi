@@ -1,4 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import { 
+    useEffect, 
+    useMemo, 
+    useRef, 
+    useState 
+} from "react"
 
 export type UseAsyncEffectResult = {
     result: any,
@@ -78,7 +83,7 @@ export default function useAsyncEffect(
                     })
             }
         }
-    }, dependencies);
+    }, dependencies); // eslint-disable-line react-hooks/exhaustive-deps
 
     return useMemo(() => ({ 
         result, error, isLoading 

@@ -1,5 +1,15 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material"
-import { ReactElement, useState } from "react";
+import { 
+    Button, 
+    Dialog, 
+    DialogActions, 
+    DialogContent, 
+    DialogContentText, 
+    DialogTitle 
+} from "@mui/material"
+import { 
+    ReactElement, 
+    useState 
+} from "react";
 
 type DeleteExerciseDialogProps = {
     response: () => void,

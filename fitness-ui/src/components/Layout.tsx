@@ -7,8 +7,14 @@ import {
     Toolbar, 
     Typography 
 } from "@mui/material"
-import { MouseEvent, useState } from "react"
-import { Outlet, useNavigate } from "react-router-dom"
+import { 
+    MouseEvent, 
+    useState 
+} from "react"
+import { 
+    Outlet, 
+    useNavigate 
+} from "react-router-dom"
 import MenuIcon from '@mui/icons-material/Menu'
 
 export const Layout = () => {
