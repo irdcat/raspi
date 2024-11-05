@@ -1,4 +1,7 @@
-import { EChartsOption, SeriesOption } from "echarts"
+import { 
+    EChartsOption, 
+    SeriesOption 
+} from "echarts"
 import { ExerciseParameters } from "../types"
 import EChartsReact from "echarts-for-react"
 

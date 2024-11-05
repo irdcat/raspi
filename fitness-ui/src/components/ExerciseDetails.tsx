@@ -1,10 +1,17 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { 
+    Box, 
+    Paper, 
+    Typography 
+} from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import ExercisesApi from "../api/ExercisesApi";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import TrainingsApi from "../api/TrainingsApi";
-import { Exercise, ExerciseSummary } from "../types";
+import { 
+    Exercise, 
+    ExerciseSummary 
+} from "../types";
 import ExerciseChart from "./ExerciseChart";
 import useAsyncEffect from "../hooks/useAsyncEffect";
 
