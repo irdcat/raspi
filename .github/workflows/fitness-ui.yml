@@ -1,4 +1,4 @@
-name: Fitness UI build
+name: Fitness UI
 
 on:
   pull_request:

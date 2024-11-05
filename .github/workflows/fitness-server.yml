@@ -1,0 +1,27 @@
+name: Fitness Server
+
+on:
+  pull_request:
+    branches: ["master"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+          cache: 'gradle'
+          cache-dependency-path: |
+            fitness-server/*.gradle*
+            fitness-server/**/gradle-wrapper.properties
+      - name: Test
+        working-directory: ./fitness-server
+        run: ./gradlew test
+      - name: Coverage
+        working-directory: ./fitness-server
+        run: ./gradlew koverLog
