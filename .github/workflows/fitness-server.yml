@@ -19,6 +19,12 @@ jobs:
           cache-dependency-path: |
             fitness-server/*.gradle*
             fitness-server/**/gradle-wrapper.properties
+      - name: Setup Gradle cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('fitness-server/**') }}
+          restore-keys: ${{ runner.os }}-gradle-
       - name: Test
         working-directory: ./fitness-server
         run: ./gradlew test
