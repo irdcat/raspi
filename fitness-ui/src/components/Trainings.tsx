@@ -17,6 +17,7 @@ import { Training } from "../types";
 import { useNavigate } from "react-router-dom";
 import TrainingsApi from "../api/TrainingsApi";
 import useAsyncEffect from "../hooks/useAsyncEffect";
+import { DeleteTrainingDialog } from "./DeleteTrainingDialog";
 
 export const Trainings = () => {
     const [ trainingList, setTrainingList ] = useState(new Array<Training>());
@@ -33,6 +34,12 @@ export const Trainings = () => {
 
     const onClickSummary = (id: string) => {
         navigate(`/trainings/${id}`);
+    }
+
+    const onDeleteTraining = (id: string) => {
+        TrainingsApi
+            .delete(id)
+            .then(deleted => setTrainingList(trainingList.filter(t => t.id !== deleted.id)));
     }
 
     return (
@@ -79,7 +86,11 @@ export const Trainings = () => {
                                     <ButtonGroup variant="outlined">
                                         <Button onClick={() => onClickSummary(training.id)} color="success">Summary</Button>
                                         <Button color="secondary">Edit</Button>
-                                        <Button color="error">Delete</Button>
+                                        <DeleteTrainingDialog response={() => onDeleteTraining(training.id)}>
+                                            {(showDialog) => (
+                                                <Button onClick={showDialog} color="error">Delete</Button>
+                                            )}
+                                        </DeleteTrainingDialog>
                                     </ButtonGroup>
                                 </TableCell>
                             </TableRow>
