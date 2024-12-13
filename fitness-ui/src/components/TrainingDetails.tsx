@@ -6,8 +6,7 @@ import {
     Typography 
 } from "@mui/material"
 import { useParams } from "react-router-dom"
-import { 
-    Exercise, 
+import {
     ExerciseSummary, 
     Training 
 } from "../types";
@@ -17,6 +16,7 @@ import ExercisesApi from "../api/ExercisesApi";
 import ExerciseChart from "./ExerciseChart";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import useAsyncEffect from "../hooks/useAsyncEffect";
+import Exercise from "../model/Exercise";
 
 type TabPanelProps = {
     children?: React.ReactNode;

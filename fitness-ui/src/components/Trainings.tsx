@@ -17,7 +17,7 @@ import { Training } from "../types";
 import { useNavigate } from "react-router-dom";
 import TrainingsApi from "../api/TrainingsApi";
 import useAsyncEffect from "../hooks/useAsyncEffect";
-import { DeleteTrainingDialog } from "./DeleteTrainingDialog";
+import { DeleteTrainingDialog } from "./dialogs/DeleteTrainingDialog";
 
 export const Trainings = () => {
     const [ trainingList, setTrainingList ] = useState(new Array<Training>());

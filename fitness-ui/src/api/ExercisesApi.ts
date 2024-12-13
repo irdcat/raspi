@@ -1,4 +1,4 @@
-import { Exercise } from "../types";
+import Exercise from "../model/Exercise";
 
 export default class ExercisesApi {
 

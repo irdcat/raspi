@@ -12,14 +12,14 @@ import {
     Typography 
 } from "@mui/material"
 import { useState } from "react"
-import { Exercise } from "../types";
 import { useNavigate } from "react-router-dom";
-import { DeleteExerciseDialog } from "./DeleteExerciseDialog";
-import { EditExerciseDialog } from "./EditExerciseDialog";
-import { AddExerciseDialog } from "./AddExerciseDialog";
+import { DeleteExerciseDialog } from "./dialogs/DeleteExerciseDialog";
+import { EditExerciseDialog } from "./dialogs/EditExerciseDialog";
+import { AddExerciseDialog } from "./dialogs/AddExerciseDialog";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import ExercisesApi from "../api/ExercisesApi";
 import useAsyncEffect from "../hooks/useAsyncEffect";
+import Exercise from "../model/Exercise";
 
 export const Exercises = () => {
     const [ exerciseList, setExerciseList ] = useState(new Array<Exercise>());
