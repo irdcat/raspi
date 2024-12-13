@@ -1,9 +1,3 @@
-export type Exercise = {
-    id: string,
-    name: string, 
-    isBodyWeight: false
-}
-
 export type TrainingExerciseSet = {
     reps: number,
     weight: number
