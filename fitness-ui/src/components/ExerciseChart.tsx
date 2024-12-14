@@ -2,8 +2,8 @@ import {
     EChartsOption, 
     SeriesOption 
 } from "echarts"
-import { ExerciseParameters } from "../types"
 import EChartsReact from "echarts-for-react"
+import ExerciseParameters from "../model/ExerciseParameters"
 
 type ExerciseChartProps = {
     parameters: Map<Date, ExerciseParameters>,

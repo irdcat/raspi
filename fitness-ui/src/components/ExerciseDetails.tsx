@@ -8,12 +8,10 @@ import { useParams } from "react-router-dom";
 import ExercisesApi from "../api/ExercisesApi";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import TrainingsApi from "../api/TrainingsApi";
-import {
-    ExerciseSummary 
-} from "../types";
 import ExerciseChart from "./ExerciseChart";
 import useAsyncEffect from "../hooks/useAsyncEffect";
 import Exercise from "../model/Exercise";
+import ExerciseSummary from "../model/ExerciseSummary";
 
 type ExerciseDetailsData = {
     exercise: Exercise,
