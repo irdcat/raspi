@@ -32,7 +32,10 @@ const ExerciseForm = (props: ExerciseFormProps) => {
                 name="name" 
                 control={control} 
                 label="Exercise name"/>
-            <FormInputCheckbox name="isBodyWeight" control={control} label="Bodyweight exercise"/>
+            <FormInputCheckbox 
+                name="isBodyWeight" 
+                control={control} 
+                label="Bodyweight exercise"/>
 
             <Button onClick={handleSubmit(props.onSubmit)} variant="outlined">
                 Submit

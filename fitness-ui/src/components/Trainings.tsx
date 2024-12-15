@@ -13,11 +13,12 @@ import {
 } from "@mui/material";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import { useState } from "react";
-import { Training } from "../types";
 import { useNavigate } from "react-router-dom";
 import TrainingsApi from "../api/TrainingsApi";
 import useAsyncEffect from "../hooks/useAsyncEffect";
 import { DeleteTrainingDialog } from "./dialogs/DeleteTrainingDialog";
+import Training from "../model/Training";
+import AddTrainingDialog from "./dialogs/AddTrainingDialog";
 
 export const Trainings = () => {
     const [ trainingList, setTrainingList ] = useState(new Array<Training>());
@@ -36,6 +37,14 @@ export const Trainings = () => {
         navigate(`/trainings/${id}`);
     }
 
+    const onAddTraining = (training: Training) => {
+        TrainingsApi
+            .add(training)
+            .then(added => [...trainingList, added])
+            .then(trainings => trainings.sort((a, b) => b.date.getTime() - a.date.getTime()))
+            .then(trainings => setTrainingList(trainings));
+    }
+
     const onDeleteTraining = (id: string) => {
         TrainingsApi
             .delete(id)
@@ -48,9 +57,11 @@ export const Trainings = () => {
                 <Typography variant="h6" color="white" sx={{ flexGrow: 1}}>
                     Trainings
                 </Typography>
-                <Button variant="outlined" color="success">
-                    Add
-                </Button>
+                <AddTrainingDialog response={(training) => onAddTraining(training)}>
+                    {(showDialog) => (
+                        <Button onClick={showDialog} variant="outlined" color="success">Add</Button>
+                    )}
+                </AddTrainingDialog>
             </Box>
             <TableContainer sx={{ maxHeight: height - 160 }} component={Paper}>
                 <Table stickyHeader aria-label="trainings table">
