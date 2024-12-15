@@ -26,6 +26,7 @@ const FormInputAutocomplete = (props: FormInputAutocompleteProps) => {
                     getOptionLabel={props.getOptionLabel}
                     isOptionEqualToValue={(option, value) => props.getOptionValue(option) === value}
                     onChange={(e, data) => onChange(data)}
+                    value={value}
                     renderInput={params => (
                         <TextField
                             {...params}

@@ -40,9 +40,7 @@ export const EditExerciseDialog = (props: EditExerciseDialogProps) => {
     return (
         <>
             { props.children(showDialog) }
-            <Dialog
-                open={ open }
-                onClose={ hideDialog }>
+            <Dialog open={ open } onClose={ hideDialog }>
                 <DialogTitle>Edit Exercise</DialogTitle>
                 <DialogContent>
                     <ExerciseForm 
