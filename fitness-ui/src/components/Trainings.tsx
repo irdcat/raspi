@@ -19,6 +19,7 @@ import useAsyncEffect from "../hooks/useAsyncEffect";
 import { DeleteTrainingDialog } from "./dialogs/DeleteTrainingDialog";
 import Training from "../model/Training";
 import AddTrainingDialog from "./dialogs/AddTrainingDialog";
+import EditTrainingDialog from "./dialogs/EditTrainingDialog";
 
 export const Trainings = () => {
     const [ trainingList, setTrainingList ] = useState(new Array<Training>());
@@ -43,6 +44,16 @@ export const Trainings = () => {
             .then(added => [...trainingList, added])
             .then(trainings => trainings.sort((a, b) => b.date.getTime() - a.date.getTime()))
             .then(trainings => setTrainingList(trainings));
+    }
+
+    const onEditTraining = (training: Training) => {
+        TrainingsApi
+            .update(training.id, training)
+            .then(updated => {
+                const newList = [...trainingList];
+                newList[trainingList.findIndex(t => t.id === updated.id)] = updated;
+                setTrainingList(trainingList);
+            });
     }
 
     const onDeleteTraining = (id: string) => {
@@ -96,7 +107,11 @@ export const Trainings = () => {
                                 <TableCell align="right">
                                     <ButtonGroup variant="outlined">
                                         <Button onClick={() => onClickSummary(training.id)} color="success">Summary</Button>
-                                        <Button color="secondary">Edit</Button>
+                                        <EditTrainingDialog training={training} response={(t) => onEditTraining(t)}>
+                                            {(showDialog) => (
+                                                <Button onClick={showDialog} variant="outlined" color="secondary">Edit</Button>
+                                            )}
+                                        </EditTrainingDialog>
                                         <DeleteTrainingDialog response={() => onDeleteTraining(training.id)}>
                                             {(showDialog) => (
                                                 <Button onClick={showDialog} color="error">Delete</Button>
