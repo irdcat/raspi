@@ -17,6 +17,8 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.LinkedHashMap
 
 @Profile("!test")
 @Configuration
@@ -81,6 +83,18 @@ class LocalApplicationInitializer(
                             )
                         }
                 )
+            }
+            .map {
+                val now = LocalDate.now()
+                val updatedDate = LocalDate.of(
+                    now.year,
+                    now.monthValue - 4 + it.date.monthValue,
+                    if (it.date.dayOfMonth > 30) { 30 } else { it.date.dayOfMonth })
+                Training(
+                    it.id,
+                    updatedDate,
+                    it.bodyWeight,
+                    it.exercises)
             }
             .collectList()
             .flatMapMany { trainingRepository.insert(it) }
