@@ -19,6 +19,13 @@ class ExerciseService(
             .map(ExerciseDto::fromExercise)
     }
 
+    fun getExercisesByIds(ids: List<String>) : Flux<ExerciseDto> {
+        return exerciseRepository
+            .findAllById(ids)
+            .map(ExerciseDto::fromExercise)
+            .switchIfEmpty(Mono.error(ExerciseNotFoundException("No exercises with ids $ids")))
+    }
+
     fun getExercise(id: String) : Mono<ExerciseDto> {
         return exerciseRepository
             .findById(id)
