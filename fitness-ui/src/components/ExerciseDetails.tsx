@@ -12,6 +12,7 @@ import ExerciseChart from "./ExerciseChart";
 import useAsyncEffect from "../hooks/useAsyncEffect";
 import Exercise from "../model/Exercise";
 import ExerciseSummary from "../model/ExerciseSummary";
+import { subDays } from "date-fns";
 
 type ExerciseDetailsData = {
     exercise: Exercise,
@@ -30,8 +31,8 @@ const ExerciseDetails = () => {
         if (id === undefined) {
             return;    
         }
-        const from = new Date(Date.UTC(2022, 0, 1));
-        const to = new Date(Date.UTC(2022, 3, 1));
+        const to = new Date();
+        const from = subDays(to, 90);
 
         const e = await ExercisesApi.getById(id);
         const s = await TrainingsApi
