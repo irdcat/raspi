@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
@@ -27,8 +28,10 @@ class ExerciseController(
 ) {
     
     @GetMapping
-    fun getExercises() : Flux<ExerciseDto> {
-        return exerciseService.getExercises()
+    fun getExercises(@RequestParam("ids") ids: Array<String>?) : Flux<ExerciseDto> {
+        return ids?.let {
+            exerciseService.getExercisesByIds(it.toList())
+        } ?: exerciseService.getExercises()
     }
 
     @GetMapping("/{id}")
