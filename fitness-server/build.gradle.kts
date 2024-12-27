@@ -68,3 +68,14 @@ tasks.withType<Test> {
 tasks.register<Task>("runLocal") {
 	dependsOn(tasks.bootTestRun)
 }
+
+tasks.register<Copy>("buildDockerContext") {
+	dependsOn(tasks.bootJar)
+
+	val bootJarOutput = tasks.bootJar.get().outputs.files.singleFile
+
+	from("Dockerfile")
+	from(bootJarOutput)
+	rename(bootJarOutput.name, "fitness.jar")
+	into(project.layout.buildDirectory.dir("dockerContext"))
+}
