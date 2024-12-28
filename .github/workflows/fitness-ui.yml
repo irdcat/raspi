@@ -4,6 +4,11 @@ on:
   pull_request:
     branches: ["master"]
 
+env:
+  DOCKER_USER: ${{secrets.DOCKER_USER}}
+  DOCKER_PASS: ${{secrets.DOCKER_PASS}}
+  REPO_NAME: fitness-ui
+
 jobs:
   npm-build:
     runs-on: ubuntu-latest
@@ -28,3 +33,13 @@ jobs:
       - name: Build
         working-directory: ./fitness-ui
         run: npm run build
+      - name: Docker Login
+        run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d--%M-%S')"
+      - name: Docker Build
+        run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:${{steps.date.outputs.date}}
+        working-directory: ./fitness-ui
+      - name: Docker Push
+        run: docker push $DOCKER_USER/$REPO_NAME:${{steps.date.outputs.date}}

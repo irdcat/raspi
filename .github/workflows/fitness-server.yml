@@ -4,6 +4,11 @@ on:
   pull_request:
     branches: ["master"]
 
+env:
+  DOCKER_USER: ${{secrets.DOCKER_USER}}
+  DOCKER_PASS: ${{secrets.DOCKER_PASS}}
+  REPO_NAME: fitness-server
+
 jobs:
   gradle-build:
     runs-on: ubuntu-latest
@@ -31,3 +36,16 @@ jobs:
       - name: Coverage
         working-directory: ./fitness-server
         run: ./gradlew koverLog
+      - name: Docker Context
+        run: ./gradlew buildDockerContext
+        working-directory: ./fitness-server
+      - name: Docker Login
+        run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d--%M-%S')"
+      - name: Docker Build
+        run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:${{steps.date.outputs.date}}
+        working-directory: ./fitness-server/build/dockerContext
+      - name: Docker Push
+        run: docker push $DOCKER_USER/$REPO_NAME:${{steps.date.outputs.date}}

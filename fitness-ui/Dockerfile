@@ -1,6 +1,9 @@
 FROM node:20 AS build
 
-WORKDIR /app
+WORKDIR /fitness
+RUN groupadd fitness
+RUN useradd -g fitness fitness
+USER fitness:fitness
 COPY package*.json ./
 RUN npm install
 COPY . .
