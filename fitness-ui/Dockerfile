@@ -1,10 +1,13 @@
 FROM node:20 AS build
 
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
+USER node
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+ENV PATH=$PATH:/home/node/.npm-global/bin
+WORKDIR /home/node
+COPY package.json .
+RUN npm install --only=prod
 COPY . .
 RUN npm run build
 
 FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /home/node/build /usr/share/nginx/html
