@@ -4,7 +4,7 @@ metadata:
   name: mongo
   {{- include "k8s-mongo.printSharedLabels" . | nindent 2 }}
 spec:
-  serviceName: mongo-service
+  serviceName: mongo-internal
   replicas: 1
   selector:
     matchLabels:
