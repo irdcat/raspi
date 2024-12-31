@@ -1,4 +1,4 @@
-FROM openjdk:21-jdk
+FROM arm64v8/openjdk:21-jdk
 
 WORKDIR fitness
 RUN groupadd fitness
