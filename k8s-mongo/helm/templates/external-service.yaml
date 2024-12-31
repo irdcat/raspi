@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongo-external
+  name: {{ .Release.Name }}-external-service
   {{- include "k8s-mongo.printSharedLabels" . | nindent 2 }}
 spec:
   selector:
