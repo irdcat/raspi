@@ -80,7 +80,7 @@ jobs:
           context: .
           platforms: linux/arm64
           push: true
-          tags: irdcat/fitness-server:latest
+          tags: ${{env.DOCKER_USER}}/${{env.REPO_NAME}}:latest
 
   helm-check:
     runs-on: ubuntu-latest
