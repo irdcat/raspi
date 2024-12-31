@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-ingress
+spec:
+  rules:
+    - host: raspi.local
+      http:
+        paths:
+          - path: /fitness
+            backend:
+              service:
+                name: {{ .Release.Name }}-internal-service
+                port:
+                  number: 80
