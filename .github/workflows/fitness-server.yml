@@ -36,6 +36,15 @@ jobs:
       - name: Coverage
         working-directory: ./fitness-server
         run: ./gradlew koverLog
+      - name: Docker Context
+        working-directory: ./fitness-server
+        run: ./gradlew buildDockerContext
+      - name: Upload Docker context artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: dockerContext
+          path: fitness-server/build/dockerContext
+          if-no-files-found: error
   docker-image:
     needs: gradle-build
     runs-on: ubuntu-latest
@@ -49,13 +58,14 @@ jobs:
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Build docker context
-        working-directory: ./fitness-server
-        run: ./gradlew buildDockerContext
+      - name: Download Docker Context artifact
+        uses: actions/download-artifact@master
+        with:
+          name: dockerContext
+          path: .
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: "{{defaultContext}}:fitness-server/build/dockerContext"
           platforms: linux/arm64
           push: true
           tags: irdcat/fitness-server:latest
