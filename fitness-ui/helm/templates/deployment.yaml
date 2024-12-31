@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  {{- include "fitness-server.printSharedLabels" . | nindent 2 }}
+spec:
+  replicas: 1
+  strategy: 
+    type: Recreate
+  selector:
+    matchLabels:
+      app: fitness-server
+  template:
+    metadata:
+      labels:
+        app: fitness-server
+        {{- include "fitness-server.printSharedLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: server
+          image: {{ printf "%s:%s" .Values.docker.image .Values.docker.tag }}
+          command: ["nginx"]
+          args:
+            - -g
+            - "daemon off;"
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-config-map
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "500Mi"
+              cpu: "0.5"
