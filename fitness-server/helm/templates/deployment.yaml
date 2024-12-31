@@ -19,8 +19,10 @@ spec:
       containers:
         - name: server
           image: {{ printf "%s:%s" .Values.docker.image .Values.docker.tag }}
-          command: ["/bin/sh", "-c"]
-          args: ["java", "-jar", "server.jar"]
+          command: ["java"]
+          args:
+            - -jar
+            - server.jar
           envFrom:
             - configMapRef:
                 name: fitness-server-config-map
