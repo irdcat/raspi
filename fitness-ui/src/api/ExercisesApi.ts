@@ -4,10 +4,11 @@ export default class ExercisesApi {
 
     private static getBaseUrl = (): string => {
         let fitnessServerUrlEnvValue = process.env.FITNESS_SERVER_URL;
-        if (fitnessServerUrlEnvValue === undefined) {
-            return ""
+        let fitnessServerPortEnvValue = process.env.FITNESS_SERVER_PORT;
+        if (fitnessServerUrlEnvValue === undefined || fitnessServerPortEnvValue === undefined) {
+            return "";
         } else {
-            return fitnessServerUrlEnvValue;
+            return `${fitnessServerUrlEnvValue}:${fitnessServerPortEnvValue}`;
         }
     }
 

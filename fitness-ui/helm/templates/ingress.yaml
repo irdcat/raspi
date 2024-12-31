@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Release.Name }}-ingress
+  {{- include "fitness-ui.printSharedLabels" . | nindent 2 }}
 spec:
   rules:
     - host: raspi.local
