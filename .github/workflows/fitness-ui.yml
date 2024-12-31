@@ -27,7 +27,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('fitness-server/**') }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('fitness-ui/**') }}
           restore-keys: ${{ runner.os }}-npm-
 
       - name: Install Node dependencies
@@ -60,7 +60,7 @@ jobs:
           context: "{{defaultContext}}:fitness-ui"
           platforms: linux/arm64
           push: true
-          tags: irdcat/fitness-ui:latest
+          tags: ${{env.DOCKER_USER}}/${{env.REPO_NAME}}:latest
 
   helm-check:
     runs-on: ubuntu-latest
@@ -75,8 +75,8 @@ jobs:
 
       - name: Helm Lint
         run: helm lint .
-        working-directory: ./k8s-mongo/helm
+        working-directory: ./fitness-ui/helm
         
       - name: Helm Template
         run: helm template raspi .
-        working-directory: ./k8s-mongo/helm
+        working-directory: ./fitness-ui/helm
