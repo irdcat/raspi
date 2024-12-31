@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}-deployment
-  {{- include "fitness-server.printSharedLabels" . | nindent 2 }}
+  {{- include "fitness-ui.printSharedLabels" . | nindent 2 }}
 spec:
   replicas: 1
   strategy: 
@@ -14,7 +14,7 @@ spec:
     metadata:
       labels:
         app: fitness-server
-        {{- include "fitness-server.printSharedLabels" . | nindent 8 }}
+        {{- include "fitness-ui.printSharedLabels" . | nindent 8 }}
     spec:
       containers:
         - name: server
