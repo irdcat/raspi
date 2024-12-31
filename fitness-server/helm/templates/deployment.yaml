@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fitness-server
+  name: {{ .Release.Name }}-deployment
   {{- include "fitness-server.printSharedLabels" . | nindent 2 }}
 spec:
   replicas: 1

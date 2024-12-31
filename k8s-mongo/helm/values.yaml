@@ -1,1 +1,4 @@
 domain: raspi.local
+docker:
+  image: mongo
+  tag: latest

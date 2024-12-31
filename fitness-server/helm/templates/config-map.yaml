@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: fitness-server-config-map
+  name: {{ .Release.Name }}-config-map
   {{ include "fitness-server.printSharedLabels" . | nindent 2 }}
 data:
   SPRING_DATA_MONGODB_HOST: mongo-internal.default.svc.cluster.local
