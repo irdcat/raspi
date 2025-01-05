@@ -1,23 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-deployment
-  {{- include "fitness-ui.printSharedLabels" . | nindent 2 }}
+  name: {{ .Release.Name }}
+  labels:
+    {{- include "fitness-ui.printSharedLabels" . | nindent 2 }}
 spec:
   replicas: 1
   strategy: 
     type: Recreate
   selector:
     matchLabels:
-      app: fitness-server
+      app: fitness-ui
   template:
     metadata:
+      name: {{ .Release.Name }}-pod
       labels:
-        app: fitness-server
+        app: fitness-ui
         {{- include "fitness-ui.printSharedLabels" . | nindent 8 }}
     spec:
       containers:
-        - name: server
+        - name: ui
           image: {{ printf "%s:%s" .Values.docker.image .Values.docker.tag }}
           command: ["nginx"]
           args:
