@@ -1,6 +1,6 @@
 clusterDomain: raspi.local
 image:
-  repository: m4tiqqq/fitness-ui
+  repository: irdcat/fitness-ui
   tag: latest
 
 resources:
