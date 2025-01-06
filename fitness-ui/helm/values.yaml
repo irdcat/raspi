@@ -1,3 +1,9 @@
 clusterDomain: raspi.local
-docker:
-  image: irdcat/fitness-ui
+image:
+  repository: m4tiqqq/fitness-ui
+  tag: latest
+
+resources:
+  requests:
+    memory: "500Mi"
+    cpu: "0.5"

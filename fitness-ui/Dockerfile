@@ -7,7 +7,13 @@ WORKDIR /home/node
 COPY package.json .
 RUN npm install --only=prod
 COPY . .
+ARG FITNESS_SERVER_URL
+ARG FITNESS_SERVER_PORT=80
+ENV FITNESS_SERVER_URL=${FITNESS_SERVER_URL}
+ENV FITNESS_SERVER_PORT=${FITNESS_SERVER_PORT}
 RUN npm run build
 
 FROM nginx:alpine
 COPY --from=build /home/node/build /usr/share/nginx/html
+# RUN cp /etc/nginx/conf.d/default.conf /nginx-default.conf.bak
+COPY nginx.conf /etc/nginx/conf.d/default.conf

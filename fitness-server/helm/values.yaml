@@ -1,3 +1,9 @@
-clusterDomain: raspi.local
-docker:
-  image: irdcat/fitness-server
+clusterDomain: api.raspi.local
+image:
+  repository: "irdcat/fitness-server"
+  tag: "latest"
+
+resources:
+  requests:
+    memory: "500Mi"
+    cpu: "0.5"
