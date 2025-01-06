@@ -4,8 +4,6 @@ metadata:
   name: {{ .Release.Name }}-ingress
   labels:
   {{- include "fitness-server.printSharedLabels" . | nindent 4 }}
-  # annotations:
-  #   nginx.ingress.kubernetes.io/rewrite-target: /api
 spec:
   ingressClassName: nginx
   rules:
@@ -17,4 +15,4 @@ spec:
               service:
                 name: {{ .Release.Name }}-internal-service
                 port:
-                  number: 8080
+                  number: 80
