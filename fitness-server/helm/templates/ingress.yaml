@@ -3,18 +3,16 @@ kind: Ingress
 metadata:
   name: {{ .Release.Name }}-ingress
   labels:
-  {{- include "fitness-ui.printSharedLabels" . | nindent 4 }}
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+  {{- include "fitness-server.printSharedLabels" . | nindent 4 }}
 spec:
   ingressClassName: nginx
   rules:
     - http:
         paths:
-          - path: /
+          - path: /api
             pathType: Prefix
             backend:
               service:
-                name: {{ .Release.Name }}-service
+                name: {{ .Release.Name }}-internal-service
                 port:
                   number: 80
