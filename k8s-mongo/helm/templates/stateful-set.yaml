@@ -2,7 +2,8 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ .Release.Name }}-stateful-set
-  {{- include "k8s-mongo.printSharedLabels" . | nindent 2 }}
+  labels:
+  {{- include "k8s-mongo.printSharedLabels" . | nindent 4 }}
 spec:
   serviceName: mongo-internal
   replicas: 1

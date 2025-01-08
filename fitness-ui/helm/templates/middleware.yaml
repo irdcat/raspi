@@ -1,9 +1,0 @@
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: {{ .Release.Name }}-middleware
-spec:
-  stripPrefix:
-    forceSlash: false
-    prefixes:
-      - /fitness

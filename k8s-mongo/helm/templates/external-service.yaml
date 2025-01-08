@@ -1,8 +1,10 @@
+{{- if eq .Values.development true }}
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Release.Name }}-external-service
-  {{- include "k8s-mongo.printSharedLabels" . | nindent 2 }}
+  labels:
+  {{- include "k8s-mongo.printSharedLabels" . | nindent 4 }}
 spec:
   selector:
     app: mongo
@@ -10,4 +12,6 @@ spec:
     - protocol: TCP
       port: 27017
       targetPort: 27017
+      nodePort: 32017
   type: NodePort
+{{- end }}

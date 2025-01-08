@@ -2,7 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}-deployment
-  {{- include "fitness-server.printSharedLabels" . | nindent 2 }}
+  labels:
+  {{- include "fitness-server.printSharedLabels" . | nindent 4 }}
 spec:
   replicas: 1
   strategy: 
@@ -18,7 +19,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: {{ printf "%s:%s" .Values.docker.image .Values.docker.tag }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           command: ["java"]
           args:
             - -jar
@@ -30,5 +31,5 @@ spec:
             - containerPort: 8080
           resources:
             requests:
-              memory: "500Mi"
-              cpu: "0.5"
+              memory: {{ .Values.resources.requests.memory }}
+              cpu: {{ .Values.resources.requests.cpu }}

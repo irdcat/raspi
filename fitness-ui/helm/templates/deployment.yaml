@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ .Release.Name }}
   labels:
-    {{- include "fitness-ui.printSharedLabels" . | nindent 2 }}
+    {{- include "fitness-ui.printSharedLabels" . | nindent 4 }}
 spec:
   replicas: 1
   strategy: 
@@ -20,17 +20,17 @@ spec:
     spec:
       containers:
         - name: ui
-          image: {{ printf "%s:%s" .Values.docker.image .Values.docker.tag }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           command: ["nginx"]
           args:
             - -g
             - "daemon off;"
-          envFrom:
-            - configMapRef:
-                name: {{ .Release.Name }}-config-map
+          # envFrom:
+          #   - configMapRef:
+          #       name: {{ .Release.Name }}-config-map
           ports:
             - containerPort: 80
           resources:
             requests:
-              memory: "500Mi"
-              cpu: "0.5"
+              memory: {{ .Values.resources.requests.memory }}
+              cpu: {{ .Values.resources.requests.cpu }}
