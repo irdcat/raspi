@@ -7,3 +7,7 @@ resources:
   requests:
     memory: "500Mi"
     cpu: "0.5"
+
+mongo:
+  service: mongo-service
+  namespace: default

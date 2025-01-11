@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ .Release.Name }}-stateful-set
+  name: {{ .Release.Name }}
   labels:
-  {{- include "k8s-mongo.printSharedLabels" . | nindent 4 }}
+    {{- include "mongo.printSharedLabels" . | nindent 4 }}
 spec:
-  serviceName: mongo-internal
+  serviceName: {{ .Release.Name }}-mongo-service
   replicas: 1
   selector:
     matchLabels:
@@ -14,7 +14,7 @@ spec:
     metadata:
       labels:
         app: mongo
-        {{- include "k8s-mongo.printSharedLabels" . | nindent 8 }}
+        {{- include "mongo.printSharedLabels" . | nindent 8 }}
     spec:
       containers:
       - name: mongo
