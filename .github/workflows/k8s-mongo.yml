@@ -1,4 +1,4 @@
-name: K8s Mongo
+name: Mongo
 
 on:
   pull_request:
@@ -16,7 +16,7 @@ jobs:
           version: "3.16.1"
       - name: Helm Lint
         run: helm lint .
-        working-directory: ./k8s-mongo/helm
+        working-directory: ./mongo/helm
       - name: Helm Template
         run: helm template raspi .
-        working-directory: ./k8s-mongo/helm
+        working-directory: ./mongo/helm
