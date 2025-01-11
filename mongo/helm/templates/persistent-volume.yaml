@@ -3,7 +3,7 @@ kind: PersistentVolume
 metadata:
   name: {{ .Release.Name }}-persistent-volume
   labels:
-  {{- include "k8s-mongo.printSharedLabels" . | nindent 4 }}
+    {{- include "mongo.printSharedLabels" . | nindent 4 }}
 spec:
   capacity:
     storage: 20Gi

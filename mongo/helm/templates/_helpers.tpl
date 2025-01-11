@@ -1,5 +1,5 @@
 {{- /* Prints common labels */ -}}
-{{- define "k8s-mongo.printSharedLabels" -}}
+{{- define "mongo.printSharedLabels" -}}
 helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
 app.kubernetes.io/name: {{ .Release.Name }}-k8s-mongo
 app.kubernetes.io/managed-by: {{ .Release.Service }}

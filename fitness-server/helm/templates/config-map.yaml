@@ -3,8 +3,8 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-config-map
   labels:
-  {{ include "fitness-server.printSharedLabels" . | nindent 4 }}
+    {{ include "fitness-server.printSharedLabels" . | nindent 4 }}
 data:
-  SPRING_DATA_MONGODB_HOST: k8s-mongo-internal-service
+  SPRING_DATA_MONGODB_HOST: {{ .Values.mongo.service }}.{{ .Values.mongo.namespace }}.svc.cluster.local
   SPRING_DATA_MONGODB_PORT: "27017"
   SPRING_DATA_MONGODB_DATABASE: fitness
