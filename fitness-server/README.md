@@ -52,3 +52,15 @@ Name of the ClusterIP service that exposes mongo port inside the cluster. It's n
 **Default**: `default`
 
 Name of the kubernetes namespace to which mongo has been deployed.
+
+#### mongo.port
+
+**Default**: `27017`
+
+Port on which MongoDB is exposed.
+
+#### mongo.database
+
+**Default**: `fitness`
+
+Name of the database used by the application.
