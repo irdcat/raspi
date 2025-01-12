@@ -3,6 +3,8 @@ name: Fitness UI
 on:
   pull_request:
     branches: ["master"]
+    paths:
+      - fitness-ui/**
 
 env:
   DOCKER_USER: ${{secrets.DOCKER_USER}}
