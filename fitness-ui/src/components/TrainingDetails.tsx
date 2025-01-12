@@ -15,7 +15,7 @@ import useAsyncEffect from "../hooks/useAsyncEffect";
 import Exercise from "../model/Exercise";
 import Training from "../model/Training";
 import ExerciseSummary from "../model/ExerciseSummary";
-import { subDays } from "date-fns";
+import { addDays, subDays } from "date-fns";
 
 type TabPanelProps = {
     children?: React.ReactNode;
@@ -59,12 +59,14 @@ const TrainingDetails = () => {
         if (id === undefined) {
             return;
         }
-        const to = new Date();
-        const from = subDays(to, 90);
 
         const training = await TrainingsApi.getById(id);
         const exerciseIds = training.exercises.map(exercise => exercise.exerciseId);
         const exercises = await ExercisesApi.getByIds(exerciseIds);
+
+        const to = addDays(training.date, 1);
+        const from = subDays(to, 90);
+
         const summaries = await TrainingsApi.getSummary({
             exerciseIds: exerciseIds,
             from: from,
