@@ -86,9 +86,20 @@ class LocalApplicationInitializer(
             }
             .map {
                 val now = LocalDate.now()
+                val monthValueResult = now.monthValue - 3 + it.date.monthValue
+                val monthValue = if (monthValueResult <= 0) {
+                    12 + monthValueResult
+                } else {
+                    monthValueResult
+                }
+                val year = if (monthValueResult <= 0) {
+                    now.year - 1
+                } else {
+                    now.year
+                }
                 val updatedDate = LocalDate.of(
-                    now.year,
-                    now.monthValue - 4 + it.date.monthValue,
+                    year,
+                    monthValue,
                     if (it.date.dayOfMonth > 30) { 30 } else { it.date.dayOfMonth })
                 Training(
                     it.id,
