@@ -3,6 +3,7 @@ name: Mongo
 on:
   pull_request:
     branches: ["master"]
+    paths: mongo/**
 
 jobs:
   helm-check:
