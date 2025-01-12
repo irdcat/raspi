@@ -6,5 +6,5 @@ metadata:
     {{ include "fitness-server.printSharedLabels" . | nindent 4 }}
 data:
   SPRING_DATA_MONGODB_HOST: {{ .Values.mongo.service }}.{{ .Values.mongo.namespace }}.svc.cluster.local
-  SPRING_DATA_MONGODB_PORT: "27017"
-  SPRING_DATA_MONGODB_DATABASE: fitness
+  SPRING_DATA_MONGODB_PORT: {{ .Values.mongo.port }}
+  SPRING_DATA_MONGODB_DATABASE: {{ .Values.mongo.database }}
