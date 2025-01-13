@@ -3,7 +3,7 @@ import ExerciseSummaryQuery from "../model/ExerciseSummaryQuery";
 import Training from "../model/Training";
 
 export default class TrainingsApi {
-    
+    static readonly URL_PREFIX: string = "/fitness"
     private static reviver = (key: string, value: any): any => {
         if (typeof value === 'string') {
             let regex = /([0-9]{4})-([0-9]{2})-([0-9]{2})/;
@@ -27,19 +27,19 @@ export default class TrainingsApi {
     };
 
     static async get(): Promise<Array<Training>> {
-        return fetch("/api/trainings")
+        return fetch(`${this.URL_PREFIX}/api/trainings`)
             .then(response => response.text())
             .then(responseText => JSON.parse(responseText, TrainingsApi.reviver));
     }
 
     static async getById(id: string): Promise<Training> {
-        return fetch(`/api/trainings/${id}`)
+        return fetch(`${this.URL_PREFIX}/api/trainings/${id}`)
             .then(response => response.text())
             .then(responseText => JSON.parse(responseText, TrainingsApi.reviver));
     }
 
     static async add(training: Training): Promise<Training> {
-        return fetch("/api/trainings", {
+        return fetch(`${this.URL_PREFIX}/api/trainings`, {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export default class TrainingsApi {
     }
 
     static async update(id: string, training: Training): Promise<Training> {
-        return fetch(`/api/trainings/${id}`, {
+        return fetch(`${this.URL_PREFIX}/api/trainings/${id}`, {
             method: "put",
             headers: {
                 "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export default class TrainingsApi {
     }
 
     static async delete(id: string): Promise<Training> {
-        return fetch(`/api/trainings/${id}`, {
+        return fetch(`${this.URL_PREFIX}/api/trainings/${id}`, {
             method: "delete",
             headers: {
                 "Accept": "application/json"
@@ -76,7 +76,7 @@ export default class TrainingsApi {
     }
 
     static async getSummary(query: ExerciseSummaryQuery): Promise<Array<ExerciseSummary>> {
-        return fetch("/api/trainings/summary", {
+        return fetch(`${this.URL_PREFIX}/api/trainings/summary`, {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
