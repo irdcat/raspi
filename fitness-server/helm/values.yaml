@@ -1,4 +1,4 @@
-clusterDomain: api.raspi.local
+domain: raspi.local
 image:
   repository: "irdcat/fitness-server"
   tag: "latest"
@@ -11,5 +11,5 @@ resources:
 mongo:
   service: mongo-service
   namespace: default
-  port: "27017"
+  port: 27017
   database: fitness
