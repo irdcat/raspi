@@ -1,4 +1,4 @@
-clusterDomain: raspi.local
+domain: raspi.local
 image:
   repository: irdcat/fitness-ui
   tag: latest
