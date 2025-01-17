@@ -3,7 +3,7 @@
     "type": "object",
     "required": [
         "domain",
-        "docker",
+        "image",
         "development"
     ],
     "properties": {
@@ -13,14 +13,14 @@
                 "raspi.local"
             ]
         },
-        "docker": {
+        "image": {
             "type": "object",
             "required": [
-                "image",
+                "repository",
                 "tag"
             ],
             "properties": {
-                "image": {
+                "repository": {
                     "type": "string",
                     "pattern": "^[a-z0-9_/\\-]+$"
                 },
