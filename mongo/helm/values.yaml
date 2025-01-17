@@ -1,5 +1,5 @@
 domain: raspi.local
-docker:
-  image: mongo
+image:
+  repository: mongo
   tag: latest
 development: false
