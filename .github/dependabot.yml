@@ -4,9 +4,9 @@ updates:
     directory: ./fitness-ui
     schedule:
       interval: 'daily'
-    open-pull-requests-limit: 0
+    open-pull-requests-limit: 5
   - package-ecosystem: 'gradle'
     directory: ./fitness-server
     schedule:
       interval: 'daily'
-    open-pull-requests-limit: 0
+    open-pull-requests-limit: 5
