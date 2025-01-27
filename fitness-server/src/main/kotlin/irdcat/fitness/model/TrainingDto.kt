@@ -5,6 +5,7 @@ import java.util.*
 
 data class TrainingDto(
     val id: String? = null,
+    val templateId: String? = null,
     val date: LocalDate? = null,
     val bodyWeight: Float? = null,
     val exercises: List<TrainingExerciseDto>? = null
@@ -13,6 +14,7 @@ data class TrainingDto(
         fun fromTraining(training: Training): TrainingDto {
             return TrainingDto(
                 training.id,
+                training.templateId,
                 training.date,
                 training.bodyWeight,
                 training.exercises.map(TrainingExerciseDto::fromTrainingExercise)
@@ -32,6 +34,7 @@ data class TrainingDto(
     fun toTraining(newId: String) : Training {
         return Training(
             newId,
+            templateId,
             date!!,
             bodyWeight!!,
             exercises!!.map { it.toTrainingExercise() }

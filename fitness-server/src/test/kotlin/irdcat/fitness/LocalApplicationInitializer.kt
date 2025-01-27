@@ -17,7 +17,6 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
-import java.util.*
 import kotlin.collections.LinkedHashMap
 
 @Profile("!test")
@@ -66,6 +65,7 @@ class LocalApplicationInitializer(
             .map {
                 Training(
                     it["id"]!!.toString(),
+                    null,
                     LocalDate.parse(it["date"]!!.toString(), dateTimeFormatter),
                     it["bodyWeight"]!!.toString().toFloat(),
                     (it["exercises"] as List<LinkedHashMap<String, Any>>)
@@ -103,6 +103,7 @@ class LocalApplicationInitializer(
                     if (it.date.dayOfMonth > 30) { 30 } else { it.date.dayOfMonth })
                 Training(
                     it.id,
+                    null,
                     updatedDate,
                     it.bodyWeight,
                     it.exercises)

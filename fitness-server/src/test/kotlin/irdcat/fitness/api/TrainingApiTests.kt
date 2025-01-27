@@ -18,6 +18,7 @@ class TrainingApiTests: AbstractIntegrationTest() {
     private val trainings = listOf(
         Training(
             "1",
+            null,
             LocalDate.now().minusDays(1),
             60.0f,
             listOf(
@@ -40,6 +41,7 @@ class TrainingApiTests: AbstractIntegrationTest() {
             )),
         Training(
             "2",
+            null,
             LocalDate.now().minusDays(2),
             60.0f,
             listOf(

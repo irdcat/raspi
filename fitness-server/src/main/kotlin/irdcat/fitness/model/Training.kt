@@ -8,6 +8,7 @@ import java.time.LocalDate
 data class Training(
     @field: Id
     val id: String,
+    val templateId: String?,
     val date: LocalDate,
     val bodyWeight: Float,
     val exercises: List<TrainingExercise>
