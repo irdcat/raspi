@@ -89,9 +89,9 @@ If you with to use it in environment other than K3s or/and Raspberry Pi or/and R
 1. K3s setup differs depending on platform, see: https://docs.k3s.io/installation/requirements
 2. Github workflows responsible for building docker images only build the image for linux/arm64 platform
 
-## Services
+# Services
 
-### Installation
+## Installation
 
 For now services are installed via locally built helm charts. Each of them is installed one by one.
 Example process of packaging and installing mongo helm chart:
@@ -103,7 +103,7 @@ Successfully packaged chart and saved it to: /home/irdcat/projects/raspi/mongo-0
 $ helm install mongo ./mongo-0.1.0.tgz --atomic --wait --debug
 ```
 
-### Upgrade
+## Upgrade
 
 Upgrades are done in a very similar fashion as upgrades. In fact one command can be used for both, see example for mongo below:
 
@@ -114,7 +114,7 @@ Successfully packaged chart and saved it to: /home/irdcat/projects/raspi/mongo-0
 $ helm upgrade mongo ./mongo-0.1.0.tgz --atomic --wait --debug --install
 ```
 
-### Helm values
+## Helm values
 
 For documentation of helm values, refer to README.md files in the directory refering to the specific component.
 
@@ -122,7 +122,7 @@ For documentation of helm values, refer to README.md files in the directory refe
 
 For the details of working with the components in the local environment, refer to README.md files in the directory refering to the specific component.
 
-## Authors
+# Authors
 
 * irdcat - Owner, Development, DevOps
 * MatiQQQ - DevOps
