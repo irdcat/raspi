@@ -5,7 +5,7 @@ ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 ENV PATH=$PATH:/home/node/.npm-global/bin
 WORKDIR /home/node
 COPY package.json .
-RUN npm install --omit=dev --prefer-offline --no-audit --no-fund --progress=false --loglevel error
+RUN npm install --omit=dev --prefer-offline --no-audit --no-fund --progress=false --loglevel error --legacy-peer-deps
 COPY . .
 RUN npm run build
 
