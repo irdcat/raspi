@@ -54,7 +54,7 @@ jobs:
           path: fitness-server/build/dockerContext
           if-no-files-found: error
 
-  docker-image:
+  docker-build:
     needs: gradle-build
     runs-on: ubuntu-latest
     steps:
@@ -81,7 +81,7 @@ jobs:
         with:
           context: .
           platforms: linux/arm64
-          push: true
+          push: false
           tags: ${{env.DOCKER_USER}}/${{env.REPO_NAME}}:latest
 
   helm-check:
