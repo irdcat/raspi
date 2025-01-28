@@ -34,7 +34,7 @@ jobs:
 
       - name: Install Node dependencies
         working-directory: ./fitness-ui
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Build
         working-directory: ./fitness-ui
