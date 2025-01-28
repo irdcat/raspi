@@ -5,6 +5,7 @@ on:
     branches: ["master"]
     paths:
       - fitness-ui/**
+      - .github/workflows/fitness-ui.yml
 
 env:
   DOCKER_USER: ${{secrets.DOCKER_USER}}
