@@ -3,7 +3,9 @@ name: Mongo
 on:
   pull_request:
     branches: ["master"]
-    paths: mongo/**
+    paths: 
+      - mongo/**
+      - .github/workflows/mongo.yml
 
 jobs:
   helm-check:
