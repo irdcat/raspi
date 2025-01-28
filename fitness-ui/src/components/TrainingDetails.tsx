@@ -11,7 +11,7 @@ import TrainingsApi from "../api/TrainingsApi";
 import ExercisesApi from "../api/ExercisesApi";
 import ExerciseChart from "./ExerciseChart";
 import useWindowDimensions from "../hooks/useWindowDimensions";
-import useAsyncEffect from "../hooks/useAsyncEffect";
+import { useAsyncEffect } from "../hooks/useAsyncEffect";
 import Exercise from "../model/Exercise";
 import Training from "../model/Training";
 import ExerciseSummary from "../model/ExerciseSummary";
@@ -81,8 +81,6 @@ const TrainingDetails = () => {
             training: training,
             exerciseSummaries: summaries
         });
-    }, async () => {
-        // NOOP
     }, [id])
 
     const onTabChange = (event: React.SyntheticEvent, newValue: number) => {
