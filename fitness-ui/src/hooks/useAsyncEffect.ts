@@ -15,7 +15,7 @@ export type UseAsyncEffectResult = {
  * Variant of useEffect hook that supports async callbacks
  * See: https://marmelab.com/blog/2023/01/11/use-async-effect-react.html
  */
-export default function useAsyncEffect(
+export function useAsyncEffect2(
     mountCallback: () => Promise<any>,
     unmountCallback: () => Promise<any>,
     dependencies: any[] = []
@@ -88,4 +88,11 @@ export default function useAsyncEffect(
     return useMemo(() => ({ 
         result, error, isLoading 
     }), [result, error, isLoading ]);
+}
+
+export function useAsyncEffect(
+    mountCallback: () => Promise<any>,
+    dependencies: any[] = []
+): UseAsyncEffectResult {
+    return useAsyncEffect2(mountCallback, async () => { }, dependencies);
 }

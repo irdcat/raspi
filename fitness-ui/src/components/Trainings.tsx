@@ -15,14 +15,18 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TrainingsApi from "../api/TrainingsApi";
-import useAsyncEffect from "../hooks/useAsyncEffect";
-import { DeleteTrainingDialog } from "./dialogs/DeleteTrainingDialog";
+import { useAsyncEffect } from "../hooks/useAsyncEffect";
 import Training from "../model/Training";
-import AddTrainingDialog from "./dialogs/AddTrainingDialog";
-import EditTrainingDialog from "./dialogs/EditTrainingDialog";
+import { ButtonActivatedDialog } from "./dialogs/ButtonActivatedDialog";
+import TrainingForm from "./forms/TrainingForm";
+import TrainingFormData from "../model/TrainingFormData";
+import { ButtonActivatedActionDialog } from "./dialogs/ButtonActivatedActionDialog";
+import Exercise from "../model/Exercise";
+import ExercisesApi from "../api/ExercisesApi";
 
 export const Trainings = () => {
     const [ trainingList, setTrainingList ] = useState(new Array<Training>());
+    const [ exerciseList, setExerciseList ] = useState(new Array<Exercise>());
     const navigate = useNavigate();
     const { height } = useWindowDimensions();
 
@@ -30,8 +34,11 @@ export const Trainings = () => {
         await TrainingsApi.get()
             .then(trainings => trainings.sort((a, b) => b.date.getTime() - a.date.getTime()))
             .then(trainings => setTrainingList(trainings))
-    }, async () => {
-        // NOOP
+    }, []);
+
+    useAsyncEffect(async () => {
+        await ExercisesApi.get()
+            .then(exercises => setExerciseList(exercises));
     }, []);
 
     const onClickSummary = (id: string) => {
@@ -52,7 +59,8 @@ export const Trainings = () => {
             .then(updated => {
                 const newList = [...trainingList];
                 newList[trainingList.findIndex(t => t.id === updated.id)] = updated;
-                setTrainingList(trainingList);
+                let sorted = newList.sort((a, b) => b.date.getTime() - a.date.getTime());
+                setTrainingList(sorted);
             });
     }
 
@@ -68,11 +76,29 @@ export const Trainings = () => {
                 <Typography variant="h6" color="white" sx={{ flexGrow: 1}}>
                     Trainings
                 </Typography>
-                <AddTrainingDialog response={(training) => onAddTraining(training)}>
-                    {(showDialog) => (
-                        <Button onClick={showDialog} variant="outlined" color="success">Add</Button>
-                    )}
-                </AddTrainingDialog>
+                <ButtonActivatedDialog title="Add Training" buttonColor="primary" buttonLabel="Add" buttonVariant="outlined">
+                    {(close) =>
+                    <TrainingForm 
+                        onSubmit={(formData: TrainingFormData) => {
+                            onAddTraining({
+                                id: "",
+                                date: formData.date,
+                                bodyWeight: formData.bodyWeight,
+                                exercises: formData.exercises
+                                    .map((trainingExercise, index) => ({
+                                        order: index,
+                                        exerciseId: trainingExercise.exercise.id,
+                                        sets: trainingExercise.sets
+                                            .map(trainingExerciseSet => ({
+                                                reps: trainingExerciseSet.reps,
+                                                weight: trainingExerciseSet.weight
+                                            }))
+                                    }))
+                            })
+                            close();
+                        }}/>
+                    }
+                </ButtonActivatedDialog>
             </Box>
             <TableContainer sx={{ maxHeight: height - 160 }} component={Paper}>
                 <Table stickyHeader aria-label="trainings table">
@@ -107,16 +133,46 @@ export const Trainings = () => {
                                 <TableCell align="right">
                                     <ButtonGroup variant="outlined">
                                         <Button onClick={() => onClickSummary(training.id)} color="success">Summary</Button>
-                                        <EditTrainingDialog training={training} response={(t) => onEditTraining(t)}>
-                                            {(showDialog) => (
-                                                <Button onClick={showDialog} variant="outlined" color="secondary">Edit</Button>
-                                            )}
-                                        </EditTrainingDialog>
-                                        <DeleteTrainingDialog response={() => onDeleteTraining(training.id)}>
-                                            {(showDialog) => (
-                                                <Button onClick={showDialog} color="error">Delete</Button>
-                                            )}
-                                        </DeleteTrainingDialog>
+                                        <ButtonActivatedDialog title="Edit Training" buttonColor="secondary" buttonVariant="outlined" buttonLabel="Edit">
+                                            {(close) =>
+                                            <TrainingForm
+                                                onSubmit={(formData: TrainingFormData) => {
+                                                    onEditTraining({
+                                                        id: training.id,
+                                                        date: formData.date,
+                                                        bodyWeight: formData.bodyWeight,
+                                                        exercises: formData.exercises
+                                                            .map((trainingExercise, index) => ({
+                                                                order: index,
+                                                                exerciseId: trainingExercise.exercise.id,
+                                                                sets: trainingExercise.sets
+                                                                    .map(trainingExerciseSet => ({
+                                                                        reps: trainingExerciseSet.reps,
+                                                                        weight: trainingExerciseSet.weight
+                                                                    }))
+                                                            }))
+                                                    })
+                                                    close();
+                                                }}
+                                                initialValues={{
+                                                    date: training.date,
+                                                    bodyWeight: training.bodyWeight,
+                                                    exercises: training.exercises.map(te => ({
+                                                        exercise: exerciseList.find(e => e.id === te.exerciseId)!!,
+                                                        sets: te.sets
+                                                    }))
+                                                }}/> 
+                                            }
+                                        </ButtonActivatedDialog>
+                                        <ButtonActivatedActionDialog
+                                            title="Delete Training"
+                                            text="Are you sure you want to delete training?"
+                                            cancelLabel="Cancel"
+                                            confirmLabel="Delete"
+                                            buttonColor="error"
+                                            buttonLabel="Delete"
+                                            onConfirm={() => onDeleteTraining(training.id)}
+                                            />
                                     </ButtonGroup>
                                 </TableCell>
                             </TableRow>

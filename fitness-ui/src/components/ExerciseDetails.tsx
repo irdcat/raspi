@@ -9,7 +9,7 @@ import ExercisesApi from "../api/ExercisesApi";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import TrainingsApi from "../api/TrainingsApi";
 import ExerciseChart from "./ExerciseChart";
-import useAsyncEffect from "../hooks/useAsyncEffect";
+import { useAsyncEffect } from "../hooks/useAsyncEffect";
 import Exercise from "../model/Exercise";
 import ExerciseSummary from "../model/ExerciseSummary";
 import { subDays } from "date-fns";
@@ -49,8 +49,6 @@ const ExerciseDetails = () => {
                 }
             });
         setData({exercise: e, summary: s});
-    }, async () => {
-        // NOOP
     }, [id])
 
     return (

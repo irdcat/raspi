@@ -5,7 +5,7 @@ import FormInputDate from "../form-components/FormInputDate"
 import FormInputText from "../form-components/FormInputText"
 import Exercise from "../../model/Exercise"
 import { useState } from "react"
-import useAsyncEffect from "../../hooks/useAsyncEffect"
+import { useAsyncEffect } from "../../hooks/useAsyncEffect"
 import ExercisesApi from "../../api/ExercisesApi"
 import FormInputTrainingExercises from "../form-components/FormInputTrainingExercises"
 import TrainingExerciseFormData from "../../model/TrainingExerciseFormData"
@@ -20,8 +20,6 @@ const TrainingForm = (props: TrainingFormProps) => {
 
     useAsyncEffect(async () => {
         setExerciseList(await ExercisesApi.get());
-    }, async () => {
-        // NOOP
     }, [])
 
     const defaultValues = {

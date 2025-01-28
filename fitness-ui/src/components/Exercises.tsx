@@ -13,13 +13,14 @@ import {
 } from "@mui/material"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { DeleteExerciseDialog } from "./dialogs/DeleteExerciseDialog";
-import { EditExerciseDialog } from "./dialogs/EditExerciseDialog";
-import { AddExerciseDialog } from "./dialogs/AddExerciseDialog";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import ExercisesApi from "../api/ExercisesApi";
-import useAsyncEffect from "../hooks/useAsyncEffect";
+import { useAsyncEffect } from "../hooks/useAsyncEffect";
 import Exercise from "../model/Exercise";
+import { ButtonActivatedDialog } from "./dialogs/ButtonActivatedDialog";
+import ExerciseFormData from "../model/ExerciseFormData";
+import ExerciseForm from "./forms/ExerciseForm";
+import { ButtonActivatedActionDialog } from "./dialogs/ButtonActivatedActionDialog";
 
 export const Exercises = () => {
     const [ exerciseList, setExerciseList ] = useState(new Array<Exercise>());
@@ -29,8 +30,6 @@ export const Exercises = () => {
     useAsyncEffect(async () => {
         await ExercisesApi.get()
             .then(exercises => setExerciseList(exercises));
-    }, async () => {
-        // NOOP
     }, []);
 
     const handleSummaryClick = (id: string) => {
@@ -65,14 +64,18 @@ export const Exercises = () => {
                 <Typography variant="h6" color="white" sx={{ flexGrow: 1 }}>
                     Exercises
                 </Typography>
-                <AddExerciseDialog response={(exercise) => onAddExercise(exercise)}>
-                    {(showDialog) => (
-                        <Button onClick={showDialog} variant="outlined" color="success">Add</Button>
-                    )}
-                </AddExerciseDialog>
+                <ButtonActivatedDialog title="Add Exercise" buttonColor="primary" buttonLabel="Add" buttonVariant="outlined">
+                    {(close) =>
+                    <ExerciseForm 
+                        onSubmit={(formData: ExerciseFormData) => {
+                            onAddExercise({id: "", name: formData.name, isBodyWeight: formData.isBodyWeight});
+                            close();
+                            }}/>
+                    }
+                </ButtonActivatedDialog>
             </Box>
             <TableContainer sx={{ maxHeight: height - 160 }} component={Paper}>
-                <Table stickyHeader aria-label="exercises table">
+                <Table stickyHeader>
                     <TableHead>
                         <TableRow>
                             <TableCell>
@@ -102,16 +105,28 @@ export const Exercises = () => {
                                 <TableCell align="right">
                                     <ButtonGroup variant="outlined">
                                         <Button onClick={() => handleSummaryClick(exercise.id)} color="success">Summary</Button>
-                                        <EditExerciseDialog exercise={exercise} response={(exercise) => onEditExercise(exercise)}>
-                                            {(showDialog) => (
-                                                <Button onClick={showDialog} color="secondary">Edit</Button>
-                                            )}
-                                        </EditExerciseDialog>
-                                        <DeleteExerciseDialog response={() => onDeleteExercise(exercise.id)}>
-                                            {(showDialog) => (
-                                                <Button onClick={showDialog} color="error">Delete</Button>
-                                            )}
-                                        </DeleteExerciseDialog>
+                                        <ButtonActivatedDialog title="Edit Exercise" buttonColor="secondary" buttonVariant="outlined" buttonLabel="Edit">
+                                            {(close) =>
+                                            <ExerciseForm 
+                                                onSubmit={(formData: ExerciseFormData) => {
+                                                    onEditExercise({id: exercise.id, name: formData.name, isBodyWeight: formData.isBodyWeight});
+                                                    close();
+                                                }}
+                                                initialValues={{
+                                                    name: exercise.name,
+                                                    isBodyWeight: exercise.isBodyWeight
+                                                }}/>
+                                            }
+                                        </ButtonActivatedDialog>
+                                        <ButtonActivatedActionDialog
+                                            title="Delete Exercise"
+                                            text="Are you sure you want to delete exercise?"
+                                            cancelLabel="Cancel"
+                                            confirmLabel="Delete"
+                                            buttonColor="error"
+                                            buttonLabel="Delete"
+                                            onConfirm={() => onDeleteExercise(exercise.id)}
+                                            />
                                     </ButtonGroup>
                                 </TableCell>
                             </TableRow>
