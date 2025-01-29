@@ -3,7 +3,7 @@ name: Release Fitness Server
 on:
   push:
     tags:
-      - 'fitness-server-(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))'
+      - 'fitness-server-v[0-9]*\.[0-9]*\.[0-9]*'
 
 concurrency: fitness-server-release
 
