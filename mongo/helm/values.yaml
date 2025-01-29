@@ -1,5 +1,0 @@
-domain: raspi.local
-image:
-  repository: mongo
-  tag: latest
-development: false

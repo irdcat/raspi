@@ -1,9 +1,0 @@
-domain: raspi.local
-image:
-  repository: irdcat/fitness-ui
-  tag: latest
-
-resources:
-  requests:
-    memory: "500Mi"
-    cpu: "0.5"
