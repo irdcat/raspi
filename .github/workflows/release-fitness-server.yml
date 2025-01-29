@@ -21,7 +21,7 @@ jobs:
       - name: Extract version from the tag
         id: extract_version
         run: |
-          VERSION=$(echo "${GITHUB_REF}"" | sed -E 's/refs\/tags\/fitness-server-(.*)/\1/')
+          VERSION=$(echo "${GITHUB_REF}" | sed -E 's/refs\/tags\/fitness-server-(.*)/\1/')
           echo "::set-output name=version::$VERSION"
           echo "Extracted version: $VERSION"
 
