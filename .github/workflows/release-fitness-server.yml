@@ -157,7 +157,6 @@ jobs:
           shopt -s extglob
           mkdir -p ./helm/
           echo "n" | cp -pr ./!(index.yaml) ../helm/charts
-          echo "n" | cp -pr ./!(index.yaml) ./helm/
           echo "n" | cp -pr ./index.yaml ../helm
           echo "y" | rm -rf ./*
           git config user.name "helm-releaser"
