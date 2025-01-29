@@ -35,6 +35,10 @@ export const Layout = () => {
         handleMenuClose();
         navigate("/trainings");
     }
+    const handleMenuTemplatesClick = () => {
+        handleMenuClose();
+        navigate("/templates");
+    }
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -62,6 +66,7 @@ export const Layout = () => {
                         }}>
                         <MenuItem onClick={ handleMenuExercisesClick }>Exercises</MenuItem>
                         <MenuItem onClick={ handleMenuTrainingsClick }>Trainings</MenuItem>
+                        <MenuItem onClick={ handleMenuTemplatesClick }>Templates</MenuItem>
                     </Menu>
                     <Typography 
                         variant="h5" 

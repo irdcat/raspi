@@ -7,6 +7,8 @@ import { CssBaseline } from '@mui/material';
 import { Trainings } from './components/Trainings';
 import ExerciseDetails from './components/ExerciseDetails';
 import TrainingDetails from './components/TrainingDetails';
+import { Templates } from './components/Templates';
+import TemplateDetails from './components/TemplateDetails';
 
 const darkTheme = createTheme({
   palette: {
@@ -26,6 +28,8 @@ const App = () => {
             <Route path="exercises/:id" element={<ExerciseDetails/>}/>
             <Route path="trainings" element={<Trainings/>}/>
             <Route path="trainings/:id" element={<TrainingDetails/>}/>
+            <Route path="templates" element={<Templates/>}/>
+            <Route path="templates/:id" element={<TemplateDetails/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

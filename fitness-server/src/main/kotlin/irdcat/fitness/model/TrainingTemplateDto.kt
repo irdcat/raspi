@@ -1,5 +1,7 @@
 package irdcat.fitness.model
 
+import java.util.*
+
 data class TrainingTemplateDto(
     val id: String? = null,
     val name: String? = null,
@@ -20,7 +22,12 @@ data class TrainingTemplateDto(
     }
 
     fun toTrainingTemplate(): TrainingTemplate {
-        return toTrainingTemplate(id!!)
+        val newId = if(id.isNullOrBlank()) {
+            UUID.randomUUID().toString()
+        } else {
+            id
+        }
+        return toTrainingTemplate(newId)
     }
 
     fun toTrainingTemplate(newId: String): TrainingTemplate {
