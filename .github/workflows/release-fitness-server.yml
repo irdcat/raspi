@@ -132,7 +132,6 @@ jobs:
       - name: Checkout registry
         uses: actions/checkout@v4
         with:
-          path: 'helm'
           ref: 'helm-registry'
           fetch-depth: 0
       
@@ -145,34 +144,16 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: fitness-server-chart
-          path: ./src
+          path: ./fitness-server
 
-      - name: Update Charts
+      - name: Update and Publish Charts
         shell: bash
-        working-directory: src
         run: |
-          helm repo index . --merge ../helm/index.yaml --url https://raw.githubusercontent.com/irdcat/raspi/helm-registry/helm
-          mkdir -p ../helm/charts
-          echo "Copying files..."
-          shopt -s extglob
-          mkdir -p ./helm/
-          echo "n" | cp -pr ./!(index.yaml) ../helm/charts
-          echo "n" | cp -pr ./index.yaml ../helm
-          echo "y" | rm -rf ./*
-          git config user.name "helm-releaser"
-          git config user.email "your-email@example.com"
-          git add .
-          git commit -m "Updated ref: $GITHUB_SHA"
-          git push
-      
-      - name: Publish Charts
-        shell: bash
-        working-directory: helm
-        run: |
+          echo "Indexing charts"
+          helm repo index . --merge ./index.yaml --url https://raw.githubusercontent.com/irdcat/raspi/helm-registry/helm
           git config user.name "helm-releaser"
           git config user.email "your-email@example.com"
           git add $(git ls-files -o --exclude-standard)
-          git add index.yaml
-          git commit -m "Updated from ref: $GITHUB_SHA"
+          git commit -m "Updated ref: $GITHUB_SHA"
           git push
         
