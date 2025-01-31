@@ -2,33 +2,43 @@ apiVersion: v1
 entries:
   fitness-server:
   - apiVersion: v2
+    appVersion: 0.0.10
+    created: "2025-01-31T21:45:36.876383073Z"
+    description: A Helm chart for fitness-server
+    digest: 68972ef05031c5615d78cbe7519d2b9545bbb4b9a1423ff3e41b8a1f7ba3fd7d
+    name: fitness-server
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/fitness-server/fitness-server-0.0.10.tgz
+    version: 0.0.10
+  - apiVersion: v2
     appVersion: 0.0.9
-    created: "2025-01-31T20:28:32.717290559Z"
+    created: "2025-01-31T21:45:36.87699906Z"
     description: A Helm chart for fitness-server
     digest: 6687551e9994590f28aaab1f0d1d9bf98e659b51e18ea91bd8f12422da66e01a
     name: fitness-server
     type: application
     urls:
-    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/helm/fitness-server/fitness-server-0.0.9.tgz
+    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/fitness-server/fitness-server-0.0.9.tgz
     version: 0.0.9
   - apiVersion: v2
     appVersion: 0.0.8
-    created: "2025-01-31T20:28:32.717063887Z"
+    created: "2025-01-31T21:45:36.876804404Z"
     description: A Helm chart for fitness-server
     digest: 89f0c96d6253ba060ecbbb98690edb9d836798a30721452514d490dc3623a193
     name: fitness-server
     type: application
     urls:
-    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/helm/fitness-server/fitness-server-0.0.8.tgz
+    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/fitness-server/fitness-server-0.0.8.tgz
     version: 0.0.8
   - apiVersion: v2
     appVersion: 0.0.7
-    created: "2025-01-31T20:28:32.716765342Z"
+    created: "2025-01-31T21:45:36.876590432Z"
     description: A Helm chart for fitness-server
     digest: 6ac4a3c38f72a0be061bb642f83fce20c43fce7c66009b9e77837563c9cfab9b
     name: fitness-server
     type: application
     urls:
-    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/helm/fitness-server/fitness-server-0.0.7.tgz
+    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/fitness-server/fitness-server-0.0.7.tgz
     version: 0.0.7
-generated: "2025-01-31T20:28:32.71640494Z"
+generated: "2025-01-31T21:45:36.87598243Z"
