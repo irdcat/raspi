@@ -93,6 +93,7 @@ jobs:
         working-directory: ./fitness-ui/helm
       
       - name: Helm Package
+        working-directory: ./fitness-ui/helm
         run: |
           VERSION=${{needs.initialise.outputs.version}}
           helm package . --app-version $VERSION --version $VERSION --destination ./package
