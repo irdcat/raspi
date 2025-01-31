@@ -1,16 +1,16 @@
-name: Release Fitness Server
+name: Release Fitness UI
 
 on:
   push:
     tags:
-      - 'fitness-server-[0-9]*\.[0-9]*\.[0-9]*'
+      - 'fitness-ui-[0-9]*\.[0-9]*\.[0-9]*'
 
-concurrency: fitness-server-release
+concurrency: fitness-ui-release
 
 env:
   DOCKER_USER: ${{secrets.DOCKER_USER}}
   DOCKER_PASS: ${{secrets.DOCKER_PASS}}
-  REPO_NAME: fitness-server
+  REPO_NAME: fitness-ui
 
 jobs:
   initialise:
@@ -21,55 +21,41 @@ jobs:
       - name: Extract version from the tag
         id: extract_version
         run: |
-          VERSION=$(echo "${GITHUB_REF}" | sed -E 's/refs\/tags\/fitness-server-(.*)/\1/')
+          VERSION=$(echo "${GITHUB_REF}" | sed -E 's/refs\/tags\/fitness-ui-(.*)/\1/')
           echo "::set-output name=version::$VERSION"
           echo "Extracted version: $VERSION"
-
-  gradle-build:
+  
+  npm-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          distribution: 'corretto'
-          java-version: '21'
-          cache: 'gradle'
-          cache-dependency-path: |
-            fitness-server/*.gradle*
-            fitness-server/**/gradle-wrapper.properties
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: fitness-ui/package-lock.json
 
-      - name: Setup Gradle cache
+      - name: Setup NPM cache
         uses: actions/cache@v3
         with:
-          path: ~/.gradle
-          key: ${{ runner.os }}-gradle-${{ hashFiles('fitness-server/**') }}
-          restore-keys: ${{ runner.os }}-gradle-
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('fitness-ui/**') }}
+          restore-keys: ${{ runner.os }}-npm-
       
-      - name: Test
-        working-directory: ./fitness-server
-        run: ./gradlew test
+      - name: Install Node dependencies
+        working-directory: ./fitness-ui
+        run: npm install --legacy-peer-deps
 
-      - name: Coverage
-        working-directory: ./fitness-server
-        run: ./gradlew koverLog
+      - name: Build
+        working-directory: ./fitness-ui
+        run: npm run build
 
-      - name: Docker Context
-        working-directory: ./fitness-server
-        run: ./gradlew buildDockerContext
-
-      - name: Upload Docker Context artifact
-        uses: actions/upload-artifact@master
-        with:
-          name: dockerContext
-          path: fitness-server/build/dockerContext
-          if-no-files-found: error
-  
   docker-build:
-    needs: 
-      - gradle-build
+    needs:
+      - npm-build
       - initialise
     runs-on: ubuntu-latest
     steps:
@@ -82,47 +68,40 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
-      - name: Download Docker Context artifact
-        uses: actions/download-artifact@master
-        with:
-          name: dockerContext
-          path: .
-
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: "{{defaultContext}}:fitness-ui"
           platforms: linux/arm64
           push: true
           tags: ${{env.DOCKER_USER}}/${{env.REPO_NAME}}:${{needs.initialise.outputs.version}}
-  
+
   helm-package:
     needs: initialise
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Setup Helm
         uses: azure/setup-helm@v4.2.0
         with:
           version: "3.16.1"
-      
+
       - name: Helm Lint
         run: helm lint .
-        working-directory: ./fitness-server/helm
-
+        working-directory: ./fitness-ui/helm
+      
       - name: Helm Package
         run: |
           VERSION=${{needs.initialise.outputs.version}}
           helm package . --app-version $VERSION --version $VERSION --destination ./package
-        working-directory: ./fitness-server/helm
 
       - name: Upload Helm artifact
         uses: actions/upload-artifact@master
         with:
-          name: fitness-server-chart
-          path: ./fitness-server/helm/package
+          name: fitness-ui-chart
+          path: ./fitness-ui/helm/package
           if-no-files-found: error
 
   helm-release:
@@ -134,22 +113,22 @@ jobs:
         with:
           ref: 'helm-registry'
           fetch-depth: 0
-      
+
       - name: Setup Helm
         uses: azure/setup-helm@v4.2.0
         with:
           version: "3.16.1"
-      
+
       - name: Download Helm artifact
         uses: actions/download-artifact@master
         with:
-          name: fitness-server-chart
-          path: ./fitness-server
+          name: fitness-ui-chart
+          path: ./fitness-ui
 
       - name: Update and Publish Charts
         shell: bash
         run: |
-          echo "Indexing charts"
+          echo "Indexing Charts"
           helm repo index . --merge ./index.yaml --url https://raw.githubusercontent.com/irdcat/raspi/helm-registry/
           git config user.name "helm-releaser"
           git config user.email "your-email@example.com"
@@ -157,4 +136,3 @@ jobs:
           git add index.yaml
           git commit -m "Updated ref: $GITHUB_SHA"
           git push
-        
