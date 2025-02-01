@@ -1,83 +1,59 @@
-import { 
-    AppBar, 
-    Box, 
-    IconButton, 
-    Menu, 
-    MenuItem, 
-    Toolbar, 
-    Typography 
-} from "@mui/material"
-import { 
-    MouseEvent, 
-    useState 
-} from "react"
-import { 
-    Outlet, 
-    useNavigate 
-} from "react-router-dom"
-import MenuIcon from '@mui/icons-material/Menu'
+import { AppBar, Box, Breadcrumbs, SvgIcon, SvgIconProps, Toolbar, Typography} from "@mui/material"
+import { Link, Outlet, useLocation } from "react-router-dom"
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+
+const HomeIcon = (props: SvgIconProps) => {
+    return (
+        <SvgIcon {...props}>
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </SvgIcon>
+    )
+}
+
+const LayoutBreadcrumbs = () => {
+    const { pathname } = useLocation();
+
+    if (pathname === "/") {
+        return (
+            <HomeIcon color="primary"/>
+        )
+    } else {
+        return (
+            <Breadcrumbs separator={<NavigateNextIcon fontSize="small"/>}>
+                {pathname.split("/").map((pathPart, index, array) => {
+                    if (pathPart === '') {
+                        return (
+                            <Link key={index} to="/">
+                                <HomeIcon color="primary"/>
+                            </Link>
+                        )
+                    } else if (index === array.length - 1) {
+                        return (
+                            <Typography key={index}>
+                                {pathPart}
+                            </Typography>
+                        )
+                    } else {
+                        return (
+                            <Link key={index} style={{ textDecoration: "none" }} to={array.slice(0, index + 1).join("/")}>
+                                <Typography color="primary">
+                                    {pathPart}
+                                </Typography>
+                            </Link>
+                        )
+                    }
+                })}    
+            </Breadcrumbs>
+        )
+    }
+}
 
 export const Layout = () => {
-    const [ menuAnchorEl, setMenuAnchorEl ] = useState<null | HTMLElement>(null);
-    const open = Boolean(menuAnchorEl);
-    const navigate = useNavigate();
-    const handleMenuClick = (event: MouseEvent<HTMLButtonElement>) => {
-        setMenuAnchorEl(event.currentTarget);
-    }
-    const handleMenuClose = () => {
-        setMenuAnchorEl(null);
-    }
-    const handleMenuExercisesClick = () => {
-        handleMenuClose();
-        navigate("/exercises");
-    }
-    const handleMenuTrainingsClick = () => {
-        handleMenuClose();
-        navigate("/trainings");
-    }
-    const handleMenuTemplatesClick = () => {
-        handleMenuClose();
-        navigate("/templates");
-    }
-
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton 
-                        size="large" 
-                        edge="start" 
-                        color="inherit"
-                        id="main-menu-button"
-                        aria-controls={ open ? "main-menu" : undefined }
-                        aria-haspopup="true"
-                        aria-expanded={ open ? "true" : undefined }
-                        aria-label="open drawer" sx={{ mr: 2, flexGrow: 0 }}
-                        onClick={ handleMenuClick }>
-                        <MenuIcon/>
-                    </IconButton>
-                    <Menu
-                        id="main-menu"
-                        anchorEl={ menuAnchorEl }
-                        open={ open }
-                        onClose={ handleMenuClose }
-                        MenuListProps={{
-                            "aria-labelledby": "main-menu-button"
-                        }}>
-                        <MenuItem onClick={ handleMenuExercisesClick }>Exercises</MenuItem>
-                        <MenuItem onClick={ handleMenuTrainingsClick }>Trainings</MenuItem>
-                        <MenuItem onClick={ handleMenuTemplatesClick }>Templates</MenuItem>
-                    </Menu>
-                    <Typography 
-                        variant="h5" 
-                        component="div" 
-                        sx={{ 
-                            flexGrow: 1, 
-                            cursor: "pointer" 
-                        }} 
-                        onClick={() => navigate("/")}>
-                        Fitness
-                    </Typography>
+                    <LayoutBreadcrumbs/>
                 </Toolbar>
             </AppBar>
             <Box component="main">
