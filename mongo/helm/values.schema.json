@@ -3,7 +3,6 @@
     "type": "object",
     "required": [
         "domain",
-        "image",
         "development"
     ],
     "properties": {
@@ -12,23 +11,6 @@
             "enum": [
                 "raspi.local"
             ]
-        },
-        "image": {
-            "type": "object",
-            "required": [
-                "repository",
-                "tag"
-            ],
-            "properties": {
-                "repository": {
-                    "type": "string",
-                    "pattern": "^[a-z0-9_/\\-]+$"
-                },
-                "tag": {
-                    "type": "string",
-                    "pattern": "^[a-zA-Z0-9_\\-]+$"
-                }
-            }
         },
         "development": {
             "type": "boolean"

@@ -40,7 +40,7 @@ jobs:
         working-directory: ./mongo
         run: |
           VERSION=${{ needs.initialise.outputs.version }}
-          helm package . --app-version $VERSION --version $VERSION --destination ./package
+          helm package . --version $VERSION --destination ./package
 
       - name: Upload Helm artifact
         uses: actions/upload-artifact@master
