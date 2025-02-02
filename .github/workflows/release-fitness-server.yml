@@ -139,13 +139,23 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: fitness-server-chart
-          path: ./fitness-server
+          path: ./temp/fitness-server
 
-      - name: Update and Publish Charts
+      - name: Update Charts
+        shell: bash
+        working-directory: temp
+        run: |
+          echo "Indexing charts..."
+          helm repo index . --merge ../index.yaml --url https://raw.githubusercontent.com/irdcat/raspi/helm-registry/
+          echo "Copying files..."
+          shopt -s extglob
+          cp -pr ./!(index.yaml) ../
+          cp -pr ./index.yaml ../
+          rm -rf ./*
+      
+      - name: Publish Charts
         shell: bash
         run: |
-          echo "Indexing charts"
-          helm repo index . --merge ./index.yaml --url https://raw.githubusercontent.com/irdcat/raspi/helm-registry/
           git config user.name "helm-releaser"
           git config user.email "your-email@example.com"
           git add $(git ls-files -o --exclude-standard)
