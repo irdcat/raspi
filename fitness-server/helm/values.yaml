@@ -1,7 +1,4 @@
 domain: raspi.local
-image:
-  repository: "irdcat/fitness-server"
-  tag: "latest"
 
 resources:
   requests:

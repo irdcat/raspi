@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: irdcat/fitness-server:{{ .Chart.AppVersion }}
           command: ["java"]
           args:
             - -jar
