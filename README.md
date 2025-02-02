@@ -89,34 +89,65 @@ If you with to use it in environment other than K3s or/and Raspberry Pi or/and R
 1. K3s setup differs depending on platform, see: https://docs.k3s.io/installation/requirements
 2. Github workflows responsible for building docker images only build the image for linux/arm64 platform
 
+# Helm registry
+
+Github Pages in this repo has been turned into a Helm Registry. 
+See: [index.yaml](https://irdcat.github.io/raspi/index.yaml)
+
+This registry is a valid helm registry and can be added into helm:
+
+```
+$ helm repo add raspi-helm https://irdcat.github.io/raspi/
+```
+
 # Services
 
 ## Installation
 
-For now services are installed via locally built helm charts. Each of them is installed one by one.
-Example process of packaging and installing mongo helm chart:
+Services can be installed using `install.sh` that is located in a root directory of this project.
+Script supports two mutually exclusive ways of installing components.
+
+### Installing single component
+
+To install single component use following command:
 
 ```
-$ helm package mongo/helm
-Successfully packaged chart and saved it to: /home/irdcat/projects/raspi/mongo-0.1.0.tgz
-
-$ helm install mongo ./mongo-0.1.0.tgz --atomic --wait --debug
+$ ./install.sh --name <component_name> --version <component_version>
 ```
 
-## Upgrade
-
-Upgrades are done in a very similar fashion as upgrades. In fact one command can be used for both, see example for mongo below:
+Example usage:
 
 ```
-$ helm package mongo/helm
-Successfully packaged chart and saved it to: /home/irdcat/projects/raspi/mongo-0.1.0.tgz
-
-$ helm upgrade mongo ./mongo-0.1.0.tgz --atomic --wait --debug --install
+$ ./install.sh --name fitness-server --version 0.0.1
 ```
 
-## Helm values
+### Installing components from the manifest
 
-For documentation of helm values, refer to README.md files in the directory refering to the specific component.
+This repository provides a manifest that can be used to install multiple components at once.
+Example manifest below:
+
+```yaml
+components:
+  - name: fitness-server
+    version: 0.0.1
+  - name: fitness-ui
+    version: 0.0.1
+  - name: mongo
+    version: 0.0.1
+
+```
+
+To install components using the manifest use following command:
+
+```
+$ ./install.sh --from-manifest <manifest_file>
+```
+
+Example usage:
+
+```
+$ ./install.sh --from-manifest manifest.yaml
+```
 
 ## Local Development
 
