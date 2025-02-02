@@ -34,10 +34,10 @@ jobs:
 
       - name: Helm Lint
         run: helm lint .
-        working-directory: ./mongo
+        working-directory: ./mongo/helm
 
       - name: Helm Package
-        working-directory: ./mongo
+        working-directory: ./mongo/helm
         run: |
           VERSION=${{ needs.initialise.outputs.version }}
           helm package . --version $VERSION --destination ./package
