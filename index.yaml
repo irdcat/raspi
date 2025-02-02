@@ -11,4 +11,15 @@ entries:
     urls:
     - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/fitness-server/fitness-server-0.0.1.tgz
     version: 0.0.1
-generated: "2025-02-02T15:27:51.121484332Z"
+  fitness-ui:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2025-02-02T15:34:52.227555918Z"
+    description: A Helm chart for fitness-ui
+    digest: f4530cf486cd03a3d8f31417f727f4820959d1acfeeb75da38cbfe33466418a3
+    name: fitness-ui
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/fitness-ui/fitness-ui-0.0.1.tgz
+    version: 0.0.1
+generated: "2025-02-02T15:34:52.227228897Z"
