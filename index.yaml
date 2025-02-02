@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  fitness-server:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2025-02-02T15:27:51.12183559Z"
+    description: A Helm chart for fitness-server
+    digest: 8bd2c49d910924754dd31dc5cfd34c8d4d94fa723df9ad61275cfbed3ef96b6a
+    name: fitness-server
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/fitness-server/fitness-server-0.0.1.tgz
+    version: 0.0.1
+generated: "2025-02-02T15:27:51.121484332Z"
