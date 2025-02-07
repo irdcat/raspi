@@ -2,8 +2,8 @@ domain: raspi.local
 
 resources:
   requests:
-    memory: "500Mi"
-    cpu: "0.5"
+    memory: 500Mi
+    cpu: 100m
 
 mongo:
   service: mongo-service
