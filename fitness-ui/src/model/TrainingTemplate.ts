@@ -5,7 +5,7 @@ type TrainingTemplate = {
     name: string,
     groupName: string,
     description: string,
-    exercises: Array<Exercise>
+    exerciseIds: Array<string>
 }
 
 export default TrainingTemplate;

@@ -24,16 +24,16 @@ const TemplateForm = (props: TemplateFromProps) => {
         name: "",
         groupName: "",
         description: "",
-        exercises: []
+        exerciseIds: []
     };
 
-    const { register, handleSubmit, control } = useForm<TrainingTemplateFormData>({
+    const { register, handleSubmit, control, setValue } = useForm<TrainingTemplateFormData>({
         defaultValues: props.initialValues ? props.initialValues : defaultValues
     })
 
     const exercisesFieldHookArray = useFieldArray({
         control: control,
-        name: "exercises"
+        name: "exerciseIds"
     });
 
     return (
@@ -61,7 +61,7 @@ const TemplateForm = (props: TemplateFromProps) => {
                 label="Description"/>
             <Box sx={{ display: "flex" }}>
                 <Typography variant="h5" sx={{ flexGrow: 1 }}>Exercises</Typography>
-                <Button onClick={() => exercisesFieldHookArray.append({ id: "", name: "", isBodyWeight: false })} variant="outlined">
+                <Button onClick={() => exercisesFieldHookArray.append({ id: "" })} variant="outlined">
                     Add Exercise
                 </Button>
             </Box>
@@ -71,13 +71,14 @@ const TemplateForm = (props: TemplateFromProps) => {
                         <TableRow key={field.id}>
                             <TableCell>
                                 <FormInputAutocomplete
-                                    name={`exercises.${index}`}
+                                    name={`exerciseIds.${index}`}
                                     control={control}
-                                    register={register(`exercises.${index}`, { required: { value: true, message: "Field is required" } })}
+                                    register={register(`exerciseIds.${index}`, { required: { value: true, message: "Field is required" } })}
                                     label="Exercise"
                                     options={exerciseList}
                                     getOptionLabel={(e) => e.name}
-                                    getOptionValue={(e) => e}/>
+                                    getOptionValue={(e) => ({ id: e.id })}
+                                    setValue={setValue}/>
                             </TableCell>
                             <TableCell align="right">
                                 <Button variant="outlined" onClick={() => exercisesFieldHookArray.remove(index)}>

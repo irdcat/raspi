@@ -21,12 +21,9 @@ import { ButtonActivatedDialog } from "./dialogs/ButtonActivatedDialog";
 import TrainingForm from "./forms/TrainingForm";
 import TrainingFormData from "../model/TrainingFormData";
 import { ButtonActivatedActionDialog } from "./dialogs/ButtonActivatedActionDialog";
-import Exercise from "../model/Exercise";
-import ExercisesApi from "../api/ExercisesApi";
 
 export const Trainings = () => {
     const [ trainingList, setTrainingList ] = useState(new Array<Training>());
-    const [ exerciseList, setExerciseList ] = useState(new Array<Exercise>());
     const navigate = useNavigate();
     const { height } = useWindowDimensions();
 
@@ -34,11 +31,6 @@ export const Trainings = () => {
         await TrainingsApi.get()
             .then(trainings => trainings.sort((a, b) => b.date.getTime() - a.date.getTime()))
             .then(trainings => setTrainingList(trainings))
-    }, []);
-
-    useAsyncEffect(async () => {
-        await ExercisesApi.get()
-            .then(exercises => setExerciseList(exercises));
     }, []);
 
     const onClickSummary = (id: string) => {
@@ -82,12 +74,13 @@ export const Trainings = () => {
                         onSubmit={(formData: TrainingFormData) => {
                             onAddTraining({
                                 id: "",
+                                templateId: formData.templateId,
                                 date: formData.date,
                                 bodyWeight: formData.bodyWeight,
                                 exercises: formData.exercises
                                     .map((trainingExercise, index) => ({
                                         order: index,
-                                        exerciseId: trainingExercise.exercise.id,
+                                        exerciseId: trainingExercise.exerciseId,
                                         sets: trainingExercise.sets
                                             .map(trainingExerciseSet => ({
                                                 reps: trainingExerciseSet.reps,
@@ -139,12 +132,13 @@ export const Trainings = () => {
                                                 onSubmit={(formData: TrainingFormData) => {
                                                     onEditTraining({
                                                         id: training.id,
+                                                        templateId: training.templateId,
                                                         date: formData.date,
                                                         bodyWeight: formData.bodyWeight,
                                                         exercises: formData.exercises
                                                             .map((trainingExercise, index) => ({
                                                                 order: index,
-                                                                exerciseId: trainingExercise.exercise.id,
+                                                                exerciseId: trainingExercise.exerciseId,
                                                                 sets: trainingExercise.sets
                                                                     .map(trainingExerciseSet => ({
                                                                         reps: trainingExerciseSet.reps,
@@ -155,10 +149,11 @@ export const Trainings = () => {
                                                     close();
                                                 }}
                                                 initialValues={{
+                                                    templateId: training.templateId,
                                                     date: training.date,
                                                     bodyWeight: training.bodyWeight,
                                                     exercises: training.exercises.map(te => ({
-                                                        exercise: exerciseList.find(e => e.id === te.exerciseId)!!,
+                                                        exerciseId: te.exerciseId,
                                                         sets: te.sets
                                                     }))
                                                 }}/> 

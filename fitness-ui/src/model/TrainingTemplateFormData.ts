@@ -1,10 +1,8 @@
-import Exercise from "./Exercise"
-
 type TrainingTemplateFormData = {
     name: string,
     groupName: string,
     description: string,
-    exercises: Array<Exercise>
+    exerciseIds: Array<{ id: string }>
 }
 
 export default TrainingTemplateFormData;

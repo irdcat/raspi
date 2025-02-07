@@ -8,7 +8,9 @@ type FormInputTrainingExercisesProps = {
     control: any,
     registerFunction: any,
     label: string,
-    options: Array<Exercise>
+    options: Array<Exercise>,
+    exercisesDisabled: boolean,
+    setValue: any
 }
 
 const FormInputTrainingExercises = (props: FormInputTrainingExercisesProps) => {
@@ -43,7 +45,9 @@ const FormInputTrainingExercises = (props: FormInputTrainingExercisesProps) => {
                             name={`${props.name}.${index}`}
                             registerFunction={props.registerFunction}
                             options={props.options}
-                            onDelete={() => fieldArrayHook.remove(index)}/>
+                            onDelete={() => fieldArrayHook.remove(index)}
+                            exerciseDisabled={props.exercisesDisabled}
+                            setValue={props.setValue}/>
                     ))}
                 </TableBody>
             </Table>

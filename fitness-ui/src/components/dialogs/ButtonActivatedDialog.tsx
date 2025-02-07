@@ -20,7 +20,7 @@ export const ButtonActivatedDialog = (props: ButtonActivatedDialogProps) => {
                 variant={props.buttonVariant}>
                     {props.buttonLabel}
             </Button>
-            <Dialog fullWidth open={open} onClose={() => setOpen(false)}>
+            <Dialog fullWidth maxWidth="lg" open={open} onClose={() => setOpen(false)}>
                 <DialogTitle>{props.title}</DialogTitle>
                 <DialogContent>
                     {props.children(() => setOpen(false))}

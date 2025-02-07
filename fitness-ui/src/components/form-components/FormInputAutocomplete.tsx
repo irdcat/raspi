@@ -9,7 +9,8 @@ type FormInputAutocompleteProps = {
     options: Array<any>,
     getOptionLabel: (option: any) => any,
     getOptionValue: (option: any) => any,
-    setValue?: any
+    setValue: any,
+    disabled?: boolean
 };
 
 const FormInputAutocomplete = (props: FormInputAutocompleteProps) => {
@@ -25,8 +26,9 @@ const FormInputAutocomplete = (props: FormInputAutocompleteProps) => {
                     options={props.options}
                     getOptionLabel={props.getOptionLabel}
                     isOptionEqualToValue={(option, value) => props.getOptionValue(option) === value}
-                    onChange={(e, data) => onChange(data)}
+                    onChange={(e, data) => { onChange(data) }}
                     value={value}
+                    disabled={props.disabled}
                     renderInput={params => (
                         <TextField
                             {...params}
@@ -34,6 +36,7 @@ const FormInputAutocomplete = (props: FormInputAutocompleteProps) => {
                             variant="outlined"
                             error={!!error}
                             helperText={error ? error.message : null}
+                            disabled={props.disabled}
                         />
                     )}
                 />    

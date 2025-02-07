@@ -2,7 +2,7 @@ import Exercise from "./Exercise";
 import TrainingExerciseSetFormData from "./TrainingExerciseSetFormData";
 
 type TrainingExerciseFormData = {
-    exercise: Exercise,
+    exerciseId: string,
     sets: Array<TrainingExerciseSetFormData>
 };
 

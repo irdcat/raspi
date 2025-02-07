@@ -50,7 +50,7 @@ const TrainingDetails = () => {
     const { height } = useWindowDimensions();
     const [ data, setData ] = useState<TrainingDetailsData>({
         exercises: [],
-        training: { id: "", date: new Date(), bodyWeight: 0, exercises: [] },
+        training: { id: "", templateId: "", date: new Date(), bodyWeight: 0, exercises: [] },
         exerciseSummaries: []
     });
     const [ tab, setTab ] = useState(0);

@@ -4,8 +4,10 @@ import irdcat.fitness.model.Exercise
 import irdcat.fitness.model.Training
 import irdcat.fitness.model.TrainingExercise
 import irdcat.fitness.model.TrainingExerciseSet
+import irdcat.fitness.model.TrainingTemplate
 import irdcat.fitness.repository.ExerciseRepository
 import irdcat.fitness.repository.TrainingRepository
+import irdcat.fitness.repository.TrainingTemplateRepository
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.context.annotation.Configuration
@@ -23,7 +25,8 @@ import kotlin.collections.LinkedHashMap
 @Configuration
 class LocalApplicationInitializer(
     private val exerciseRepository: ExerciseRepository,
-    private val trainingRepository: TrainingRepository
+    private val trainingRepository: TrainingRepository,
+    private val trainingTemplateRepository: TrainingTemplateRepository
 ): InitializingBean {
 
     companion object {
@@ -40,8 +43,10 @@ class LocalApplicationInitializer(
 
         private const val TEST_EXERCISES_FILE = "test-exercises.yaml"
         private const val TEST_TRAININGS_FILE = "test-trainings.yaml"
+        private const val TEST_TEMPLATES_FILE = "test-templates.yaml"
     }
 
+    @Suppress("unchecked", "UNCHECKED_CAST")
     override fun afterPropertiesSet() {
         Mono.just(TEST_EXERCISES_FILE)
             .map { this.javaClass.classLoader.getResourceAsStream(it) }
@@ -58,6 +63,23 @@ class LocalApplicationInitializer(
             .flatMapMany { exerciseRepository.insert(it) }
             .subscribe { logger.info("Added exercise {}", it) }
 
+        Mono.just(TEST_TEMPLATES_FILE)
+            .map { this.javaClass.classLoader.getResourceAsStream(it) }
+            .map { yaml.load<List<LinkedHashMap<String, Any>>>(it) }
+            .flatMapMany { Flux.fromIterable(it) }
+            .map {
+                TrainingTemplate(
+                    it["id"]!!.toString(),
+                    it["name"]!!.toString(),
+                    it["groupName"]!!.toString(),
+                    it["description"]!!.toString(),
+                    it["exerciseIds"]!! as List<String>
+                )
+            }
+            .collectList()
+            .flatMapMany { trainingTemplateRepository.insert(it) }
+            .subscribe { logger.info("Added template {}", it) }
+
         Mono.just(TEST_TRAININGS_FILE)
             .map { this.javaClass.classLoader.getResourceAsStream(it) }
             .map { yaml.load<List<LinkedHashMap<String, Any>>>(it) }
@@ -68,12 +90,12 @@ class LocalApplicationInitializer(
                     null,
                     LocalDate.parse(it["date"]!!.toString(), dateTimeFormatter),
                     it["bodyWeight"]!!.toString().toFloat(),
-                    (it["exercises"] as List<LinkedHashMap<String, Any>>)
+                    (it["exercises"]!! as List<LinkedHashMap<String, Any>>)
                         .map { e ->
                             TrainingExercise(
                                 e["order"].toString().toInt(),
                                 e["exerciseId"].toString(),
-                                (e["sets"] as List<LinkedHashMap<String, Any>>)
+                                (e["sets"]!! as List<LinkedHashMap<String, Any>>)
                                     .map { s ->
                                         TrainingExerciseSet(
                                             s["reps"]!!.toString().toInt(),
