@@ -1,2 +1,6 @@
 domain: raspi.local
 development: false
+resources:
+  requests:
+    cpu: 100m
+    memory: 300Mi
