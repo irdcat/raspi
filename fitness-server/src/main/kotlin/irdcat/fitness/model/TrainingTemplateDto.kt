@@ -7,7 +7,7 @@ data class TrainingTemplateDto(
     val name: String? = null,
     val groupName: String? = null,
     val description: String? = null,
-    val exercises: List<ExerciseDto>? = null
+    val exerciseIds: List<String>? = null
 ) {
     companion object {
         fun fromTrainingTemplate(trainingTemplate: TrainingTemplate): TrainingTemplateDto {
@@ -16,7 +16,7 @@ data class TrainingTemplateDto(
                 trainingTemplate.name,
                 trainingTemplate.groupName,
                 trainingTemplate.description,
-                trainingTemplate.exercises.map(ExerciseDto::fromExercise)
+                trainingTemplate.exerciseIds
             )
         }
     }
@@ -36,7 +36,7 @@ data class TrainingTemplateDto(
             name!!,
             groupName!!,
             description!!,
-            exercises!!.map(ExerciseDto::toExercise)
+            exerciseIds!!
         )
     }
 }

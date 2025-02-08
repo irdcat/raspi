@@ -29,7 +29,7 @@ const FormInputTrainingExerciseSets = (props: FormInputTrainingExerciseSetsProps
             }}>
             <Box sx={{ display: "flex" }}>
                 <Typography variant="h6" sx={{ flexGrow: 1 }}>{props.label}</Typography>
-                <Button onClick={() => fieldArrayHook.append({ reps: null, weight: null })} variant="outlined">
+                <Button onClick={() => fieldArrayHook.append({ reps: "0", weight: "0" })} variant="outlined">
                     Add Set
                 </Button>
             </Box>
@@ -37,6 +37,7 @@ const FormInputTrainingExerciseSets = (props: FormInputTrainingExerciseSetsProps
                 <TableBody>
                     {fieldArrayHook.fields.map((field, index) => (
                         <FormInputTrainingExerciseSetRow
+                            key={field.id}
                             control={props.control}
                             name={`${props.name}.${index}`}
                             registerFunction={props.registerFunction}

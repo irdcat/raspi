@@ -62,7 +62,7 @@ export const Templates = () => {
                                 name: formData.name,
                                 groupName: formData.groupName,
                                 description: formData.description,
-                                exercises: formData.exercises
+                                exerciseIds: formData.exerciseIds.map(e => e.id)
                             });
                             close();
                         }}/>
@@ -119,7 +119,7 @@ export const Templates = () => {
                                                         name: formData.name,
                                                         groupName: formData.groupName,
                                                         description: formData.description,
-                                                        exercises: formData.exercises
+                                                        exerciseIds: formData.exerciseIds.map(e => e.id)
                                                     });
                                                     close();
                                                 }}
@@ -127,7 +127,7 @@ export const Templates = () => {
                                                     name: template.name,
                                                     groupName: template.groupName,
                                                     description: template.description,
-                                                    exercises: template.exercises
+                                                    exerciseIds: template.exerciseIds.map(e => ({ id: e }))
                                                 }}/>
                                             }
                                         </ButtonActivatedDialog>

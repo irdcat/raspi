@@ -10,5 +10,5 @@ data class TrainingTemplate(
     val name: String,
     val groupName: String,
     val description: String,
-    val exercises: List<Exercise>
+    val exerciseIds: List<String>
 )

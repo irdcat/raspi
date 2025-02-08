@@ -9,6 +9,8 @@ import TemplatesApi from "../api/TemplatesApi";
 import { subDays } from "date-fns";
 import TrainingsApi from "../api/TrainingsApi";
 import ExerciseChart from "./ExerciseChart";
+import Exercise from "../model/Exercise";
+import ExercisesApi from "../api/ExercisesApi";
 
 type TabPanelProps = {
     children?: React.ReactNode;
@@ -34,6 +36,7 @@ const CustomTabPanel = (props: TabPanelProps) => {
 
 type TemplateDetailsData = {
     template: TrainingTemplate,
+    exercises: Array<Exercise>,
     exerciseSummaries: Array<ExerciseSummary>
 }
 
@@ -41,7 +44,8 @@ const TemplateDetails = () => {
     const { id } = useParams();
     const { height } = useWindowDimensions();
     const [ data, setData ] = useState<TemplateDetailsData>({
-        template: { id: "", name: "", groupName: "", description: "", exercises: [] },
+        template: { id: "", name: "", groupName: "", description: "", exerciseIds: [] },
+        exercises: [],
         exerciseSummaries: []
     });
     const [ tab, setTab ] = useState(0);
@@ -52,19 +56,21 @@ const TemplateDetails = () => {
         }
 
         const template = await TemplatesApi.getById(id);
-        const exerciseIds = template.exercises.map(e => e.id);
         
         const to = new Date();
         const from = subDays(to, 90);
 
         const summaries = await TrainingsApi.getSummary({
-            exerciseIds: exerciseIds,
+            exerciseIds: template.exerciseIds,
             from: from,
             to: to
         });
 
+        const exercises = await ExercisesApi.getByIds(template.exerciseIds);
+
         setData({
             template: template,
+            exercises: exercises,
             exerciseSummaries: summaries
         });
     });
@@ -83,7 +89,7 @@ const TemplateDetails = () => {
             <Paper sx={{ height: height - 160 }}>
                 <Tabs value={tab} onChange={onTabChange}>
                     {data.exerciseSummaries.map(summary => (
-                        <Tab sx={{ flexGrow: 1 }} label={data.template.exercises.filter(e => e.id === summary.id)[0].name} id={summary.id}/>
+                        <Tab sx={{ flexGrow: 1 }} label={data.exercises.filter(e => e.id === summary.id)[0].name} id={summary.id}/>
                     ))}
                 </Tabs>
                 {data.exerciseSummaries.map((summary, idx) => (

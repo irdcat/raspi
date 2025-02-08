@@ -11,7 +11,9 @@ type FormInputTrainingExerciseRowProps = {
     name: string,
     options: Array<Exercise>,
     registerFunction: any,
-    onDelete: () => void
+    onDelete: () => void,
+    exerciseDisabled: boolean,
+    setValue: any
 };
 
 const FormInputTrainingExerciseRow = (props: FormInputTrainingExerciseRowProps) => {
@@ -20,24 +22,26 @@ const FormInputTrainingExerciseRow = (props: FormInputTrainingExerciseRowProps) 
     return (
         <>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                <TableCell>
+                <TableCell padding="checkbox">
                     <IconButton size="small" onClick={() => setOpen(!open)}>
                         {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
                     </IconButton>
                 </TableCell>
                 <TableCell>
                     <FormInputAutocomplete 
-                        name={`${props.name}.exercise`}
+                        name={`${props.name}.exerciseId`}
                         control={props.control} 
-                        register={props.registerFunction(`${props.name}.exercise`, {
+                        register={props.registerFunction(`${props.name}.exerciseId`, {
                             required: { value: true, message: "Field is required" }
                         })} 
                         label={"Exercise"}
                         options={props.options} 
-                        getOptionLabel={(e) => e.name}
-                        getOptionValue={(e) => e.id}/>
+                        getOptionLabel={(v) => props.options.find(e => e.id === v)?.name}
+                        getOptionValue={(v) => v}
+                        disabled={props.exerciseDisabled}
+                        setValue={props.setValue}/>
                 </TableCell>
-                <TableCell align="right">
+                <TableCell align="right" padding="checkbox">
                     <Button variant="outlined" onClick={() => props.onDelete()}>
                         Delete
                     </Button>
