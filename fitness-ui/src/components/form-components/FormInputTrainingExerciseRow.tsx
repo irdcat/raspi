@@ -36,8 +36,8 @@ const FormInputTrainingExerciseRow = (props: FormInputTrainingExerciseRowProps) 
                         })} 
                         label={"Exercise"}
                         options={props.options} 
-                        getOptionLabel={(v) => props.options.find(e => e.id === v)?.name}
-                        getOptionValue={(v) => v}
+                        getOptionLabel={(v) => v.name}
+                        getOptionValue={(v) => v.id}
                         disabled={props.exerciseDisabled}
                         setValue={props.setValue}/>
                 </TableCell>
