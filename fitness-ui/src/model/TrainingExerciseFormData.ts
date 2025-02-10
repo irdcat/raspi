@@ -1,4 +1,3 @@
-import Exercise from "./Exercise";
 import TrainingExerciseSetFormData from "./TrainingExerciseSetFormData";
 
 type TrainingExerciseFormData = {
