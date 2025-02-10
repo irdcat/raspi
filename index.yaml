@@ -65,6 +65,19 @@ entries:
   mongo:
   - apiVersion: v2
     appVersion: 8.0.4
+    created: "2025-02-10T12:58:41.18318366Z"
+    description: Helm chart for Mongo deployment
+    digest: 7b7c47d33bdd7e53dbd13fad23c9a380719cb312f8e30a1d877326dd311988c2
+    maintainers:
+    - email: kamil.adamiec97@gmail.com
+      name: Kamil Adamiec
+    name: mongo
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/mongo/mongo-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: 8.0.4
     created: "2025-02-07T20:29:37.893135956Z"
     description: Helm chart for Mongo deployment
     digest: 8c622537d2ac96649d09a44083d9fcb8617436b72a7a5a41456d001968e381ad
@@ -102,4 +115,4 @@ entries:
     urls:
     - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/mongo/mongo-0.0.1.tgz
     version: 0.0.1
-generated: "2025-02-08T00:13:23.34444176Z"
+generated: "2025-02-10T12:58:41.18259449Z"
