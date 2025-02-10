@@ -1,0 +1,12 @@
+# Ignore artifacts:
+build
+coverage
+helm
+.dockerignore
+Dockerfile
+nginx.conf
+.gitignore
+.prettierignore
+.prettierrc
+package-lock.json
+package.json

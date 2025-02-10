@@ -1,11 +1,11 @@
-import Exercise from "./Exercise"
+import Exercise from './Exercise';
 
 type TrainingTemplate = {
-    id: string,
-    name: string,
-    groupName: string,
-    description: string,
-    exerciseIds: Array<string>
-}
+  id: string;
+  name: string;
+  groupName: string;
+  description: string;
+  exerciseIds: Array<string>;
+};
 
 export default TrainingTemplate;

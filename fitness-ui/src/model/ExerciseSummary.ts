@@ -1,8 +1,8 @@
-import ExerciseParameters from "./ExerciseParameters";
+import ExerciseParameters from './ExerciseParameters';
 
 type ExerciseSummary = {
-    id: string,
-    parameters: Map<Date, ExerciseParameters>
-}
+  id: string;
+  parameters: Map<Date, ExerciseParameters>;
+};
 
 export default ExerciseSummary;

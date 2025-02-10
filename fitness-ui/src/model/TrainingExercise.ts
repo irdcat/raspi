@@ -1,9 +1,9 @@
-import TrainingExerciseSet from "./TrainingExerciseSet";
+import TrainingExerciseSet from './TrainingExerciseSet';
 
 type TrainingExercise = {
-    order: number,
-    exerciseId: string,
-    sets: Array<TrainingExerciseSet>
-}
+  order: number;
+  exerciseId: string;
+  sets: Array<TrainingExerciseSet>;
+};
 
 export default TrainingExercise;
