@@ -30,4 +30,5 @@ spec:
           mountPath: /mongo/data
       volumes:
       - name: {{ .Release.Name }}-volume
-        claimName: {{ .Release.Name }}-persistent-volume-claim
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-persistent-volume-claim
