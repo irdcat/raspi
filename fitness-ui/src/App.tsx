@@ -1,14 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { Exercises } from './components/Exercises';
+import { Layout } from './pages/Layout';
+import { Home } from './pages/Home';
+import { Exercises } from './pages/Exercises';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
-import { Trainings } from './components/Trainings';
-import ExerciseDetails from './components/ExerciseDetails';
-import TrainingDetails from './components/TrainingDetails';
-import { Templates } from './components/Templates';
-import TemplateDetails from './components/TemplateDetails';
+import { Trainings } from './pages/Trainings';
+import ExerciseDetails from './pages/ExerciseDetails';
+import TrainingDetails from './pages/TrainingDetails';
+import { Templates } from './pages/Templates';
+import TemplateDetails from './pages/TemplateDetails';
 
 const darkTheme = createTheme({
   palette: {

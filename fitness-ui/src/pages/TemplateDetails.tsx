@@ -8,7 +8,7 @@ import { useAsyncEffect } from "../hooks/useAsyncEffect";
 import TemplatesApi from "../api/TemplatesApi";
 import { subDays } from "date-fns";
 import TrainingsApi from "../api/TrainingsApi";
-import ExerciseChart from "./ExerciseChart";
+import ExerciseChart from "../components/ExerciseChart";
 import Exercise from "../model/Exercise";
 import ExercisesApi from "../api/ExercisesApi";
 

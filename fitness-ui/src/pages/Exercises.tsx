@@ -1,26 +1,14 @@
-import { 
-    Box, 
-    Button, 
-    ButtonGroup, 
-    Paper, 
-    Table, 
-    TableBody, 
-    TableCell, 
-    TableContainer, 
-    TableHead, 
-    TableRow, 
-    Typography 
-} from "@mui/material"
+import { Box, Button, ButtonGroup, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import ExercisesApi from "../api/ExercisesApi";
 import { useAsyncEffect } from "../hooks/useAsyncEffect";
 import Exercise from "../model/Exercise";
-import { ButtonActivatedDialog } from "./dialogs/ButtonActivatedDialog";
+import { ButtonActivatedDialog } from "../components/dialogs/ButtonActivatedDialog";
 import ExerciseFormData from "../model/ExerciseFormData";
-import ExerciseForm from "./forms/ExerciseForm";
-import { ButtonActivatedActionDialog } from "./dialogs/ButtonActivatedActionDialog";
+import ExerciseForm from "../components/forms/ExerciseForm";
+import { ButtonActivatedActionDialog } from "../components/dialogs/ButtonActivatedActionDialog";
 
 export const Exercises = () => {
     const [ exerciseList, setExerciseList ] = useState(new Array<Exercise>());
