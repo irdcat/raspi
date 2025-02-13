@@ -5,10 +5,10 @@ import TemplatesApi from "../api/TemplatesApi";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, ButtonGroup, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import { ButtonActivatedDialog } from "./dialogs/ButtonActivatedDialog";
-import TemplateForm from "./forms/TemplateForm";
+import { ButtonActivatedDialog } from "../components/dialogs/ButtonActivatedDialog";
+import TemplateForm from "../components/forms/TemplateForm";
 import TrainingTemplateFormData from "../model/TrainingTemplateFormData";
-import { ButtonActivatedActionDialog } from "./dialogs/ButtonActivatedActionDialog";
+import { ButtonActivatedActionDialog } from "../components/dialogs/ButtonActivatedActionDialog";
 
 export const Templates = () => {
     const [ templateList, setTemplateList ] = useState(new Array<TrainingTemplate>());
