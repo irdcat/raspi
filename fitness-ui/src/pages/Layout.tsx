@@ -1,64 +1,33 @@
-import { AppBar, Box, Breadcrumbs, SvgIcon, SvgIconProps, Toolbar, Typography} from "@mui/material"
-import { Link, Outlet, useLocation } from "react-router-dom"
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { AppBar, Box, Button, Toolbar } from "@mui/material";
+import { Outlet, useLocation, useNavigate } from "react-router-dom"
 
-const HomeIcon = (props: SvgIconProps) => {
+const Layout = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+
     return (
-        <SvgIcon {...props}>
-            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-        </SvgIcon>
-    )
-}
-
-const LayoutBreadcrumbs = () => {
-    const { pathname } = useLocation();
-
-    if (pathname === "/") {
-        return (
-            <HomeIcon color="primary"/>
-        )
-    } else {
-        return (
-            <Breadcrumbs separator={<NavigateNextIcon fontSize="small"/>}>
-                {pathname.split("/").map((pathPart, index, array) => {
-                    if (pathPart === '') {
-                        return (
-                            <Link key={index} to="/">
-                                <HomeIcon color="primary"/>
-                            </Link>
-                        )
-                    } else if (index === array.length - 1) {
-                        return (
-                            <Typography key={index}>
-                                {pathPart}
-                            </Typography>
-                        )
-                    } else {
-                        return (
-                            <Link key={index} style={{ textDecoration: "none" }} to={array.slice(0, index + 1).join("/")}>
-                                <Typography color="primary">
-                                    {pathPart}
-                                </Typography>
-                            </Link>
-                        )
-                    }
-                })}    
-            </Breadcrumbs>
-        )
-    }
-}
-
-export const Layout = () => {
-    return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
-                    <LayoutBreadcrumbs/>
+        <Box sx={{ width: '100vw', height: '100vh'}}>
+            <AppBar sx={{ height: '60px' }}>
+                <Toolbar sx={{ height: '60px', padding: '5px' }}>
+                    <Button onClick={() => navigate("/")} disabled={location.pathname === "/"}>
+                        Bodyweight
+                    </Button>
+                    <Button onClick={() => navigate("/exercises")} disabled={location.pathname === "/exercises"}>
+                        Exercises
+                    </Button>
+                    <Button onClick={() => navigate("/trainings")} disabled={location.pathname === "/trainings"}>
+                        Trainings
+                    </Button>
+                    <Button onClick={() => navigate("/analysis")} disabled={location.pathname === "/analysis"}>
+                        Analysis
+                    </Button>
                 </Toolbar>
             </AppBar>
-            <Box component="main">
+            <Box sx={{ paddingTop: '60px', height: '100%' }}>
                 <Outlet/>
             </Box>
         </Box>
     )
 }
+
+export default Layout;

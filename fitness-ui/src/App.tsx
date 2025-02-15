@@ -1,18 +1,22 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Layout } from './pages/Layout';
-import { Home } from './pages/Home';
-import { Exercises } from './pages/Exercises';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material';
-import { Trainings } from './pages/Trainings';
-import ExerciseDetails from './pages/ExerciseDetails';
-import TrainingDetails from './pages/TrainingDetails';
-import { Templates } from './pages/Templates';
-import TemplateDetails from './pages/TemplateDetails';
+import { CssBaseline, darkScrollbar } from '@mui/material';
+import Layout from './pages/Layout';
+import Bodyweight from './pages/Bodyweight';
+import Trainings from './pages/Trainings';
+import Analysis from './pages/Analysis';
+import Exercises from './pages/Exercises';
 
 const darkTheme = createTheme({
   palette: {
     mode: "dark"
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: () => ({
+        body: darkScrollbar()
+      })
+    }
   }
 });
 
@@ -23,13 +27,10 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout/>}>
-            <Route index element={<Home/>}/>
-            <Route path="exercises" element={<Exercises/>}/>
-            <Route path="exercises/:id" element={<ExerciseDetails/>}/>
+            <Route index element={<Bodyweight/>}/>
             <Route path="trainings" element={<Trainings/>}/>
-            <Route path="trainings/:id" element={<TrainingDetails/>}/>
-            <Route path="templates" element={<Templates/>}/>
-            <Route path="templates/:id" element={<TemplateDetails/>}/>
+            <Route path="exercises" element={<Exercises/>}/>
+            <Route path="analysis" element={<Analysis/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

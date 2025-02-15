@@ -1,127 +1,96 @@
-import { Box, Button, ButtonGroup, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom";
-import useWindowDimensions from "../hooks/useWindowDimensions";
-import ExercisesApi from "../api/ExercisesApi";
-import { useAsyncEffect } from "../hooks/useAsyncEffect";
-import Exercise from "../model/Exercise";
-import { ButtonActivatedDialog } from "../components/dialogs/ButtonActivatedDialog";
-import ExerciseFormData from "../model/ExerciseFormData";
-import ExerciseForm from "../components/forms/ExerciseForm";
-import { ButtonActivatedActionDialog } from "../components/dialogs/ButtonActivatedActionDialog";
+import { Box, List, ListItem, ListItemButton, Pagination, Paper, TextField, Typography } from "@mui/material";
 
-export const Exercises = () => {
-    const [ exerciseList, setExerciseList ] = useState(new Array<Exercise>());
-    const navigate = useNavigate();
-    const { height } = useWindowDimensions();
+const exercises = [
+    { name: "Squat", count: 45 },
+    { name: "Deadlift", count: 78 },
+    { name: "Bench Press", count: 62 },
+    { name: "Overhead Press", count: 53 },
+    { name: "Pull-Up", count: 37 },
+    { name: "Chin-Up", count: 48 },
+    { name: "Barbell Row", count: 59 },
+    { name: "Dumbbell Press", count: 66 },
+    { name: "Lunges", count: 72 },
+    { name: "Romanian Deadlift", count: 50 },
+    { name: "Front Squat", count: 55 },
+    { name: "Bulgarian Split Squat", count: 42 },
+    { name: "Face Pulls", count: 60 },
+    { name: "Lat Pulldown", count: 70 },
+    { name: "Seated Row", count: 58 },
+    { name: "Dumbbell Flyes", count: 63 },
+    { name: "Hammer Curl", count: 49 },
+    { name: "Triceps Dip", count: 68 },
+    { name: "Close-Grip Bench Press", count: 52 },
+    { name: "Cable Crossover", count: 47 },
+    { name: "Chest Press Machine", count: 64 },
+    { name: "Leg Press", count: 80 },
+    { name: "Calf Raise", count: 74 },
+    { name: "Seated Calf Raise", count: 61 },
+    { name: "Hip Thrust", count: 77 },
+    { name: "Good Morning", count: 56 },
+    { name: "Hanging Leg Raise", count: 39 },
+    { name: "Plank", count: 50 },
+    { name: "Side Plank", count: 41 },
+    { name: "Russian Twist", count: 58 },
+    { name: "Bicycle Crunch", count: 54 },
+    { name: "Cable Crunch", count: 65 },
+    { name: "Farmers Carry", count: 73 },
+    { name: "Kettlebell Swing", count: 79 },
+    { name: "Zercher Squat", count: 48 },
+    { name: "Jefferson Deadlift", count: 67 },
+    { name: "One-Arm Dumbbell Row", count: 60 },
+    { name: "Incline Bench Press", count: 57 },
+    { name: "Trap Bar Deadlift", count: 75 },
+    { name: "Snatch Grip Deadlift", count: 62 },
+    { name: "T-Bar Row", count: 71 },
+    { name: "Reverse Fly", count: 46 },
+    { name: "Landmine Press", count: 55 },
+    { name: "Pistol Squat", count: 44 },
+    { name: "Step-Ups", count: 53 },
+    { name: "Box Jumps", count: 69 },
+    { name: "Sled Push", count: 76 },
+    { name: "Battle Ropes", count: 66 },
+    { name: "Turkish Get-Up", count: 58 },
+    { name: "Dragon Flag", count: 50 }
+];
 
-    useAsyncEffect(async () => {
-        await ExercisesApi.get()
-            .then(exercises => setExerciseList(exercises));
-    }, []);
-
-    const handleSummaryClick = (id: string) => {
-        navigate(`/exercises/${id}`)
-    }
-
-    const onAddExercise = (exercise: Exercise) => {
-        ExercisesApi
-            .add(exercise)
-            .then(e => setExerciseList([...exerciseList, e]));
-    }
-
-    const onEditExercise = (exercise: Exercise) => {
-        ExercisesApi
-            .update(exercise.id, exercise)
-            .then(updated => {
-                const newList = [...exerciseList];
-                newList[exerciseList.findIndex(e => e.id === updated.id)] = updated;
-                setExerciseList(newList);
-            });
-    }
-
-    const onDeleteExercise = (id: string) => {
-        ExercisesApi
-            .delete(id)
-            .then(deleted => setExerciseList(exerciseList.filter(e => e.id !== deleted.id)));
-    }
-
+const Exercises = () => {
     return (
-        <Box sx={{ px: 3 }}>
-            <Box sx={{ display: "flex", paddingY: 2, paddingX: 1 }}>
-                <Typography variant="h6" color="white" sx={{ flexGrow: 1 }}>
-                    Exercises
-                </Typography>
-                <ButtonActivatedDialog title="Add Exercise" buttonColor="primary" buttonLabel="Add" buttonVariant="outlined">
-                    {(close) =>
-                    <ExerciseForm 
-                        onSubmit={(formData: ExerciseFormData) => {
-                            onAddExercise({id: "", name: formData.name, isBodyWeight: formData.isBodyWeight});
-                            close();
-                            }}/>
-                    }
-                </ButtonActivatedDialog>
+        <Box sx={{ height: '100%', paddingX: '7px' }}>
+            <Box component={Paper} sx={{ height: '64px', paddingY: '1px', paddingX: '6px', display: 'flex' }}>
+                <Box sx={{ flexGrow: 1, paddingY: '10px' }}>
+                    <TextField
+                        size="small"
+                        label="Search"
+                        name="search"/>
+                </Box>
             </Box>
-            <TableContainer sx={{ maxHeight: height - 160 }} component={Paper}>
-                <Table stickyHeader>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>
-                                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                                    Name
-                                </Typography>
-                            </TableCell>
-                            <TableCell>
-                                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                                    Uses body weight
-                                </Typography>
-                            </TableCell>
-                            <TableCell align="right">
-                                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                                    Actions
-                                </Typography>
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody sx={{ overflowY: "scroll" }}>
-                        { exerciseList.map((exercise) => (
-                            <TableRow key={ exercise.id } sx={{ '&:lastchild td, &:last-child th': { border: 0 } }}>
-                                <TableCell>{ exercise.name }</TableCell>
-                                <TableCell>
-                                    { exercise.isBodyWeight ? "Yes" : "No" }
-                                </TableCell>
-                                <TableCell align="right">
-                                    <ButtonGroup variant="outlined">
-                                        <Button onClick={() => handleSummaryClick(exercise.id)} color="success">Summary</Button>
-                                        <ButtonActivatedDialog title="Edit Exercise" buttonColor="secondary" buttonVariant="outlined" buttonLabel="Edit">
-                                            {(close) =>
-                                            <ExerciseForm 
-                                                onSubmit={(formData: ExerciseFormData) => {
-                                                    onEditExercise({id: exercise.id, name: formData.name, isBodyWeight: formData.isBodyWeight});
-                                                    close();
-                                                }}
-                                                initialValues={{
-                                                    name: exercise.name,
-                                                    isBodyWeight: exercise.isBodyWeight
-                                                }}/>
-                                            }
-                                        </ButtonActivatedDialog>
-                                        <ButtonActivatedActionDialog
-                                            title="Delete Exercise"
-                                            text="Are you sure you want to delete exercise?"
-                                            cancelLabel="Cancel"
-                                            confirmLabel="Delete"
-                                            buttonColor="error"
-                                            buttonLabel="Delete"
-                                            onConfirm={() => onDeleteExercise(exercise.id)}
-                                            />
-                                    </ButtonGroup>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <Box sx={{ padding: 1, overflowY: 'scroll', height: 'calc(100% - 192px)' }}>
+                <List>
+                    {exercises.map((exercise, index) => (
+                        <ListItem key={index} disablePadding>
+                            <ListItemButton>
+                                <Box sx={{ display: 'flex', width: '100%' }}>
+                                    <Box sx={{ flexGrow: 1 }}>
+                                        <Typography>
+                                            {exercise.name}
+                                        </Typography>
+                                    </Box>
+                                    <Box>
+                                        <Typography sx={{ color: 'text.secondary'}}>
+                                            {exercise.count}
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
+                </List>
+            </Box>
+            <Box component={Paper} sx={{ paddingY: '16px', paddingX: '16px', height: '64px' }}>
+                <Pagination size="medium" count={10} variant="outlined" shape="rounded" />
+            </Box>
         </Box>
     )
 }
+
+export default Exercises;
