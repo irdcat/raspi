@@ -1,168 +1,149 @@
-import { Box, Button, ButtonGroup, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import useWindowDimensions from "../hooks/useWindowDimensions";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import TrainingsApi from "../api/TrainingsApi";
-import { useAsyncEffect } from "../hooks/useAsyncEffect";
-import Training from "../model/Training";
-import { ButtonActivatedDialog } from "../components/dialogs/ButtonActivatedDialog";
-import TrainingForm from "../components/forms/TrainingForm";
-import TrainingFormData from "../model/TrainingFormData";
-import { ButtonActivatedActionDialog } from "../components/dialogs/ButtonActivatedActionDialog";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { SyntheticEvent, useState } from "react";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { format, subDays } from "date-fns";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 
-export const Trainings = () => {
-    const [trainingList, setTrainingList] = useState(new Array<Training>());
-    const navigate = useNavigate();
-    const { height } = useWindowDimensions();
+const exercises = ["Squat", "Bench Press", "Deadlift", "Overhead Press", "Barbell Row", "Pull-Up", "Chin-Up", "Lunges", "Dips", "Face Pulls", "Lat Pulldown", "Seated Row", "Dumbbell Press", "Romanian Deadlift", "Bulgarian Split Squat", "Leg Press", "Calf Raise", "Hip Thrust", "Good Morning", "Plank", "Russian Twist", "Bicycle Crunch", "Cable Crunch", "Farmers Carry", "Kettlebell Swing", "Step-Ups", "Trap Bar Deadlift", "Incline Bench Press", "T-Bar Row", "Reverse Fly", "Landmine Press", "Pistol Squat", "Box Jumps", "Sled Push", "Battle Ropes", "Turkish Get-Up", "Dragon Flag", "Jefferson Deadlift", "One-Arm Dumbbell Row", "Zercher Squat", "Cable Crossover", "Chest Press Machine", "Hammer Curl", "Triceps Dip", "Close-Grip Bench Press", "Seated Calf Raise", "Landmine Squat", "Snatch Grip Deadlift", "Hanging Leg Raise", "Side Plank"];
+const bodyWeightMap: { [date: string]: number } = {
+    "2024-01-01": 70.0,
+    "2024-01-02": 70.1,
+    "2024-01-03": 70.3,
+    "2024-01-04": 70.5,
+    "2024-01-05": 70.7,
+    "2024-01-06": 70.9,
+    "2024-01-07": 71.1,
+    "2024-01-08": 71.3,
+    "2024-01-09": 71.6,
+    "2024-01-10": 71.8,
+    "2024-01-11": 72.0,
+    "2024-01-12": 72.2,
+    "2024-01-13": 72.5,
+    "2024-01-14": 72.7,
+    "2024-01-15": 72.9,
+    "2024-01-16": 73.1,
+    "2024-01-17": 73.4,
+    "2024-01-18": 73.6,
+    "2024-01-19": 73.8,
+    "2024-01-20": 74.0,
+    "2024-01-21": 74.3,
+    "2024-01-22": 74.5,
+    "2024-01-23": 74.7,
+    "2024-01-24": 75.0,
+    "2024-01-25": 75.2,
+    "2024-01-26": 75.4,
+    "2024-01-27": 75.6,
+    "2024-01-28": 75.9,
+    "2024-01-29": 76.1,
+    "2024-01-30": 76.3,
+    "2024-01-31": 76.5,
+    "2024-02-01": 76.8,
+    "2024-02-02": 77.0,
+    "2024-02-03": 77.2,
+    "2024-02-04": 77.5,
+    "2024-02-05": 77.7,
+    "2024-02-06": 77.9,
+    "2024-02-07": 78.1,
+    "2024-02-08": 78.4,
+    "2024-02-09": 78.6,
+    "2024-02-10": 78.8,
+    "2024-02-11": 79.0,
+    "2024-02-12": 79.3,
+    "2024-02-13": 79.5,
+    "2024-02-14": 79.7,
+    "2024-02-15": 80.0
+  };
 
-    useAsyncEffect(async () => {
-        await TrainingsApi.get()
-            .then(trainings => trainings.sort((a, b) => b.date.getTime() - a.date.getTime()))
-            .then(trainings => setTrainingList(trainings))
-    }, []);
+const trainingData = Array.from({ length: 50 }, (_, i) => {
+  const date = new Date(2024, 0, i + 1);
+  return {
+    date,
+    bodyweight: bodyWeightMap[date.toISOString().split('T')[0]] || 70 + i * 0.2,
+    exercises: exercises.slice(0, 3).map((exercise) => ({
+      name: exercise,
+      sets: [
+        { reps: 5, weight: Math.floor(Math.random() * 50) + 50 },
+        { reps: 5, weight: Math.floor(Math.random() * 50) + 50 },
+        { reps: 5, weight: Math.floor(Math.random() * 50) + 50 }
+      ]
+    }))
+  };
+});
 
-    const onClickSummary = (id: string) => {
-        navigate(`/trainings/${id}`);
-    }
+const Trainings = () => {
+    const [expanded, setExpanded] = useState<number | false>(false);
 
-    const onAddTraining = (training: Training) => {
-        TrainingsApi
-            .add(training)
-            .then(added => [...trainingList, added])
-            .then(trainings => trainings.sort((a, b) => b.date.getTime() - a.date.getTime()))
-            .then(trainings => setTrainingList(trainings));
-    }
-
-    const onEditTraining = (training: Training) => {
-        TrainingsApi
-            .update(training.id, training)
-            .then(updated => {
-                const newList = [...trainingList];
-                newList[trainingList.findIndex(t => t.id === updated.id)] = updated;
-                let sorted = newList.sort((a, b) => b.date.getTime() - a.date.getTime());
-                setTrainingList(sorted);
-            });
-    }
-
-    const onDeleteTraining = (id: string) => {
-        TrainingsApi
-            .delete(id)
-            .then(deleted => setTrainingList(trainingList.filter(t => t.id !== deleted.id)));
+    const handleExpansion = (panel: number) => (event: SyntheticEvent, isExpanded: boolean) => {
+        setExpanded(isExpanded ? panel : false);
     }
 
     return (
-        <Box sx={{ px: 3 }}>
-            <Box sx={{ display: "flex", paddingY: 2, paddingX: 1 }}>
-                <Typography variant="h6" color="white" sx={{ flexGrow: 1 }}>
-                    Trainings
-                </Typography>
-                <ButtonActivatedDialog title="Add Training" buttonColor="primary" buttonLabel="Add" buttonVariant="outlined">
-                    {(close) =>
-                        <TrainingForm
-                            onSubmit={(formData: TrainingFormData) => {
-                                onAddTraining({
-                                    id: "",
-                                    templateId: formData.templateId,
-                                    date: formData.date,
-                                    bodyWeight: formData.bodyWeight,
-                                    exercises: formData.exercises
-                                        .map((trainingExercise, index) => ({
-                                            order: index,
-                                            exerciseId: trainingExercise.exerciseId,
-                                            sets: trainingExercise.sets
-                                                .map(trainingExerciseSet => ({
-                                                    reps: trainingExerciseSet.reps,
-                                                    weight: trainingExerciseSet.weight
-                                                }))
-                                        }))
-                                })
-                                close();
-                            }} />
-                    }
-                </ButtonActivatedDialog>
+        <Box sx={{ height: '100%', paddingX: '5px' }}>
+            <Box component={Paper} sx={{ height: '64px', paddingY: '1px', paddingX: '4px', display: 'flex' }}>
+                <Box sx={{ paddingY: '10px', flexGrow: 1 }}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DatePicker
+                            sx={{ paddingRight: 1, width: '155px' }}
+                            slotProps={{ textField: { size: "small" } }}
+                            label="From"
+                            name="from"
+                            value={subDays(new Date(), 180)}/>
+                        <DatePicker
+                            sx={{ paddingRight: 1, width: '155px' }}
+                            slotProps={{ textField: { size: "small" } }}
+                            label="To"
+                            name="to"
+                            value={new Date()}/>    
+                    </LocalizationProvider>
+                </Box>
+                <Box sx={{ paddingY: '10px' }}>
+                    <Button sx={{ height: '39px' }} variant="outlined" color="success">Add</Button>
+                </Box>
             </Box>
-            <TableContainer sx={{ maxHeight: height - 160 }} component={Paper}>
-                <Table stickyHeader aria-label="trainings table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>
-                                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                                    Date
-                                </Typography>
-                            </TableCell>
-                            <TableCell>
-                                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                                    Body Weight (kg)
-                                </Typography>
-                            </TableCell>
-                            <TableCell align="right">
-                                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                                    Actions
-                                </Typography>
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {trainingList.map((training) => (
-                            <TableRow key={training.id} sx={{ '&:lastchild td, &:last-child th': { border: 0 } }}>
-                                <TableCell>
-                                    {training.date.toDateString()}
-                                </TableCell>
-                                <TableCell>
-                                    {training.bodyWeight}
-                                </TableCell>
-                                <TableCell align="right">
-                                    <ButtonGroup variant="outlined">
-                                        <Button onClick={() => onClickSummary(training.id)} color="success">Summary</Button>
-                                        <ButtonActivatedDialog title="Edit Training" buttonColor="secondary" buttonVariant="outlined" buttonLabel="Edit">
-                                            {(close) =>
-                                                <TrainingForm
-                                                    onSubmit={(formData: TrainingFormData) => {
-                                                        onEditTraining({
-                                                            id: training.id,
-                                                            templateId: training.templateId,
-                                                            date: formData.date,
-                                                            bodyWeight: formData.bodyWeight,
-                                                            exercises: formData.exercises
-                                                                .map((trainingExercise, index) => ({
-                                                                    order: index,
-                                                                    exerciseId: trainingExercise.exerciseId,
-                                                                    sets: trainingExercise.sets
-                                                                        .map(trainingExerciseSet => ({
-                                                                            reps: trainingExerciseSet.reps,
-                                                                            weight: trainingExerciseSet.weight
-                                                                        }))
-                                                                }))
-                                                        })
-                                                        close();
-                                                    }}
-                                                    initialValues={{
-                                                        templateId: training.templateId,
-                                                        date: training.date,
-                                                        bodyWeight: training.bodyWeight,
-                                                        exercises: training.exercises.map(te => ({
-                                                            exerciseId: te.exerciseId,
-                                                            sets: te.sets
-                                                        }))
-                                                    }} />
-                                            }
-                                        </ButtonActivatedDialog>
-                                        <ButtonActivatedActionDialog
-                                            title="Delete Training"
-                                            text="Are you sure you want to delete training?"
-                                            cancelLabel="Cancel"
-                                            confirmLabel="Delete"
-                                            buttonColor="error"
-                                            buttonLabel="Delete"
-                                            onConfirm={() => onDeleteTraining(training.id)}
-                                        />
-                                    </ButtonGroup>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <Box sx={{ height: 'calc(100% - 192px)', padding: '6px', overflowY: 'scroll' }}>
+                {trainingData.sort((a, b) => b.date.getTime() - a.date.getTime()).map((training, index) => (
+                    <Accordion expanded={expanded === index} onChange={handleExpansion(index)} key={index}>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon/>} id={`content-${index}`}>
+                            <Typography component="span" sx={{ flexShrink: 0, width: '33%' }}>
+                                {format(training.date, "dd.MM.yyyy")}
+                            </Typography>
+                            <Typography component="span" sx={{ color: 'text.secondary' }}>
+                                {`${training.bodyweight.toString()} kg`}
+                            </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <TableContainer component={Paper}>
+                                <Table sx={{ tableLayout: 'fixed' }}>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell width='170px'>
+                                                <Typography variant="body2" sx={{ fontWeight: "bold" }}>Exercise</Typography>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Typography variant="body2" sx={{ fontWeight: "bold" }}>Sets</Typography>
+                                            </TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {training.exercises.map((exercise, exerciseIndex) => (
+                                            <TableRow key={`row-${index}-${exerciseIndex}`}>
+                                                <TableCell>{exercise.name}</TableCell>
+                                                <TableCell>{exercise.sets.map(s => `${s.reps}x${s.weight}`).join(" ")}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </AccordionDetails>
+                    </Accordion>
+                ))}
+            </Box>
+            <Box component={Paper} sx={{ paddingY: '16px', paddingX: '16px', height: '64px' }}>
+                <Pagination size="medium" count={10} variant="outlined" shape="rounded" />
+            </Box>
         </Box>
     )
 }
+
+export default Trainings;
