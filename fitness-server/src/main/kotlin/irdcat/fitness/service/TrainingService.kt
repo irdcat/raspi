@@ -1,78 +1,65 @@
 package irdcat.fitness.service
 
-import irdcat.fitness.exception.InvalidTrainingException
-import irdcat.fitness.exception.TrainingNotFoundException
-import irdcat.fitness.model.ExerciseParametersDto
-import irdcat.fitness.model.ExerciseSummaryDto
-import irdcat.fitness.model.TrainingDto
-import irdcat.fitness.repository.TrainingRepository
+import org.springframework.data.domain.Sort
+import org.springframework.data.mongodb.core.ReactiveMongoTemplate
+import org.springframework.data.mongodb.core.aggregation.Aggregation.group
+import org.springframework.data.mongodb.core.aggregation.Aggregation.limit
+import org.springframework.data.mongodb.core.aggregation.Aggregation.match
+import org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation
+import org.springframework.data.mongodb.core.aggregation.Aggregation.project
+import org.springframework.data.mongodb.core.aggregation.Aggregation.skip
+import org.springframework.data.mongodb.core.aggregation.Aggregation.sort
+import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import reactor.kotlin.core.publisher.toFlux
-import java.time.LocalDate
+import java.util.Date
 
 @Service
 class TrainingService(
-    private val trainingRepository: TrainingRepository
+    private val reactiveMongoTemplate: ReactiveMongoTemplate
 ) {
 
-    fun getTrainings(): Flux<TrainingDto> {
-        return trainingRepository
-            .findAll()
-            .map(TrainingDto::fromTraining)
+    fun findTrainingsBetweenDates(from: Date?, to: Date?, page: Int, pageSize: Int): Flux<TrainingDto> {
+        val dateCriteria = Criteria.where("date")
+        if (from != null && to != null) {
+            dateCriteria.gte(from).lte(to)
+        } else if (from != null) {
+            dateCriteria.gte(from)
+        } else if (to != null) {
+            dateCriteria.lte(to)
+        }
+
+        val matchOperation = match(dateCriteria)
+        val groupOperation = group("date")
+            .first("date").`as`("date")
+            .first("bodyweight").`as`("bodyweight")
+            .push(newAggregation(
+                project()
+                    .and("\$exercise").`as`("exercise")
+                    .and("\$sets").`as`("sets")
+            )).`as`("exercises")
+        val sortOperation = sort(Sort.Direction.DESC, "date")
+        val skipOperation = skip((page * pageSize).toLong())
+        val limitOperation = limit(pageSize.toLong())
+        val aggregation = newAggregation(
+            matchOperation, groupOperation, sortOperation, skipOperation, limitOperation)
+        return reactiveMongoTemplate.aggregate(
+            aggregation, TrainingExercise::class.java, TrainingDto::class.java)
     }
 
-    fun getTraining(id: String): Mono<TrainingDto> {
-        return trainingRepository
-            .findById(id)
-            .map(TrainingDto::fromTraining)
-            .switchIfEmpty(Mono.error(TrainingNotFoundException("No training with id $id")))
-    }
-
-    fun saveTraining(trainingDto: TrainingDto): Mono<TrainingDto> {
-        return Mono.just(trainingDto)
-            .map { it.toTraining() }
-            .flatMap { trainingRepository.save(it) }
-            .map(TrainingDto::fromTraining)
-            .onErrorMap { InvalidTrainingException(it.message ?: "Invalid training") }
-    }
-
-    fun updateTraining(id: String, trainingDto: TrainingDto): Mono<TrainingDto> {
-        return Mono.just(trainingDto)
-            .map { it.toTraining(id) }
-            .flatMap { trainingRepository.save(it) }
-            .map(TrainingDto::fromTraining)
-            .onErrorMap { InvalidTrainingException(it.message ?: "Invalid training") }
-    }
-
-    fun deleteTraining(id: String): Mono<TrainingDto> {
-        return trainingRepository
-            .deleteById(id)
-            .then(Mono.just(TrainingDto(id)))
-    }
-
-    fun getExerciseSummaries(
-        exerciseIds: List<String>,
-        from: LocalDate,
-        to: LocalDate): Flux<ExerciseSummaryDto> {
-
-        return trainingRepository
-            .findByExerciseIdsFromDate(exerciseIds, from, to)
-            .map { Pair(it.date, it.exercises) }
-            .collectList()
-            .flatMapMany {
-                it.flatMap { (key, values) ->
-                    values.map { e -> key to e }
-                }.toFlux()
-            }
-            .groupBy { it.second.exerciseId }
-            .flatMap { grouped ->
-                grouped
-                    .map { it.first to ExerciseParametersDto.fromTrainingExercise(it.second) }
-                    .collectList()
-                    .map { ExerciseSummaryDto(grouped.key(), it.associate { (k, v) -> k to v }) }
-            }
-            .filter { exerciseIds.contains(it.id) }
+    fun findByDate(date: Date): Mono<TrainingDto> {
+        val matchOperation = match(Criteria.where("date").`is`(date))
+        val groupOperation = group("date")
+            .first("date").`as`("date")
+            .first("bodyweight").`as`("bodyweight")
+            .push(newAggregation(
+                project()
+                    .and("\$exercise").`as`("exercise")
+                    .and("\$sets").`as`("sets")
+            )).`as`("exercises")
+        val aggregation = newAggregation(matchOperation, groupOperation)
+        return reactiveMongoTemplate.aggregate(
+            aggregation, TrainingExercise::class.java, TrainingDto::class.java).next()
     }
 }

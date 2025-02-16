@@ -1,8 +1,8 @@
 import BodyweightChart from "../components/BodyweightChart";
 import { Box, Paper } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { DatePicker } from "@mui/x-date-pickers";
 import { subDays } from "date-fns";
+import ResponsiveFilterBar from "../components/ResponsiveFilterBar";
 
 const bodyWeightMap: Record<string, number> = {
     "2024-01-01": 70.0,
@@ -56,23 +56,19 @@ const bodyWeightMap: Record<string, number> = {
 const Bodyweight = () => {
     return (
         <Box sx={{ height: '100%', paddingX: '7px' }}>
-            <Box component={Paper} sx={{ height: '64px', paddingY: '1px', paddingX: '6px', display: 'flex' }}>
-                <Box sx={{ paddingY: '10px' }}>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DatePicker
-                            sx={{ paddingRight: 1, width: '160px' }}
-                            slotProps={{ textField: { size: "small" } }}
-                            label="From"
-                            name="from"
-                            value={subDays(new Date(), 180)}/>
-                        <DatePicker
-                            sx={{ paddingRight: 1, width: '160px' }}
-                            slotProps={{ textField: { size: "small" } }}
-                            label="To"
-                            name="to"
-                            value={new Date()}/>    
-                    </LocalizationProvider>
-                </Box>
+            <Box component={Paper} sx={{ height: '64px', paddingY: '12px', paddingX: '8px', display: 'flex' }}>
+                <ResponsiveFilterBar>
+                    <DatePicker
+                        slotProps={{ textField: { size: "small" } }}
+                        label="From"
+                        name="from"
+                        value={subDays(new Date(), 180)}/>
+                    <DatePicker
+                        slotProps={{ textField: { size: "small" } }}
+                        label="To"
+                        name="to"
+                        value={new Date()}/>
+                </ResponsiveFilterBar>
             </Box>
             <Box sx={{ height: 'calc(100% - 128px)', padding: '6px' }}>
                 <BodyweightChart data={bodyWeightMap}/>

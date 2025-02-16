@@ -1,9 +1,10 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, IconButton, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography } from "@mui/material";
 import { SyntheticEvent, useState } from "react";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { format, subDays } from "date-fns";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { DatePicker } from "@mui/x-date-pickers";
+import { LuDownload, LuPencilLine, LuPlus, LuTrash2, LuUpload } from "react-icons/lu";
+import ResponsiveFilterBar from "../components/ResponsiveFilterBar";
 
 const exercises = ["Squat", "Bench Press", "Deadlift", "Overhead Press", "Barbell Row", "Pull-Up", "Chin-Up", "Lunges", "Dips", "Face Pulls", "Lat Pulldown", "Seated Row", "Dumbbell Press", "Romanian Deadlift", "Bulgarian Split Squat", "Leg Press", "Calf Raise", "Hip Thrust", "Good Morning", "Plank", "Russian Twist", "Bicycle Crunch", "Cable Crunch", "Farmers Carry", "Kettlebell Swing", "Step-Ups", "Trap Bar Deadlift", "Incline Bench Press", "T-Bar Row", "Reverse Fly", "Landmine Press", "Pistol Squat", "Box Jumps", "Sled Push", "Battle Ropes", "Turkish Get-Up", "Dragon Flag", "Jefferson Deadlift", "One-Arm Dumbbell Row", "Zercher Squat", "Cable Crossover", "Chest Press Machine", "Hammer Curl", "Triceps Dip", "Close-Grip Bench Press", "Seated Calf Raise", "Landmine Squat", "Snatch Grip Deadlift", "Hanging Leg Raise", "Side Plank"];
 const bodyWeightMap: { [date: string]: number } = {
@@ -80,25 +81,35 @@ const Trainings = () => {
 
     return (
         <Box sx={{ height: '100%', paddingX: '5px' }}>
-            <Box component={Paper} sx={{ height: '64px', paddingY: '1px', paddingX: '4px', display: 'flex' }}>
-                <Box sx={{ paddingY: '10px', flexGrow: 1 }}>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DatePicker
-                            sx={{ paddingRight: 1, width: '155px' }}
-                            slotProps={{ textField: { size: "small" } }}
-                            label="From"
-                            name="from"
-                            value={subDays(new Date(), 180)}/>
-                        <DatePicker
-                            sx={{ paddingRight: 1, width: '155px' }}
-                            slotProps={{ textField: { size: "small" } }}
-                            label="To"
-                            name="to"
-                            value={new Date()}/>    
-                    </LocalizationProvider>
-                </Box>
-                <Box sx={{ paddingY: '10px' }}>
-                    <Button sx={{ height: '39px' }} variant="outlined" color="success">Add</Button>
+            <Box component={Paper} sx={{ height: '64px', paddingY: '12px', paddingX: '4px', display: 'flex', columnGap: '2px' }}>
+                <ResponsiveFilterBar>
+                    <DatePicker
+                        slotProps={{ textField: { size: "small" } }}
+                        label="From"
+                        name="from"
+                        value={subDays(new Date(), 180)}/>
+                    <DatePicker
+                        slotProps={{ textField: { size: "small" } }}
+                        label="To"
+                        name="to"
+                        value={new Date()}/> 
+                </ResponsiveFilterBar>
+                <Box sx={{ display: 'flex', columnGap: '4px' }}>
+                    <Tooltip title="Import" arrow>
+                        <IconButton sx={{ border: '1px solid gray', borderRadius: '4px', height: '40px' }}>
+                            <LuUpload/>
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Export" arrow>
+                        <IconButton sx={{ border: '1px solid gray', borderRadius: '4px', height: '40px' }}>
+                            <LuDownload/>
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Add" arrow>
+                        <IconButton color="success" sx={{ border: '1px solid gray', borderRadius: '4px', height: '40px' }}>
+                            <LuPlus/>
+                        </IconButton>
+                    </Tooltip>
                 </Box>
             </Box>
             <Box sx={{ height: 'calc(100% - 192px)', padding: '6px', overflowY: 'scroll' }}>
@@ -113,6 +124,18 @@ const Trainings = () => {
                             </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
+                            <Box sx={{ display: 'flex', columnGap: '4px' }}>
+                                <Tooltip title="Edit" arrow>
+                                    <IconButton color="secondary" sx={{ border: '1px solid gray', borderRadius: '4px' }}>
+                                        <LuPencilLine/>
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title="Delete" arrow>
+                                    <IconButton color="error" sx={{ border: '1px solid gray', borderRadius: '4px' }}>
+                                        <LuTrash2/>
+                                    </IconButton>
+                                </Tooltip>
+                            </Box>
                             <TableContainer component={Paper}>
                                 <Table sx={{ tableLayout: 'fixed' }}>
                                     <TableHead>
