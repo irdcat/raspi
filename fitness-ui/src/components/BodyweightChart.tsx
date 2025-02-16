@@ -33,8 +33,9 @@ const BodyweightChart = (props: { data: { [date: string]: number } }) => {
                     color: '#335656'
                 }
             },
-            min: (value) => value.min - 3,
-            max: (value) => value.max + 3
+            min: (value) => value.min - 1,
+            max: (value) => value.max + 1,
+            interval: 1
         },
         series: {
             name: 'Body Weight',

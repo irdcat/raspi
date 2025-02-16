@@ -6,6 +6,8 @@ import Bodyweight from './pages/Bodyweight';
 import Trainings from './pages/Trainings';
 import Analysis from './pages/Analysis';
 import Exercises from './pages/Exercises';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 
 const darkTheme = createTheme({
   palette: {
@@ -22,19 +24,21 @@ const darkTheme = createTheme({
 
 const App = () => {
   return (
-    <ThemeProvider theme={ darkTheme }>
-      <CssBaseline/>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout/>}>
-            <Route index element={<Bodyweight/>}/>
-            <Route path="trainings" element={<Trainings/>}/>
-            <Route path="exercises" element={<Exercises/>}/>
-            <Route path="analysis" element={<Analysis/>}/>
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <ThemeProvider theme={ darkTheme }>
+        <CssBaseline/>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout/>}>
+              <Route index element={<Bodyweight/>}/>
+              <Route path="trainings" element={<Trainings/>}/>
+              <Route path="exercises" element={<Exercises/>}/>
+              <Route path="analysis" element={<Analysis/>}/>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </LocalizationProvider>
   );
 }
 

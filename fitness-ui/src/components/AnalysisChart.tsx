@@ -1,20 +1,72 @@
-import { EChartsOption } from "echarts"
+import { EChartsOption, SeriesOption } from "echarts"
 import EChartsReact from "echarts-for-react"
+import { Metric, Summary } from "../types"
+import StringUtils from "../utils/StringUtils"
 
 const AnalysisChart = (props: { 
-    data: { 
-        [date: string]: {
-            bodyweight: number,
-            volume: number,
-            averageVolume: number,
-            minIntensity: number,
-            maxIntensity: number,
-            averageIntensity: number 
-        }
-    },
-    metric: "Volume" | "Intensity",
-    isBodyweight: boolean
+    data: Summary,
+    metric: Metric,
 }) => {
+    
+    const summaryToSeries = (summary: Summary, metric: Metric): SeriesOption[] => {
+        let series: SeriesOption[] = [];
+        let metricData: number[] = [];
+
+        switch (metric) {
+            case "volume":
+                metricData = Object.values(summary.parameters).map(p => p.volume);
+                break;
+            case "averageVolume":
+                metricData = Object.values(summary.parameters).map(p => p.averageVolume);
+                break;
+            case "minIntensity":
+                metricData = Object.values(summary.parameters).map(p => p.minIntensity);
+                break;
+            case "maxIntensity":
+                metricData = Object.values(summary.parameters).map(p => p.maxIntensity);
+                break;
+            case "averageIntensity":
+                metricData = Object.values(summary.parameters).map(p => p.averageIntensity);
+                break;
+        }
+
+        if (summary.exercise?.isBodyweight) {
+            let bodyweightData: number[] = [];
+            if (metric == "volume" || metric == "averageVolume") {
+                bodyweightData = Object.values(summary.parameters).map(p => p.bodyweightVolume);
+            } else {
+                bodyweightData = Object.values(summary.parameters).map(p => p.bodyweight);
+            }
+            let summedData: number[] = [];
+            for (let i = 0; i < metricData.length; i++) {
+                summedData[i] = metricData[i] + bodyweightData[i];
+            }
+            series = [{
+                name: `Bodyweight${metric === "volume" || metric === "averageVolume" ? ' Volume' : ''}`,
+                type: 'line',
+                stack: 'stack',
+                data: bodyweightData
+            }, {
+                name: `Added weight${metric === "volume" || metric === "averageVolume" ? ' volume' : ''}`,
+                type: 'line',
+                stack: 'stack',
+                data: metricData
+            }, {
+                name: "Overall weight",
+                type: 'line',
+                data: summedData
+            }]
+        } else {
+            series.push({
+                name: StringUtils.camelCaseToSpaced(metric),
+                type: 'line',
+                data: metricData
+            })
+        }
+
+        return series;
+    }
+
     let options: EChartsOption = {
         grid: {
             top: 25,
@@ -29,7 +81,7 @@ const AnalysisChart = (props: {
             }
         },
         xAxis: {
-            data: Object.keys(props.data),
+            data: Object.keys(props.data.parameters),
             axisTick: {
                 alignWithLabel: true
             }
@@ -44,27 +96,7 @@ const AnalysisChart = (props: {
                 show: true,
             }
         },
-        series: props.metric === "Volume" ? [{
-            name: "Volume",
-            type: 'line',
-            data: Object.values(props.data).map(d => d.volume)
-        }, {
-            name: "Average volume",
-            type: 'line',
-            data: Object.values(props.data).map(d => d.averageVolume)
-        }] : [{
-            name: "Average intensity",
-            type: 'line',
-            stack: props.isBodyweight ? 'stack' : undefined,
-            areaStyle: props.isBodyweight ? {} : undefined,
-            data: Object.values(props.data).map(d => d.averageIntensity)
-        }, {
-            name: "Bodyweight",
-            type: 'line',
-            stack: props.isBodyweight ? 'stack' : undefined,
-            areaStyle: props.isBodyweight ? {} : undefined,
-            data: Object.values(props.data).map(d => d.bodyweight)
-        }]
+        series: summaryToSeries(props.data, props.metric)
     }
 
     return (
