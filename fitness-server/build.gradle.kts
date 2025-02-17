@@ -28,7 +28,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 	implementation("org.springdoc:springdoc-openapi-starter-webflux-api:2.8.4")
-	implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.4")
+	implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.5")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-testcontainers")
 	testImplementation("io.projectreactor:reactor-test")
