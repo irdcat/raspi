@@ -20,7 +20,7 @@ const App = () => {
   return (
     <ThemeProvider theme={ darkTheme }>
       <CssBaseline/>
-      <BrowserRouter>
+      <BrowserRouter basename="/fitness">
         <Routes>
           <Route path="/" element={<Layout/>}>
             <Route index element={<Home/>}/>
