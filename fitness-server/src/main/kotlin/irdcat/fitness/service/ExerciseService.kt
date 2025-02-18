@@ -1,6 +1,6 @@
 package irdcat.fitness.service
 
-import org.springframework.data.domain.Sort
+import org.springframework.data.domain.Sort.Direction
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.aggregation.Aggregation.group
 import org.springframework.data.mongodb.core.aggregation.Aggregation.limit
@@ -18,25 +18,29 @@ import reactor.core.publisher.Mono
 class ExerciseService(
     private val reactiveMongoTemplate: ReactiveMongoTemplate
 ) {
+    companion object {
+        const val EXERCISE = "exercise"
+        const val EXERCISE_NAME = "exercise.name"
+        const val COUNT = "count"
+        const val GROUP_KEY = "_id"
+    }
 
     fun findAllNames(): Mono<List<String>> {
         return reactiveMongoTemplate
-            .findDistinct("exercise.name", TrainingExercise::class.java, String::class.java)
+            .findDistinct(EXERCISE_NAME, TrainingExercise::class.java, String::class.java)
             .collectList()
     }
 
     fun findCountedByName(name: String, page: Int, pageSize: Int): Flux<CountedExerciseDto> {
 
-        // TODO: Look for better way than filtering with regex
-
-        val matchOperation = match(Criteria.where("exercise.name").regex(name, "i"))
-        val groupOperation = group("exercise")
-            .count().`as`("count")
-            .push("exercise").`as`("exercise")
+        val nameCriteria = sanitizeRegexCriteria(name)
+        val matchOperation = match(Criteria.where(EXERCISE_NAME).regex(".*$nameCriteria.*", "i"))
+        val groupOperation = group(EXERCISE)
+            .count().`as`(COUNT)
         val projectionOperation = project()
-            .and("_id").`as`("exercise")
-            .and("count").`as`("count")
-        val sortOperation = sort(Sort.Direction.ASC, "exercise.name")
+            .and(GROUP_KEY).`as`(EXERCISE)
+            .and(COUNT).`as`(COUNT)
+        val sortOperation = sort(Direction.ASC, EXERCISE_NAME)
         val skipOperation = skip((page * pageSize).toLong())
         val limitOperation = limit(pageSize.toLong())
 
@@ -49,5 +53,9 @@ class ExerciseService(
             limitOperation)
         return reactiveMongoTemplate
             .aggregate(aggregation, TrainingExercise::class.java, CountedExerciseDto::class.java)
+    }
+
+    private fun sanitizeRegexCriteria(value: String): String {
+        return value.replace("/[#-.]|[\\[-^]|[?|{}]/g".toRegex(), "\\$&")
     }
 }

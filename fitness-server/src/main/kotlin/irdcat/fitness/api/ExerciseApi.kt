@@ -1,6 +1,5 @@
 package irdcat.fitness.api
 
-import irdcat.fitness.Constants
 import irdcat.fitness.Constants.RequestParameters
 import irdcat.fitness.service.CountedExerciseDto
 import irdcat.fitness.service.ExerciseService
@@ -20,11 +19,9 @@ class ExerciseApi(
 
     @GetMapping("/counted")
     fun findCounted(
-        @RequestParam(defaultValue = ".*") name: String,
+        @RequestParam name: String,
         @RequestParam(RequestParameters.PAGE, defaultValue = "0") page: Int,
         @RequestParam(RequestParameters.SIZE, defaultValue = "20") pageSize: Int): Flux<CountedExerciseDto> {
-
-        // TODO: Make name an optional parameter
 
         return exerciseService.findCountedByName(name, page, pageSize)
     }
