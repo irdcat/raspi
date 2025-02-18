@@ -29,6 +29,7 @@ export type SummaryParameters = {
     volume: number | null,
     averageVolume: number | null,
     bodyweightVolume: number | null,
+    averageBodyweightVolume: number | null,
     minIntensity: number | null,
     maxIntensity: number | null,
     averageIntensity: number | null,

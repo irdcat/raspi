@@ -1,5 +1,6 @@
 package irdcat.fitness.service
 
+import com.mongodb.BasicDBObject
 import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.aggregation.Aggregation.group
@@ -20,46 +21,56 @@ class TrainingService(
     private val reactiveMongoTemplate: ReactiveMongoTemplate
 ) {
 
-    fun findTrainingsBetweenDates(from: Date?, to: Date?, page: Int, pageSize: Int): Flux<TrainingDto> {
-        val dateCriteria = Criteria.where("date")
-        if (from != null && to != null) {
-            dateCriteria.gte(from).lte(to)
-        } else if (from != null) {
-            dateCriteria.gte(from)
-        } else if (to != null) {
-            dateCriteria.lte(to)
-        }
-
+    fun findTrainingsBetweenDates(from: Date, to: Date, page: Int, pageSize: Int): Flux<TrainingDto> {
+        val dateCriteria = Criteria.where("date").gte(from).lte(to)
         val matchOperation = match(dateCriteria)
         val groupOperation = group("date")
-            .first("date").`as`("date")
             .first("bodyweight").`as`("bodyweight")
-            .push(newAggregation(
-                project()
-                    .and("\$exercise").`as`("exercise")
-                    .and("\$sets").`as`("sets")
-            )).`as`("exercises")
+            .first("date").`as`("date")
+            .push(
+                BasicDBObject()
+                    .append("_id", "\$_id")
+                    .append("exercise", "\$exercise")
+                    .append("sets", "\$sets")
+            ).`as`("exercises")
+        val projectionOperation = project()
+            .and("date").`as`("date")
+            .and("bodyweight").`as`("bodyweight")
+            .and("exercises").`as`("exercises")
         val sortOperation = sort(Sort.Direction.DESC, "date")
         val skipOperation = skip((page * pageSize).toLong())
         val limitOperation = limit(pageSize.toLong())
+
         val aggregation = newAggregation(
-            matchOperation, groupOperation, sortOperation, skipOperation, limitOperation)
-        return reactiveMongoTemplate.aggregate(
-            aggregation, TrainingExercise::class.java, TrainingDto::class.java)
+            matchOperation,
+            groupOperation,
+            projectionOperation,
+            sortOperation,
+            skipOperation,
+            limitOperation)
+        return reactiveMongoTemplate
+            .aggregate(aggregation, TrainingExercise::class.java, TrainingDto::class.java)
     }
 
     fun findByDate(date: Date): Mono<TrainingDto> {
         val matchOperation = match(Criteria.where("date").`is`(date))
         val groupOperation = group("date")
-            .first("date").`as`("date")
             .first("bodyweight").`as`("bodyweight")
-            .push(newAggregation(
-                project()
-                    .and("\$exercise").`as`("exercise")
-                    .and("\$sets").`as`("sets")
-            )).`as`("exercises")
-        val aggregation = newAggregation(matchOperation, groupOperation)
-        return reactiveMongoTemplate.aggregate(
-            aggregation, TrainingExercise::class.java, TrainingDto::class.java).next()
+            .first("date").`as`("date")
+            .push(
+                BasicDBObject()
+                    .append("_id", "\$_id")
+                    .append("exercise", "\$exercise")
+                    .append("sets", "\$sets")
+            ).`as`("exercises")
+        val projectionOperation = project()
+            .and("date").`as`("date")
+            .and("bodyweight").`as`("bodyweight")
+            .and("exercises").`as`("exercises")
+
+        val aggregation = newAggregation(matchOperation, groupOperation, projectionOperation)
+        return reactiveMongoTemplate
+            .aggregate(aggregation, TrainingExercise::class.java, TrainingDto::class.java)
+            .next()
     }
 }

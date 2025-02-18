@@ -32,8 +32,12 @@ const AnalysisChart = (props: {
 
         if (summary.exercise?.isBodyweight) {
             let bodyweightData: number[] = [];
-            if (metric == "volume" || metric == "averageVolume") {
-                bodyweightData = Object.values(summary.parameters).map(p => p.bodyweightVolume);
+            if (metric === "volume" || metric === "averageVolume") {
+                if (metric === "volume") {
+                    bodyweightData = Object.values(summary.parameters).map(p => p.bodyweightVolume);
+                } else {
+                    bodyweightData = Object.values(summary.parameters).map(p => p.averageBodyweightVolume)
+                }
             } else {
                 bodyweightData = Object.values(summary.parameters).map(p => p.bodyweight);
             }

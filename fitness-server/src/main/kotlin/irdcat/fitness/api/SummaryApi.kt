@@ -1,6 +1,7 @@
 package irdcat.fitness.api
 
-import irdcat.fitness.service.SummaryDto
+import irdcat.fitness.service.BodyweightSummaryDto
+import irdcat.fitness.service.ExerciseSummaryDto
 import irdcat.fitness.service.SummaryService
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.format.annotation.DateTimeFormat.ISO
@@ -18,13 +19,20 @@ class SummaryApi(
     private val summaryService: SummaryService
 ) {
 
-    @GetMapping
-    fun findSummary(
-        @RequestParam @DateTimeFormat(iso = ISO.DATE) from: Date?,
-        @RequestParam @DateTimeFormat(iso = ISO.DATE) to: Date?,
-        @RequestParam name: String?,
-        @RequestParam fields: List<String>): Mono<SummaryDto> {
+    @GetMapping("/exercise")
+    fun getExerciseSummary(
+        @RequestParam @DateTimeFormat(iso = ISO.DATE) from: Date,
+        @RequestParam @DateTimeFormat(iso = ISO.DATE) to: Date,
+        @RequestParam name: String): Mono<ExerciseSummaryDto> {
 
-        return summaryService.calculateSummary(from, to, name, fields)
+        return summaryService.calculateExerciseSummary(from, to, name)
+    }
+
+    @GetMapping("/bodyweight")
+    fun getBodyweightSummary(
+        @RequestParam @DateTimeFormat(iso = ISO.DATE) from: Date,
+        @RequestParam @DateTimeFormat(iso = ISO.DATE) to: Date): Mono<BodyweightSummaryDto> {
+
+        return summaryService.calculateBodyweightSummary(from, to)
     }
 }

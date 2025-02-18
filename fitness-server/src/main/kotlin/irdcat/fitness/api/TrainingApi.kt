@@ -1,5 +1,6 @@
 package irdcat.fitness.api
 
+import irdcat.fitness.Constants.RequestParameters
 import irdcat.fitness.service.TrainingDto
 import irdcat.fitness.service.TrainingService
 import org.springframework.format.annotation.DateTimeFormat
@@ -22,10 +23,10 @@ class TrainingApi(
 
     @GetMapping
     fun findBetweenDates(
-        @RequestParam @DateTimeFormat(iso = ISO.DATE) from: Date?,
-        @RequestParam @DateTimeFormat(iso = ISO.DATE) to: Date?,
-        @RequestParam page: Int,
-        @RequestParam pageSize: Int): Flux<TrainingDto> {
+        @RequestParam @DateTimeFormat(iso = ISO.DATE) from: Date,
+        @RequestParam @DateTimeFormat(iso = ISO.DATE) to: Date,
+        @RequestParam(RequestParameters.PAGE, defaultValue = "0") page: Int,
+        @RequestParam(RequestParameters.SIZE, defaultValue = "20") pageSize: Int): Flux<TrainingDto> {
 
         return trainingService.findTrainingsBetweenDates(from, to, page, pageSize)
     }
