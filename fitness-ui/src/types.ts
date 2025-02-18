@@ -41,6 +41,10 @@ export type Summary = {
     parameters: Map<Date, SummaryParameters>
 }
 
+export type BodyweightSummary = {
+    parameters: Map<Date, number>
+}
+
 export const METRICS = [
     "volume", 
     "averageVolume", 

@@ -1,7 +1,9 @@
 import { EChartsOption } from "echarts"
 import EChartsReact from "echarts-for-react"
 
-const BodyweightChart = (props: { data: { [date: string]: number } }) => {
+const BodyweightChart = (props: { data: Map<Date, number> }) => {
+    const { data } = props
+    
     let options: EChartsOption = {
         grid: {
             top: 20,
@@ -16,7 +18,7 @@ const BodyweightChart = (props: { data: { [date: string]: number } }) => {
             }
         },
         xAxis: {
-            data: Object.keys(props.data),
+            data: Object.keys(data),
             axisTick: {
                 alignWithLabel: true
             }
@@ -33,14 +35,13 @@ const BodyweightChart = (props: { data: { [date: string]: number } }) => {
                     color: '#335656'
                 }
             },
-            min: (value) => value.min - 1,
-            max: (value) => value.max + 1,
+            min: (value) => Math.ceil(value.min) - 1,
             interval: 1
         },
         series: {
             name: 'Body Weight',
             type: 'line',
-            data: Object.values(props.data)
+            data: Object.values(data)
         }
     }
 
