@@ -4,7 +4,7 @@ import { subDays } from "date-fns";
 import { useState } from "react";
 import AnalysisChart from "../components/AnalysisChart";
 import ResponsiveFilterBar from "../components/ResponsiveFilterBar";
-import { Exercise, Metric, METRICS, Summary } from "../types";
+import { Metric, METRICS, Summary } from "../types";
 import StringUtils from "../utils/StringUtils";
 
 type AnalysisFilters = {
@@ -15,12 +15,11 @@ type AnalysisFilters = {
 }
 
 const Analysis = () => {
-    const [exerciseList, setExerciseList] = useState<Array<Exercise>>([]);
-    const [summary, setSummary] = useState<Summary>({
+    const [summary] = useState<Summary>({
         exercise: { name: "Name", isBodyweight: false },
         parameters: new Map()
     });
-    const [analysisFilters, setAnalysisFilters] = useState<AnalysisFilters>({
+    const [analysisFilters] = useState<AnalysisFilters>({
         from: subDays(new Date(), 180),
         to: new Date(),
         exerciseName: "",

@@ -45,6 +45,13 @@ export type BodyweightSummary = {
     parameters: Map<Date, number>
 }
 
+export type Page<T> = {
+    content: Array<T>,
+    currentPage: number,
+    pageSize: number,
+    totalResults: number
+}
+
 export const METRICS = [
     "volume", 
     "averageVolume", 
