@@ -30,7 +30,7 @@ const AnalysisChart = (props: {
                 break;
         }
 
-        if (summary.exercise?.isBodyweight) {
+        if (summary.exercise.isBodyweight) {
             let bodyweightData: number[] = [];
             if (metric === "volume" || metric === "averageVolume") {
                 if (metric === "volume") {
@@ -61,11 +61,11 @@ const AnalysisChart = (props: {
                 data: summedData
             }]
         } else {
-            series.push({
+            series = [{
                 name: StringUtils.camelCaseToSpaced(metric),
                 type: 'line',
                 data: metricData
-            })
+            }]
         }
 
         return series;

@@ -26,18 +26,18 @@ export type Training = {
 }
 
 export type SummaryParameters = {
-    volume: number | null,
-    averageVolume: number | null,
+    volume: number,
+    averageVolume: number,
+    minIntensity: number,
+    maxIntensity: number,
+    averageIntensity: number,
+    bodyweight: number,
     bodyweightVolume: number | null,
     averageBodyweightVolume: number | null,
-    minIntensity: number | null,
-    maxIntensity: number | null,
-    averageIntensity: number | null,
-    bodyweight: number | null
 }
 
 export type Summary = {
-    exercise: Exercise | null,
+    exercise: Exercise,
     parameters: Map<Date, SummaryParameters>
 }
 

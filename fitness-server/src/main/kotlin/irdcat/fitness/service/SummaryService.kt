@@ -1,7 +1,7 @@
 package irdcat.fitness.service
 
 import com.mongodb.BasicDBObject
-import org.springframework.data.domain.Sort.Direction.ASC
+import org.springframework.data.domain.Sort.Direction
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.aggregation.Aggregation.addFields
 import org.springframework.data.mongodb.core.aggregation.Aggregation.group
@@ -89,6 +89,7 @@ class SummaryService(
             .and(BODYWEIGHT).`as`(PARAMETERS_BODYWEIGHT)
             .and(BODYWEIGHT_VOLUME).`as`(PARAMETERS_BODYWEIGHT_VOLUME)
             .and(AVERAGE_BODYWEIGHT_VOLUME).`as`(PARAMETERS_AVERAGE_BODYWEIGHT_VOLUME)
+        var sortOperation = sort(Direction.ASC, DATE)
         val groupByExercise = group(EXERCISE)
             .push(BasicDBObject()
                 .append(DATE, "\$$DATE")
@@ -144,7 +145,7 @@ class SummaryService(
         val projectionOperation = project()
             .and(GROUP_KEY).`as`(DATE)
             .and(BODYWEIGHT).`as`(PARAMETER)
-        val sortOperation = sort(ASC, DATE)
+        val sortOperation = sort(Direction.ASC, DATE)
 
         val aggregation = newAggregation(
             matchOperation,
