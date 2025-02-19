@@ -9,7 +9,7 @@ type Filters = {
 }
 
 const Exercises = () => {
-    const pageSize = 50;
+    const pageSize = 30;
     const [countedExercises, setCountedExercises] = useState<Array<CountedExercise>>([])
     const [pageCount, setPageCount] = useState(1);
     const [loading, setLoading] = useState(true);

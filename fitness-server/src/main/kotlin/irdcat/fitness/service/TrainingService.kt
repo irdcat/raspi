@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation.skip
 import org.springframework.data.mongodb.core.aggregation.Aggregation.sort
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.util.Date
 
@@ -29,9 +28,10 @@ class TrainingService(
         const val EXERCISE = "exercise"
         const val EXERCISES = "exercises"
         const val SETS = "sets"
+        const val COUNT = "count"
     }
 
-    fun findTrainingsBetweenDates(from: Date, to: Date, page: Int, pageSize: Int): Flux<TrainingDto> {
+    fun findTrainingsBetweenDates(from: Date, to: Date, page: Long, pageSize: Long): Mono<Page<TrainingDto>> {
 
         val dateCriteria = Criteria.where(DATE).gte(from).lte(to)
         val matchOperation = match(dateCriteria)
@@ -50,6 +50,8 @@ class TrainingService(
         val sortOperation = sort(Direction.DESC, DATE)
         val skipOperation = skip((page * pageSize).toLong())
         val limitOperation = limit(pageSize.toLong())
+        val groupCountingOperation = group()
+            .count().`as`(COUNT)
 
         val aggregation = newAggregation(
             matchOperation,
@@ -58,8 +60,24 @@ class TrainingService(
             sortOperation,
             skipOperation,
             limitOperation)
-        return reactiveMongoTemplate
+
+        val countingAggregation = newAggregation(
+            matchOperation,
+            groupOperation,
+            groupCountingOperation)
+
+        data class CountIntermediate(val count: Long)
+
+        val resultsMono = reactiveMongoTemplate
             .aggregate(aggregation, TrainingExercise::class.java, TrainingDto::class.java)
+            .collectList()
+        val countMono = reactiveMongoTemplate
+            .aggregate(countingAggregation, TrainingExercise::class.java, CountIntermediate::class.java)
+            .next()
+
+        return resultsMono
+            .zipWith(countMono)
+            .map { Page(it.t1, page, pageSize, it.t2.count) }
     }
 
     fun findByDate(date: Date): Mono<TrainingDto> {
