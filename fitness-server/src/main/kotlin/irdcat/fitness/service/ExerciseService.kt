@@ -1,7 +1,5 @@
 package irdcat.fitness.service
 
-import com.mongodb.BasicDBObject
-import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort.Direction
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.aggregation.Aggregation.group
@@ -32,7 +30,8 @@ class ExerciseService(
             .collectList()
     }
 
-    fun findCountedByName(name: String?, page: Long, pageSize: Long): Mono<Page<CountedExerciseDto>> {
+    fun findCountedByName(
+        name: String?, page: Long, pageSize: Long): Mono<Page<CountedExerciseDto>> {
 
         val nameCriteria = sanitizeRegexCriteria(name.orEmpty())
         val matchOperation = match(Criteria.where(EXERCISE_NAME).regex(".*$nameCriteria.*", "i"))
@@ -44,12 +43,8 @@ class ExerciseService(
         val sortOperation = sort(Direction.ASC, EXERCISE_NAME)
         val skipOperation = skip((page * pageSize).toLong())
         val limitOperation = limit(pageSize.toLong())
-        val groupEverythingOperation = group()
-            .count().`as`("totalCount")
-            .push(BasicDBObject()
-                .append("exercise", "\$exercise")
-                .append("count", "\$count"))
-            .`as`("results")
+        val countingGroupOperation = group()
+            .count().`as`(COUNT)
 
         val aggregation = newAggregation(
             matchOperation,
@@ -57,18 +52,25 @@ class ExerciseService(
             projectionOperation,
             sortOperation,
             skipOperation,
-            limitOperation,
-            groupEverythingOperation)
+            limitOperation)
 
-        data class AggregateResult(
-            val results: List<CountedExerciseDto>,
-            val totalCount: Long
-        )
+        val countingAggregation = newAggregation(
+            matchOperation,
+            groupOperation,
+            countingGroupOperation)
 
-        return reactiveMongoTemplate
-            .aggregate(aggregation, TrainingExercise::class.java, AggregateResult::class.java)
+        data class CountIntermediate(val count: Long)
+
+        val resultsMono = reactiveMongoTemplate
+            .aggregate(aggregation, TrainingExercise::class.java, CountedExerciseDto::class.java)
+            .collectList()
+        val countMono = reactiveMongoTemplate
+            .aggregate(countingAggregation, TrainingExercise::class.java, CountIntermediate::class.java)
             .next()
-            .map { Page(it.results, page, pageSize, it.totalCount) }
+
+        return resultsMono
+            .zipWith(countMono)
+            .map { Page(it.t1, page, pageSize, it.t2.count) }
     }
 
     private fun sanitizeRegexCriteria(value: String): String {
