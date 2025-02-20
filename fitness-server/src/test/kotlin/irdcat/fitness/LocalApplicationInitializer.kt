@@ -46,6 +46,7 @@ class LocalApplicationInitializer(
             }
             .collectList()
             .flatMapMany { reactiveMongoTemplate.insert(it, TrainingExercise::class.java) }
-            .subscribe { logger.info("Added exercise {}", it) }
+            .count()
+            .subscribe { logger.info("Initialized DB with {} training exercises", it) }
     }
 }
