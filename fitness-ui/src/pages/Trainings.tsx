@@ -14,7 +14,7 @@ type Filters = {
 }
 
 const Trainings = () => {
-    const pageSize = 30;
+    const pageSize = 25;
     const [trainings, setTrainings] = useState<Array<Training>>([]);
     const [pageCount, setPageCount] = useState(1);
     const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ const Trainings = () => {
             setLoading(true);
             const from = format(filters.from, 'yyyy-MM-dd');
             const to = format(filters.to, 'yyyy-MM-dd');
-            const result = (await fetch(`/api/trainings?from=${from}&to=${to}&page=${filters.page-1}&pageSize=${pageSize}`)
+            const result = (await fetch(`/api/trainings?from=${from}&to=${to}&page=${filters.page-1}&size=${pageSize}`)
                 .then(r => r.json()) as Page<Training>);
             setTrainings(result.content);
             setPageCount(Math.ceil(result.totalResults / pageSize));

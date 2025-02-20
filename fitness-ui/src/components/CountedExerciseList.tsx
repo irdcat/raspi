@@ -10,7 +10,7 @@ const CountedExerciseList = (props: { exercises: Array<CountedExercise> }) => {
             {exercises.map((countedExercise, index) => (
                 <ListItem key={index} disablePadding>
                     <ListItemButton>
-                        <Box sx={{ display: 'flex', width: '100%', columnGap: 1 }}>
+                        <Box sx={{ display: 'flex', width: '100%', columnGap: 1, padding: '3px' }}>
                             <Box sx={{ flexGrow: 1 }}>
                                 <Typography>
                                     {countedExercise.exercise.name}

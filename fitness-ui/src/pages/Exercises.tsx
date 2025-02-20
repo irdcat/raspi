@@ -9,7 +9,7 @@ type Filters = {
 }
 
 const Exercises = () => {
-    const pageSize = 30;
+    const pageSize = 25;
     const [countedExercises, setCountedExercises] = useState<Array<CountedExercise>>([])
     const [pageCount, setPageCount] = useState(1);
     const [loading, setLoading] = useState(true);
@@ -21,7 +21,7 @@ const Exercises = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            const result = (await fetch(`/api/exercises/counted?page=${filters.page-1}&pageSize=${pageSize}${filters.name.length === 0 ? '' : '&name=' + filters.name}`)
+            const result = (await fetch(`/api/exercises/counted?page=${filters.page-1}&size=${pageSize}${filters.name.length === 0 ? '' : '&name=' + filters.name}`)
                 .then(r => r.json())) as Page<CountedExercise>;
             setCountedExercises(result.content);
             setPageCount(Math.ceil(result.totalResults / pageSize));

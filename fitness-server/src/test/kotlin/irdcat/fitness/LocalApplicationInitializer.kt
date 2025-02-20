@@ -40,7 +40,7 @@ class LocalApplicationInitializer(
             .flatMapMany { it.toFlux() }
             .map {
                 val originalDate = it.date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-                val daysDifference = LocalDate.of(2022, 3, 5).toEpochDay() - originalDate.toEpochDay()
+                val daysDifference = LocalDate.of(2022, 4, 8).toEpochDay() - originalDate.toEpochDay()
                 val newDate = applicationStartDate.minusDays(daysDifference)
                 it.copy(date = Date.from(newDate.atStartOfDay(ZoneId.systemDefault()).toInstant()))
             }
