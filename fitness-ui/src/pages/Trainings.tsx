@@ -5,7 +5,11 @@ import { LuDownload, LuPlus, LuUpload } from "react-icons/lu";
 import ResponsiveFilterBar from "../components/ResponsiveFilterBar";
 import TrainingList from "../components/TrainingsList";
 import { useEffect, useState } from "react";
-import { Page, Training } from "../types";
+import { Training } from "../types";
+import { fetchTraining, fetchTrainings } from "../api/trainingApi";
+import { useDialogs } from "@toolpad/core";
+import DatePromptDialog from "../components/DatePromptDialog";
+import { useNavigate } from "react-router-dom";
 
 type Filters = {
     from: Date,
@@ -23,14 +27,13 @@ const Trainings = () => {
         to: new Date(),
         page: 1
     });
+    const dialogs = useDialogs();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            const from = format(filters.from, 'yyyy-MM-dd');
-            const to = format(filters.to, 'yyyy-MM-dd');
-            const result = (await fetch(`/api/trainings?from=${from}&to=${to}&page=${filters.page-1}&size=${pageSize}`)
-                .then(r => r.json()) as Page<Training>);
+            const result = await fetchTrainings(filters.from, filters.to, filters.page, pageSize);
             setTrainings(result.content);
             setPageCount(Math.ceil(result.totalResults / pageSize));
             setLoading(false);
@@ -53,8 +56,21 @@ const Trainings = () => {
             setFilters(prevFilter => ({
                 ...prevFilter,
                 [fieldName]: value
-            }))
+            }));
         }
+
+    const handleTrainingAdd = async () => {
+        const promptResult = await dialogs.open(DatePromptDialog);
+        if (promptResult === null) {
+            return;
+        }
+        const training = await fetchTraining(promptResult);
+        if (training !== null) {
+            await dialogs.alert("Training with the given date exists! Edit appropriate training instead.");
+        } else {
+            navigate(`/trainings/${format(promptResult, "yyyy-MM-dd")}`);
+        }
+    }
 
     return (
         <>
@@ -86,13 +102,16 @@ const Trainings = () => {
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Add" arrow>
-                            <IconButton color="success" sx={{ border: '1px solid gray', borderRadius: '4px', height: '40px' }}>
+                            <IconButton 
+                                sx={{ border: '1px solid gray', borderRadius: '4px', height: '40px' }}
+                                onClick={async () => await handleTrainingAdd()}
+                                color="success">
                                 <LuPlus/>
                             </IconButton>
                         </Tooltip>
                     </Box>
                 </Box>
-                <Box sx={{ height: 'calc(100% - 192px)', padding: '6px', overflowY: 'scroll' }}>
+                <Box sx={{ height: 'calc(100% - 192px)', padding: '6px', overflowY: 'auto' }}>
                     <TrainingList trainings={trainings}/>
                 </Box>
                 <Box component={Paper} sx={{ paddingY: '16px', paddingX: '16px', height: '64px' }}>

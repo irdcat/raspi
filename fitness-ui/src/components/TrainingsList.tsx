@@ -4,13 +4,31 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, IconButton, Paper, 
 import { format } from "date-fns";
 import { LuPencilLine, LuTrash2 } from "react-icons/lu";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useNavigate } from "react-router-dom";
+import { useDialogs } from "@toolpad/core";
 
 const TrainingList = (props: { trainings: Array<Training> }) => {
     const { trainings } = props;
     const [expanded, setExpanded] = useState<number | false>(false);
+    const navigate = useNavigate();
+    const dialogs = useDialogs();
 
     const handleExpansion = (panel: number) => (event: SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
+    }
+
+    const handleTrainingEdit = (date: Date) => {
+        const dateString = format(date, "yyyy-MM-dd");
+        navigate(`/trainings/${dateString}`);
+    }
+
+    const handleTrainingDelete = async (date: Date) => {
+        const dateString = format(date, "dd.MM.yyyy");
+        const result = await dialogs.confirm(`Are you sure you want to delete training from ${dateString}`);
+        if (!result) {
+            return;
+        }
+        // TODO: Delete training
     }
 
     return (
@@ -28,12 +46,18 @@ const TrainingList = (props: { trainings: Array<Training> }) => {
                     <AccordionDetails>
                         <Box sx={{ display: 'flex', columnGap: '4px' }}>
                             <Tooltip title="Edit" arrow>
-                                <IconButton color="secondary" sx={{ border: '1px solid gray', borderRadius: '4px' }}>
+                                <IconButton 
+                                    sx={{ border: '1px solid gray', borderRadius: '4px' }}
+                                    color="secondary"
+                                    onClick={() => handleTrainingEdit(training.date)}>
                                     <LuPencilLine/>
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Delete" arrow>
-                                <IconButton color="error" sx={{ border: '1px solid gray', borderRadius: '4px' }}>
+                                <IconButton 
+                                    sx={{ border: '1px solid gray', borderRadius: '4px' }}
+                                    color="error"
+                                    onClick={() => handleTrainingDelete(training.date)}>
                                     <LuTrash2/>
                                 </IconButton>
                             </Tooltip>

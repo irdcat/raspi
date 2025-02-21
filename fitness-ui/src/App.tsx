@@ -8,6 +8,7 @@ import Analysis from './pages/Analysis';
 import Exercises from './pages/Exercises';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import TrainingDetails from './pages/TrainingDetails';
 
 const darkTheme = createTheme({
   palette: {
@@ -16,7 +17,30 @@ const darkTheme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: () => ({
-        body: darkScrollbar()
+        body: {
+          "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
+              backgroundColor: 'rgba(23, 23, 23, 0.23)',
+              width: '5px'
+          },
+          "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
+              borderRadius: 13,
+              backgroundColor: 'rgba(96, 96, 96, 0.73)',
+              minHeight: 26,
+              border: 'none'
+          },
+          "&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus": {
+              backgroundColor: 'rgba(96, 96, 96, 0.84)'
+          },
+          "&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active": {
+              backgroundColor: 'rgba(149, 149, 149, 0.93)'
+          },
+          "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover": {
+              backgroundColor: 'rgba(149, 149, 149, 0.73)'
+          },
+          "&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner": {
+              backgroundColor: 'rgba(0, 0, 0, 1)'
+          }
+        }
       })
     }
   }
@@ -32,6 +56,7 @@ const App = () => {
             <Route path="/" element={<Layout/>}>
               <Route index element={<Bodyweight/>}/>
               <Route path="trainings" element={<Trainings/>}/>
+              <Route path="trainings/:dateString" element={<TrainingDetails/>}/>
               <Route path="exercises" element={<Exercises/>}/>
               <Route path="analysis" element={<Analysis/>}/>
             </Route>

@@ -14,6 +14,7 @@ import reactor.kotlin.core.publisher.toFlux
 import reactor.kotlin.core.publisher.toMono
 import java.time.LocalDate
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.util.Date
 
 @Profile("!test")
@@ -39,10 +40,10 @@ class LocalApplicationInitializer(
             .map { yaml.readValue(it, object: TypeReference<List<TrainingExercise>>() {}) }
             .flatMapMany { it.toFlux() }
             .map {
-                val originalDate = it.date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+                val originalDate = it.date.toInstant().atZone(ZoneOffset.UTC).toLocalDate()
                 val daysDifference = LocalDate.of(2022, 5, 2).toEpochDay() - originalDate.toEpochDay()
                 val newDate = applicationStartDate.minusDays(daysDifference)
-                it.copy(date = Date.from(newDate.atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                it.copy(date = Date.from(newDate.atStartOfDay(ZoneOffset.UTC).toInstant()))
             }
             .collectList()
             .flatMapMany { reactiveMongoTemplate.insert(it, TrainingExercise::class.java) }

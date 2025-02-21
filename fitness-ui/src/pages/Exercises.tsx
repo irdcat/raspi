@@ -1,7 +1,8 @@
 import { Backdrop, Box, CircularProgress, Pagination, Paper, TextField } from "@mui/material";
 import CountedExerciseList from "../components/CountedExerciseList";
 import { useEffect, useState } from "react";
-import { CountedExercise, Page } from "../types";
+import { CountedExercise } from "../types";
+import { fetchCountedExercises } from "../api/exerciseApi";
 
 type Filters = {
     name: string,
@@ -21,8 +22,7 @@ const Exercises = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            const result = (await fetch(`/api/exercises/counted?page=${filters.page-1}&size=${pageSize}${filters.name.length === 0 ? '' : '&name=' + filters.name}`)
-                .then(r => r.json())) as Page<CountedExercise>;
+            const result = await fetchCountedExercises(filters.name, filters.page, pageSize);
             setCountedExercises(result.content);
             setPageCount(Math.ceil(result.totalResults / pageSize));
             setLoading(false);
@@ -56,7 +56,7 @@ const Exercises = () => {
                         value={filters.name}
                         onChange={handleNameChange}/>
                 </Box>
-                <Box sx={{ padding: 1, overflowY: 'scroll', height: 'calc(100% - 192px)' }}>
+                <Box sx={{ padding: 1, overflowY: 'auto', height: 'calc(100% - 192px)' }}>
                     <CountedExerciseList exercises={countedExercises}/>
                 </Box>
                 <Box component={Paper} sx={{ paddingY: '16px', paddingX: '16px', height: '64px' }}>

@@ -1,4 +1,5 @@
 import { AppBar, Box, Button, Toolbar } from "@mui/material";
+import { DialogsProvider } from "@toolpad/core";
 import { Outlet, useLocation, useNavigate } from "react-router-dom"
 
 const locations: { label: string, path: string }[] = [
@@ -27,7 +28,9 @@ const Layout = () => {
                 </Toolbar>
             </AppBar>
             <Box sx={{ paddingTop: '60px', height: '100%' }}>
-                <Outlet/>
+                <DialogsProvider>
+                    <Outlet/>
+                </DialogsProvider>
             </Box>
         </Box>
     )

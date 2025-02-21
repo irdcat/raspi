@@ -1,7 +1,7 @@
 import { EChartsOption, SeriesOption } from "echarts"
 import EChartsReact from "echarts-for-react"
 import { Metric, Summary } from "../types"
-import StringUtils from "../utils/StringUtils"
+import { camelCaseToSpaced } from "../utils/stringUtils"
 
 const AnalysisChart = (props: { 
     data: Summary,
@@ -54,6 +54,7 @@ const AnalysisChart = (props: {
                 name: `Added weight${metric === "volume" || metric === "averageVolume" ? ' volume' : ''}`,
                 type: 'line',
                 stack: 'stack',
+                areaStyle: {},
                 data: metricData
             }, {
                 name: "Overall weight",
@@ -62,7 +63,7 @@ const AnalysisChart = (props: {
             }]
         } else {
             series = [{
-                name: StringUtils.camelCaseToSpaced(metric),
+                name: camelCaseToSpaced(metric),
                 type: 'line',
                 data: metricData
             }]

@@ -1,11 +1,14 @@
 import { Autocomplete, Backdrop, Box, CircularProgress, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField } from "@mui/material";
 import { DatePicker, DateValidationError, PickerChangeHandlerContext } from "@mui/x-date-pickers";
-import { format, subDays } from "date-fns";
+import { subDays } from "date-fns";
 import { SyntheticEvent, useEffect, useState } from "react";
 import AnalysisChart from "../components/AnalysisChart";
 import ResponsiveFilterBar from "../components/ResponsiveFilterBar";
 import { Metric, METRICS, Summary } from "../types";
-import StringUtils from "../utils/StringUtils";
+import { fetchExerciseSummary } from "../api/summaryApi";
+import { fetchExerciseNames } from "../api/exerciseApi";
+import { useDialogs } from "@toolpad/core";
+import { camelCaseToSpaced } from "../utils/stringUtils";
 
 type AnalysisFilters = {
     from: Date,
@@ -26,12 +29,13 @@ const Analysis = () => {
         to: new Date(),
         exerciseName: ""
     });
+    const dialogs = useDialogs();
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            const response = await fetch("/api/exercises/names").then(r => r.json());
-            setExerciseNames(response as Array<string>);
+            const result = await fetchExerciseNames();
+            setExerciseNames(result);
             setLoading(false);
         };
         fetchData();
@@ -40,7 +44,8 @@ const Analysis = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            if (analysisFilters.exerciseName === "") {
+            const { exerciseName, from, to } = analysisFilters;
+            if (exerciseName === "") {
                 setSummary({ 
                     exercise: { name: "", isBodyweight: false },
                      parameters: new Map() 
@@ -48,12 +53,8 @@ const Analysis = () => {
                 setLoading(false);
                 return;
             }
-
-            const from = format(analysisFilters.from, "yyyy-MM-dd");
-            const to = format(analysisFilters.to, "yyyy-MM-dd");
-            const response = await fetch(`/api/summary/exercise?name=${analysisFilters.exerciseName}&from=${from}&to=${to}`)
-                .then(r => r.json());
-            setSummary(response as Summary);
+            const result = await fetchExerciseSummary(from, to, exerciseName);
+            setSummary(result);
             setLoading(false);
         };
         fetchData();
@@ -119,7 +120,7 @@ const Analysis = () => {
                                 label="Metric"
                                 onChange={handleMetricChange}>
                                 {METRICS.map((m, index) => (
-                                    <MenuItem value={m} key={index}>{StringUtils.camelCaseToSpaced(m)}</MenuItem>
+                                    <MenuItem value={m} key={index}>{camelCaseToSpaced(m)}</MenuItem>
                                 ))}
                             </Select>
                         </FormControl>

@@ -1,10 +1,10 @@
 import BodyweightChart from "../components/BodyweightChart";
 import { Backdrop, Box, CircularProgress, Paper } from "@mui/material";
 import { DatePicker, DateValidationError, PickerChangeHandlerContext } from "@mui/x-date-pickers";
-import { format, subDays } from "date-fns";
+import { subDays } from "date-fns";
 import ResponsiveFilterBar from "../components/ResponsiveFilterBar";
 import { useEffect, useState } from "react";
-import { BodyweightSummary } from "../types";
+import { fetchBodyweightSummary } from "../api/summaryApi";
 
 type Filters = {
     from: Date,
@@ -21,13 +21,10 @@ const Bodyweight = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const from = format(filters.from, 'yyyy-MM-dd')
-            const to = format(filters.to, 'yyyy-MM-dd')
             setLoading(true);
-            const result = (await fetch(`/api/summary/bodyweight?from=${from}&to=${to}`)
-                .then(r => r.json())) as BodyweightSummary
-            setBodyweights(result.parameters)
-            setLoading(false)
+            const result = await fetchBodyweightSummary(filters.from, filters.to);
+            setBodyweights(result.parameters);
+            setLoading(false);
         }
         fetchData();
     }, [filters]);
@@ -40,7 +37,7 @@ const Bodyweight = () => {
             setFilters(prevFilter => ({
                 ...prevFilter,
                 [fieldName]: value
-            }))
+            }));
         }
 
     return (
