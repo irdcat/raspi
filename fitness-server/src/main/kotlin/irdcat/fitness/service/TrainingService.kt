@@ -1,6 +1,7 @@
 package irdcat.fitness.service
 
 import com.mongodb.BasicDBObject
+import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Sort.Direction
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.aggregation.Aggregation.group
@@ -13,6 +14,7 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation.sort
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
 import java.util.Date
 
 @Service
@@ -21,6 +23,7 @@ class TrainingService(
 ) {
 
     companion object {
+        private val logger = LoggerFactory.getLogger(this::class.java)
 
         const val GROUP_KEY = "_id"
         const val DATE = "date"
@@ -75,9 +78,12 @@ class TrainingService(
             .aggregate(countingAggregation, TrainingExercise::class.java, CountIntermediate::class.java)
             .next()
 
+        logger.debug("Find between dates aggregation: {}", aggregation)
+        logger.debug("Find between dates counting aggregation: {}", countingAggregation)
         return resultsMono
             .zipWith(countMono)
             .map { Page(it.t1, page, pageSize, it.t2.count) }
+            .doOnNext { logger.debug("Training Page: [page={}, size={}, total={}]", it.currentPage, it.pageSize, it.totalResults) }
     }
 
     fun findByDate(date: Date): Mono<TrainingDto> {
@@ -102,8 +108,20 @@ class TrainingService(
             groupOperation,
             limitOperation,
             projectionOperation)
+        logger.debug("Find by date aggregation: {}", aggregation)
         return reactiveMongoTemplate
             .aggregate(aggregation, TrainingExercise::class.java, TrainingDto::class.java)
             .next()
+            .doOnNext { logger.debug("TrainingDto: {}", it) }
+    }
+
+    fun createOrUpdate(trainingDto: TrainingDto): Mono<TrainingDto> {
+
+        return trainingDto.toMono()
+            .map(TrainingDto::toTrainingExercises)
+            .flatMapMany { reactiveMongoTemplate.insert(it, TrainingExercise::class.java) }
+            .doOnNext { logger.debug("Training Exercise: {}", it) }
+            .collectList()
+            .map(TrainingDto::fromTrainingExercises)
     }
 }

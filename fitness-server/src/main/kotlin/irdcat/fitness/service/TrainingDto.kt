@@ -12,4 +12,26 @@ data class TrainingDto(
     val bodyweight: Float,
 
     val exercises: List<TrainingExerciseDto>
-)
+) {
+    companion object {
+        fun fromTrainingExercises(trainingExercises: List<TrainingExercise>): TrainingDto {
+            return TrainingDto(
+                date = trainingExercises.map(TrainingExercise::date).first(),
+                bodyweight = trainingExercises.map(TrainingExercise::bodyweight).first(),
+                exercises = trainingExercises.map(TrainingExerciseDto::fromTrainingExercise)
+            )
+        }
+    }
+
+    fun toTrainingExercises(): List<TrainingExercise> {
+        return exercises.map {
+            TrainingExercise(
+                id = it.id.ifEmpty { null },
+                exercise = it.exercise.toExercise(),
+                bodyweight = bodyweight,
+                date = date,
+                sets = it.sets.map(TrainingExerciseSetDto::toTrainingExerciseSet)
+            )
+        }
+    }
+}

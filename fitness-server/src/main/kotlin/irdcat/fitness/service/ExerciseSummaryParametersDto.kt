@@ -10,8 +10,8 @@ data class ExerciseSummaryParametersDto(
     val minIntensity: Float,
     val maxIntensity: Float,
     val averageIntensity: Float,
+    val bodyweight: Float,
 
-    val bodyweight: Float?,
-    val bodyweightVolume: Float?,
-    val averageBodyweightVolume: Float?
+    val bodyweightVolume: Float? = null,
+    val averageBodyweightVolume: Float? = null
 )

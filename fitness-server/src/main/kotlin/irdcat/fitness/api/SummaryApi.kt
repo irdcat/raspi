@@ -3,6 +3,7 @@ package irdcat.fitness.api
 import irdcat.fitness.service.BodyweightSummaryDto
 import irdcat.fitness.service.ExerciseSummaryDto
 import irdcat.fitness.service.SummaryService
+import org.slf4j.LoggerFactory
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.format.annotation.DateTimeFormat.ISO
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
@@ -19,12 +20,17 @@ class SummaryApi(
     private val summaryService: SummaryService
 ) {
 
+    companion object {
+        private val logger = LoggerFactory.getLogger(this::class.java)
+    }
+
     @GetMapping("/exercise")
     fun getExerciseSummary(
         @RequestParam @DateTimeFormat(iso = ISO.DATE) from: Date,
         @RequestParam @DateTimeFormat(iso = ISO.DATE) to: Date,
         @RequestParam name: String): Mono<ExerciseSummaryDto> {
 
+        logger.info("Requested exercise summary [name={}, from={}, to={}]", name, from, to)
         return summaryService.calculateExerciseSummary(from, to, name)
     }
 
@@ -33,6 +39,7 @@ class SummaryApi(
         @RequestParam @DateTimeFormat(iso = ISO.DATE) from: Date,
         @RequestParam @DateTimeFormat(iso = ISO.DATE) to: Date): Mono<BodyweightSummaryDto> {
 
+        logger.info("Requested bodyweight summary [from={}, to={}]", from, to)
         return summaryService.calculateBodyweightSummary(from, to)
     }
 }

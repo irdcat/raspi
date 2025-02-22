@@ -1,6 +1,7 @@
 package irdcat.fitness.service
 
 import com.mongodb.BasicDBObject
+import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Sort.Direction
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.aggregation.Aggregation.addFields
@@ -24,7 +25,7 @@ class SummaryService(
 ) {
 
     companion object {
-
+        private val logger = LoggerFactory.getLogger(this::class.java)
         private val dateFormatter = SimpleDateFormat("yyyy-MM-dd")
 
         const val GROUP_KEY = "_id"
@@ -105,6 +106,7 @@ class SummaryService(
             addFieldsOperation,
             groupByDateOperation,
             projectByDate,
+            sortOperation,
             groupByExercise,
             projectByExercise)
 
@@ -118,6 +120,7 @@ class SummaryService(
             val data: List<IntermediateParametersAggregation>
         )
 
+        logger.debug("Exercise Summary Aggregation: {}", aggregation)
         return reactiveMongoTemplate
             .aggregate(aggregation, TrainingExercise::class.java, IntermediateAggregation::class.java)
             .next()
@@ -134,6 +137,7 @@ class SummaryService(
                     }
                 )
             }
+            .doOnNext { logger.debug("Exercise Summary: [name={}, dataPoints={}]", it.exercise.name, it.parameters.size) }
     }
 
     fun calculateBodyweightSummary(from: Date, to: Date): Mono<BodyweightSummaryDto> {
@@ -158,10 +162,12 @@ class SummaryService(
             val parameter: Float
         )
 
+        logger.debug("Bodyweight Summary Aggregation: {}", aggregation)
         return reactiveMongoTemplate
             .aggregate(aggregation, TrainingExercise::class.java, IntermediateAggregation::class.java)
             .map { Pair(dateFormatter.format(it.date), it.parameter.toFloat()) }
             .collectList()
             .map { BodyweightSummaryDto(it.toMap()) }
+            .doOnNext { logger.debug("Bodyweight Summary: [dataPoints={}]", it.parameters.size) }
     }
 }
