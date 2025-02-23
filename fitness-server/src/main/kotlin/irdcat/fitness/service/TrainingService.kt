@@ -24,7 +24,6 @@ import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import reactor.util.function.Tuples
 import java.util.Date
-import java.util.Objects
 import java.util.UUID
 
 @Service
@@ -120,9 +119,10 @@ class TrainingService(
         val criteria = findByDateCriteria(trainingDto.date)
         val query = Query().addCriteria(criteria)
 
-        val existingExerciseIdsFlux = reactiveMongoTemplate
+        val existingExerciseIdsMono = reactiveMongoTemplate
             .find(query, TrainingExercise::class.java)
             .map(TrainingExercise::id)
+            .collectList()
 
         val addedExercisesFlux = trainingDto.toMono()
             .map(TrainingDto::toTrainingExercises)
@@ -136,7 +136,7 @@ class TrainingService(
 
         val updatedExercisesFlux = exerciseIdsFlux
             .collectList()
-            .zipWith(existingExerciseIdsFlux.collectList())
+            .zipWith(existingExerciseIdsMono)
             .map { it.t1.intersect(it.t2) }
             .doOnNext { logger.debug("Attempting to update {} exercises", it.size) }
             .zipWith(trainingDto.toMono())
@@ -148,7 +148,7 @@ class TrainingService(
 
         return exerciseIdsFlux
             .collectList()
-            .zipWith(existingExerciseIdsFlux.collectList())
+            .zipWith(existingExerciseIdsMono)
             .map { it.t2.subtract(it.t1) }
             .doOnNext { logger.debug("Attempting to delete {} exercises.", it.size) }
             .map { Criteria.where(ID).`in`(it) }
