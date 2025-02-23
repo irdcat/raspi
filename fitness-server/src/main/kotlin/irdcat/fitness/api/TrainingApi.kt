@@ -2,7 +2,6 @@ package irdcat.fitness.api
 
 import irdcat.fitness.Constants.RequestParameters
 import irdcat.fitness.exception.TrainingNotFoundException
-import irdcat.fitness.service.DeleteTrainingDto
 import irdcat.fitness.service.Page
 import irdcat.fitness.service.TrainingDto
 import irdcat.fitness.service.TrainingService
@@ -27,7 +26,7 @@ import reactor.kotlin.core.publisher.toMono
 import java.util.Date
 
 @RestController
-@RequestMapping("/api/trainings", produces = [APPLICATION_JSON_VALUE])
+@RequestMapping("/api/trainings")
 class TrainingApi(
     private val trainingService: TrainingService
 ) {
@@ -36,7 +35,7 @@ class TrainingApi(
         private val logger = LoggerFactory.getLogger(this::class.java)
     }
 
-    @GetMapping
+    @GetMapping(produces = [APPLICATION_JSON_VALUE])
     fun findBetweenDates(
         @RequestParam @DateTimeFormat(iso = ISO.DATE) from: Date,
         @RequestParam @DateTimeFormat(iso = ISO.DATE) to: Date,
@@ -48,7 +47,7 @@ class TrainingApi(
             .findTrainingsBetweenDates(from, to, page, pageSize)
     }
 
-    @GetMapping("/{date}")
+    @GetMapping("/{date}", produces = [APPLICATION_JSON_VALUE])
     fun findByDate(
         @PathVariable @DateTimeFormat(iso = ISO.DATE) date: Date): Mono<TrainingDto> {
 
@@ -57,19 +56,20 @@ class TrainingApi(
             .findByDate(date)
     }
 
-    @PostMapping
+    @PostMapping(consumes = [APPLICATION_JSON_VALUE], produces = [APPLICATION_JSON_VALUE])
     fun createOrUpdate(@RequestBody trainingDto: TrainingDto): Mono<TrainingDto> {
 
         logger.info("Creating or updating training {}", trainingDto)
         return trainingService.createOrUpdate(trainingDto)
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{date}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteTraining(@RequestBody deleteTrainingDto: DeleteTrainingDto): Mono<Void> {
+    fun deleteTrainingByDate(
+        @PathVariable @DateTimeFormat(iso = ISO.DATE) date: Date): Mono<Void> {
 
-        logger.info("Deleting training {}", deleteTrainingDto)
-        return trainingService.delete(deleteTrainingDto)
+        logger.info("Deleting training at {}", date)
+        return trainingService.deleteByDate(date)
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)

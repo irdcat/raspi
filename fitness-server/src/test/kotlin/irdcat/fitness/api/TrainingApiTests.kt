@@ -2,8 +2,12 @@ package irdcat.fitness.api
 
 import irdcat.fitness.Constants.RequestParameters
 import irdcat.fitness.service.Exercise
+import irdcat.fitness.service.ExerciseDto
+import irdcat.fitness.service.TrainingDto
 import irdcat.fitness.service.TrainingExercise
+import irdcat.fitness.service.TrainingExerciseDto
 import irdcat.fitness.service.TrainingExerciseSet
+import irdcat.fitness.service.TrainingExerciseSetDto
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
@@ -242,5 +246,361 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.content[0].exercises[1].sets[1]").doesNotExist()
             .jsonPath("$.content[0].exercises[2]").doesNotExist()
             .jsonPath("$.content[1]").doesNotExist()
+    }
+
+    @Test
+    fun createTraining() {
+
+        val newTrainingDto = TrainingDto(
+            "04.01.2025".toDate(),
+            65.0f,
+            listOf(
+                TrainingExerciseDto(
+                    "", ExerciseDto("Pull Up", true), listOf(
+                        TrainingExerciseSetDto(10, 7.0f),
+                        TrainingExerciseSetDto(10, 7.0f),
+                        TrainingExerciseSetDto(10, 7.0f)
+                    )
+                ),
+                TrainingExerciseDto(
+                    "", ExerciseDto("Dip", true), listOf(
+                        TrainingExerciseSetDto(10, 20.0f),
+                        TrainingExerciseSetDto(10, 20.0f),
+                        TrainingExerciseSetDto(10, 20.0f)
+                    )
+                )
+            )
+        )
+
+        webTestClient()
+            .post()
+            .uri("/api/trainings")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .bodyValue(newTrainingDto)
+            .exchange()
+            .expectStatus().isOk
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.date").isEqualTo("2025-01-04")
+            .jsonPath("$.bodyweight").isEqualTo(65.0f)
+            .jsonPath("$.exercises").isArray
+            .jsonPath("$.exercises[0].id").isNotEmpty
+            .jsonPath("$.exercises[0].exercise.name").isEqualTo("Pull Up")
+            .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
+            .jsonPath("$.exercises[0].sets").isArray
+            .jsonPath("$.exercises[0].sets[0].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[0].sets[0].weight").isEqualTo(7.0f)
+            .jsonPath("$.exercises[0].sets[1].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[0].sets[1].weight").isEqualTo(7.0f)
+            .jsonPath("$.exercises[0].sets[2].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[0].sets[2].weight").isEqualTo(7.0f)
+            .jsonPath("$.exercises[0].sets[3]").doesNotExist()
+            .jsonPath("$.exercises[1].id").isNotEmpty
+            .jsonPath("$.exercises[1].exercise.name").isEqualTo("Dip")
+            .jsonPath("$.exercises[1].exercise.isBodyweight").isEqualTo(true)
+            .jsonPath("$.exercises[1].sets").isArray
+            .jsonPath("$.exercises[1].sets[0].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[1].sets[0].weight").isEqualTo(20.0f)
+            .jsonPath("$.exercises[1].sets[1].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[1].sets[1].weight").isEqualTo(20.0f)
+            .jsonPath("$.exercises[1].sets[2].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[1].sets[2].weight").isEqualTo(20.0f)
+            .jsonPath("$.exercises[1].sets[3]").doesNotExist()
+            .jsonPath("$.exercises[2]").doesNotExist()
+
+        webTestClient()
+            .get()
+            .uri("/api/trainings/2025-01-04")
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isOk
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.date").isEqualTo("2025-01-04")
+            .jsonPath("$.bodyweight").isEqualTo(65.0f)
+            .jsonPath("$.exercises").isArray
+            .jsonPath("$.exercises[0].id").isNotEmpty
+            .jsonPath("$.exercises[0].exercise.name").isEqualTo("Pull Up")
+            .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
+            .jsonPath("$.exercises[0].sets").isArray
+            .jsonPath("$.exercises[0].sets[0].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[0].sets[0].weight").isEqualTo(7.0f)
+            .jsonPath("$.exercises[0].sets[1].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[0].sets[1].weight").isEqualTo(7.0f)
+            .jsonPath("$.exercises[0].sets[2].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[0].sets[2].weight").isEqualTo(7.0f)
+            .jsonPath("$.exercises[0].sets[3]").doesNotExist()
+            .jsonPath("$.exercises[1].id").isNotEmpty
+            .jsonPath("$.exercises[1].exercise.name").isEqualTo("Dip")
+            .jsonPath("$.exercises[1].exercise.isBodyweight").isEqualTo(true)
+            .jsonPath("$.exercises[1].sets").isArray
+            .jsonPath("$.exercises[1].sets[0].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[1].sets[0].weight").isEqualTo(20.0f)
+            .jsonPath("$.exercises[1].sets[1].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[1].sets[1].weight").isEqualTo(20.0f)
+            .jsonPath("$.exercises[1].sets[2].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[1].sets[2].weight").isEqualTo(20.0f)
+            .jsonPath("$.exercises[1].sets[3]").doesNotExist()
+            .jsonPath("$.exercises[2]").doesNotExist()
+    }
+
+    @Test
+    fun updateTraining_modifyExercise() {
+
+        insertTrainingExercises(listOf(
+            TrainingExercise("1", Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+                TrainingExerciseSet(10, 5.0f)
+            )),
+            TrainingExercise("2", Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
+                TrainingExerciseSet(5, 120.0f)
+            ))
+        ))
+
+        val newTrainingDto = TrainingDto(
+            "01.01.2025".toDate(),
+            63.0f,
+            listOf(
+                TrainingExerciseDto(
+                    "1", ExerciseDto("Dip", true), listOf(
+                        TrainingExerciseSetDto(10, 20.0f)
+                    )
+                ),
+                TrainingExerciseDto(
+                    "2", ExerciseDto("Deadlift", false), listOf(
+                        TrainingExerciseSetDto(5, 120.0f)
+                    )
+                )
+            )
+        )
+
+        webTestClient()
+            .post()
+            .uri("/api/trainings")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .bodyValue(newTrainingDto)
+            .exchange()
+            .expectStatus().isOk
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.date").isEqualTo("2025-01-01")
+            .jsonPath("$.bodyweight").isEqualTo(63.0f)
+            .jsonPath("$.exercises").isArray
+            .jsonPath("$.exercises[0].id").isEqualTo("1")
+            .jsonPath("$.exercises[0].exercise.name").isEqualTo("Dip")
+            .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
+            .jsonPath("$.exercises[0].sets").isArray
+            .jsonPath("$.exercises[0].sets[0].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[0].sets[0].weight").isEqualTo(20.0f)
+            .jsonPath("$.exercises[0].sets[1]").doesNotExist()
+            .jsonPath("$.exercises[1].sets[0].repetitions").isEqualTo(5)
+            .jsonPath("$.exercises[1].sets[0].weight").isEqualTo(120.0f)
+            .jsonPath("$.exercises[1].sets[1]").doesNotExist()
+            .jsonPath("$.exercises[2]").doesNotExist()
+
+        webTestClient()
+            .get()
+            .uri("/api/trainings/2025-01-01")
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isOk
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.date").isEqualTo("2025-01-01")
+            .jsonPath("$.bodyweight").isEqualTo(63.0f)
+            .jsonPath("$.exercises").isArray
+            .jsonPath("$.exercises[0].id").isEqualTo("1")
+            .jsonPath("$.exercises[0].exercise.name").isEqualTo("Dip")
+            .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
+            .jsonPath("$.exercises[0].sets").isArray
+            .jsonPath("$.exercises[0].sets[0].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[0].sets[0].weight").isEqualTo(20.0f)
+            .jsonPath("$.exercises[0].sets[1]").doesNotExist()
+            .jsonPath("$.exercises[1].id").isEqualTo("2")
+            .jsonPath("$.exercises[1].exercise.name").isEqualTo("Deadlift")
+            .jsonPath("$.exercises[1].exercise.isBodyweight").isEqualTo(false)
+            .jsonPath("$.exercises[1].sets").isArray
+            .jsonPath("$.exercises[1].sets[0].repetitions").isEqualTo(5)
+            .jsonPath("$.exercises[1].sets[0].weight").isEqualTo(120.0f)
+            .jsonPath("$.exercises[1].sets[1]").doesNotExist()
+            .jsonPath("$.exercises[2]").doesNotExist()
+    }
+
+    @Test
+    fun updateTraining_addExercise() {
+        insertTrainingExercises(listOf(
+            TrainingExercise("1", Exercise("Dip", true), 63.0f, "01.01.2025".toDate(), listOf(
+                TrainingExerciseSet(10, 20.0f)
+            ))
+        ))
+
+        val newTrainingDto = TrainingDto(
+            "01.01.2025".toDate(),
+            63.0f,
+            listOf(
+                TrainingExerciseDto("1", ExerciseDto("Dip", true), listOf(
+                    TrainingExerciseSetDto(10, 20.0f)
+                )),
+                TrainingExerciseDto("", ExerciseDto("Pull Up", true), listOf(
+                    TrainingExerciseSetDto(10, 5.0f)
+                ))
+            )
+        )
+
+        webTestClient()
+            .post()
+            .uri("/api/trainings")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .bodyValue(newTrainingDto)
+            .exchange()
+            .expectStatus().isOk
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.date").isEqualTo("2025-01-01")
+            .jsonPath("$.bodyweight").isEqualTo(63.0f)
+            .jsonPath("$.exercises").isArray
+            .jsonPath("$.exercises[0].id").isNotEmpty
+            .jsonPath("$.exercises[0].exercise.name").isEqualTo("Pull Up")
+            .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
+            .jsonPath("$.exercises[0].sets").isArray
+            .jsonPath("$.exercises[0].sets[0].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[0].sets[0].weight").isEqualTo(5.0f)
+            .jsonPath("$.exercises[0].sets[1]").doesNotExist()
+            .jsonPath("$.exercises[1].id").isEqualTo("1")
+            .jsonPath("$.exercises[1].exercise.name").isEqualTo("Dip")
+            .jsonPath("$.exercises[1].exercise.isBodyweight").isEqualTo(true)
+            .jsonPath("$.exercises[1].sets").isArray
+            .jsonPath("$.exercises[1].sets[0].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[1].sets[0].weight").isEqualTo(20.0f)
+            .jsonPath("$.exercises[1].sets[1]").doesNotExist()
+            .jsonPath("$.exercises[2]").doesNotExist()
+
+        webTestClient()
+            .get()
+            .uri("/api/trainings/2025-01-01")
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isOk
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.date").isEqualTo("2025-01-01")
+            .jsonPath("$.bodyweight").isEqualTo(63.0f)
+            .jsonPath("$.exercises").isArray
+            .jsonPath("$.exercises[0].id").isEqualTo("1")
+            .jsonPath("$.exercises[0].exercise.name").isEqualTo("Dip")
+            .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
+            .jsonPath("$.exercises[0].sets").isArray
+            .jsonPath("$.exercises[0].sets[0].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[0].sets[0].weight").isEqualTo(20.0f)
+            .jsonPath("$.exercises[0].sets[1]").doesNotExist()
+            .jsonPath("$.exercises[1].id").isNotEmpty
+            .jsonPath("$.exercises[1].exercise.name").isEqualTo("Pull Up")
+            .jsonPath("$.exercises[1].exercise.isBodyweight").isEqualTo(true)
+            .jsonPath("$.exercises[1].sets").isArray
+            .jsonPath("$.exercises[1].sets[0].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[1].sets[0].weight").isEqualTo(5.0f)
+            .jsonPath("$.exercises[1].sets[1]").doesNotExist()
+            .jsonPath("$.exercises[2]").doesNotExist()
+    }
+
+    @Test
+    fun updateTraining_deleteExercise() {
+
+        insertTrainingExercises(listOf(
+            TrainingExercise("1", Exercise("Dip", true), 63.0f, "01.01.2025".toDate(), listOf(
+                TrainingExerciseSet(10, 20.0f)
+            )),
+            TrainingExercise("2", Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+                TrainingExerciseSet(10, 5.0f)
+            ))
+        ))
+
+        val newTrainingDto = TrainingDto(
+            "01.01.2025".toDate(),
+            63.0f,
+            listOf(
+                TrainingExerciseDto("1", ExerciseDto("Dip", true), listOf(
+                    TrainingExerciseSetDto(10, 20.0f)
+                ))
+            )
+        )
+
+        webTestClient()
+            .post()
+            .uri("/api/trainings")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .bodyValue(newTrainingDto)
+            .exchange()
+            .expectStatus().isOk
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.date").isEqualTo("2025-01-01")
+            .jsonPath("$.bodyweight").isEqualTo(63.0f)
+            .jsonPath("$.exercises").isArray
+            .jsonPath("$.exercises[0].id").isEqualTo("1")
+            .jsonPath("$.exercises[0].exercise.name").isEqualTo("Dip")
+            .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
+            .jsonPath("$.exercises[0].sets").isArray
+            .jsonPath("$.exercises[0].sets[0].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[0].sets[0].weight").isEqualTo(20.0f)
+            .jsonPath("$.exercises[0].sets[1]").doesNotExist()
+            .jsonPath("$.exercises[1]").doesNotExist()
+
+        webTestClient()
+            .get()
+            .uri("/api/trainings/2025-01-01")
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isOk
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.date").isEqualTo("2025-01-01")
+            .jsonPath("$.bodyweight").isEqualTo(63.0f)
+            .jsonPath("$.exercises").isArray
+            .jsonPath("$.exercises[0].id").isEqualTo("1")
+            .jsonPath("$.exercises[0].exercise.name").isEqualTo("Dip")
+            .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
+            .jsonPath("$.exercises[0].sets").isArray
+            .jsonPath("$.exercises[0].sets[0].repetitions").isEqualTo(10)
+            .jsonPath("$.exercises[0].sets[0].weight").isEqualTo(20.0f)
+            .jsonPath("$.exercises[0].sets[1]").doesNotExist()
+            .jsonPath("$.exercises[1]").doesNotExist()
+    }
+
+    @Test
+    fun deleteTraining() {
+
+        insertTrainingExercises(listOf(
+            TrainingExercise("1", Exercise("Dip", true), 63.0f, "01.01.2025".toDate(), listOf(
+                TrainingExerciseSet(10, 20.0f)
+            )),
+            TrainingExercise("2", Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+                TrainingExerciseSet(10, 5.0f)
+            ))
+        ))
+
+        webTestClient()
+            .delete()
+            .uri("/api/trainings/2025-01-01")
+            .exchange()
+            .expectStatus().isNoContent
+            .expectBody().isEmpty
+
+        webTestClient()
+            .get()
+            .uri("/api/trainings/2025-01-01")
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isNotFound
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.timestamp").isNotEmpty
+            .jsonPath("$.path").isEqualTo("/api/trainings/2025-01-01")
+            .jsonPath("$.status").isEqualTo(404)
+            .jsonPath("$.error").isNotEmpty
+            .jsonPath("$.requestId").isNotEmpty
     }
 }

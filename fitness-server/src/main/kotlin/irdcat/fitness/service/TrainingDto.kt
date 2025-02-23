@@ -26,7 +26,7 @@ data class TrainingDto(
     fun toTrainingExercises(): List<TrainingExercise> {
         return exercises.map {
             TrainingExercise(
-                id = it.id.ifEmpty { null },
+                id = it.id,
                 exercise = it.exercise.toExercise(),
                 bodyweight = bodyweight,
                 date = date,

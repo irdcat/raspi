@@ -17,10 +17,15 @@ import org.springframework.data.mongodb.core.aggregation.MatchOperation
 import org.springframework.data.mongodb.core.aggregation.ProjectionOperation
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
+import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.stereotype.Service
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
+import reactor.util.function.Tuples
 import java.util.Date
+import java.util.Objects
+import java.util.UUID
 
 @Service
 class TrainingService(
@@ -104,21 +109,62 @@ class TrainingService(
 
     fun createOrUpdate(trainingDto: TrainingDto): Mono<TrainingDto> {
 
-        return trainingDto.toMono()
+        val exerciseIdsFlux = trainingDto.toMono()
             .map(TrainingDto::toTrainingExercises)
+            .flatMapMany { Flux.fromIterable(it) }
+            .map(TrainingExercise::id)
+
+        val criteria = findByDateCriteria(trainingDto.date)
+        val query = Query().addCriteria(criteria)
+
+        val existingExerciseIdsFlux = reactiveMongoTemplate
+            .find(query, TrainingExercise::class.java)
+            .map(TrainingExercise::id)
+
+        val addedExercisesFlux = trainingDto.toMono()
+            .map(TrainingDto::toTrainingExercises)
+            .flatMapMany { Flux.fromIterable(it) }
+            .filter { it.id.isNullOrEmpty() }
+            .map { it.copy(id = UUID.randomUUID().toString()) }
+            .collectList()
+            .doOnNext { logger.debug("Attempting to add {} exercises.", it.size) }
             .flatMapMany { reactiveMongoTemplate.insert(it, TrainingExercise::class.java) }
-            .doOnNext { logger.debug("Training Exercise: {}", it) }
+            .doOnNext { logger.debug("Added: {}", it) }
+
+        val updatedExercisesFlux = exerciseIdsFlux
+            .collectList()
+            .zipWith(existingExerciseIdsFlux.collectList())
+            .map { it.t1.intersect(it.t2) }
+            .doOnNext { logger.debug("Attempting to update {} exercises", it.size) }
+            .zipWith(trainingDto.toMono())
+            .map { Tuples.of(it.t1, it.t2.toTrainingExercises()) }
+            .map { it.t2.filter { te -> it.t1.contains(te.id) } }
+            .flatMapMany { Flux.fromIterable(it) }
+            .flatMap { reactiveMongoTemplate.save(it) }
+            .doOnNext { logger.debug("Updated: {} ", it) }
+
+        return exerciseIdsFlux
+            .collectList()
+            .zipWith(existingExerciseIdsFlux.collectList())
+            .map { it.t2.subtract(it.t1) }
+            .doOnNext { logger.debug("Attempting to delete {} exercises.", it.size) }
+            .map { Criteria.where(ID).`in`(it) }
+            .map { Query().addCriteria(it) }
+            .flatMap { reactiveMongoTemplate.remove(it, TrainingExercise::class.java) }
+            .doOnNext { logger.debug("Deleted {} exercises.", it.deletedCount) }
+            .thenMany(updatedExercisesFlux)
+            .mergeWith(addedExercisesFlux)
             .collectList()
             .map(TrainingDto::fromTrainingExercises)
     }
 
-    fun delete(deleteTrainingDto: DeleteTrainingDto): Mono<Void> {
+    fun deleteByDate(date: Date): Mono<Void> {
 
-        return deleteTrainingDto.toMono()
-            .map(DeleteTrainingDto::exerciseIds)
-            .map { Criteria.where(ID).`in`(it) }
+        return date.toMono()
+            .map { findByDateCriteria(date) }
             .map { Query().addCriteria(it) }
-            .map { reactiveMongoTemplate.remove(it, TrainingExercise::class.java) }
+            .flatMap { reactiveMongoTemplate.remove(it, TrainingExercise::class.java) }
+            .doOnNext { logger.debug("Deleted {} exercises.", it.deletedCount) }
             .then()
     }
 
@@ -130,7 +176,7 @@ class TrainingService(
 
     private fun matchByDate(date: Date): MatchOperation {
 
-        val dateCriteria = Criteria.where(DATE).`is`(date)
+        val dateCriteria = findByDateCriteria(date)
         return match(dateCriteria)
     }
 
@@ -152,5 +198,10 @@ class TrainingService(
             .and(GROUP_KEY).`as`(DATE)
             .and(BODYWEIGHT).`as`(BODYWEIGHT)
             .and(EXERCISES).`as`(EXERCISES)
+    }
+
+    private fun findByDateCriteria(date: Date): Criteria {
+
+        return Criteria.where(DATE).isEqualTo(date)
     }
 }
