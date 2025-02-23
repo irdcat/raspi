@@ -16,7 +16,7 @@ class TrainingApiTests: AbstractApiTest() {
     }
 
     @Test
-    fun getTraining() {
+    fun getTraining_ok() {
 
         insertTrainingExercises(listOf(
             TrainingExercise("1", Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
@@ -56,6 +56,36 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.exercises[1].sets[0].weight").isEqualTo(120.0f)
             .jsonPath("$.exercises[1].sets[1]").doesNotExist()
             .jsonPath("$.exercises[2]").doesNotExist()
+    }
+
+    @Test
+    fun getTraining_notFound() {
+
+        insertTrainingExercises(listOf(
+            TrainingExercise("1", Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+                TrainingExerciseSet(10, 5.0f)
+            )),
+            TrainingExercise("2", Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
+                TrainingExerciseSet(5, 120.0f)
+            )),
+            TrainingExercise("3", Exercise("Pull Up", true), 63.0f, "02.01.2025".toDate(), listOf(
+                TrainingExerciseSet(10, 6.0f)
+            ))
+        ))
+
+        webTestClient()
+            .get()
+            .uri("/api/trainings/2025-01-03")
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isNotFound
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.timestamp").isNotEmpty
+            .jsonPath("$.path").isEqualTo("/api/trainings/2025-01-03")
+            .jsonPath("$.status").isEqualTo(404)
+            .jsonPath("$.error").isNotEmpty
+            .jsonPath("$.requestId").isNotEmpty
     }
 
     @Test

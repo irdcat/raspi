@@ -4,6 +4,7 @@ import com.mongodb.BasicDBObject
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Sort.Direction
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
+import org.springframework.data.mongodb.core.aggregation.AddFieldsOperation
 import org.springframework.data.mongodb.core.aggregation.Aggregation.addFields
 import org.springframework.data.mongodb.core.aggregation.Aggregation.group
 import org.springframework.data.mongodb.core.aggregation.Aggregation.match
@@ -12,6 +13,9 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation.project
 import org.springframework.data.mongodb.core.aggregation.Aggregation.sort
 import org.springframework.data.mongodb.core.aggregation.Aggregation.unwind
 import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators.Multiply.valueOf
+import org.springframework.data.mongodb.core.aggregation.GroupOperation
+import org.springframework.data.mongodb.core.aggregation.MatchOperation
+import org.springframework.data.mongodb.core.aggregation.ProjectionOperation
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.stereotype.Service
@@ -60,45 +64,14 @@ class SummaryService(
 
     fun calculateExerciseSummary(from: Date, to: Date, name: String): Mono<ExerciseSummaryDto> {
 
-        val criteria = Criteria
-            .where(DATE).gte(from).lte(to)
-            .and(EXERCISE_NAME).isEqualTo(name)
-        val matchOperation = match(criteria)
+        val matchOperation = matchBetweenDatesAndExerciseName(from, to, name)
         val unwindOperation = unwind(SETS)
-        val addFieldsOperation = addFields()
-            .addField(SET_VOLUME).withValue(valueOf(SETS_REPETITIONS).multiplyBy(SETS_WEIGHT))
-            .addField(SET_BODYWEIGHT_VOLUME).withValue(valueOf(SETS_REPETITIONS).multiplyBy(BODYWEIGHT))
-            .build()
-        val groupByDateOperation = group(DATE)
-            .first(EXERCISE).`as`(EXERCISE)
-            .sum(SET_VOLUME).`as`(VOLUME)
-            .avg(SET_VOLUME).`as`(AVERAGE_VOLUME)
-            .min(SETS_WEIGHT).`as`(MIN_INTENSITY)
-            .max(SETS_WEIGHT).`as`(MAX_INTENSITY)
-            .avg(SETS_WEIGHT).`as`(AVG_INTENSITY)
-            .first(BODYWEIGHT).`as`(BODYWEIGHT)
-            .sum(SET_BODYWEIGHT_VOLUME).`as`(BODYWEIGHT_VOLUME)
-            .avg(SET_BODYWEIGHT_VOLUME).`as`(AVERAGE_BODYWEIGHT_VOLUME)
-        val projectByDate = project()
-            .and(GROUP_KEY).`as`(DATE)
-            .and(EXERCISE).`as`(EXERCISE)
-            .and(VOLUME).`as`(PARAMETERS_VOLUME)
-            .and(AVERAGE_VOLUME).`as`(PARAMETERS_AVERAGE_VOLUME)
-            .and(MIN_INTENSITY).`as`(PARAMETERS_MIN_INTENSITY)
-            .and(MAX_INTENSITY).`as`(PARAMETERS_MAX_INTENSITY)
-            .and(AVG_INTENSITY).`as`(PARAMETERS_AVG_INTENSITY)
-            .and(BODYWEIGHT).`as`(PARAMETERS_BODYWEIGHT)
-            .and(BODYWEIGHT_VOLUME).`as`(PARAMETERS_BODYWEIGHT_VOLUME)
-            .and(AVERAGE_BODYWEIGHT_VOLUME).`as`(PARAMETERS_AVERAGE_BODYWEIGHT_VOLUME)
+        val addFieldsOperation = addSetVolumeFields()
+        val groupByDateOperation = groupParametersByDate()
+        val projectByDate = projectParametersGroupedByDate()
         var sortOperation = sort(Direction.ASC, DATE)
-        val groupByExercise = group(EXERCISE)
-            .push(BasicDBObject()
-                .append(DATE, "\$$DATE")
-                .append(PARAMETERS, "\$$PARAMETERS"))
-            .`as`(DATA)
-        val projectByExercise = project()
-            .and(GROUP_KEY).`as`(EXERCISE)
-            .and(DATA).`as`(DATA)
+        val groupByExercise = groupParametersByExercise()
+        val projectByExercise = projectParametersGroupedByExercise()
 
         val aggregation = newAggregation(
             matchOperation,
@@ -142,13 +115,9 @@ class SummaryService(
 
     fun calculateBodyweightSummary(from: Date, to: Date): Mono<BodyweightSummaryDto> {
 
-        val criteria = Criteria.where(DATE).gte(from).lte(to)
-        val matchOperation = match(criteria)
-        val groupOperation = group(DATE)
-            .first(BODYWEIGHT).`as`(BODYWEIGHT)
-        val projectionOperation = project()
-            .and(GROUP_KEY).`as`(DATE)
-            .and(BODYWEIGHT).`as`(PARAMETER)
+        val matchOperation = matchBetweenDates(from, to)
+        val groupOperation = groupBodyweightsByDate()
+        val projectionOperation = projectGroupedBodyweights()
         val sortOperation = sort(Direction.ASC, DATE)
 
         val aggregation = newAggregation(
@@ -169,5 +138,85 @@ class SummaryService(
             .collectList()
             .map { BodyweightSummaryDto(it.toMap()) }
             .doOnNext { logger.debug("Bodyweight Summary: [dataPoints={}]", it.parameters.size) }
+    }
+
+    private fun matchBetweenDates(from: Date, to: Date): MatchOperation {
+
+        val criteria = Criteria.where(DATE).gte(from).lte(to)
+        return match(criteria)
+    }
+
+    private fun matchBetweenDatesAndExerciseName(from: Date, to: Date, name: String): MatchOperation {
+
+        val criteria = Criteria
+            .where(DATE).gte(from).lte(to)
+            .and(EXERCISE_NAME).isEqualTo(name)
+        return match(criteria)
+    }
+
+    private fun groupBodyweightsByDate(): GroupOperation {
+
+        return group(DATE)
+            .first(BODYWEIGHT).`as`(BODYWEIGHT)
+    }
+
+    private fun projectGroupedBodyweights(): ProjectionOperation {
+
+        return project()
+            .and(GROUP_KEY).`as`(DATE)
+            .and(BODYWEIGHT).`as`(PARAMETER)
+    }
+
+    private fun addSetVolumeFields(): AddFieldsOperation {
+
+        return addFields()
+            .addField(SET_VOLUME).withValue(valueOf(SETS_REPETITIONS).multiplyBy(SETS_WEIGHT))
+            .addField(SET_BODYWEIGHT_VOLUME).withValue(valueOf(SETS_REPETITIONS).multiplyBy(BODYWEIGHT))
+            .build()
+    }
+
+    private fun groupParametersByDate(): GroupOperation {
+
+        return group(DATE)
+            .first(EXERCISE).`as`(EXERCISE)
+            .sum(SET_VOLUME).`as`(VOLUME)
+            .avg(SET_VOLUME).`as`(AVERAGE_VOLUME)
+            .min(SETS_WEIGHT).`as`(MIN_INTENSITY)
+            .max(SETS_WEIGHT).`as`(MAX_INTENSITY)
+            .avg(SETS_WEIGHT).`as`(AVG_INTENSITY)
+            .first(BODYWEIGHT).`as`(BODYWEIGHT)
+            .sum(SET_BODYWEIGHT_VOLUME).`as`(BODYWEIGHT_VOLUME)
+            .avg(SET_BODYWEIGHT_VOLUME).`as`(AVERAGE_BODYWEIGHT_VOLUME)
+    }
+
+    private fun projectParametersGroupedByDate(): ProjectionOperation {
+
+        return project()
+            .and(GROUP_KEY).`as`(DATE)
+            .and(EXERCISE).`as`(EXERCISE)
+            .and(VOLUME).`as`(PARAMETERS_VOLUME)
+            .and(AVERAGE_VOLUME).`as`(PARAMETERS_AVERAGE_VOLUME)
+            .and(MIN_INTENSITY).`as`(PARAMETERS_MIN_INTENSITY)
+            .and(MAX_INTENSITY).`as`(PARAMETERS_MAX_INTENSITY)
+            .and(AVG_INTENSITY).`as`(PARAMETERS_AVG_INTENSITY)
+            .and(BODYWEIGHT).`as`(PARAMETERS_BODYWEIGHT)
+            .and(BODYWEIGHT_VOLUME).`as`(PARAMETERS_BODYWEIGHT_VOLUME)
+            .and(AVERAGE_BODYWEIGHT_VOLUME).`as`(PARAMETERS_AVERAGE_BODYWEIGHT_VOLUME)
+    }
+
+    private fun groupParametersByExercise(): GroupOperation {
+
+        return group(EXERCISE)
+            .push(BasicDBObject()
+                .append(DATE, "\$$DATE")
+                .append(PARAMETERS, "\$$PARAMETERS"))
+            .`as`(DATA)
+    }
+
+    private fun projectParametersGroupedByExercise(): ProjectionOperation {
+
+        return project()
+            .and(GROUP_KEY).`as`(EXERCISE)
+            .and(DATA).`as`(DATA)
     }
 }
