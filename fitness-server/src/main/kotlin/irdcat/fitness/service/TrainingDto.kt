@@ -16,9 +16,15 @@ data class TrainingDto(
     companion object {
         fun fromTrainingExercises(trainingExercises: List<TrainingExercise>): TrainingDto {
             return TrainingDto(
-                date = trainingExercises.map(TrainingExercise::date).first(),
-                bodyweight = trainingExercises.map(TrainingExercise::bodyweight).first(),
-                exercises = trainingExercises.map(TrainingExerciseDto::fromTrainingExercise)
+                date = trainingExercises
+                    .map(TrainingExercise::date)
+                    .first(),
+                bodyweight = trainingExercises
+                    .map(TrainingExercise::bodyweight)
+                    .first(),
+                exercises = trainingExercises
+                    .map(TrainingExerciseDto::fromTrainingExercise)
+                    .sortedBy(TrainingExerciseDto::order)
             )
         }
     }
@@ -27,11 +33,12 @@ data class TrainingDto(
         return exercises.map {
             TrainingExercise(
                 id = it.id,
+                order = it.order,
                 exercise = it.exercise.toExercise(),
                 bodyweight = bodyweight,
                 date = date,
                 sets = it.sets.map(TrainingExerciseSetDto::toTrainingExerciseSet)
             )
-        }
+        }.sortedBy(TrainingExercise::order)
     }
 }

@@ -1,2132 +1,2280 @@
 - id: '1'
+  order: 1
   exercise:
     name: Deadlift
     isBodyweight: false
   bodyweight: 69.4
   date: '2022-01-17'
   sets:
-  - repetitions: 4
-    weight: 107.5
-  - repetitions: 4
-    weight: 107.5
-  - repetitions: 4
-    weight: 107.5
-  - repetitions: 4
-    weight: 107.5
+    - repetitions: 4
+      weight: 107.5
+    - repetitions: 4
+      weight: 107.5
+    - repetitions: 4
+      weight: 107.5
+    - repetitions: 4
+      weight: 107.5
 
 - id: '2'
+  order: 2
   exercise:
     name: Barbell Row
     isBodyweight: false
   bodyweight: 69.4
   date: '2022-01-17'
   sets:
-  - repetitions: 8
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
+    - repetitions: 8
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
 
 - id: '3'
+  order: 3
   exercise:
     name: Lat Pullover
     isBodyweight: false
   bodyweight: 69.4
   date: '2022-01-17'
   sets:
-  - repetitions: 10
-    weight: 52.0
-  - repetitions: 10
-    weight: 52.0
-  - repetitions: 10
-    weight: 52.0
+    - repetitions: 10
+      weight: 52.0
+    - repetitions: 10
+      weight: 52.0
+    - repetitions: 10
+      weight: 52.0
 
 - id: '4'
+  order: 4
   exercise:
     name: Incline Bench Press (Machine)
     isBodyweight: false
   bodyweight: 69.4
   date: '2022-01-17'
   sets:
-  - repetitions: 10
-    weight: 60.0
-  - repetitions: 10
-    weight: 60.0
-  - repetitions: 10
-    weight: 60.0
+    - repetitions: 10
+      weight: 60.0
+    - repetitions: 10
+      weight: 60.0
+    - repetitions: 10
+      weight: 60.0
 
 - id: '5'
+  order: 5
   exercise:
     name: Bulgarian Split Squat
     isBodyweight: false
   bodyweight: 69.4
   date: '2022-01-17'
   sets:
-  - repetitions: 10
-    weight: 25.0
-  - repetitions: 10
-    weight: 25.0
-  - repetitions: 10
-    weight: 25.0
+    - repetitions: 10
+      weight: 25.0
+    - repetitions: 10
+      weight: 25.0
+    - repetitions: 10
+      weight: 25.0
 
 - id: '6'
+  order: 6
   exercise:
     name: Face Pull
     isBodyweight: false
   bodyweight: 69.4
   date: '2022-01-17'
   sets:
-  - repetitions: 15
-    weight: 25.0
-  - repetitions: 15
-    weight: 25.0
-  - repetitions: 15
-    weight: 25.0
+    - repetitions: 15
+      weight: 25.0
+    - repetitions: 15
+      weight: 25.0
+    - repetitions: 15
+      weight: 25.0
 
 - id: '7'
+  order: 7
   exercise:
     name: Bicep Curl (Cable Machine)
     isBodyweight: false
   bodyweight: 69.4
   date: '2022-01-17'
   sets:
-  - repetitions: 10
-    weight: 35.0
-  - repetitions: 10
-    weight: 35.0
-  - repetitions: 10
-    weight: 35.0
+    - repetitions: 10
+      weight: 35.0
+    - repetitions: 10
+      weight: 35.0
+    - repetitions: 10
+      weight: 35.0
 
 - id: '8'
+  order: 1
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 69.1
   date: '2022-01-19'
   sets:
-  - repetitions: 4
-    weight: 75.0
-  - repetitions: 3
-    weight: 72.5
-  - repetitions: 4
-    weight: 72.5
-  - repetitions: 3
-    weight: 72.5
+    - repetitions: 4
+      weight: 75.0
+    - repetitions: 3
+      weight: 72.5
+    - repetitions: 4
+      weight: 72.5
+    - repetitions: 3
+      weight: 72.5
 
 - id: '9'
+  order: 2
   exercise:
     name: Overhead Press
     isBodyweight: false
   bodyweight: 69.1
   date: '2022-01-19'
   sets:
-  - repetitions: 7
-    weight: 40.0
-  - repetitions: 6
-    weight: 40.0
-  - repetitions: 6
-    weight: 40.0
-  - repetitions: 4
-    weight: 40.0
+    - repetitions: 7
+      weight: 40.0
+    - repetitions: 6
+      weight: 40.0
+    - repetitions: 6
+      weight: 40.0
+    - repetitions: 4
+      weight: 40.0
 
 - id: '10'
+  order: 3
   exercise:
     name: Seated Row (Machine)
     isBodyweight: false
   bodyweight: 69.1
   date: '2022-01-19'
   sets:
-  - repetitions: 10
-    weight: 55.0
-  - repetitions: 10
-    weight: 55.0
-  - repetitions: 10
-    weight: 55.0
+    - repetitions: 10
+      weight: 55.0
+    - repetitions: 10
+      weight: 55.0
+    - repetitions: 10
+      weight: 55.0
 
 - id: '11'
+  order: 4
   exercise:
     name: Leg Press
     isBodyweight: false
   bodyweight: 69.1
   date: '2022-01-19'
   sets:
-  - repetitions: 10
-    weight: 115.0
-  - repetitions: 10
-    weight: 115.0
-  - repetitions: 10
-    weight: 115.0
+    - repetitions: 10
+      weight: 115.0
+    - repetitions: 10
+      weight: 115.0
+    - repetitions: 10
+      weight: 115.0
 
 - id: '12'
+  order: 5
   exercise:
     name: Seated Hamstring Curl
     isBodyweight: false
   bodyweight: 69.1
   date: '2022-01-19'
   sets:
-  - repetitions: 12
-    weight: 45.0
-  - repetitions: 12
-    weight: 45.0
-  - repetitions: 12
-    weight: 45.0
+    - repetitions: 12
+      weight: 45.0
+    - repetitions: 12
+      weight: 45.0
+    - repetitions: 12
+      weight: 45.0
 
 - id: '13'
+  order: 6
   exercise:
     name: Lateral Raises
     isBodyweight: false
   bodyweight: 69.1
   date: '2022-01-19'
   sets:
-  - repetitions: 12
-    weight: 16.0
-  - repetitions: 12
-    weight: 16.0
-  - repetitions: 12
-    weight: 16.0
+    - repetitions: 12
+      weight: 16.0
+    - repetitions: 12
+      weight: 16.0
+    - repetitions: 12
+      weight: 16.0
 
 - id: '14'
+  order: 7
   exercise:
     name: Tricep Pushdown
     isBodyweight: false
   bodyweight: 69.1
   date: '2022-01-19'
   sets:
-  - repetitions: 10
-    weight: 37.5
-  - repetitions: 10
-    weight: 37.5
-  - repetitions: 10
-    weight: 37.5
+    - repetitions: 10
+      weight: 37.5
+    - repetitions: 10
+      weight: 37.5
+    - repetitions: 10
+      weight: 37.5
 
 - id: '15'
+  order: 1
   exercise:
     name: Squat
     isBodyweight: false
   bodyweight: 68.8
   date: '2022-01-21'
   sets:
-  - repetitions: 5
-    weight: 82.5
-  - repetitions: 5
-    weight: 82.5
-  - repetitions: 5
-    weight: 82.5
-  - repetitions: 5
-    weight: 82.5
+    - repetitions: 5
+      weight: 82.5
+    - repetitions: 5
+      weight: 82.5
+    - repetitions: 5
+      weight: 82.5
+    - repetitions: 5
+      weight: 82.5
 
 - id: '16'
+  order: 2
   exercise:
     name: Romanian Deadlift
     isBodyweight: false
   bodyweight: 68.8
   date: '2022-01-21'
   sets:
-  - repetitions: 6
-    weight: 70.0
-  - repetitions: 6
-    weight: 70.0
-  - repetitions: 6
-    weight: 70.0
-  - repetitions: 6
-    weight: 70.0
+    - repetitions: 6
+      weight: 70.0
+    - repetitions: 6
+      weight: 70.0
+    - repetitions: 6
+      weight: 70.0
+    - repetitions: 6
+      weight: 70.0
 
 - id: '17'
+  order: 3
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 68.8
   date: '2022-01-21'
   sets:
-  - repetitions: 8
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
+    - repetitions: 8
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
 
 - id: '18'
+  order: 4
   exercise:
     name: Seated Row (Cable Machine)
     isBodyweight: false
   bodyweight: 68.8
   date: '2022-01-21'
   sets:
-  - repetitions: 10
-    weight: 55.0
-  - repetitions: 10
-    weight: 55.0
-  - repetitions: 10
-    weight: 55.0
+    - repetitions: 10
+      weight: 55.0
+    - repetitions: 10
+      weight: 55.0
+    - repetitions: 10
+      weight: 55.0
 
 - id: '19'
+  order: 5
   exercise:
     name: Seated Overhead Press (Machine)
     isBodyweight: false
   bodyweight: 68.8
   date: '2022-01-21'
   sets:
-  - repetitions: 10
-    weight: 45.0
-  - repetitions: 9
-    weight: 45.0
-  - repetitions: 8
-    weight: 40.0
+    - repetitions: 10
+      weight: 45.0
+    - repetitions: 9
+      weight: 45.0
+    - repetitions: 8
+      weight: 40.0
 
 - id: '20'
+  order: 6
   exercise:
     name: Bicep Curl (Machine)
     isBodyweight: false
   bodyweight: 68.8
   date: '2022-01-21'
   sets:
-  - repetitions: 15
-    weight: 20.0
-  - repetitions: 12
-    weight: 20.0
-  - repetitions: 12
-    weight: 20.0
+    - repetitions: 15
+      weight: 20.0
+    - repetitions: 12
+      weight: 20.0
+    - repetitions: 12
+      weight: 20.0
 
 - id: '21'
+  order: 7
   exercise:
     name: Tricep Pushdown (Machine)
     isBodyweight: false
   bodyweight: 68.8
   date: '2022-01-21'
   sets:
-  - repetitions: 15
-    weight: 62.5
-  - repetitions: 12
-    weight: 65.0
-  - repetitions: 12
-    weight: 65.0
+    - repetitions: 15
+      weight: 62.5
+    - repetitions: 12
+      weight: 65.0
+    - repetitions: 12
+      weight: 65.0
 
 - id: '22'
+  order: 1
   exercise:
     name: Deadlift
     isBodyweight: false
   bodyweight: 69.1
   date: '2022-01-24'
   sets:
-  - repetitions: 4
-    weight: 110.0
-  - repetitions: 4
-    weight: 110.0
-  - repetitions: 4
-    weight: 110.0
-  - repetitions: 4
-    weight: 110.0
+    - repetitions: 4
+      weight: 110.0
+    - repetitions: 4
+      weight: 110.0
+    - repetitions: 4
+      weight: 110.0
+    - repetitions: 4
+      weight: 110.0
 
 - id: '23'
+  order: 2
   exercise:
     name: Barbell Row
     isBodyweight: false
   bodyweight: 69.1
   date: '2022-01-24'
   sets:
-  - repetitions: 8
-    weight: 67.5
-  - repetitions: 8
-    weight: 67.5
-  - repetitions: 8
-    weight: 67.5
+    - repetitions: 8
+      weight: 67.5
+    - repetitions: 8
+      weight: 67.5
+    - repetitions: 8
+      weight: 67.5
 
 - id: '24'
+  order: 3
   exercise:
     name: Lat Pullover
     isBodyweight: false
   bodyweight: 69.1
   date: '2022-01-24'
   sets:
-  - repetitions: 10
-    weight: 55.0
-  - repetitions: 10
-    weight: 55.0
-  - repetitions: 10
-    weight: 55.0
+    - repetitions: 10
+      weight: 55.0
+    - repetitions: 10
+      weight: 55.0
+    - repetitions: 10
+      weight: 55.0
 
 - id: '25'
+  order: 4
   exercise:
     name: Incline Bench Press (Machine)
     isBodyweight: false
   bodyweight: 69.1
   date: '2022-01-24'
   sets:
-  - repetitions: 10
-    weight: 62.5
-  - repetitions: 10
-    weight: 62.5
-  - repetitions: 10
-    weight: 62.5
+    - repetitions: 10
+      weight: 62.5
+    - repetitions: 10
+      weight: 62.5
+    - repetitions: 10
+      weight: 62.5
 
 - id: '26'
+  order: 5
   exercise:
     name: Bulgarian Split Squat
     isBodyweight: false
   bodyweight: 69.1
   date: '2022-01-24'
   sets:
-  - repetitions: 8
-    weight: 30.0
-  - repetitions: 8
-    weight: 30.0
-  - repetitions: 8
-    weight: 30.0
+    - repetitions: 8
+      weight: 30.0
+    - repetitions: 8
+      weight: 30.0
+    - repetitions: 8
+      weight: 30.0
 
 - id: '27'
+  order: 6
   exercise:
     name: Face Pull
     isBodyweight: false
   bodyweight: 69.1
   date: '2022-01-24'
   sets:
-  - repetitions: 15
-    weight: 30.0
-  - repetitions: 15
-    weight: 30.0
-  - repetitions: 15
-    weight: 30.0
+    - repetitions: 15
+      weight: 30.0
+    - repetitions: 15
+      weight: 30.0
+    - repetitions: 15
+      weight: 30.0
 
 - id: '28'
+  order: 7
   exercise:
     name: Bicep Curl (Cable Machine)
     isBodyweight: false
   bodyweight: 69.1
   date: '2022-01-24'
   sets:
-  - repetitions: 10
-    weight: 30.0
-  - repetitions: 10
-    weight: 30.0
-  - repetitions: 10
-    weight: 27.5
+    - repetitions: 10
+      weight: 30.0
+    - repetitions: 10
+      weight: 30.0
+    - repetitions: 10
+      weight: 27.5
 
 - id: '29'
+  order: 1
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 69.2
   date: '2022-01-26'
   sets:
-  - repetitions: 5
-    weight: 72.5
-  - repetitions: 5
-    weight: 72.5
-  - repetitions: 4
-    weight: 72.5
-  - repetitions: 4
-    weight: 72.5
+    - repetitions: 5
+      weight: 72.5
+    - repetitions: 5
+      weight: 72.5
+    - repetitions: 4
+      weight: 72.5
+    - repetitions: 4
+      weight: 72.5
 
 - id: '30'
+  order: 2
   exercise:
     name: Overhead Press
     isBodyweight: false
   bodyweight: 69.2
   date: '2022-01-26'
   sets:
-  - repetitions: 7
-    weight: 40.0
-  - repetitions: 7
-    weight: 40.0
-  - repetitions: 7
-    weight: 40.0
-  - repetitions: 7
-    weight: 40.0
+    - repetitions: 7
+      weight: 40.0
+    - repetitions: 7
+      weight: 40.0
+    - repetitions: 7
+      weight: 40.0
+    - repetitions: 7
+      weight: 40.0
 
 - id: '31'
+  order: 3
   exercise:
     name: Seated Row (Machine)
     isBodyweight: false
   bodyweight: 69.2
   date: '2022-01-26'
   sets:
-  - repetitions: 10
-    weight: 60.0
-  - repetitions: 10
-    weight: 60.0
-  - repetitions: 10
-    weight: 60.0
+    - repetitions: 10
+      weight: 60.0
+    - repetitions: 10
+      weight: 60.0
+    - repetitions: 10
+      weight: 60.0
 
 - id: '32'
+  order: 4
   exercise:
     name: Leg Press
     isBodyweight: false
   bodyweight: 69.2
   date: '2022-01-26'
   sets:
-  - repetitions: 12
-    weight: 115.0
-  - repetitions: 12
-    weight: 115.0
-  - repetitions: 12
-    weight: 115.0
+    - repetitions: 12
+      weight: 115.0
+    - repetitions: 12
+      weight: 115.0
+    - repetitions: 12
+      weight: 115.0
 
 - id: '33'
+  order: 5
   exercise:
     name: Seated Hamstring Curl
     isBodyweight: false
   bodyweight: 69.2
   date: '2022-01-26'
   sets:
-  - repetitions: 12
-    weight: 30.0
-  - repetitions: 12
-    weight: 30.0
-  - repetitions: 12
-    weight: 30.0
+    - repetitions: 12
+      weight: 30.0
+    - repetitions: 12
+      weight: 30.0
+    - repetitions: 12
+      weight: 30.0
 
 - id: '34'
+  order: 6
   exercise:
     name: Lateral Raises
     isBodyweight: false
   bodyweight: 69.2
   date: '2022-01-26'
   sets:
-  - repetitions: 12
-    weight: 16.0
-  - repetitions: 12
-    weight: 16.0
-  - repetitions: 12
-    weight: 16.0
+    - repetitions: 12
+      weight: 16.0
+    - repetitions: 12
+      weight: 16.0
+    - repetitions: 12
+      weight: 16.0
 
 - id: '35'
+  order: 7
   exercise:
     name: Tricep Pushdown
     isBodyweight: false
   bodyweight: 69.2
   date: '2022-01-26'
   sets:
-  - repetitions: 10
-    weight: 37.5
-  - repetitions: 10
-    weight: 37.5
-  - repetitions: 10
-    weight: 37.5
+    - repetitions: 10
+      weight: 37.5
+    - repetitions: 10
+      weight: 37.5
+    - repetitions: 10
+      weight: 37.5
 
 - id: '36'
+  order: 1
   exercise:
     name: Squat
     isBodyweight: false
   bodyweight: 69.6
   date: '2022-01-29'
   sets:
-  - repetitions: 4
-    weight: 85.0
-  - repetitions: 4
-    weight: 85.0
-  - repetitions: 4
-    weight: 85.0
-  - repetitions: 4
-    weight: 85.0
+    - repetitions: 4
+      weight: 85.0
+    - repetitions: 4
+      weight: 85.0
+    - repetitions: 4
+      weight: 85.0
+    - repetitions: 4
+      weight: 85.0
 
 - id: '37'
+  order: 2
   exercise:
     name: Romanian Deadlift
     isBodyweight: false
   bodyweight: 69.6
   date: '2022-01-29'
   sets:
-  - repetitions: 6
-    weight: 72.5
-  - repetitions: 6
-    weight: 72.5
-  - repetitions: 6
-    weight: 72.5
-  - repetitions: 6
-    weight: 72.5
+    - repetitions: 6
+      weight: 72.5
+    - repetitions: 6
+      weight: 72.5
+    - repetitions: 6
+      weight: 72.5
+    - repetitions: 6
+      weight: 72.5
 
 - id: '38'
+  order: 3
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 69.6
   date: '2022-01-29'
   sets:
-  - repetitions: 9
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
+    - repetitions: 9
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
 
 - id: '39'
+  order: 4
   exercise:
     name: Seated Row (Cable Machine)
     isBodyweight: false
   bodyweight: 69.6
   date: '2022-01-29'
   sets:
-  - repetitions: 12
-    weight: 55.0
-  - repetitions: 12
-    weight: 55.0
-  - repetitions: 10
-    weight: 55.0
+    - repetitions: 12
+      weight: 55.0
+    - repetitions: 12
+      weight: 55.0
+    - repetitions: 10
+      weight: 55.0
 
 - id: '40'
+  order: 5
   exercise:
     name: Seated Overhead Press (Machine)
     isBodyweight: false
   bodyweight: 69.6
   date: '2022-01-29'
   sets:
-  - repetitions: 10
-    weight: 45.0
-  - repetitions: 10
-    weight: 45.0
-  - repetitions: 10
-    weight: 45.0
+    - repetitions: 10
+      weight: 45.0
+    - repetitions: 10
+      weight: 45.0
+    - repetitions: 10
+      weight: 45.0
 
 - id: '41'
+  order: 6
   exercise:
     name: Bicep Curl (Machine)
     isBodyweight: false
   bodyweight: 69.6
   date: '2022-01-29'
   sets:
-  - repetitions: 15
-    weight: 22.5
-  - repetitions: 13
-    weight: 22.5
-  - repetitions: 12
-    weight: 22.5
+    - repetitions: 15
+      weight: 22.5
+    - repetitions: 13
+      weight: 22.5
+    - repetitions: 12
+      weight: 22.5
 
 - id: '42'
+  order: 7
   exercise:
     name: Tricep Pushdown (Machine)
     isBodyweight: false
   bodyweight: 69.6
   date: '2022-01-29'
   sets:
-  - repetitions: 15
-    weight: 62.5
-  - repetitions: 15
-    weight: 65.0
-  - repetitions: 15
-    weight: 65.0
+    - repetitions: 15
+      weight: 62.5
+    - repetitions: 15
+      weight: 65.0
+    - repetitions: 15
+      weight: 65.0
 
 - id: '43'
+  order: 1
   exercise:
     name: Deadlift
     isBodyweight: false
   bodyweight: 69.3
   date: '2022-01-31'
   sets:
-  - repetitions: 5
-    weight: 110.0
-  - repetitions: 5
-    weight: 110.0
-  - repetitions: 5
-    weight: 110.0
-  - repetitions: 5
-    weight: 110.0
+    - repetitions: 5
+      weight: 110.0
+    - repetitions: 5
+      weight: 110.0
+    - repetitions: 5
+      weight: 110.0
+    - repetitions: 5
+      weight: 110.0
 
 - id: '44'
+  order: 2
   exercise:
     name: Barbell Row
     isBodyweight: false
   bodyweight: 69.3
   date: '2022-01-31'
   sets:
-  - repetitions: 8
-    weight: 70.0
-  - repetitions: 8
-    weight: 70.0
-  - repetitions: 8
-    weight: 70.0
+    - repetitions: 8
+      weight: 70.0
+    - repetitions: 8
+      weight: 70.0
+    - repetitions: 8
+      weight: 70.0
 
 - id: '45'
+  order: 3
   exercise:
     name: Lat Pullover
     isBodyweight: false
   bodyweight: 69.3
   date: '2022-01-31'
   sets:
-  - repetitions: 10
-    weight: 55.0
-  - repetitions: 10
-    weight: 55.0
-  - repetitions: 10
-    weight: 55.0
+    - repetitions: 10
+      weight: 55.0
+    - repetitions: 10
+      weight: 55.0
+    - repetitions: 10
+      weight: 55.0
 
 - id: '46'
+  order: 4
   exercise:
     name: Incline Bench Press (Machine)
     isBodyweight: false
   bodyweight: 69.3
   date: '2022-01-31'
   sets:
-  - repetitions: 10
-    weight: 62.5
-  - repetitions: 10
-    weight: 62.5
-  - repetitions: 9
-    weight: 62.5
+    - repetitions: 10
+      weight: 62.5
+    - repetitions: 10
+      weight: 62.5
+    - repetitions: 9
+      weight: 62.5
 
 - id: '47'
+  order: 5
   exercise:
     name: Bulgarian Split Squat
     isBodyweight: false
   bodyweight: 69.3
   date: '2022-01-31'
   sets:
-  - repetitions: 10
-    weight: 30.0
-  - repetitions: 8
-    weight: 30.0
-  - repetitions: 8
-    weight: 30.0
+    - repetitions: 10
+      weight: 30.0
+    - repetitions: 8
+      weight: 30.0
+    - repetitions: 8
+      weight: 30.0
 
 - id: '48'
+  order: 6
   exercise:
     name: Face Pull
     isBodyweight: false
   bodyweight: 69.3
   date: '2022-01-31'
   sets:
-  - repetitions: 15
-    weight: 32.5
-  - repetitions: 15
-    weight: 32.5
-  - repetitions: 15
-    weight: 32.5
+    - repetitions: 15
+      weight: 32.5
+    - repetitions: 15
+      weight: 32.5
+    - repetitions: 15
+      weight: 32.5
 
 - id: '49'
+  order: 7
   exercise:
     name: Bicep Curl (Cable Machine)
     isBodyweight: false
   bodyweight: 69.3
   date: '2022-01-31'
   sets:
-  - repetitions: 10
-    weight: 45.0
-  - repetitions: 10
-    weight: 40.0
-  - repetitions: 10
-    weight: 40.0
+    - repetitions: 10
+      weight: 45.0
+    - repetitions: 10
+      weight: 40.0
+    - repetitions: 10
+      weight: 40.0
 
 - id: '50'
+  order: 1
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 68.9
   date: '2022-02-03'
   sets:
-  - repetitions: 5
-    weight: 72.5
-  - repetitions: 5
-    weight: 72.5
-  - repetitions: 5
-    weight: 72.5
-  - repetitions: 5
-    weight: 72.5
+    - repetitions: 5
+      weight: 72.5
+    - repetitions: 5
+      weight: 72.5
+    - repetitions: 5
+      weight: 72.5
+    - repetitions: 5
+      weight: 72.5
 
 - id: '51'
+  order: 2
   exercise:
     name: Overhead Press
     isBodyweight: false
   bodyweight: 68.9
   date: '2022-02-03'
   sets:
-  - repetitions: 8
-    weight: 40.0
-  - repetitions: 7
-    weight: 40.0
-  - repetitions: 6
-    weight: 40.0
-  - repetitions: 5
-    weight: 40.0
+    - repetitions: 8
+      weight: 40.0
+    - repetitions: 7
+      weight: 40.0
+    - repetitions: 6
+      weight: 40.0
+    - repetitions: 5
+      weight: 40.0
 
 - id: '52'
+  order: 3
   exercise:
     name: Seated Row (Machine)
     isBodyweight: false
   bodyweight: 68.9
   date: '2022-02-03'
   sets:
-  - repetitions: 10
-    weight: 60.0
-  - repetitions: 10
-    weight: 60.0
-  - repetitions: 10
-    weight: 60.0
+    - repetitions: 10
+      weight: 60.0
+    - repetitions: 10
+      weight: 60.0
+    - repetitions: 10
+      weight: 60.0
 
 - id: '53'
+  order: 4
   exercise:
     name: Leg Press
     isBodyweight: false
   bodyweight: 68.9
   date: '2022-02-03'
   sets:
-  - repetitions: 12
-    weight: 120.0
-  - repetitions: 12
-    weight: 120.0
-  - repetitions: 12
-    weight: 120.0
+    - repetitions: 12
+      weight: 120.0
+    - repetitions: 12
+      weight: 120.0
+    - repetitions: 12
+      weight: 120.0
 
 - id: '54'
+  order: 5
   exercise:
     name: Seated Hamstring Curl
     isBodyweight: false
   bodyweight: 68.9
   date: '2022-02-03'
   sets:
-  - repetitions: 12
-    weight: 50.0
-  - repetitions: 12
-    weight: 50.0
-  - repetitions: 12
-    weight: 50.0
+    - repetitions: 12
+      weight: 50.0
+    - repetitions: 12
+      weight: 50.0
+    - repetitions: 12
+      weight: 50.0
 
 - id: '55'
+  order: 6
   exercise:
     name: Lateral Raises
     isBodyweight: false
   bodyweight: 68.9
   date: '2022-02-03'
   sets:
-  - repetitions: 10
-    weight: 20.0
-  - repetitions: 10
-    weight: 20.0
-  - repetitions: 10
-    weight: 20.0
+    - repetitions: 10
+      weight: 20.0
+    - repetitions: 10
+      weight: 20.0
+    - repetitions: 10
+      weight: 20.0
 
 - id: '56'
+  order: 7
   exercise:
     name: Tricep Pushdown
     isBodyweight: false
   bodyweight: 68.9
   date: '2022-02-03'
   sets:
-  - repetitions: 10
-    weight: 37.5
-  - repetitions: 10
-    weight: 37.5
-  - repetitions: 10
-    weight: 37.5
+    - repetitions: 10
+      weight: 37.5
+    - repetitions: 10
+      weight: 37.5
+    - repetitions: 10
+      weight: 37.5
 
 - id: '57'
+  order: 1
   exercise:
     name: Squat
     isBodyweight: false
   bodyweight: 69.2
   date: '2022-02-05'
   sets:
-  - repetitions: 4
-    weight: 85.0
-  - repetitions: 4
-    weight: 85.0
-  - repetitions: 4
-    weight: 85.0
-  - repetitions: 4
-    weight: 85.0
+    - repetitions: 4
+      weight: 85.0
+    - repetitions: 4
+      weight: 85.0
+    - repetitions: 4
+      weight: 85.0
+    - repetitions: 4
+      weight: 85.0
 
 - id: '58'
+  order: 2
   exercise:
     name: Romanian Deadlift
     isBodyweight: false
   bodyweight: 69.2
   date: '2022-02-05'
   sets:
-  - repetitions: 6
-    weight: 73.0
-  - repetitions: 6
-    weight: 73.0
-  - repetitions: 6
-    weight: 73.0
-  - repetitions: 6
-    weight: 73.0
+    - repetitions: 6
+      weight: 73.0
+    - repetitions: 6
+      weight: 73.0
+    - repetitions: 6
+      weight: 73.0
+    - repetitions: 6
+      weight: 73.0
 
 - id: '59'
+  order: 3
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 69.2
   date: '2022-02-05'
   sets:
-  - repetitions: 9
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
+    - repetitions: 9
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
 
 - id: '60'
+  order: 4
   exercise:
     name: Seated Row (Cable Machine)
     isBodyweight: false
   bodyweight: 69.2
   date: '2022-02-05'
   sets:
-  - repetitions: 10
-    weight: 57.5
-  - repetitions: 10
-    weight: 57.5
-  - repetitions: 10
-    weight: 57.5
+    - repetitions: 10
+      weight: 57.5
+    - repetitions: 10
+      weight: 57.5
+    - repetitions: 10
+      weight: 57.5
 
 - id: '61'
+  order: 5
   exercise:
     name: Seated Overhead Press (Machine)
     isBodyweight: false
   bodyweight: 69.2
   date: '2022-02-05'
   sets:
-  - repetitions: 8
-    weight: 50.0
-  - repetitions: 8
-    weight: 50.0
-  - repetitions: 8
-    weight: 50.0
+    - repetitions: 8
+      weight: 50.0
+    - repetitions: 8
+      weight: 50.0
+    - repetitions: 8
+      weight: 50.0
 
 - id: '62'
+  order: 6
   exercise:
     name: Bicep Curl (Machine)
     isBodyweight: false
   bodyweight: 69.2
   date: '2022-02-05'
   sets:
-  - repetitions: 12
-    weight: 25.0
-  - repetitions: 12
-    weight: 25.0
-  - repetitions: 12
-    weight: 25.0
+    - repetitions: 12
+      weight: 25.0
+    - repetitions: 12
+      weight: 25.0
+    - repetitions: 12
+      weight: 25.0
 
 - id: '63'
+  order: 7
   exercise:
     name: Tricep Pushdown (Machine)
     isBodyweight: false
   bodyweight: 69.2
   date: '2022-02-05'
   sets:
-  - repetitions: 12
-    weight: 65.0
-  - repetitions: 12
-    weight: 65.0
-  - repetitions: 12
-    weight: 65.0
+    - repetitions: 12
+      weight: 65.0
+    - repetitions: 12
+      weight: 65.0
+    - repetitions: 12
+      weight: 65.0
 
 - id: '64'
+  order: 1
   exercise:
     name: Deadlift
     isBodyweight: false
   bodyweight: 69.5
   date: '2022-02-09'
   sets:
-  - repetitions: 5
-    weight: 107.0
-  - repetitions: 5
-    weight: 107.0
-  - repetitions: 5
-    weight: 107.0
-  - repetitions: 5
-    weight: 107.0
+    - repetitions: 5
+      weight: 107.0
+    - repetitions: 5
+      weight: 107.0
+    - repetitions: 5
+      weight: 107.0
+    - repetitions: 5
+      weight: 107.0
 
 - id: '65'
+  order: 2
   exercise:
     name: Barbell Row
     isBodyweight: false
   bodyweight: 69.5
   date: '2022-02-09'
   sets:
-  - repetitions: 8
-    weight: 70.0
-  - repetitions: 8
-    weight: 70.0
-  - repetitions: 8
-    weight: 70.0
+    - repetitions: 8
+      weight: 70.0
+    - repetitions: 8
+      weight: 70.0
+    - repetitions: 8
+      weight: 70.0
 
 - id: '66'
+  order: 3
   exercise:
     name: Lat Pullover
     isBodyweight: false
   bodyweight: 69.5
   date: '2022-02-09'
   sets:
-  - repetitions: 10
-    weight: 55.0
-  - repetitions: 10
-    weight: 57.5
-  - repetitions: 10
-    weight: 57.5
+    - repetitions: 10
+      weight: 55.0
+    - repetitions: 10
+      weight: 57.5
+    - repetitions: 10
+      weight: 57.5
 
 - id: '67'
+  order: 4
   exercise:
     name: Incline Bench Press (Machine)
     isBodyweight: false
   bodyweight: 69.5
   date: '2022-02-09'
   sets:
-  - repetitions: 10
-    weight: 65.0
-  - repetitions: 10
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
+    - repetitions: 10
+      weight: 65.0
+    - repetitions: 10
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
 
 - id: '68'
+  order: 5
   exercise:
     name: Bulgarian Split Squat
     isBodyweight: false
   bodyweight: 69.5
   date: '2022-02-09'
   sets:
-  - repetitions: 10
-    weight: 30.0
-  - repetitions: 10
-    weight: 30.0
-  - repetitions: 8
-    weight: 30.0
+    - repetitions: 10
+      weight: 30.0
+    - repetitions: 10
+      weight: 30.0
+    - repetitions: 8
+      weight: 30.0
 
 - id: '69'
+  order: 6
   exercise:
     name: Face Pull
     isBodyweight: false
   bodyweight: 69.5
   date: '2022-02-09'
   sets:
-  - repetitions: 12
-    weight: 35.0
-  - repetitions: 12
-    weight: 35.0
-  - repetitions: 12
-    weight: 35.0
+    - repetitions: 12
+      weight: 35.0
+    - repetitions: 12
+      weight: 35.0
+    - repetitions: 12
+      weight: 35.0
 
 - id: '70'
+  order: 7
   exercise:
     name: Bicep Curl (Cable Machine)
     isBodyweight: false
   bodyweight: 69.5
   date: '2022-02-09'
   sets:
-  - repetitions: 12
-    weight: 40.0
-  - repetitions: 12
-    weight: 40.0
-  - repetitions: 12
-    weight: 40.0
+    - repetitions: 12
+      weight: 40.0
+    - repetitions: 12
+      weight: 40.0
+    - repetitions: 12
+      weight: 40.0
 
 - id: '71'
+  order: 1
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 69.9
   date: '2022-02-11'
   sets:
-  - repetitions: 4
-    weight: 75.0
-  - repetitions: 4
-    weight: 75.0
-  - repetitions: 4
-    weight: 72.5
-  - repetitions: 4
-    weight: 72.5
+    - repetitions: 4
+      weight: 75.0
+    - repetitions: 4
+      weight: 75.0
+    - repetitions: 4
+      weight: 72.5
+    - repetitions: 4
+      weight: 72.5
 
 - id: '72'
+  order: 2
   exercise:
     name: Overhead Press
     isBodyweight: false
   bodyweight: 69.9
   date: '2022-02-11'
   sets:
-  - repetitions: 7
-    weight: 40.0
-  - repetitions: 7
-    weight: 40.0
-  - repetitions: 7
-    weight: 40.0
-  - repetitions: 7
-    weight: 40.0
+    - repetitions: 7
+      weight: 40.0
+    - repetitions: 7
+      weight: 40.0
+    - repetitions: 7
+      weight: 40.0
+    - repetitions: 7
+      weight: 40.0
 
 - id: '73'
+  order: 3
   exercise:
     name: Seated Row (Machine)
     isBodyweight: false
   bodyweight: 69.9
   date: '2022-02-11'
   sets:
-  - repetitions: 10
-    weight: 62.5
-  - repetitions: 10
-    weight: 62.5
-  - repetitions: 10
-    weight: 62.5
+    - repetitions: 10
+      weight: 62.5
+    - repetitions: 10
+      weight: 62.5
+    - repetitions: 10
+      weight: 62.5
 
 - id: '74'
+  order: 4
   exercise:
     name: Leg Press
     isBodyweight: false
   bodyweight: 69.9
   date: '2022-02-11'
   sets:
-  - repetitions: 10
-    weight: 120.0
-  - repetitions: 10
-    weight: 120.0
-  - repetitions: 10
-    weight: 120.0
+    - repetitions: 10
+      weight: 120.0
+    - repetitions: 10
+      weight: 120.0
+    - repetitions: 10
+      weight: 120.0
 
 - id: '75'
+  order: 5
   exercise:
     name: Seated Hamstring Curl
     isBodyweight: false
   bodyweight: 69.9
   date: '2022-02-11'
   sets:
-  - repetitions: 12
-    weight: 52.5
-  - repetitions: 12
-    weight: 52.5
-  - repetitions: 12
-    weight: 52.5
+    - repetitions: 12
+      weight: 52.5
+    - repetitions: 12
+      weight: 52.5
+    - repetitions: 12
+      weight: 52.5
 
 - id: '76'
+  order: 6
   exercise:
     name: Lateral Raises
     isBodyweight: false
   bodyweight: 69.9
   date: '2022-02-11'
   sets:
-  - repetitions: 10
-    weight: 20.0
-  - repetitions: 10
-    weight: 20.0
-  - repetitions: 10
-    weight: 20.0
+    - repetitions: 10
+      weight: 20.0
+    - repetitions: 10
+      weight: 20.0
+    - repetitions: 10
+      weight: 20.0
 
 - id: '77'
+  order: 7
   exercise:
     name: Tricep Pushdown
     isBodyweight: false
   bodyweight: 69.9
   date: '2022-02-11'
   sets:
-  - repetitions: 12
-    weight: 37.5
-  - repetitions: 10
-    weight: 37.5
-  - repetitions: 10
-    weight: 37.5
+    - repetitions: 12
+      weight: 37.5
+    - repetitions: 10
+      weight: 37.5
+    - repetitions: 10
+      weight: 37.5
 
 - id: '78'
+  order: 1
   exercise:
     name: Squat
     isBodyweight: false
   bodyweight: 70.1
   date: '2022-02-13'
   sets:
-  - repetitions: 4
-    weight: 87.5
-  - repetitions: 4
-    weight: 87.5
-  - repetitions: 4
-    weight: 87.5
-  - repetitions: 4
-    weight: 87.5
+    - repetitions: 4
+      weight: 87.5
+    - repetitions: 4
+      weight: 87.5
+    - repetitions: 4
+      weight: 87.5
+    - repetitions: 4
+      weight: 87.5
 
 - id: '79'
+  order: 2
   exercise:
     name: Romanian Deadlift
     isBodyweight: false
   bodyweight: 70.1
   date: '2022-02-13'
   sets:
-  - repetitions: 6
-    weight: 73.0
-  - repetitions: 6
-    weight: 73.0
-  - repetitions: 6
-    weight: 73.0
-  - repetitions: 6
-    weight: 73.0
+    - repetitions: 6
+      weight: 73.0
+    - repetitions: 6
+      weight: 73.0
+    - repetitions: 6
+      weight: 73.0
+    - repetitions: 6
+      weight: 73.0
 
 - id: '80'
+  order: 3
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 70.1
   date: '2022-02-13'
   sets:
-  - repetitions: 9
-    weight: 65.0
-  - repetitions: 9
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
+    - repetitions: 9
+      weight: 65.0
+    - repetitions: 9
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
 
 - id: '81'
+  order: 4
   exercise:
     name: Seated Row (Cable Machine)
     isBodyweight: false
   bodyweight: 70.1
   date: '2022-02-13'
   sets:
-  - repetitions: 10
-    weight: 60.0
-  - repetitions: 10
-    weight: 60.0
-  - repetitions: 10
-    weight: 60.0
+    - repetitions: 10
+      weight: 60.0
+    - repetitions: 10
+      weight: 60.0
+    - repetitions: 10
+      weight: 60.0
 
 - id: '82'
+  order: 5
   exercise:
     name: Seated Overhead Press (Machine)
     isBodyweight: false
   bodyweight: 70.1
   date: '2022-02-13'
   sets:
-  - repetitions: 10
-    weight: 50.0
-  - repetitions: 8
-    weight: 50.0
-  - repetitions: 8
-    weight: 50.0
+    - repetitions: 10
+      weight: 50.0
+    - repetitions: 8
+      weight: 50.0
+    - repetitions: 8
+      weight: 50.0
 
 - id: '83'
+  order: 6
   exercise:
     name: Bicep Curl (Machine)
     isBodyweight: false
   bodyweight: 70.1
   date: '2022-02-13'
   sets:
-  - repetitions: 12
-    weight: 25.0
-  - repetitions: 12
-    weight: 25.0
-  - repetitions: 10
-    weight: 25.0
+    - repetitions: 12
+      weight: 25.0
+    - repetitions: 12
+      weight: 25.0
+    - repetitions: 10
+      weight: 25.0
 
 - id: '84'
+  order: 7
   exercise:
     name: Tricep Pushdown (Machine)
     isBodyweight: false
   bodyweight: 70.1
   date: '2022-02-13'
   sets:
-  - repetitions: 15
-    weight: 65.0
-  - repetitions: 15
-    weight: 65.0
-  - repetitions: 12
-    weight: 65.0
+    - repetitions: 15
+      weight: 65.0
+    - repetitions: 15
+      weight: 65.0
+    - repetitions: 12
+      weight: 65.0
 
 - id: '85'
+  order: 1
   exercise:
     name: Deadlift
     isBodyweight: false
   bodyweight: 70.0
   date: '2022-02-16'
   sets:
-  - repetitions: 4
-    weight: 110.0
-  - repetitions: 4
-    weight: 110.0
-  - repetitions: 4
-    weight: 110.0
-  - repetitions: 4
-    weight: 110.0
+    - repetitions: 4
+      weight: 110.0
+    - repetitions: 4
+      weight: 110.0
+    - repetitions: 4
+      weight: 110.0
+    - repetitions: 4
+      weight: 110.0
 
 - id: '86'
+  order: 2
   exercise:
     name: Barbell Row
     isBodyweight: false
   bodyweight: 70.0
   date: '2022-02-16'
   sets:
-  - repetitions: 8
-    weight: 60.0
-  - repetitions: 8
-    weight: 60.0
-  - repetitions: 8
-    weight: 60.0
+    - repetitions: 8
+      weight: 60.0
+    - repetitions: 8
+      weight: 60.0
+    - repetitions: 8
+      weight: 60.0
 
 - id: '87'
+  order: 3
   exercise:
     name: Lat Pullover
     isBodyweight: false
   bodyweight: 70.0
   date: '2022-02-16'
   sets:
-  - repetitions: 10
-    weight: 60.0
-  - repetitions: 10
-    weight: 60.0
-  - repetitions: 10
-    weight: 60.0
+    - repetitions: 10
+      weight: 60.0
+    - repetitions: 10
+      weight: 60.0
+    - repetitions: 10
+      weight: 60.0
 
 - id: '88'
+  order: 4
   exercise:
     name: Incline Bench Press (Machine)
     isBodyweight: false
   bodyweight: 70.0
   date: '2022-02-16'
   sets:
-  - repetitions: 10
-    weight: 65.0
-  - repetitions: 10
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
+    - repetitions: 10
+      weight: 65.0
+    - repetitions: 10
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
 
 - id: '89'
+  order: 5
   exercise:
     name: Bulgarian Split Squat
     isBodyweight: false
   bodyweight: 70.0
   date: '2022-02-16'
   sets:
-  - repetitions: 8
-    weight: 30.0
-  - repetitions: 8
-    weight: 30.0
-  - repetitions: 8
-    weight: 30.0
+    - repetitions: 8
+      weight: 30.0
+    - repetitions: 8
+      weight: 30.0
+    - repetitions: 8
+      weight: 30.0
 
 - id: '90'
+  order: 6
   exercise:
     name: Face Pull
     isBodyweight: false
   bodyweight: 70.0
   date: '2022-02-16'
   sets:
-  - repetitions: 15
-    weight: 35.0
-  - repetitions: 15
-    weight: 35.0
-  - repetitions: 15
-    weight: 35.0
+    - repetitions: 15
+      weight: 35.0
+    - repetitions: 15
+      weight: 35.0
+    - repetitions: 15
+      weight: 35.0
 
 - id: '91'
+  order: 7
   exercise:
     name: Bicep Curl (Cable Machine)
     isBodyweight: false
   bodyweight: 70.0
   date: '2022-02-16'
   sets:
-  - repetitions: 10
-    weight: 45.0
-  - repetitions: 10
-    weight: 45.0
-  - repetitions: 10
-    weight: 45.0
+    - repetitions: 10
+      weight: 45.0
+    - repetitions: 10
+      weight: 45.0
+    - repetitions: 10
+      weight: 45.0
 
 - id: '92'
+  order: 1
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 70.6
   date: '2022-02-18'
   sets:
-  - repetitions: 4
-    weight: 75.0
-  - repetitions: 4
-    weight: 75.0
-  - repetitions: 4
-    weight: 75.0
-  - repetitions: 4
-    weight: 75.0
+    - repetitions: 4
+      weight: 75.0
+    - repetitions: 4
+      weight: 75.0
+    - repetitions: 4
+      weight: 75.0
+    - repetitions: 4
+      weight: 75.0
 
 - id: '93'
+  order: 2
   exercise:
     name: Overhead Press
     isBodyweight: false
   bodyweight: 70.6
   date: '2022-02-18'
   sets:
-  - repetitions: 6
-    weight: 42.0
-  - repetitions: 6
-    weight: 42.0
-  - repetitions: 6
-    weight: 42.0
-  - repetitions: 6
-    weight: 42.0
+    - repetitions: 6
+      weight: 42.0
+    - repetitions: 6
+      weight: 42.0
+    - repetitions: 6
+      weight: 42.0
+    - repetitions: 6
+      weight: 42.0
 
 - id: '94'
+  order: 3
   exercise:
     name: Seated Row (Machine)
     isBodyweight: false
   bodyweight: 70.6
   date: '2022-02-18'
   sets:
-  - repetitions: 8
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
+    - repetitions: 8
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
 
 - id: '95'
+  order: 4
   exercise:
     name: Leg Press
     isBodyweight: false
   bodyweight: 70.6
   date: '2022-02-18'
   sets:
-  - repetitions: 10
-    weight: 120.0
-  - repetitions: 10
-    weight: 120.0
-  - repetitions: 10
-    weight: 120.0
+    - repetitions: 10
+      weight: 120.0
+    - repetitions: 10
+      weight: 120.0
+    - repetitions: 10
+      weight: 120.0
 
 - id: '96'
+  order: 5
   exercise:
     name: Seated Hamstring Curl
     isBodyweight: false
   bodyweight: 70.6
   date: '2022-02-18'
   sets:
-  - repetitions: 10
-    weight: 55.0
-  - repetitions: 10
-    weight: 55.0
-  - repetitions: 10
-    weight: 55.0
+    - repetitions: 10
+      weight: 55.0
+    - repetitions: 10
+      weight: 55.0
+    - repetitions: 10
+      weight: 55.0
 
 - id: '97'
+  order: 6
   exercise:
     name: Lateral Raises
     isBodyweight: false
   bodyweight: 70.6
   date: '2022-02-18'
   sets:
-  - repetitions: 10
-    weight: 20.0
-  - repetitions: 10
-    weight: 20.0
-  - repetitions: 10
-    weight: 20.0
+    - repetitions: 10
+      weight: 20.0
+    - repetitions: 10
+      weight: 20.0
+    - repetitions: 10
+      weight: 20.0
 
 - id: '98'
+  order: 7
   exercise:
     name: Tricep Pushdown
     isBodyweight: false
   bodyweight: 70.6
   date: '2022-02-18'
   sets:
-  - repetitions: 12
-    weight: 37.5
-  - repetitions: 12
-    weight: 37.5
-  - repetitions: 10
-    weight: 37.5
+    - repetitions: 12
+      weight: 37.5
+    - repetitions: 12
+      weight: 37.5
+    - repetitions: 10
+      weight: 37.5
 
 - id: '99'
+  order: 1
   exercise:
     name: Squat
     isBodyweight: false
   bodyweight: 71.2
   date: '2022-02-20'
   sets:
-  - repetitions: 4
-    weight: 90.0
-  - repetitions: 4
-    weight: 90.0
-  - repetitions: 4
-    weight: 90.0
-  - repetitions: 4
-    weight: 90.0
+    - repetitions: 4
+      weight: 90.0
+    - repetitions: 4
+      weight: 90.0
+    - repetitions: 4
+      weight: 90.0
+    - repetitions: 4
+      weight: 90.0
 
 - id: '100'
+  order: 2
   exercise:
     name: Romanian Deadlift
     isBodyweight: false
   bodyweight: 71.2
   date: '2022-02-20'
   sets:
-  - repetitions: 6
-    weight: 73.0
-  - repetitions: 6
-    weight: 73.0
-  - repetitions: 6
-    weight: 73.0
-  - repetitions: 6
-    weight: 73.0
+    - repetitions: 6
+      weight: 73.0
+    - repetitions: 6
+      weight: 73.0
+    - repetitions: 6
+      weight: 73.0
+    - repetitions: 6
+      weight: 73.0
 
 - id: '101'
+  order: 3
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 71.2
   date: '2022-02-20'
   sets:
-  - repetitions: 9
-    weight: 65.0
-  - repetitions: 9
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
+    - repetitions: 9
+      weight: 65.0
+    - repetitions: 9
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
 
 - id: '102'
+  order: 4
   exercise:
     name: Seated Row (Cable Machine)
     isBodyweight: false
   bodyweight: 71.2
   date: '2022-02-20'
   sets:
-  - repetitions: 10
-    weight: 60.0
-  - repetitions: 10
-    weight: 60.0
-  - repetitions: 10
-    weight: 60.0
+    - repetitions: 10
+      weight: 60.0
+    - repetitions: 10
+      weight: 60.0
+    - repetitions: 10
+      weight: 60.0
 
 - id: '103'
+  order: 5
   exercise:
     name: Seated Overhead Press (Machine)
     isBodyweight: false
   bodyweight: 71.2
   date: '2022-02-20'
   sets:
-  - repetitions: 10
-    weight: 50.0
-  - repetitions: 10
-    weight: 50.0
-  - repetitions: 8
-    weight: 50.0
+    - repetitions: 10
+      weight: 50.0
+    - repetitions: 10
+      weight: 50.0
+    - repetitions: 8
+      weight: 50.0
 
 - id: '104'
+  order: 6
   exercise:
     name: Bicep Curl (Machine)
     isBodyweight: false
   bodyweight: 71.2
   date: '2022-02-20'
   sets:
-  - repetitions: 10
-    weight: 25.0
-  - repetitions: 10
-    weight: 25.0
-  - repetitions: 10
-    weight: 25.0
+    - repetitions: 10
+      weight: 25.0
+    - repetitions: 10
+      weight: 25.0
+    - repetitions: 10
+      weight: 25.0
 
 - id: '105'
+  order: 7
   exercise:
     name: Tricep Pushdown (Machine)
     isBodyweight: false
   bodyweight: 71.2
   date: '2022-02-20'
   sets:
-  - repetitions: 15
-    weight: 65.0
-  - repetitions: 15
-    weight: 65.0
-  - repetitions: 15
-    weight: 65.0
+    - repetitions: 15
+      weight: 65.0
+    - repetitions: 15
+      weight: 65.0
+    - repetitions: 15
+      weight: 65.0
 
 - id: '106'
+  order: 1
   exercise:
     name: Deadlift
     isBodyweight: false
   bodyweight: 70.9
   date: '2022-02-22'
   sets:
-  - repetitions: 5
-    weight: 110.0
-  - repetitions: 4
-    weight: 110.0
-  - repetitions: 4
-    weight: 110.0
-  - repetitions: 4
-    weight: 110.0
+    - repetitions: 5
+      weight: 110.0
+    - repetitions: 4
+      weight: 110.0
+    - repetitions: 4
+      weight: 110.0
+    - repetitions: 4
+      weight: 110.0
 
 - id: '107'
+  order: 2
   exercise:
     name: Barbell Row
     isBodyweight: false
   bodyweight: 70.9
   date: '2022-02-22'
   sets:
-  - repetitions: 8
-    weight: 60.0
-  - repetitions: 8
-    weight: 60.0
-  - repetitions: 8
-    weight: 60.0
+    - repetitions: 8
+      weight: 60.0
+    - repetitions: 8
+      weight: 60.0
+    - repetitions: 8
+      weight: 60.0
 
 - id: '108'
+  order: 3
   exercise:
     name: Lat Pullover
     isBodyweight: false
   bodyweight: 70.9
   date: '2022-02-22'
   sets:
-  - repetitions: 10
-    weight: 60.0
-  - repetitions: 10
-    weight: 60.0
-  - repetitions: 8
-    weight: 60.0
+    - repetitions: 10
+      weight: 60.0
+    - repetitions: 10
+      weight: 60.0
+    - repetitions: 8
+      weight: 60.0
 
 - id: '109'
+  order: 4
   exercise:
     name: Incline Bench Press (Machine)
     isBodyweight: false
   bodyweight: 70.9
   date: '2022-02-22'
   sets:
-  - repetitions: 10
-    weight: 65.0
-  - repetitions: 10
-    weight: 65.0
-  - repetitions: 10
-    weight: 65.0
+    - repetitions: 10
+      weight: 65.0
+    - repetitions: 10
+      weight: 65.0
+    - repetitions: 10
+      weight: 65.0
 
 - id: '110'
+  order: 5
   exercise:
     name: Bulgarian Split Squat
     isBodyweight: false
   bodyweight: 70.9
   date: '2022-02-22'
   sets:
-  - repetitions: 10
-    weight: 30.0
-  - repetitions: 10
-    weight: 30.0
-  - repetitions: 10
-    weight: 30.0
+    - repetitions: 10
+      weight: 30.0
+    - repetitions: 10
+      weight: 30.0
+    - repetitions: 10
+      weight: 30.0
 
 - id: '111'
+  order: 6
   exercise:
     name: Face Pull
     isBodyweight: false
   bodyweight: 70.9
   date: '2022-02-22'
   sets:
-  - repetitions: 15
-    weight: 35.0
-  - repetitions: 15
-    weight: 35.0
-  - repetitions: 15
-    weight: 35.0
+    - repetitions: 15
+      weight: 35.0
+    - repetitions: 15
+      weight: 35.0
+    - repetitions: 15
+      weight: 35.0
 
 - id: '112'
+  order: 7
   exercise:
     name: Bicep Curl (Cable Machine)
     isBodyweight: false
   bodyweight: 70.9
   date: '2022-02-22'
   sets:
-  - repetitions: 12
-    weight: 45.0
-  - repetitions: 10
-    weight: 45.0
-  - repetitions: 10
-    weight: 45.0
+    - repetitions: 12
+      weight: 45.0
+    - repetitions: 10
+      weight: 45.0
+    - repetitions: 10
+      weight: 45.0
 
 - id: '113'
+  order: 1
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 70.9
   date: '2022-02-24'
   sets:
-  - repetitions: 5
-    weight: 75.0
-  - repetitions: 5
-    weight: 75.0
-  - repetitions: 4
-    weight: 75.0
-  - repetitions: 4
-    weight: 75.0
+    - repetitions: 5
+      weight: 75.0
+    - repetitions: 5
+      weight: 75.0
+    - repetitions: 4
+      weight: 75.0
+    - repetitions: 4
+      weight: 75.0
 
 - id: '114'
+  order: 2
   exercise:
     name: Overhead Press
     isBodyweight: false
   bodyweight: 70.9
   date: '2022-02-24'
   sets:
-  - repetitions: 6
-    weight: 42.5
-  - repetitions: 6
-    weight: 42.5
-  - repetitions: 6
-    weight: 42.5
-  - repetitions: 6
-    weight: 42.5
+    - repetitions: 6
+      weight: 42.5
+    - repetitions: 6
+      weight: 42.5
+    - repetitions: 6
+      weight: 42.5
+    - repetitions: 6
+      weight: 42.5
 
 - id: '115'
+  order: 3
   exercise:
     name: Seated Row (Machine)
     isBodyweight: false
   bodyweight: 70.9
   date: '2022-02-24'
   sets:
-  - repetitions: 10
-    weight: 65.0
-  - repetitions: 10
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
+    - repetitions: 10
+      weight: 65.0
+    - repetitions: 10
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
 
 - id: '116'
+  order: 4
   exercise:
     name: Leg Press
     isBodyweight: false
   bodyweight: 70.9
   date: '2022-02-24'
   sets:
-  - repetitions: 10
-    weight: 120.0
-  - repetitions: 10
-    weight: 120.0
-  - repetitions: 10
-    weight: 120.0
+    - repetitions: 10
+      weight: 120.0
+    - repetitions: 10
+      weight: 120.0
+    - repetitions: 10
+      weight: 120.0
 
 - id: '117'
+  order: 5
   exercise:
     name: Seated Hamstring Curl
     isBodyweight: false
   bodyweight: 70.9
   date: '2022-02-24'
   sets:
-  - repetitions: 10
-    weight: 57.5
-  - repetitions: 10
-    weight: 57.5
-  - repetitions: 10
-    weight: 57.5
+    - repetitions: 10
+      weight: 57.5
+    - repetitions: 10
+      weight: 57.5
+    - repetitions: 10
+      weight: 57.5
 
 - id: '118'
+  order: 6
   exercise:
     name: Lateral Raises
     isBodyweight: false
   bodyweight: 70.9
   date: '2022-02-24'
   sets:
-  - repetitions: 10
-    weight: 20.0
-  - repetitions: 10
-    weight: 20.0
-  - repetitions: 10
-    weight: 20.0
+    - repetitions: 10
+      weight: 20.0
+    - repetitions: 10
+      weight: 20.0
+    - repetitions: 10
+      weight: 20.0
 
 - id: '119'
+  order: 7
   exercise:
     name: Tricep Pushdown
     isBodyweight: false
   bodyweight: 70.9
   date: '2022-02-24'
   sets:
-  - repetitions: 12
-    weight: 37.5
-  - repetitions: 12
-    weight: 37.5
-  - repetitions: 10
-    weight: 37.5
+    - repetitions: 12
+      weight: 37.5
+    - repetitions: 12
+      weight: 37.5
+    - repetitions: 10
+      weight: 37.5
 
 - id: '120'
+  order: 1
   exercise:
     name: Squat
     isBodyweight: false
   bodyweight: 71.5
   date: '2022-02-26'
   sets:
-  - repetitions: 5
-    weight: 90.0
-  - repetitions: 5
-    weight: 90.0
-  - repetitions: 4
-    weight: 90.0
-  - repetitions: 4
-    weight: 90.0
+    - repetitions: 5
+      weight: 90.0
+    - repetitions: 5
+      weight: 90.0
+    - repetitions: 4
+      weight: 90.0
+    - repetitions: 4
+      weight: 90.0
 
 - id: '121'
+  order: 2
   exercise:
     name: Romanian Deadlift
     isBodyweight: false
   bodyweight: 71.5
   date: '2022-02-26'
   sets:
-  - repetitions: 6
-    weight: 75.0
-  - repetitions: 6
-    weight: 75.0
-  - repetitions: 6
-    weight: 75.0
-  - repetitions: 6
-    weight: 75.0
+    - repetitions: 6
+      weight: 75.0
+    - repetitions: 6
+      weight: 75.0
+    - repetitions: 6
+      weight: 75.0
+    - repetitions: 6
+      weight: 75.0
 
 - id: '122'
+  order: 3
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 71.5
   date: '2022-02-26'
   sets:
-  - repetitions: 9
-    weight: 65.0
-  - repetitions: 9
-    weight: 65.0
-  - repetitions: 9
-    weight: 65.0
+    - repetitions: 9
+      weight: 65.0
+    - repetitions: 9
+      weight: 65.0
+    - repetitions: 9
+      weight: 65.0
 
 - id: '123'
+  order: 4
   exercise:
     name: Seated Row (Cable Machine)
     isBodyweight: false
   bodyweight: 71.5
   date: '2022-02-26'
   sets:
-  - repetitions: 10
-    weight: 62.5
-  - repetitions: 8
-    weight: 62.5
-  - repetitions: 8
-    weight: 62.5
+    - repetitions: 10
+      weight: 62.5
+    - repetitions: 8
+      weight: 62.5
+    - repetitions: 8
+      weight: 62.5
 
 - id: '124'
+  order: 5
   exercise:
     name: Seated Overhead Press (Machine)
     isBodyweight: false
   bodyweight: 71.5
   date: '2022-02-26'
   sets:
-  - repetitions: 10
-    weight: 50.0
-  - repetitions: 10
-    weight: 50.0
-  - repetitions: 9
-    weight: 50.0
+    - repetitions: 10
+      weight: 50.0
+    - repetitions: 10
+      weight: 50.0
+    - repetitions: 9
+      weight: 50.0
 
 - id: '125'
+  order: 6
   exercise:
     name: Bicep Curl (Machine)
     isBodyweight: false
   bodyweight: 71.5
   date: '2022-02-26'
   sets:
-  - repetitions: 12
-    weight: 25.0
-  - repetitions: 12
-    weight: 25.0
-  - repetitions: 12
-    weight: 25.0
+    - repetitions: 12
+      weight: 25.0
+    - repetitions: 12
+      weight: 25.0
+    - repetitions: 12
+      weight: 25.0
 
 - id: '126'
+  order: 7
   exercise:
     name: Tricep Pushdown (Machine)
     isBodyweight: false
   bodyweight: 71.5
   date: '2022-02-26'
   sets:
-  - repetitions: 15
-    weight: 67.5
-  - repetitions: 15
-    weight: 67.5
-  - repetitions: 15
-    weight: 67.5
+    - repetitions: 15
+      weight: 67.5
+    - repetitions: 15
+      weight: 67.5
+    - repetitions: 15
+      weight: 67.5
 
 - id: '127'
+  order: 1
   exercise:
     name: Deadlift
     isBodyweight: false
   bodyweight: 71.2
   date: '2022-03-01'
   sets:
-  - repetitions: 5
-    weight: 110.0
-  - repetitions: 5
-    weight: 110.0
-  - repetitions: 5
-    weight: 110.0
-  - repetitions: 5
-    weight: 110.0
+    - repetitions: 5
+      weight: 110.0
+    - repetitions: 5
+      weight: 110.0
+    - repetitions: 5
+      weight: 110.0
+    - repetitions: 5
+      weight: 110.0
 
 - id: '128'
+  order: 2
   exercise:
     name: Barbell Row
     isBodyweight: false
   bodyweight: 71.2
   date: '2022-03-01'
   sets:
-  - repetitions: 8
-    weight: 60.0
-  - repetitions: 8
-    weight: 60.0
-  - repetitions: 8
-    weight: 60.0
+    - repetitions: 8
+      weight: 60.0
+    - repetitions: 8
+      weight: 60.0
+    - repetitions: 8
+      weight: 60.0
 
 - id: '129'
+  order: 3
   exercise:
     name: Lat Pullover
     isBodyweight: false
   bodyweight: 71.2
   date: '2022-03-01'
   sets:
-  - repetitions: 10
-    weight: 60.0
-  - repetitions: 10
-    weight: 60.0
-  - repetitions: 9
-    weight: 60.0
+    - repetitions: 10
+      weight: 60.0
+    - repetitions: 10
+      weight: 60.0
+    - repetitions: 9
+      weight: 60.0
 
 - id: '130'
+  order: 4
   exercise:
     name: Incline Bench Press (Machine)
     isBodyweight: false
   bodyweight: 71.2
   date: '2022-03-01'
   sets:
-  - repetitions: 10
-    weight: 65.0
-  - repetitions: 10
-    weight: 67.5
-  - repetitions: 10
-    weight: 67.5
+    - repetitions: 10
+      weight: 65.0
+    - repetitions: 10
+      weight: 67.5
+    - repetitions: 10
+      weight: 67.5
 
 - id: '131'
+  order: 5
   exercise:
     name: Bulgarian Split Squat
     isBodyweight: false
   bodyweight: 71.2
   date: '2022-03-01'
   sets:
-  - repetitions: 10
-    weight: 30.0
-  - repetitions: 10
-    weight: 30.0
-  - repetitions: 10
-    weight: 30.0
+    - repetitions: 10
+      weight: 30.0
+    - repetitions: 10
+      weight: 30.0
+    - repetitions: 10
+      weight: 30.0
 
 - id: '132'
+  order: 6
   exercise:
     name: Face Pull
     isBodyweight: false
   bodyweight: 71.2
   date: '2022-03-01'
   sets:
-  - repetitions: 15
-    weight: 35.0
-  - repetitions: 15
-    weight: 35.0
-  - repetitions: 15
-    weight: 35.0
+    - repetitions: 15
+      weight: 35.0
+    - repetitions: 15
+      weight: 35.0
+    - repetitions: 15
+      weight: 35.0
 
 - id: '133'
+  order: 7
   exercise:
     name: Bicep Curl (Cable Machine)
     isBodyweight: false
   bodyweight: 71.2
   date: '2022-03-01'
   sets:
-  - repetitions: 10
-    weight: 45.0
-  - repetitions: 10
-    weight: 45.0
-  - repetitions: 10
-    weight: 45.0
+    - repetitions: 10
+      weight: 45.0
+    - repetitions: 10
+      weight: 45.0
+    - repetitions: 10
+      weight: 45.0
 
 - id: '134'
+  order: 1
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 71.6
   date: '2022-03-03'
   sets:
-  - repetitions: 5
-    weight: 75.0
-  - repetitions: 5
-    weight: 75.0
-  - repetitions: 5
-    weight: 75.0
-  - repetitions: 4
-    weight: 75.0
+    - repetitions: 5
+      weight: 75.0
+    - repetitions: 5
+      weight: 75.0
+    - repetitions: 5
+      weight: 75.0
+    - repetitions: 4
+      weight: 75.0
 
 - id: '135'
+  order: 2
   exercise:
     name: Overhead Press
     isBodyweight: false
   bodyweight: 71.6
   date: '2022-03-03'
   sets:
-  - repetitions: 8
-    weight: 40.0
-  - repetitions: 6
-    weight: 40.0
-  - repetitions: 5
-    weight: 40.0
-  - repetitions: 4
-    weight: 40.0
+    - repetitions: 8
+      weight: 40.0
+    - repetitions: 6
+      weight: 40.0
+    - repetitions: 5
+      weight: 40.0
+    - repetitions: 4
+      weight: 40.0
 
 - id: '136'
+  order: 3
   exercise:
     name: Seated Row (Machine)
     isBodyweight: false
   bodyweight: 71.6
   date: '2022-03-03'
   sets:
-  - repetitions: 10
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
-  - repetitions: 8
-    weight: 65.0
+    - repetitions: 10
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
+    - repetitions: 8
+      weight: 65.0
 
 - id: '137'
+  order: 4
   exercise:
     name: Leg Press
     isBodyweight: false
   bodyweight: 71.6
   date: '2022-03-03'
   sets:
-  - repetitions: 10
-    weight: 120.0
-  - repetitions: 10
-    weight: 120.0
-  - repetitions: 10
-    weight: 120.0
+    - repetitions: 10
+      weight: 120.0
+    - repetitions: 10
+      weight: 120.0
+    - repetitions: 10
+      weight: 120.0
 
 - id: '138'
+  order: 5
   exercise:
     name: Seated Hamstring Curl
     isBodyweight: false
   bodyweight: 71.6
   date: '2022-03-03'
   sets:
-  - repetitions: 12
-    weight: 57.5
-  - repetitions: 12
-    weight: 57.5
-  - repetitions: 12
-    weight: 57.5
+    - repetitions: 12
+      weight: 57.5
+    - repetitions: 12
+      weight: 57.5
+    - repetitions: 12
+      weight: 57.5
 
 - id: '139'
+  order: 6
   exercise:
     name: Lateral Raises
     isBodyweight: false
   bodyweight: 71.6
   date: '2022-03-03'
   sets:
-  - repetitions: 10
-    weight: 20.0
-  - repetitions: 10
-    weight: 20.0
-  - repetitions: 10
-    weight: 20.0
+    - repetitions: 10
+      weight: 20.0
+    - repetitions: 10
+      weight: 20.0
+    - repetitions: 10
+      weight: 20.0
 
 - id: '140'
+  order: 7
   exercise:
     name: Tricep Pushdown
     isBodyweight: false
   bodyweight: 71.6
   date: '2022-03-03'
   sets:
-  - repetitions: 12
-    weight: 38.0
-  - repetitions: 12
-    weight: 38.0
-  - repetitions: 10
-    weight: 38.0
+    - repetitions: 12
+      weight: 38.0
+    - repetitions: 12
+      weight: 38.0
+    - repetitions: 10
+      weight: 38.0
 
 - id: '141'
+  order: 1
   exercise:
     name: Squat
     isBodyweight: false
   bodyweight: 72.1
   date: '2022-03-05'
   sets:
-  - repetitions: 5
-    weight: 90.0
-  - repetitions: 5
-    weight: 90.0
-  - repetitions: 5
-    weight: 90.0
-  - repetitions: 4
-    weight: 90.0
+    - repetitions: 5
+      weight: 90.0
+    - repetitions: 5
+      weight: 90.0
+    - repetitions: 5
+      weight: 90.0
+    - repetitions: 4
+      weight: 90.0
 
 - id: '142'
+  order: 2
   exercise:
     name: Romanian Deadlift
     isBodyweight: false
   bodyweight: 72.1
   date: '2022-03-05'
   sets:
-  - repetitions: 7
-    weight: 75.0
-  - repetitions: 7
-    weight: 75.0
-  - repetitions: 6
-    weight: 75.0
-  - repetitions: 6
-    weight: 75.0
+    - repetitions: 7
+      weight: 75.0
+    - repetitions: 7
+      weight: 75.0
+    - repetitions: 6
+      weight: 75.0
+    - repetitions: 6
+      weight: 75.0
 
 - id: '143'
+  order: 3
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 72.1
   date: '2022-03-05'
   sets:
-  - repetitions: 10
-    weight: 65.0
-  - repetitions: 10
-    weight: 65.0
-  - repetitions: 9
-    weight: 65.0
+    - repetitions: 10
+      weight: 65.0
+    - repetitions: 10
+      weight: 65.0
+    - repetitions: 9
+      weight: 65.0
 
 - id: '144'
+  order: 4
   exercise:
     name: Seated Row (Cable Machine)
     isBodyweight: false
   bodyweight: 72.1
   date: '2022-03-05'
   sets:
-  - repetitions: 10
-    weight: 62.5
-  - repetitions: 10
-    weight: 62.5
-  - repetitions: 8
-    weight: 62.5
+    - repetitions: 10
+      weight: 62.5
+    - repetitions: 10
+      weight: 62.5
+    - repetitions: 8
+      weight: 62.5
 
 - id: '145'
+  order: 5
   exercise:
     name: Seated Overhead Press (Machine)
     isBodyweight: false
   bodyweight: 72.1
   date: '2022-03-05'
   sets:
-  - repetitions: 10
-    weight: 50.0
-  - repetitions: 10
-    weight: 50.0
-  - repetitions: 10
-    weight: 50.0
+    - repetitions: 10
+      weight: 50.0
+    - repetitions: 10
+      weight: 50.0
+    - repetitions: 10
+      weight: 50.0
 
 - id: '146'
+  order: 6
   exercise:
     name: Bicep Curl (Machine)
     isBodyweight: false
   bodyweight: 72.1
   date: '2022-03-05'
   sets:
-  - repetitions: 13
-    weight: 25.0
-  - repetitions: 13
-    weight: 25.0
-  - repetitions: 13
-    weight: 25.0
+    - repetitions: 13
+      weight: 25.0
+    - repetitions: 13
+      weight: 25.0
+    - repetitions: 13
+      weight: 25.0
 
 - id: '147'
+  order: 7
   exercise:
     name: Tricep Pushdown (Machine)
     isBodyweight: false
   bodyweight: 72.1
   date: '2022-03-05'
   sets:
-  - repetitions: 15
-    weight: 70.0
-  - repetitions: 15
-    weight: 70.0
-  - repetitions: 15
-    weight: 70.0
+    - repetitions: 15
+      weight: 70.0
+    - repetitions: 15
+      weight: 70.0
+    - repetitions: 15
+      weight: 70.0
 
 - id: '148'
+  order: 1
   exercise:
     name: Front Squat
     isBodyweight: false
@@ -2143,6 +2291,7 @@
       weight: 85.0
 
 - id: '149'
+  order: 2
   exercise:
     name: Dumbbell Fly
     isBodyweight: false
@@ -2157,6 +2306,7 @@
       weight: 20.0
 
 - id: '150'
+  order: 3
   exercise:
     name: Pull-Up
     isBodyweight: true
@@ -2171,6 +2321,7 @@
       weight: 0.0
 
 - id: '151'
+  order: 4
   exercise:
     name: Leg Curl
     isBodyweight: false
@@ -2185,6 +2336,7 @@
       weight: 50.0
 
 - id: '152'
+  order: 5
   exercise:
     name: Dumbbell Shoulder Press
     isBodyweight: false
@@ -2199,6 +2351,7 @@
       weight: 22.5
 
 - id: '153'
+  order: 1
   exercise:
     name: Deadlift
     isBodyweight: false
@@ -2215,6 +2368,7 @@
       weight: 112.5
 
 - id: '154'
+  order: 2
   exercise:
     name: Incline Dumbbell Press
     isBodyweight: false
@@ -2229,6 +2383,7 @@
       weight: 27.5
 
 - id: '155'
+  order: 3
   exercise:
     name: Cable Crossover
     isBodyweight: false
@@ -2243,6 +2398,7 @@
       weight: 30.0
 
 - id: '156'
+  order: 4
   exercise:
     name: Barbell Shrug
     isBodyweight: false
@@ -2257,6 +2413,7 @@
       weight: 70.0
 
 - id: '157'
+  order: 5
   exercise:
     name: Calf Raise
     isBodyweight: false
@@ -2271,6 +2428,7 @@
       weight: 50.0
 
 - id: '158'
+  order: 1
   exercise:
     name: Bench Press
     isBodyweight: false
@@ -2287,6 +2445,7 @@
       weight: 77.5
 
 - id: '159'
+  order: 2
   exercise:
     name: Overhead Press
     isBodyweight: false
@@ -2303,6 +2462,7 @@
       weight: 42.5
 
 - id: '160'
+  order: 3
   exercise:
     name: Seated Row (Machine)
     isBodyweight: false
@@ -2317,6 +2477,7 @@
       weight: 67.5
 
 - id: '161'
+  order: 4
   exercise:
     name: Leg Press
     isBodyweight: false
@@ -2331,6 +2492,7 @@
       weight: 125.0
 
 - id: '162'
+  order: 5
   exercise:
     name: Seated Hamstring Curl
     isBodyweight: false
@@ -2345,6 +2507,7 @@
       weight: 60.0
 
 - id: '163'
+  order: 6
   exercise:
     name: Lateral Raises
     isBodyweight: false
@@ -2359,6 +2522,7 @@
       weight: 22.5
 
 - id: '164'
+  order: 7
   exercise:
     name: Tricep Pushdown
     isBodyweight: false
@@ -2373,6 +2537,7 @@
       weight: 40.0
 
 - id: '165'
+  order: 1
   exercise:
     name: Squat
     isBodyweight: false
@@ -2389,6 +2554,7 @@
       weight: 92.5
 
 - id: '166'
+  order: 2
   exercise:
     name: Romanian Deadlift
     isBodyweight: false
@@ -2405,6 +2571,7 @@
       weight: 77.5
 
 - id: '167'
+  order: 3
   exercise:
     name: Bench Press
     isBodyweight: false
@@ -2419,6 +2586,7 @@
       weight: 67.5
 
 - id: '168'
+  order: 4
   exercise:
     name: Seated Row (Cable Machine)
     isBodyweight: false
@@ -2433,6 +2601,7 @@
       weight: 65.0
 
 - id: '169'
+  order: 5
   exercise:
     name: Seated Overhead Press (Machine)
     isBodyweight: false
@@ -2447,6 +2616,7 @@
       weight: 52.5
 
 - id: '170'
+  order: 6
   exercise:
     name: Bicep Curl (Machine)
     isBodyweight: false
@@ -2461,6 +2631,7 @@
       weight: 27.5
 
 - id: '171'
+  order: 7
   exercise:
     name: Tricep Pushdown (Machine)
     isBodyweight: false
@@ -2475,6 +2646,7 @@
       weight: 72.5
 
 - id: '172'
+  order: 1
   exercise:
     name: Front Squat
     isBodyweight: false
@@ -2491,6 +2663,7 @@
       weight: 87.5
 
 - id: '173'
+  order: 2
   exercise:
     name: Dumbbell Fly
     isBodyweight: false
@@ -2505,6 +2678,7 @@
       weight: 22.5
 
 - id: '174'
+  order: 3
   exercise:
     name: Pull-Up
     isBodyweight: true
@@ -2519,6 +2693,7 @@
       weight: 0.0
 
 - id: '175'
+  order: 4
   exercise:
     name: Leg Curl
     isBodyweight: false
@@ -2533,6 +2708,7 @@
       weight: 52.5
 
 - id: '176'
+  order: 5
   exercise:
     name: Dumbbell Shoulder Press
     isBodyweight: false
@@ -2547,6 +2723,7 @@
       weight: 25.0
 
 - id: '177'
+  order: 1
   exercise:
     name: Deadlift
     isBodyweight: false
@@ -2563,6 +2740,7 @@
       weight: 115.0
 
 - id: '178'
+  order: 2
   exercise:
     name: Incline Dumbbell Press
     isBodyweight: false
@@ -2577,6 +2755,7 @@
       weight: 30.0
 
 - id: '179'
+  order: 3
   exercise:
     name: Cable Crossover
     isBodyweight: false
@@ -2591,6 +2770,7 @@
       weight: 32.5
 
 - id: '180'
+  order: 4
   exercise:
     name: Barbell Shrug
     isBodyweight: false
@@ -2605,6 +2785,7 @@
       weight: 72.5
 
 - id: '181'
+  order: 5
   exercise:
     name: Calf Raise
     isBodyweight: false
@@ -2619,6 +2800,7 @@
       weight: 52.5
 
 - id: '182'
+  order: 1
   exercise:
     name: Bench Press
     isBodyweight: false
@@ -2635,6 +2817,7 @@
       weight: 80.0
 
 - id: '183'
+  order: 2
   exercise:
     name: Overhead Press
     isBodyweight: false
@@ -2651,6 +2834,7 @@
       weight: 45.0
 
 - id: '184'
+  order: 3
   exercise:
     name: Seated Row (Machine)
     isBodyweight: false
@@ -2665,6 +2849,7 @@
       weight: 70.0
 
 - id: '185'
+  order: 4
   exercise:
     name: Leg Press
     isBodyweight: false
@@ -2679,6 +2864,7 @@
       weight: 130.0
 
 - id: '186'
+  order: 5
   exercise:
     name: Seated Hamstring Curl
     isBodyweight: false
@@ -2693,6 +2879,7 @@
       weight: 62.5
 
 - id: '187'
+  order: 6
   exercise:
     name: Lateral Raises
     isBodyweight: false
@@ -2707,6 +2894,7 @@
       weight: 25.0
 
 - id: '188'
+  order: 7
   exercise:
     name: Tricep Pushdown
     isBodyweight: false
@@ -2721,6 +2909,7 @@
       weight: 42.5
 
 - id: '189'
+  order: 1
   exercise:
     name: Squat
     isBodyweight: false
@@ -2737,6 +2926,7 @@
       weight: 95.0
 
 - id: '190'
+  order: 2
   exercise:
     name: Romanian Deadlift
     isBodyweight: false
@@ -2753,6 +2943,7 @@
       weight: 80.0
 
 - id: '191'
+  order: 3
   exercise:
     name: Bench Press
     isBodyweight: false
@@ -2767,6 +2958,7 @@
       weight: 70.0
 
 - id: '192'
+  order: 4
   exercise:
     name: Seated Row (Cable Machine)
     isBodyweight: false
@@ -2781,6 +2973,7 @@
       weight: 67.5
 
 - id: '193'
+  order: 5
   exercise:
     name: Seated Overhead Press (Machine)
     isBodyweight: false
@@ -2795,6 +2988,7 @@
       weight: 55.0
 
 - id: '194'
+  order: 6
   exercise:
     name: Bicep Curl (Machine)
     isBodyweight: false
@@ -2809,6 +3003,7 @@
       weight: 30.0
 
 - id: '195'
+  order: 7
   exercise:
     name: Tricep Pushdown (Machine)
     isBodyweight: false
@@ -2823,6 +3018,7 @@
       weight: 75.0
 
 - id: '196'
+  order: 1
   exercise:
     name: Pull-Up
     isBodyweight: true
@@ -2830,13 +3026,14 @@
   date: '2022-03-23'
   sets:
     - repetitions: 8
-      weight: 5.0  
+      weight: 5.0
     - repetitions: 8
       weight: 5.0
     - repetitions: 7
       weight: 5.0
 
 - id: '197'
+  order: 2
   exercise:
     name: Dip
     isBodyweight: true
@@ -2844,13 +3041,14 @@
   date: '2022-03-23'
   sets:
     - repetitions: 10
-      weight: 7.5  
+      weight: 7.5
     - repetitions: 10
       weight: 7.5
     - repetitions: 9
       weight: 7.5
 
 - id: '198'
+  order: 3
   exercise:
     name: Chin-Up
     isBodyweight: true
@@ -2858,13 +3056,14 @@
   date: '2022-03-23'
   sets:
     - repetitions: 8
-      weight: 5.0  
+      weight: 5.0
     - repetitions: 8
       weight: 5.0
     - repetitions: 7
       weight: 5.0
 
 - id: '199'
+  order: 4
   exercise:
     name: Deadlift
     isBodyweight: false
@@ -2881,6 +3080,7 @@
       weight: 117.5
 
 - id: '200'
+  order: 5
   exercise:
     name: Incline Dumbbell Press
     isBodyweight: false
@@ -2895,6 +3095,7 @@
       weight: 32.5
 
 - id: '201'
+  order: 6
   exercise:
     name: Cable Crossover
     isBodyweight: false
@@ -2909,6 +3110,7 @@
       weight: 35.0
 
 - id: '202'
+  order: 7
   exercise:
     name: Barbell Shrug
     isBodyweight: false
@@ -2923,6 +3125,7 @@
       weight: 75.0
 
 - id: '203'
+  order: 8
   exercise:
     name: Calf Raise
     isBodyweight: false
@@ -2937,6 +3140,7 @@
       weight: 55.0
 
 - id: '204'
+  order: 1
   exercise:
     name: Bench Press
     isBodyweight: false
@@ -2953,6 +3157,7 @@
       weight: 82.5
 
 - id: '205'
+  order: 2
   exercise:
     name: Overhead Press
     isBodyweight: false
@@ -2969,6 +3174,7 @@
       weight: 47.5
 
 - id: '206'
+  order: 3
   exercise:
     name: Seated Row (Machine)
     isBodyweight: false
@@ -2983,6 +3189,7 @@
       weight: 72.5
 
 - id: '207'
+  order: 4
   exercise:
     name: Leg Press
     isBodyweight: false
@@ -2997,6 +3204,7 @@
       weight: 135.0
 
 - id: '208'
+  order: 5
   exercise:
     name: Seated Hamstring Curl
     isBodyweight: false
@@ -3011,6 +3219,7 @@
       weight: 65.0
 
 - id: '209'
+  order: 6
   exercise:
     name: Lateral Raises
     isBodyweight: false
@@ -3025,6 +3234,7 @@
       weight: 27.5
 
 - id: '210'
+  order: 7
   exercise:
     name: Tricep Pushdown
     isBodyweight: false
@@ -3039,6 +3249,7 @@
       weight: 45.0
 
 - id: '211'
+  order: 1
   exercise:
     name: Squat
     isBodyweight: false
@@ -3055,6 +3266,7 @@
       weight: 97.5
 
 - id: '212'
+  order: 2
   exercise:
     name: Romanian Deadlift
     isBodyweight: false
@@ -3071,6 +3283,7 @@
       weight: 82.5
 
 - id: '213'
+  order: 3
   exercise:
     name: Bench Press
     isBodyweight: false
@@ -3085,6 +3298,7 @@
       weight: 72.5
 
 - id: '214'
+  order: 4
   exercise:
     name: Seated Row (Cable Machine)
     isBodyweight: false
@@ -3099,6 +3313,7 @@
       weight: 70.0
 
 - id: '215'
+  order: 5
   exercise:
     name: Seated Overhead Press (Machine)
     isBodyweight: false
@@ -3113,6 +3328,7 @@
       weight: 57.5
 
 - id: '216'
+  order: 6
   exercise:
     name: Bicep Curl (Machine)
     isBodyweight: false
@@ -3127,6 +3343,7 @@
       weight: 32.5
 
 - id: '217'
+  order: 7
   exercise:
     name: Tricep Pushdown (Machine)
     isBodyweight: false
@@ -3141,6 +3358,7 @@
       weight: 77.5
 
 - id: '218'
+  order: 1
   exercise:
     name: Pull-Up
     isBodyweight: true
@@ -3155,6 +3373,7 @@
       weight: 7.5
 
 - id: '219'
+  order: 2
   exercise:
     name: Dip
     isBodyweight: true
@@ -3169,6 +3388,7 @@
       weight: 10.0
 
 - id: '220'
+  order: 3
   exercise:
     name: Chin-Up
     isBodyweight: true
@@ -3183,6 +3403,7 @@
       weight: 7.5
 
 - id: '221'
+  order: 4
   exercise:
     name: Deadlift
     isBodyweight: false
@@ -3199,6 +3420,7 @@
       weight: 120.0
 
 - id: '222'
+  order: 5
   exercise:
     name: Incline Dumbbell Press
     isBodyweight: false
@@ -3213,6 +3435,7 @@
       weight: 35.0
 
 - id: '223'
+  order: 6
   exercise:
     name: Cable Crossover
     isBodyweight: false
@@ -3227,6 +3450,7 @@
       weight: 37.5
 
 - id: '224'
+  order: 7
   exercise:
     name: Barbell Shrug
     isBodyweight: false
@@ -3241,6 +3465,7 @@
       weight: 77.5
 
 - id: '225'
+  order: 8
   exercise:
     name: Calf Raise
     isBodyweight: false
@@ -3255,6 +3480,7 @@
       weight: 57.5
 
 - id: '226'
+  order: 1
   exercise:
     name: Bench Press
     isBodyweight: false
@@ -3271,6 +3497,7 @@
       weight: 85.0
 
 - id: '227'
+  order: 2
   exercise:
     name: Overhead Press
     isBodyweight: false
@@ -3287,6 +3514,7 @@
       weight: 50.0
 
 - id: '228'
+  order: 3
   exercise:
     name: Seated Row (Machine)
     isBodyweight: false
@@ -3301,6 +3529,7 @@
       weight: 75.0
 
 - id: '229'
+  order: 4
   exercise:
     name: Leg Press
     isBodyweight: false
@@ -3315,6 +3544,7 @@
       weight: 140.0
 
 - id: '230'
+  order: 5
   exercise:
     name: Seated Hamstring Curl
     isBodyweight: false
@@ -3329,6 +3559,7 @@
       weight: 67.5
 
 - id: '231'
+  order: 6
   exercise:
     name: Lateral Raises
     isBodyweight: false
@@ -3343,6 +3574,7 @@
       weight: 30.0
 
 - id: '232'
+  order: 7
   exercise:
     name: Tricep Pushdown
     isBodyweight: false
@@ -3357,6 +3589,7 @@
       weight: 47.5
 
 - id: '233'
+  order: 1
   exercise:
     name: Squat
     isBodyweight: false
@@ -3373,6 +3606,7 @@
       weight: 100.0
 
 - id: '234'
+  order: 2
   exercise:
     name: Romanian Deadlift
     isBodyweight: false
@@ -3389,6 +3623,7 @@
       weight: 85.0
 
 - id: '235'
+  order: 3
   exercise:
     name: Bench Press
     isBodyweight: false
@@ -3403,6 +3638,7 @@
       weight: 75.0
 
 - id: '236'
+  order: 4
   exercise:
     name: Seated Row (Cable Machine)
     isBodyweight: false
@@ -3417,6 +3653,7 @@
       weight: 72.5
 
 - id: '237'
+  order: 5
   exercise:
     name: Seated Overhead Press (Machine)
     isBodyweight: false
@@ -3431,6 +3668,7 @@
       weight: 60.0
 
 - id: '238'
+  order: 6
   exercise:
     name: Bicep Curl (Machine)
     isBodyweight: false
@@ -3445,6 +3683,7 @@
       weight: 35.0
 
 - id: '239'
+  order: 7
   exercise:
     name: Tricep Pushdown (Machine)
     isBodyweight: false
@@ -3459,6 +3698,7 @@
       weight: 80.0
 
 - id: '240'
+  order: 1
   exercise:
     name: Pull-Up
     isBodyweight: true
@@ -3473,6 +3713,7 @@
       weight: 10.0
 
 - id: '241'
+  order: 2
   exercise:
     name: Dip
     isBodyweight: true
@@ -3487,6 +3728,7 @@
       weight: 12.5
 
 - id: '242'
+  order: 3
   exercise:
     name: Chin-Up
     isBodyweight: true
@@ -3501,6 +3743,7 @@
       weight: 10.0
 
 - id: '243'
+  order: 4
   exercise:
     name: Deadlift
     isBodyweight: false
@@ -3517,6 +3760,7 @@
       weight: 122.5
 
 - id: '244'
+  order: 5
   exercise:
     name: Incline Dumbbell Press
     isBodyweight: false
@@ -3531,6 +3775,7 @@
       weight: 37.5
 
 - id: '245'
+  order: 6
   exercise:
     name: Cable Crossover
     isBodyweight: false
@@ -3545,6 +3790,7 @@
       weight: 40.0
 
 - id: '246'
+  order: 7
   exercise:
     name: Barbell Shrug
     isBodyweight: false
@@ -3559,6 +3805,7 @@
       weight: 80.0
 
 - id: '247'
+  order: 8
   exercise:
     name: Calf Raise
     isBodyweight: false
@@ -3573,6 +3820,7 @@
       weight: 60.0
 
 - id: '248'
+  order: 1
   exercise:
     name: Bench Press
     isBodyweight: false
@@ -3589,6 +3837,7 @@
       weight: 87.5
 
 - id: '249'
+  order: 2
   exercise:
     name: Overhead Press
     isBodyweight: false
@@ -3605,6 +3854,7 @@
       weight: 52.5
 
 - id: '250'
+  order: 3
   exercise:
     name: Seated Row (Machine)
     isBodyweight: false
@@ -3619,6 +3869,7 @@
       weight: 77.5
 
 - id: '251'
+  order: 4
   exercise:
     name: Leg Press
     isBodyweight: false
@@ -3633,6 +3884,7 @@
       weight: 145.0
 
 - id: '252'
+  order: 5
   exercise:
     name: Seated Hamstring Curl
     isBodyweight: false
@@ -3647,6 +3899,7 @@
       weight: 70.0
 
 - id: '253'
+  order: 6
   exercise:
     name: Lateral Raises
     isBodyweight: false
@@ -3661,6 +3914,7 @@
       weight: 32.5
 
 - id: '254'
+  order: 7
   exercise:
     name: Tricep Pushdown
     isBodyweight: false
@@ -3675,6 +3929,7 @@
       weight: 50.0
 
 - id: '255'
+  order: 1
   exercise:
     name: Squat
     isBodyweight: false
@@ -3691,6 +3946,7 @@
       weight: 102.5
 
 - id: '256'
+  order: 2
   exercise:
     name: Romanian Deadlift
     isBodyweight: false
@@ -3707,6 +3963,7 @@
       weight: 87.5
 
 - id: '257'
+  order: 3
   exercise:
     name: Bench Press
     isBodyweight: false
@@ -3721,6 +3978,7 @@
       weight: 77.5
 
 - id: '258'
+  order: 4
   exercise:
     name: Seated Row (Cable Machine)
     isBodyweight: false
@@ -3735,6 +3993,7 @@
       weight: 75.0
 
 - id: '259'
+  order: 5
   exercise:
     name: Seated Overhead Press (Machine)
     isBodyweight: false
@@ -3749,6 +4008,7 @@
       weight: 62.5
 
 - id: '260'
+  order: 6
   exercise:
     name: Bicep Curl (Machine)
     isBodyweight: false
@@ -3763,6 +4023,7 @@
       weight: 37.5
 
 - id: '261'
+  order: 7
   exercise:
     name: Tricep Pushdown (Machine)
     isBodyweight: false
@@ -3776,1273 +4037,1361 @@
     - repetitions: 15
       weight: 82.5
 - id: '262'
+  order: 1
   exercise:
     name: Pull-Up
     isBodyweight: true
   bodyweight: 76.0
   date: '2022-04-10'
   sets:
-  - repetitions: 8
-    weight: 12.5
-  - repetitions: 8
-    weight: 12.5
-  - repetitions: 8
-    weight: 12.5
+    - repetitions: 8
+      weight: 12.5
+    - repetitions: 8
+      weight: 12.5
+    - repetitions: 8
+      weight: 12.5
 
 - id: '263'
+  order: 2
   exercise:
     name: Dip
     isBodyweight: true
   bodyweight: 76.0
   date: '2022-04-10'
   sets:
-  - repetitions: 10
-    weight: 15.0
-  - repetitions: 10
-    weight: 15.0
-  - repetitions: 9
-    weight: 15.0
+    - repetitions: 10
+      weight: 15.0
+    - repetitions: 10
+      weight: 15.0
+    - repetitions: 9
+      weight: 15.0
 
 - id: '264'
+  order: 3
   exercise:
     name: Chin-Up
     isBodyweight: true
   bodyweight: 76.0
   date: '2022-04-10'
   sets:
-  - repetitions: 8
-    weight: 12.5
-  - repetitions: 8
-    weight: 12.5
-  - repetitions: 7
-    weight: 12.5
+    - repetitions: 8
+      weight: 12.5
+    - repetitions: 8
+      weight: 12.5
+    - repetitions: 7
+      weight: 12.5
 
 - id: '265'
+  order: 4
   exercise:
     name: Deadlift
     isBodyweight: false
   bodyweight: 76.0
   date: '2022-04-10'
   sets:
-  - repetitions: 5
-    weight: 125.0
-  - repetitions: 5
-    weight: 125.0
-  - repetitions: 5
-    weight: 125.0
-  - repetitions: 5
-    weight: 125.0
+    - repetitions: 5
+      weight: 125.0
+    - repetitions: 5
+      weight: 125.0
+    - repetitions: 5
+      weight: 125.0
+    - repetitions: 5
+      weight: 125.0
 
 - id: '266'
+  order: 5
   exercise:
     name: Incline Dumbbell Press
     isBodyweight: false
   bodyweight: 76.0
   date: '2022-04-10'
   sets:
-  - repetitions: 10
-    weight: 40.0
-  - repetitions: 10
-    weight: 40.0
-  - repetitions: 10
-    weight: 40.0
+    - repetitions: 10
+      weight: 40.0
+    - repetitions: 10
+      weight: 40.0
+    - repetitions: 10
+      weight: 40.0
 
 - id: '267'
+  order: 6
   exercise:
     name: Cable Crossover
     isBodyweight: false
   bodyweight: 76.0
   date: '2022-04-10'
   sets:
-  - repetitions: 12
-    weight: 42.5
-  - repetitions: 12
-    weight: 42.5
-  - repetitions: 12
-    weight: 42.5
+    - repetitions: 12
+      weight: 42.5
+    - repetitions: 12
+      weight: 42.5
+    - repetitions: 12
+      weight: 42.5
 
 - id: '268'
+  order: 7
   exercise:
     name: Barbell Shrug
     isBodyweight: false
   bodyweight: 76.0
   date: '2022-04-10'
   sets:
-  - repetitions: 12
-    weight: 82.5
-  - repetitions: 12
-    weight: 82.5
-  - repetitions: 12
-    weight: 82.5
+    - repetitions: 12
+      weight: 82.5
+    - repetitions: 12
+      weight: 82.5
+    - repetitions: 12
+      weight: 82.5
 
 - id: '269'
+  order: 8
   exercise:
     name: Calf Raise
     isBodyweight: false
   bodyweight: 76.0
   date: '2022-04-10'
   sets:
-  - repetitions: 15
-    weight: 62.5
-  - repetitions: 15
-    weight: 62.5
-  - repetitions: 15
-    weight: 62.5
+    - repetitions: 15
+      weight: 62.5
+    - repetitions: 15
+      weight: 62.5
+    - repetitions: 15
+      weight: 62.5
 
 - id: '270'
+  order: 1
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 76.2
   date: '2022-04-12'
   sets:
-  - repetitions: 5
-    weight: 90.0
-  - repetitions: 5
-    weight: 90.0
-  - repetitions: 5
-    weight: 90.0
-  - repetitions: 5
-    weight: 90.0
+    - repetitions: 5
+      weight: 90.0
+    - repetitions: 5
+      weight: 90.0
+    - repetitions: 5
+      weight: 90.0
+    - repetitions: 5
+      weight: 90.0
 
 - id: '271'
+  order: 2
   exercise:
     name: Overhead Press
     isBodyweight: false
   bodyweight: 76.2
   date: '2022-04-12'
   sets:
-  - repetitions: 8
-    weight: 55.0
-  - repetitions: 8
-    weight: 55.0
-  - repetitions: 8
-    weight: 55.0
-  - repetitions: 8
-    weight: 55.0
+    - repetitions: 8
+      weight: 55.0
+    - repetitions: 8
+      weight: 55.0
+    - repetitions: 8
+      weight: 55.0
+    - repetitions: 8
+      weight: 55.0
 
 - id: '272'
+  order: 3
   exercise:
     name: Seated Row (Machine)
     isBodyweight: false
   bodyweight: 76.2
   date: '2022-04-12'
   sets:
-  - repetitions: 10
-    weight: 80.0
-  - repetitions: 10
-    weight: 80.0
-  - repetitions: 10
-    weight: 80.0
+    - repetitions: 10
+      weight: 80.0
+    - repetitions: 10
+      weight: 80.0
+    - repetitions: 10
+      weight: 80.0
 
 - id: '273'
+  order: 4
   exercise:
     name: Leg Press
     isBodyweight: false
   bodyweight: 76.2
   date: '2022-04-12'
   sets:
-  - repetitions: 12
-    weight: 150.0
-  - repetitions: 12
-    weight: 150.0
-  - repetitions: 12
-    weight: 150.0
+    - repetitions: 12
+      weight: 150.0
+    - repetitions: 12
+      weight: 150.0
+    - repetitions: 12
+      weight: 150.0
 
 - id: '274'
+  order: 5
   exercise:
     name: Seated Hamstring Curl
     isBodyweight: false
   bodyweight: 76.2
   date: '2022-04-12'
   sets:
-  - repetitions: 12
-    weight: 72.5
-  - repetitions: 12
-    weight: 72.5
-  - repetitions: 12
-    weight: 72.5
+    - repetitions: 12
+      weight: 72.5
+    - repetitions: 12
+      weight: 72.5
+    - repetitions: 12
+      weight: 72.5
 
 - id: '275'
+  order: 6
   exercise:
     name: Lateral Raises
     isBodyweight: false
   bodyweight: 76.2
   date: '2022-04-12'
   sets:
-  - repetitions: 12
-    weight: 35.0
-  - repetitions: 12
-    weight: 35.0
-  - repetitions: 12
-    weight: 35.0
+    - repetitions: 12
+      weight: 35.0
+    - repetitions: 12
+      weight: 35.0
+    - repetitions: 12
+      weight: 35.0
 
 - id: '276'
+  order: 7
   exercise:
     name: Tricep Pushdown
     isBodyweight: false
   bodyweight: 76.2
   date: '2022-04-12'
   sets:
-  - repetitions: 12
-    weight: 52.5
-  - repetitions: 12
-    weight: 52.5
-  - repetitions: 12
-    weight: 52.5
+    - repetitions: 12
+      weight: 52.5
+    - repetitions: 12
+      weight: 52.5
+    - repetitions: 12
+      weight: 52.5
 
 - id: '277'
+  order: 1
   exercise:
     name: Squat
     isBodyweight: false
   bodyweight: 76.4
   date: '2022-04-14'
   sets:
-  - repetitions: 5
-    weight: 105.0
-  - repetitions: 5
-    weight: 105.0
-  - repetitions: 5
-    weight: 105.0
-  - repetitions: 5
-    weight: 105.0
+    - repetitions: 5
+      weight: 105.0
+    - repetitions: 5
+      weight: 105.0
+    - repetitions: 5
+      weight: 105.0
+    - repetitions: 5
+      weight: 105.0
 
 - id: '278'
+  order: 2
   exercise:
     name: Romanian Deadlift
     isBodyweight: false
   bodyweight: 76.4
   date: '2022-04-14'
   sets:
-  - repetitions: 6
-    weight: 90.0
-  - repetitions: 6
-    weight: 90.0
-  - repetitions: 6
-    weight: 90.0
-  - repetitions: 6
-    weight: 90.0
+    - repetitions: 6
+      weight: 90.0
+    - repetitions: 6
+      weight: 90.0
+    - repetitions: 6
+      weight: 90.0
+    - repetitions: 6
+      weight: 90.0
 
 - id: '279'
+  order: 3
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 76.4
   date: '2022-04-14'
   sets:
-  - repetitions: 10
-    weight: 80.0
-  - repetitions: 10
-    weight: 80.0
-  - repetitions: 10
-    weight: 80.0
+    - repetitions: 10
+      weight: 80.0
+    - repetitions: 10
+      weight: 80.0
+    - repetitions: 10
+      weight: 80.0
 
 - id: '280'
+  order: 4
   exercise:
     name: Seated Row (Cable Machine)
     isBodyweight: false
   bodyweight: 76.4
   date: '2022-04-14'
   sets:
-  - repetitions: 10
-    weight: 77.5
-  - repetitions: 10
-    weight: 77.5
-  - repetitions: 10
-    weight: 77.5
+    - repetitions: 10
+      weight: 77.5
+    - repetitions: 10
+      weight: 77.5
+    - repetitions: 10
+      weight: 77.5
 
 - id: '281'
+  order: 5
   exercise:
     name: Seated Overhead Press (Machine)
     isBodyweight: false
   bodyweight: 76.4
   date: '2022-04-14'
   sets:
-  - repetitions: 10
-    weight: 65.0
-  - repetitions: 10
-    weight: 65.0
-  - repetitions: 10
-    weight: 65.0
+    - repetitions: 10
+      weight: 65.0
+    - repetitions: 10
+      weight: 65.0
+    - repetitions: 10
+      weight: 65.0
 
 - id: '282'
+  order: 6
   exercise:
     name: Bicep Curl (Machine)
     isBodyweight: false
   bodyweight: 76.4
   date: '2022-04-14'
   sets:
-  - repetitions: 12
-    weight: 40.0
-  - repetitions: 12
-    weight: 40.0
-  - repetitions: 12
-    weight: 40.0
+    - repetitions: 12
+      weight: 40.0
+    - repetitions: 12
+      weight: 40.0
+    - repetitions: 12
+      weight: 40.0
 
 - id: '283'
+  order: 7
   exercise:
     name: Tricep Pushdown (Machine)
     isBodyweight: false
   bodyweight: 76.4
   date: '2022-04-14'
   sets:
-  - repetitions: 15
-    weight: 85.0
-  - repetitions: 15
-    weight: 85.0
-  - repetitions: 15
-    weight: 85.0
+    - repetitions: 15
+      weight: 85.0
+    - repetitions: 15
+      weight: 85.0
+    - repetitions: 15
+      weight: 85.0
 
 - id: '284'
+  order: 1
   exercise:
     name: Pull-Up
     isBodyweight: true
   bodyweight: 76.6
   date: '2022-04-16'
   sets:
-  - repetitions: 8
-    weight: 15.0
-  - repetitions: 8
-    weight: 15.0
-  - repetitions: 8
-    weight: 15.0
+    - repetitions: 8
+      weight: 15.0
+    - repetitions: 8
+      weight: 15.0
+    - repetitions: 8
+      weight: 15.0
 
 - id: '285'
+  order: 2
   exercise:
     name: Dip
     isBodyweight: true
   bodyweight: 76.6
   date: '2022-04-16'
   sets:
-  - repetitions: 10
-    weight: 17.5
-  - repetitions: 10
-    weight: 17.5
-  - repetitions: 9
-    weight: 17.5
+    - repetitions: 10
+      weight: 17.5
+    - repetitions: 10
+      weight: 17.5
+    - repetitions: 9
+      weight: 17.5
 
 - id: '286'
+  order: 3
   exercise:
     name: Chin-Up
     isBodyweight: true
   bodyweight: 76.6
   date: '2022-04-16'
   sets:
-  - repetitions: 8
-    weight: 15.0
-  - repetitions: 8
-    weight: 15.0
-  - repetitions: 7
-    weight: 15.0
+    - repetitions: 8
+      weight: 15.0
+    - repetitions: 8
+      weight: 15.0
+    - repetitions: 7
+      weight: 15.0
 
 - id: '287'
+  order: 4
   exercise:
     name: Deadlift
     isBodyweight: false
   bodyweight: 76.6
   date: '2022-04-16'
   sets:
-  - repetitions: 5
-    weight: 127.5
-  - repetitions: 5
-    weight: 127.5
-  - repetitions: 5
-    weight: 127.5
-  - repetitions: 5
-    weight: 127.5
+    - repetitions: 5
+      weight: 127.5
+    - repetitions: 5
+      weight: 127.5
+    - repetitions: 5
+      weight: 127.5
+    - repetitions: 5
+      weight: 127.5
 
 - id: '288'
+  order: 5
   exercise:
     name: Incline Dumbbell Press
     isBodyweight: false
   bodyweight: 76.6
   date: '2022-04-16'
   sets:
-  - repetitions: 10
-    weight: 42.5
-  - repetitions: 10
-    weight: 42.5
-  - repetitions: 10
-    weight: 42.5
+    - repetitions: 10
+      weight: 42.5
+    - repetitions: 10
+      weight: 42.5
+    - repetitions: 10
+      weight: 42.5
 
 - id: '289'
+  order: 6
   exercise:
     name: Cable Crossover
     isBodyweight: false
   bodyweight: 76.6
   date: '2022-04-16'
   sets:
-  - repetitions: 12
-    weight: 45.0
-  - repetitions: 12
-    weight: 45.0
-  - repetitions: 12
-    weight: 45.0
+    - repetitions: 12
+      weight: 45.0
+    - repetitions: 12
+      weight: 45.0
+    - repetitions: 12
+      weight: 45.0
 
 - id: '290'
+  order: 7
   exercise:
     name: Barbell Shrug
     isBodyweight: false
   bodyweight: 76.6
   date: '2022-04-16'
   sets:
-  - repetitions: 12
-    weight: 85.0
-  - repetitions: 12
-    weight: 85.0
-  - repetitions: 12
-    weight: 85.0
+    - repetitions: 12
+      weight: 85.0
+    - repetitions: 12
+      weight: 85.0
+    - repetitions: 12
+      weight: 85.0
 
 - id: '291'
+  order: 8
   exercise:
     name: Calf Raise
     isBodyweight: false
   bodyweight: 76.6
   date: '2022-04-16'
   sets:
-  - repetitions: 15
-    weight: 65.0
-  - repetitions: 15
-    weight: 65.0
-  - repetitions: 15
-    weight: 65.0
+    - repetitions: 15
+      weight: 65.0
+    - repetitions: 15
+      weight: 65.0
+    - repetitions: 15
+      weight: 65.0
 
 - id: '292'
+  order: 1
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 76.8
   date: '2022-04-18'
   sets:
-  - repetitions: 5
-    weight: 92.5
-  - repetitions: 5
-    weight: 92.5
-  - repetitions: 5
-    weight: 92.5
-  - repetitions: 5
-    weight: 92.5
+    - repetitions: 5
+      weight: 92.5
+    - repetitions: 5
+      weight: 92.5
+    - repetitions: 5
+      weight: 92.5
+    - repetitions: 5
+      weight: 92.5
 
 - id: '293'
+  order: 2
   exercise:
     name: Overhead Press
     isBodyweight: false
   bodyweight: 76.8
   date: '2022-04-18'
   sets:
-  - repetitions: 8
-    weight: 57.5
-  - repetitions: 8
-    weight: 57.5
-  - repetitions: 8
-    weight: 57.5
-  - repetitions: 8
-    weight: 57.5
+    - repetitions: 8
+      weight: 57.5
+    - repetitions: 8
+      weight: 57.5
+    - repetitions: 8
+      weight: 57.5
+    - repetitions: 8
+      weight: 57.5
 
 - id: '294'
+  order: 3
   exercise:
     name: Seated Row (Machine)
     isBodyweight: false
   bodyweight: 76.8
   date: '2022-04-18'
   sets:
-  - repetitions: 10
-    weight: 82.5
-  - repetitions: 10
-    weight: 82.5
-  - repetitions: 10
-    weight: 82.5
+    - repetitions: 10
+      weight: 82.5
+    - repetitions: 10
+      weight: 82.5
+    - repetitions: 10
+      weight: 82.5
 
 - id: '295'
+  order: 4
   exercise:
     name: Leg Press
     isBodyweight: false
   bodyweight: 76.8
   date: '2022-04-18'
   sets:
-  - repetitions: 12
-    weight: 155.0
-  - repetitions: 12
-    weight: 155.0
-  - repetitions: 12
-    weight: 155.0
+    - repetitions: 12
+      weight: 155.0
+    - repetitions: 12
+      weight: 155.0
+    - repetitions: 12
+      weight: 155.0
 
 - id: '296'
+  order: 5
   exercise:
     name: Seated Hamstring Curl
     isBodyweight: false
   bodyweight: 76.8
   date: '2022-04-18'
   sets:
-  - repetitions: 12
-    weight: 75.0
-  - repetitions: 12
-    weight: 75.0
-  - repetitions: 12
-    weight: 75.0
+    - repetitions: 12
+      weight: 75.0
+    - repetitions: 12
+      weight: 75.0
+    - repetitions: 12
+      weight: 75.0
 
 - id: '297'
+  order: 6
   exercise:
     name: Lateral Raises
     isBodyweight: false
   bodyweight: 76.8
   date: '2022-04-18'
   sets:
-  - repetitions: 12
-    weight: 37.5
-  - repetitions: 12
-    weight: 37.5
-  - repetitions: 12
-    weight: 37.5
+    - repetitions: 12
+      weight: 37.5
+    - repetitions: 12
+      weight: 37.5
+    - repetitions: 12
+      weight: 37.5
 
 - id: '298'
+  order: 7
   exercise:
     name: Tricep Pushdown
     isBodyweight: false
   bodyweight: 76.8
   date: '2022-04-18'
   sets:
-  - repetitions: 12
-    weight: 55.0
-  - repetitions: 12
-    weight: 55.0
-  - repetitions: 12
-    weight: 55.0
+    - repetitions: 12
+      weight: 55.0
+    - repetitions: 12
+      weight: 55.0
+    - repetitions: 12
+      weight: 55.0
 
 - id: '299'
+  order: 1
   exercise:
     name: Squat
     isBodyweight: false
   bodyweight: 77.0
   date: '2022-04-20'
   sets:
-  - repetitions: 5
-    weight: 107.5
-  - repetitions: 5
-    weight: 107.5
-  - repetitions: 5
-    weight: 107.5
-  - repetitions: 5
-    weight: 107.5
+    - repetitions: 5
+      weight: 107.5
+    - repetitions: 5
+      weight: 107.5
+    - repetitions: 5
+      weight: 107.5
+    - repetitions: 5
+      weight: 107.5
 
 - id: '300'
+  order: 2
   exercise:
     name: Romanian Deadlift
     isBodyweight: false
   bodyweight: 77.0
   date: '2022-04-20'
   sets:
-  - repetitions: 6
-    weight: 92.5
-  - repetitions: 6
-    weight: 92.5
-  - repetitions: 6
-    weight: 92.5
-  - repetitions: 6
-    weight: 92.5
+    - repetitions: 6
+      weight: 92.5
+    - repetitions: 6
+      weight: 92.5
+    - repetitions: 6
+      weight: 92.5
+    - repetitions: 6
+      weight: 92.5
 
 - id: '301'
+  order: 3
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 77.0
   date: '2022-04-20'
   sets:
-  - repetitions: 10
-    weight: 82.5
-  - repetitions: 10
-    weight: 82.5
-  - repetitions: 10
-    weight: 82.5
+    - repetitions: 10
+      weight: 82.5
+    - repetitions: 10
+      weight: 82.5
+    - repetitions: 10
+      weight: 82.5
 
 - id: '302'
+  order: 4
   exercise:
     name: Seated Row (Cable Machine)
     isBodyweight: false
   bodyweight: 77.0
   date: '2022-04-20'
   sets:
-  - repetitions: 10
-    weight: 80.0
-  - repetitions: 10
-    weight: 80.0
-  - repetitions: 10
-    weight: 80.0
+    - repetitions: 10
+      weight: 80.0
+    - repetitions: 10
+      weight: 80.0
+    - repetitions: 10
+      weight: 80.0
 
 - id: '303'
+  order: 5
   exercise:
     name: Seated Overhead Press (Machine)
     isBodyweight: false
   bodyweight: 77.0
   date: '2022-04-20'
   sets:
-  - repetitions: 10
-    weight: 67.5
-  - repetitions: 10
-    weight: 67.5
-  - repetitions: 10
-    weight: 67.5
+    - repetitions: 10
+      weight: 67.5
+    - repetitions: 10
+      weight: 67.5
+    - repetitions: 10
+      weight: 67.5
 
 - id: '304'
+  order: 6
   exercise:
     name: Bicep Curl (Machine)
     isBodyweight: false
   bodyweight: 77.0
   date: '2022-04-20'
   sets:
-  - repetitions: 12
-    weight: 42.5
-  - repetitions: 12
-    weight: 42.5
-  - repetitions: 12
-    weight: 42.5
+    - repetitions: 12
+      weight: 42.5
+    - repetitions: 12
+      weight: 42.5
+    - repetitions: 12
+      weight: 42.5
 
 - id: '305'
+  order: 7
   exercise:
     name: Tricep Pushdown (Machine)
     isBodyweight: false
   bodyweight: 77.0
   date: '2022-04-20'
   sets:
-  - repetitions: 15
-    weight: 87.5
-  - repetitions: 15
-    weight: 87.5
-  - repetitions: 15
-    weight: 87.5
+    - repetitions: 15
+      weight: 87.5
+    - repetitions: 15
+      weight: 87.5
+    - repetitions: 15
+      weight: 87.5
 
 - id: '306'
+  order: 1
   exercise:
     name: Pull-Up
     isBodyweight: true
   bodyweight: 77.2
   date: '2022-04-22'
   sets:
-  - repetitions: 8
-    weight: 17.5
-  - repetitions: 8
-    weight: 17.5
-  - repetitions: 8
-    weight: 17.5
+    - repetitions: 8
+      weight: 17.5
+    - repetitions: 8
+      weight: 17.5
+    - repetitions: 8
+      weight: 17.5
 
 - id: '307'
+  order: 2
   exercise:
     name: Dip
     isBodyweight: true
   bodyweight: 77.2
   date: '2022-04-22'
   sets:
-  - repetitions: 10
-    weight: 20.0
-  - repetitions: 10
-    weight: 20.0
-  - repetitions: 9
-    weight: 20.0
+    - repetitions: 10
+      weight: 20.0
+    - repetitions: 10
+      weight: 20.0
+    - repetitions: 9
+      weight: 20.0
 
 - id: '308'
+  order: 3
   exercise:
     name: Chin-Up
     isBodyweight: true
   bodyweight: 77.2
   date: '2022-04-22'
   sets:
-  - repetitions: 8
-    weight: 17.5
-  - repetitions: 8
-    weight: 17.5
-  - repetitions: 7
-    weight: 17.5
+    - repetitions: 8
+      weight: 17.5
+    - repetitions: 8
+      weight: 17.5
+    - repetitions: 7
+      weight: 17.5
 
 - id: '309'
+  order: 4
   exercise:
     name: Deadlift
     isBodyweight: false
   bodyweight: 77.2
   date: '2022-04-22'
   sets:
-  - repetitions: 5
-    weight: 130.0
-  - repetitions: 5
-    weight: 130.0
-  - repetitions: 5
-    weight: 130.0
-  - repetitions: 5
-    weight: 130.0
+    - repetitions: 5
+      weight: 130.0
+    - repetitions: 5
+      weight: 130.0
+    - repetitions: 5
+      weight: 130.0
+    - repetitions: 5
+      weight: 130.0
 
 - id: '310'
+  order: 5
   exercise:
     name: Incline Dumbbell Press
     isBodyweight: false
   bodyweight: 77.2
   date: '2022-04-22'
   sets:
-  - repetitions: 10
-    weight: 45.0
-  - repetitions: 10
-    weight: 45.0
-  - repetitions: 10
-    weight: 45.0
+    - repetitions: 10
+      weight: 45.0
+    - repetitions: 10
+      weight: 45.0
+    - repetitions: 10
+      weight: 45.0
 
 - id: '311'
+  order: 6
   exercise:
     name: Cable Crossover
     isBodyweight: false
   bodyweight: 77.2
   date: '2022-04-22'
   sets:
-  - repetitions: 12
-    weight: 47.5
-  - repetitions: 12
-    weight: 47.5
-  - repetitions: 12
-    weight: 47.5
+    - repetitions: 12
+      weight: 47.5
+    - repetitions: 12
+      weight: 47.5
+    - repetitions: 12
+      weight: 47.5
 
 - id: '312'
+  order: 7
   exercise:
     name: Barbell Shrug
     isBodyweight: false
   bodyweight: 77.2
   date: '2022-04-22'
   sets:
-  - repetitions: 12
-    weight: 87.5
-  - repetitions: 12
-    weight: 87.5
-  - repetitions: 12
-    weight: 87.5
+    - repetitions: 12
+      weight: 87.5
+    - repetitions: 12
+      weight: 87.5
+    - repetitions: 12
+      weight: 87.5
 
 - id: '313'
+  order: 8
   exercise:
     name: Calf Raise
     isBodyweight: false
   bodyweight: 77.2
   date: '2022-04-22'
   sets:
-  - repetitions: 15
-    weight: 67.5
-  - repetitions: 15
-    weight: 67.5
-  - repetitions: 15
-    weight: 67.5
+    - repetitions: 15
+      weight: 67.5
+    - repetitions: 15
+      weight: 67.5
+    - repetitions: 15
+      weight: 67.5
 
 - id: '314'
+  order: 1
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 77.4
   date: '2022-04-24'
   sets:
-  - repetitions: 5
-    weight: 95.0
-  - repetitions: 5
-    weight: 95.0
-  - repetitions: 5
-    weight: 95.0
-  - repetitions: 5
-    weight: 95.0
+    - repetitions: 5
+      weight: 95.0
+    - repetitions: 5
+      weight: 95.0
+    - repetitions: 5
+      weight: 95.0
+    - repetitions: 5
+      weight: 95.0
 
 - id: '315'
+  order: 2
   exercise:
     name: Overhead Press
     isBodyweight: false
   bodyweight: 77.4
   date: '2022-04-24'
   sets:
-  - repetitions: 8
-    weight: 60.0
-  - repetitions: 8
-    weight: 60.0
-  - repetitions: 8
-    weight: 60.0
-  - repetitions: 8
-    weight: 60.0
+    - repetitions: 8
+      weight: 60.0
+    - repetitions: 8
+      weight: 60.0
+    - repetitions: 8
+      weight: 60.0
+    - repetitions: 8
+      weight: 60.0
 
 - id: '316'
+  order: 3
   exercise:
     name: Seated Row (Machine)
     isBodyweight: false
   bodyweight: 77.4
   date: '2022-04-24'
   sets:
-  - repetitions: 10
-    weight: 85.0
-  - repetitions: 10
-    weight: 85.0
-  - repetitions: 10
-    weight: 85.0
+    - repetitions: 10
+      weight: 85.0
+    - repetitions: 10
+      weight: 85.0
+    - repetitions: 10
+      weight: 85.0
 
 - id: '317'
+  order: 4
   exercise:
     name: Leg Press
     isBodyweight: false
   bodyweight: 77.4
   date: '2022-04-24'
   sets:
-  - repetitions: 12
-    weight: 160.0
-  - repetitions: 12
-    weight: 160.0
-  - repetitions: 12
-    weight: 160.0
+    - repetitions: 12
+      weight: 160.0
+    - repetitions: 12
+      weight: 160.0
+    - repetitions: 12
+      weight: 160.0
 
 - id: '318'
+  order: 5
   exercise:
     name: Seated Hamstring Curl
     isBodyweight: false
   bodyweight: 77.4
   date: '2022-04-24'
   sets:
-  - repetitions: 12
-    weight: 77.5
-  - repetitions: 12
-    weight: 77.5
-  - repetitions: 12
-    weight: 77.5
+    - repetitions: 12
+      weight: 77.5
+    - repetitions: 12
+      weight: 77.5
+    - repetitions: 12
+      weight: 77.5
 
 - id: '319'
+  order: 6
   exercise:
     name: Lateral Raises
     isBodyweight: false
   bodyweight: 77.4
   date: '2022-04-24'
   sets:
-  - repetitions: 12
-    weight: 40.0
-  - repetitions: 12
-    weight: 40.0
-  - repetitions: 12
-    weight: 40.0
+    - repetitions: 12
+      weight: 40.0
+    - repetitions: 12
+      weight: 40.0
+    - repetitions: 12
+      weight: 40.0
 
 - id: '320'
+  order: 7
   exercise:
     name: Tricep Pushdown
     isBodyweight: false
   bodyweight: 77.4
   date: '2022-04-24'
   sets:
-  - repetitions: 12
-    weight: 57.5
-  - repetitions: 12
-    weight: 57.5
-  - repetitions: 12
-    weight: 57.5
+    - repetitions: 12
+      weight: 57.5
+    - repetitions: 12
+      weight: 57.5
+    - repetitions: 12
+      weight: 57.5
 
 - id: '321'
+  order: 1
   exercise:
     name: Squat
     isBodyweight: false
   bodyweight: 77.6
   date: '2022-04-26'
   sets:
-  - repetitions: 5
-    weight: 110.0
-  - repetitions: 5
-    weight: 110.0
-  - repetitions: 5
-    weight: 110.0
-  - repetitions: 5
-    weight: 110.0
+    - repetitions: 5
+      weight: 110.0
+    - repetitions: 5
+      weight: 110.0
+    - repetitions: 5
+      weight: 110.0
+    - repetitions: 5
+      weight: 110.0
 
 - id: '322'
+  order: 2
   exercise:
     name: Romanian Deadlift
     isBodyweight: false
   bodyweight: 77.6
   date: '2022-04-26'
   sets:
-  - repetitions: 6
-    weight: 95.0
-  - repetitions: 6
-    weight: 95.0
-  - repetitions: 6
-    weight: 95.0
-  - repetitions: 6
-    weight: 95.0
+    - repetitions: 6
+      weight: 95.0
+    - repetitions: 6
+      weight: 95.0
+    - repetitions: 6
+      weight: 95.0
+    - repetitions: 6
+      weight: 95.0
 
 - id: '323'
+  order: 3
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 77.6
   date: '2022-04-26'
   sets:
-  - repetitions: 10
-    weight: 85.0
-  - repetitions: 10
-    weight: 85.0
-  - repetitions: 10
-    weight: 85.0
+    - repetitions: 10
+      weight: 85.0
+    - repetitions: 10
+      weight: 85.0
+    - repetitions: 10
+      weight: 85.0
 
 - id: '324'
+  order: 4
   exercise:
     name: Seated Row (Cable Machine)
     isBodyweight: false
   bodyweight: 77.6
   date: '2022-04-26'
   sets:
-  - repetitions: 10
-    weight: 82.5
-  - repetitions: 10
-    weight: 82.5
-  - repetitions: 10
-    weight: 82.5
+    - repetitions: 10
+      weight: 82.5
+    - repetitions: 10
+      weight: 82.5
+    - repetitions: 10
+      weight: 82.5
 
 - id: '325'
+  order: 5
   exercise:
     name: Seated Overhead Press (Machine)
     isBodyweight: false
   bodyweight: 77.6
   date: '2022-04-26'
   sets:
-  - repetitions: 10
-    weight: 70.0
-  - repetitions: 10
-    weight: 70.0
-  - repetitions: 10
-    weight: 70.0
+    - repetitions: 10
+      weight: 70.0
+    - repetitions: 10
+      weight: 70.0
+    - repetitions: 10
+      weight: 70.0
 
 - id: '326'
+  order: 6
   exercise:
     name: Bicep Curl (Machine)
     isBodyweight: false
   bodyweight: 77.6
   date: '2022-04-26'
   sets:
-  - repetitions: 12
-    weight: 45.0
-  - repetitions: 12
-    weight: 45.0
-  - repetitions: 12
-    weight: 45.0
+    - repetitions: 12
+      weight: 45.0
+    - repetitions: 12
+      weight: 45.0
+    - repetitions: 12
+      weight: 45.0
 
 - id: '327'
+  order: 7
   exercise:
     name: Tricep Pushdown (Machine)
     isBodyweight: false
   bodyweight: 77.6
   date: '2022-04-26'
   sets:
-  - repetitions: 15
-    weight: 90.0
-  - repetitions: 15
-    weight: 90.0
-  - repetitions: 15
-    weight: 90.0
+    - repetitions: 15
+      weight: 90.0
+    - repetitions: 15
+      weight: 90.0
+    - repetitions: 15
+      weight: 90.0
 
 - id: '328'
+  order: 1
   exercise:
     name: Pull-Up
     isBodyweight: true
   bodyweight: 77.8
   date: '2022-04-28'
   sets:
-  - repetitions: 8
-    weight: 20.0
-  - repetitions: 8
-    weight: 20.0
-  - repetitions: 8
-    weight: 20.0
+    - repetitions: 8
+      weight: 20.0
+    - repetitions: 8
+      weight: 20.0
+    - repetitions: 8
+      weight: 20.0
 
 - id: '329'
+  order: 2
   exercise:
     name: Dip
     isBodyweight: true
   bodyweight: 77.8
   date: '2022-04-28'
   sets:
-  - repetitions: 10
-    weight: 22.5
-  - repetitions: 10
-    weight: 22.5
-  - repetitions: 9
-    weight: 22.5
+    - repetitions: 10
+      weight: 22.5
+    - repetitions: 10
+      weight: 22.5
+    - repetitions: 9
+      weight: 22.5
 
 - id: '330'
+  order: 3
   exercise:
     name: Chin-Up
     isBodyweight: true
   bodyweight: 77.8
   date: '2022-04-28'
   sets:
-  - repetitions: 8
-    weight: 20.0
-  - repetitions: 8
-    weight: 20.0
-  - repetitions: 7
-    weight: 20.0
+    - repetitions: 8
+      weight: 20.0
+    - repetitions: 8
+      weight: 20.0
+    - repetitions: 7
+      weight: 20.0
 
 - id: '331'
+  order: 4
   exercise:
     name: Deadlift
     isBodyweight: false
   bodyweight: 77.8
   date: '2022-04-28'
   sets:
-  - repetitions: 5
-    weight: 132.5
-  - repetitions: 5
-    weight: 132.5
-  - repetitions: 5
-    weight: 132.5
-  - repetitions: 5
-    weight: 132.5
+    - repetitions: 5
+      weight: 132.5
+    - repetitions: 5
+      weight: 132.5
+    - repetitions: 5
+      weight: 132.5
+    - repetitions: 5
+      weight: 132.5
 
 - id: '332'
+  order: 5
   exercise:
     name: Incline Dumbbell Press
     isBodyweight: false
   bodyweight: 77.8
   date: '2022-04-28'
   sets:
-  - repetitions: 10
-    weight: 47.5
-  - repetitions: 10
-    weight: 47.5
-  - repetitions: 10
-    weight: 47.5
+    - repetitions: 10
+      weight: 47.5
+    - repetitions: 10
+      weight: 47.5
+    - repetitions: 10
+      weight: 47.5
 
 - id: '333'
+  order: 6
   exercise:
     name: Cable Crossover
     isBodyweight: false
   bodyweight: 77.8
   date: '2022-04-28'
   sets:
-  - repetitions: 12
-    weight: 50.0
-  - repetitions: 12
-    weight: 50.0
-  - repetitions: 12
-    weight: 50.0
+    - repetitions: 12
+      weight: 50.0
+    - repetitions: 12
+      weight: 50.0
+    - repetitions: 12
+      weight: 50.0
 
 - id: '334'
+  order: 7
   exercise:
     name: Barbell Shrug
     isBodyweight: false
   bodyweight: 77.8
   date: '2022-04-28'
   sets:
-  - repetitions: 12
-    weight: 90.0
-  - repetitions: 12
-    weight: 90.0
-  - repetitions: 12
-    weight: 90.0
+    - repetitions: 12
+      weight: 90.0
+    - repetitions: 12
+      weight: 90.0
+    - repetitions: 12
+      weight: 90.0
 
 - id: '335'
+  order: 8
   exercise:
     name: Calf Raise
     isBodyweight: false
   bodyweight: 77.8
   date: '2022-04-28'
   sets:
-  - repetitions: 15
-    weight: 70.0
-  - repetitions: 15
-    weight: 70.0
-  - repetitions: 15
-    weight: 70.0
+    - repetitions: 15
+      weight: 70.0
+    - repetitions: 15
+      weight: 70.0
+    - repetitions: 15
+      weight: 70.0
 
 - id: '336'
+  order: 1
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 78.0
   date: '2022-04-30'
   sets:
-  - repetitions: 5
-    weight: 97.5
-  - repetitions: 5
-    weight: 97.5
-  - repetitions: 5
-    weight: 97.5
-  - repetitions: 5
-    weight: 97.5
+    - repetitions: 5
+      weight: 97.5
+    - repetitions: 5
+      weight: 97.5
+    - repetitions: 5
+      weight: 97.5
+    - repetitions: 5
+      weight: 97.5
 
 - id: '337'
+  order: 2
   exercise:
     name: Overhead Press
     isBodyweight: false
   bodyweight: 78.0
   date: '2022-04-30'
   sets:
-  - repetitions: 8
-    weight: 62.5
-  - repetitions: 8
-    weight: 62.5
-  - repetitions: 8
-    weight: 62.5
-  - repetitions: 8
-    weight: 62.5
+    - repetitions: 8
+      weight: 62.5
+    - repetitions: 8
+      weight: 62.5
+    - repetitions: 8
+      weight: 62.5
+    - repetitions: 8
+      weight: 62.5
 
 - id: '338'
+  order: 3
   exercise:
     name: Seated Row (Machine)
     isBodyweight: false
   bodyweight: 78.0
   date: '2022-04-30'
   sets:
-  - repetitions: 10
-    weight: 87.5
-  - repetitions: 10
-    weight: 87.5
-  - repetitions: 10
-    weight: 87.5
+    - repetitions: 10
+      weight: 87.5
+    - repetitions: 10
+      weight: 87.5
+    - repetitions: 10
+      weight: 87.5
 
 - id: '339'
+  order: 4
   exercise:
     name: Leg Press
     isBodyweight: false
   bodyweight: 78.0
   date: '2022-04-30'
   sets:
-  - repetitions: 12
-    weight: 165.0
-  - repetitions: 12
-    weight: 165.0
-  - repetitions: 12
-    weight: 165.0
+    - repetitions: 12
+      weight: 165.0
+    - repetitions: 12
+      weight: 165.0
+    - repetitions: 12
+      weight: 165.0
 
 - id: '340'
+  order: 5
   exercise:
     name: Seated Hamstring Curl
     isBodyweight: false
   bodyweight: 78.0
   date: '2022-04-30'
   sets:
-  - repetitions: 12
-    weight: 80.0
-  - repetitions: 12
-    weight: 80.0
-  - repetitions: 12
-    weight: 80.0
+    - repetitions: 12
+      weight: 80.0
+    - repetitions: 12
+      weight: 80.0
+    - repetitions: 12
+      weight: 80.0
 
 - id: '341'
+  order: 6
   exercise:
     name: Lateral Raises
     isBodyweight: false
   bodyweight: 78.0
   date: '2022-04-30'
   sets:
-  - repetitions: 12
-    weight: 42.5
-  - repetitions: 12
-    weight: 42.5
-  - repetitions: 12
-    weight: 42.5
+    - repetitions: 12
+      weight: 42.5
+    - repetitions: 12
+      weight: 42.5
+    - repetitions: 12
+      weight: 42.5
 
 - id: '342'
+  order: 7
   exercise:
     name: Tricep Pushdown
     isBodyweight: false
   bodyweight: 78.0
   date: '2022-04-30'
   sets:
-  - repetitions: 12
-    weight: 60.0
-  - repetitions: 12
-    weight: 60.0
-  - repetitions: 12
-    weight: 60.0
+    - repetitions: 12
+      weight: 60.0
+    - repetitions: 12
+      weight: 60.0
+    - repetitions: 12
+      weight: 60.0
 
 - id: '343'
+  order: 1
   exercise:
     name: Squat
     isBodyweight: false
   bodyweight: 78.2
   date: '2022-05-02'
   sets:
-  - repetitions: 5
-    weight: 112.5
-  - repetitions: 5
-    weight: 112.5
-  - repetitions: 5
-    weight: 112.5
-  - repetitions: 5
-    weight: 112.5
+    - repetitions: 5
+      weight: 112.5
+    - repetitions: 5
+      weight: 112.5
+    - repetitions: 5
+      weight: 112.5
+    - repetitions: 5
+      weight: 112.5
 
 - id: '344'
+  order: 2
   exercise:
     name: Romanian Deadlift
     isBodyweight: false
   bodyweight: 78.2
   date: '2022-05-02'
   sets:
-  - repetitions: 6
-    weight: 97.5
-  - repetitions: 6
-    weight: 97.5
-  - repetitions: 6
-    weight: 97.5
-  - repetitions: 6
-    weight: 97.5
+    - repetitions: 6
+      weight: 97.5
+    - repetitions: 6
+      weight: 97.5
+    - repetitions: 6
+      weight: 97.5
+    - repetitions: 6
+      weight: 97.5
 
 - id: '345'
+  order: 3
   exercise:
     name: Bench Press
     isBodyweight: false
   bodyweight: 78.2
   date: '2022-05-02'
   sets:
-  - repetitions: 10
-    weight: 87.5
-  - repetitions: 10
-    weight: 87.5
-  - repetitions: 10
-    weight: 87.5
+    - repetitions: 10
+      weight: 87.5
+    - repetitions: 10
+      weight: 87.5
+    - repetitions: 10
+      weight: 87.5
 
 - id: '346'
+  order: 4
   exercise:
     name: Seated Row (Cable Machine)
     isBodyweight: false
   bodyweight: 78.2
   date: '2022-05-02'
   sets:
-  - repetitions: 10
-    weight: 85.0
-  - repetitions: 10
-    weight: 85.0
-  - repetitions: 10
-    weight: 85.0
+    - repetitions: 10
+      weight: 85.0
+    - repetitions: 10
+      weight: 85.0
+    - repetitions: 10
+      weight: 85.0
 
 - id: '347'
+  order: 5
   exercise:
     name: Seated Overhead Press (Machine)
     isBodyweight: false
   bodyweight: 78.2
   date: '2022-05-02'
   sets:
-  - repetitions: 10
-    weight: 72.5
-  - repetitions: 10
-    weight: 72.5
-  - repetitions: 10
-    weight: 72.5
+    - repetitions: 10
+      weight: 72.5
+    - repetitions: 10
+      weight: 72.5
+    - repetitions: 10
+      weight: 72.5
 
 - id: '348'
+  order: 6
   exercise:
     name: Bicep Curl (Machine)
     isBodyweight: false
   bodyweight: 78.2
   date: '2022-05-02'
   sets:
-  - repetitions: 12
-    weight: 47.5
-  - repetitions: 12
-    weight: 47.5
-  - repetitions: 12
-    weight: 47.5
+    - repetitions: 12
+      weight: 47.5
+    - repetitions: 12
+      weight: 47.5
+    - repetitions: 12
+      weight: 47.5
 
 - id: '349'
+  order: 7
   exercise:
     name: Tricep Pushdown (Machine)
     isBodyweight: false
   bodyweight: 78.2
   date: '2022-05-02'
   sets:
-  - repetitions: 15
-    weight: 92.5
-  - repetitions: 15
-    weight: 92.5
-  - repetitions: 15
-    weight: 92.5
+    - repetitions: 15
+      weight: 92.5
+    - repetitions: 15
+      weight: 92.5
+    - repetitions: 15
+      weight: 92.5

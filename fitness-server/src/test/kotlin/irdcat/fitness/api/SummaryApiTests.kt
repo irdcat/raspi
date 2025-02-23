@@ -23,9 +23,9 @@ class SummaryApiTests: AbstractApiTest() {
     fun getBodyweightSummary() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf()),
-            TrainingExercise("2", Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf()),
-            TrainingExercise("3", Exercise("Pull Up", true), 64.0f, "02.01.2025".toDate(), listOf())
+            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf()),
+            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf()),
+            TrainingExercise("3", 1, Exercise("Pull Up", true), 64.0f, "02.01.2025".toDate(), listOf())
         ))
 
         val nullableResult = webTestClient()
@@ -57,15 +57,15 @@ class SummaryApiTests: AbstractApiTest() {
     fun getExerciseSummary_bodyweightExercise() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 5.0f),
                 TrainingExerciseSet(10, 5.0f)
             )),
-            TrainingExercise("2", Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(5, 120.0f),
                 TrainingExerciseSet(5, 120.0f)
             )),
-            TrainingExercise("3", Exercise("Pull Up", true), 64.0f, "02.01.2025".toDate(), listOf(
+            TrainingExercise("3", 1, Exercise("Pull Up", true), 64.0f, "02.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 6.0f),
                 TrainingExerciseSet(10, 6.0f)
             ))
@@ -121,15 +121,15 @@ class SummaryApiTests: AbstractApiTest() {
     fun getExerciseSummary_nonBodyweightExercise() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 5.0f),
                 TrainingExerciseSet(10, 5.0f)
             )),
-            TrainingExercise("2", Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(5, 120.0f),
                 TrainingExerciseSet(5, 120.0f)
             )),
-            TrainingExercise("3", Exercise("Pull Up", true), 64.0f, "02.01.2025".toDate(), listOf(
+            TrainingExercise("3", 1, Exercise("Pull Up", true), 64.0f, "02.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 6.0f),
                 TrainingExerciseSet(10, 6.0f)
             ))

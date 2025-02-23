@@ -43,11 +43,13 @@ class TrainingService(
         const val EXERCISES = "exercises"
         const val SETS = "sets"
         const val COUNT = "count"
+        const val ORDER = "order"
     }
 
     fun findTrainingsBetweenDates(from: Date, to: Date, page: Long, pageSize: Long): Mono<Page<TrainingDto>> {
 
         val matchOperation = matchBetweenDates(from, to)
+        val sortByOrderOperation = sort(Direction.ASC, ORDER)
         val groupOperation = groupByDate()
         val projectionOperation = projectGroupedByDate()
         val sortOperation = sort(Direction.DESC, DATE)
@@ -58,6 +60,7 @@ class TrainingService(
 
         val aggregation = newAggregation(
             matchOperation,
+            sortByOrderOperation,
             groupOperation,
             projectionOperation,
             sortOperation,
@@ -188,6 +191,7 @@ class TrainingService(
                 BasicDBObject()
                     .append(GROUP_KEY, "\$$GROUP_KEY")
                     .append(EXERCISE, "\$$EXERCISE")
+                    .append(ORDER, "\$$ORDER")
                     .append(SETS, "\$$SETS")
             ).`as`(EXERCISES)
     }
@@ -196,6 +200,7 @@ class TrainingService(
 
         return project()
             .and(GROUP_KEY).`as`(DATE)
+            .and(ORDER).`as`(ORDER)
             .and(BODYWEIGHT).`as`(BODYWEIGHT)
             .and(EXERCISES).`as`(EXERCISES)
     }

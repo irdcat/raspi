@@ -10,6 +10,8 @@ data class TrainingExercise(
     @field: Id
     val id: String?,
 
+    val order: Int,
+
     val exercise: Exercise,
 
     val bodyweight: Float,

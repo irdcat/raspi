@@ -23,13 +23,13 @@ class TrainingApiTests: AbstractApiTest() {
     fun getTraining_ok() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 5.0f)
             )),
-            TrainingExercise("2", Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(5, 120.0f)
             )),
-            TrainingExercise("3", Exercise("Pull Up", true), 63.0f, "02.01.2025".toDate(), listOf(
+            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "02.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 6.0f)
             ))
         ))
@@ -46,6 +46,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.bodyweight").isEqualTo(63.0f)
             .jsonPath("$.exercises").isArray
             .jsonPath("$.exercises[0].id").isEqualTo("1")
+            .jsonPath("$.exercises[0].order").isEqualTo(1)
             .jsonPath("$.exercises[0].exercise.name").isEqualTo("Pull Up")
             .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.exercises[0].sets").isArray
@@ -53,6 +54,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.exercises[0].sets[0].weight").isEqualTo(5.0f)
             .jsonPath("$.exercises[0].sets[1]").doesNotExist()
             .jsonPath("$.exercises[1].id").isEqualTo("2")
+            .jsonPath("$.exercises[1].order").isEqualTo(2)
             .jsonPath("$.exercises[1].exercise.name").isEqualTo("Deadlift")
             .jsonPath("$.exercises[1].exercise.isBodyweight").isEqualTo(false)
             .jsonPath("$.exercises[1].sets").isArray
@@ -66,13 +68,13 @@ class TrainingApiTests: AbstractApiTest() {
     fun getTraining_notFound() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 5.0f)
             )),
-            TrainingExercise("2", Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(5, 120.0f)
             )),
-            TrainingExercise("3", Exercise("Pull Up", true), 63.0f, "02.01.2025".toDate(), listOf(
+            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "02.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 6.0f)
             ))
         ))
@@ -96,13 +98,13 @@ class TrainingApiTests: AbstractApiTest() {
     fun getTrainings_resultsInOnePage() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 5.0f)
             )),
-            TrainingExercise("2", Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(5, 120.0f)
             )),
-            TrainingExercise("3", Exercise("Pull Up", true), 63.0f, "02.01.2025".toDate(), listOf(
+            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "02.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 6.0f)
             ))
         ))
@@ -131,6 +133,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.content[0].bodyweight").isEqualTo(63.0f)
             .jsonPath("$.content[0].exercises").isArray
             .jsonPath("$.content[0].exercises[0].id").isEqualTo("3")
+            .jsonPath("$.content[0].exercises[0].order").isEqualTo(1)
             .jsonPath("$.content[0].exercises[0].exercise.name").isEqualTo("Pull Up")
             .jsonPath("$.content[0].exercises[0].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.content[0].exercises[0].sets").isArray
@@ -142,6 +145,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.content[1].bodyweight").isEqualTo(63.0f)
             .jsonPath("$.content[1].exercises").isArray
             .jsonPath("$.content[1].exercises[0].id").isEqualTo("1")
+            .jsonPath("$.content[1].exercises[0].order").isEqualTo(1)
             .jsonPath("$.content[1].exercises[0].exercise.name").isEqualTo("Pull Up")
             .jsonPath("$.content[1].exercises[0].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.content[1].exercises[0].sets").isArray
@@ -149,6 +153,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.content[1].exercises[0].sets[0].weight").isEqualTo(5.0f)
             .jsonPath("$.content[1].exercises[0].sets[1]").doesNotExist()
             .jsonPath("$.content[1].exercises[1].id").isEqualTo("2")
+            .jsonPath("$.content[1].exercises[1].order").isEqualTo(2)
             .jsonPath("$.content[1].exercises[1].exercise.name").isEqualTo("Deadlift")
             .jsonPath("$.content[1].exercises[1].exercise.isBodyweight").isEqualTo(false)
             .jsonPath("$.content[1].exercises[1].sets").isArray
@@ -163,13 +168,13 @@ class TrainingApiTests: AbstractApiTest() {
     fun getTrainings_resultsInTwoPages() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 5.0f)
             )),
-            TrainingExercise("2", Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(5, 120.0f)
             )),
-            TrainingExercise("3", Exercise("Pull Up", true), 63.0f, "02.01.2025".toDate(), listOf(
+            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "02.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 6.0f)
             ))
         ))
@@ -198,6 +203,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.content[0].bodyweight").isEqualTo(63.0f)
             .jsonPath("$.content[0].exercises").isArray
             .jsonPath("$.content[0].exercises[0].id").isEqualTo("3")
+            .jsonPath("$.content[0].exercises[0].order").isEqualTo(1)
             .jsonPath("$.content[0].exercises[0].exercise.name").isEqualTo("Pull Up")
             .jsonPath("$.content[0].exercises[0].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.content[0].exercises[0].sets").isArray
@@ -231,6 +237,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.content[0].bodyweight").isEqualTo(63.0f)
             .jsonPath("$.content[0].exercises").isArray
             .jsonPath("$.content[0].exercises[0].id").isEqualTo("1")
+            .jsonPath("$.content[0].exercises[0].order").isEqualTo(1)
             .jsonPath("$.content[0].exercises[0].exercise.name").isEqualTo("Pull Up")
             .jsonPath("$.content[0].exercises[0].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.content[0].exercises[0].sets").isArray
@@ -238,6 +245,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.content[0].exercises[0].sets[0].weight").isEqualTo(5.0f)
             .jsonPath("$.content[0].exercises[0].sets[1]").doesNotExist()
             .jsonPath("$.content[0].exercises[1].id").isEqualTo("2")
+            .jsonPath("$.content[0].exercises[1].order").isEqualTo(2)
             .jsonPath("$.content[0].exercises[1].exercise.name").isEqualTo("Deadlift")
             .jsonPath("$.content[0].exercises[1].exercise.isBodyweight").isEqualTo(false)
             .jsonPath("$.content[0].exercises[1].sets").isArray
@@ -256,14 +264,14 @@ class TrainingApiTests: AbstractApiTest() {
             65.0f,
             listOf(
                 TrainingExerciseDto(
-                    "", ExerciseDto("Pull Up", true), listOf(
+                    "", 1, ExerciseDto("Pull Up", true), listOf(
                         TrainingExerciseSetDto(10, 7.0f),
                         TrainingExerciseSetDto(10, 7.0f),
                         TrainingExerciseSetDto(10, 7.0f)
                     )
                 ),
                 TrainingExerciseDto(
-                    "", ExerciseDto("Dip", true), listOf(
+                    "", 2, ExerciseDto("Dip", true), listOf(
                         TrainingExerciseSetDto(10, 20.0f),
                         TrainingExerciseSetDto(10, 20.0f),
                         TrainingExerciseSetDto(10, 20.0f)
@@ -286,6 +294,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.bodyweight").isEqualTo(65.0f)
             .jsonPath("$.exercises").isArray
             .jsonPath("$.exercises[0].id").isNotEmpty
+            .jsonPath("$.exercises[0].order").isEqualTo(1)
             .jsonPath("$.exercises[0].exercise.name").isEqualTo("Pull Up")
             .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.exercises[0].sets").isArray
@@ -297,6 +306,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.exercises[0].sets[2].weight").isEqualTo(7.0f)
             .jsonPath("$.exercises[0].sets[3]").doesNotExist()
             .jsonPath("$.exercises[1].id").isNotEmpty
+            .jsonPath("$.exercises[1].order").isEqualTo(2)
             .jsonPath("$.exercises[1].exercise.name").isEqualTo("Dip")
             .jsonPath("$.exercises[1].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.exercises[1].sets").isArray
@@ -321,6 +331,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.bodyweight").isEqualTo(65.0f)
             .jsonPath("$.exercises").isArray
             .jsonPath("$.exercises[0].id").isNotEmpty
+            .jsonPath("$.exercises[0].order").isEqualTo(1)
             .jsonPath("$.exercises[0].exercise.name").isEqualTo("Pull Up")
             .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.exercises[0].sets").isArray
@@ -332,6 +343,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.exercises[0].sets[2].weight").isEqualTo(7.0f)
             .jsonPath("$.exercises[0].sets[3]").doesNotExist()
             .jsonPath("$.exercises[1].id").isNotEmpty
+            .jsonPath("$.exercises[1].order").isEqualTo(2)
             .jsonPath("$.exercises[1].exercise.name").isEqualTo("Dip")
             .jsonPath("$.exercises[1].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.exercises[1].sets").isArray
@@ -349,10 +361,10 @@ class TrainingApiTests: AbstractApiTest() {
     fun updateTraining_modifyExercise() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 5.0f)
             )),
-            TrainingExercise("2", Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(5, 120.0f)
             ))
         ))
@@ -362,12 +374,12 @@ class TrainingApiTests: AbstractApiTest() {
             63.0f,
             listOf(
                 TrainingExerciseDto(
-                    "1", ExerciseDto("Dip", true), listOf(
+                    "1", 1, ExerciseDto("Dip", true), listOf(
                         TrainingExerciseSetDto(10, 20.0f)
                     )
                 ),
                 TrainingExerciseDto(
-                    "2", ExerciseDto("Deadlift", false), listOf(
+                    "2", 2, ExerciseDto("Deadlift", false), listOf(
                         TrainingExerciseSetDto(5, 120.0f)
                     )
                 )
@@ -388,12 +400,18 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.bodyweight").isEqualTo(63.0f)
             .jsonPath("$.exercises").isArray
             .jsonPath("$.exercises[0].id").isEqualTo("1")
+            .jsonPath("$.exercises[0].order").isEqualTo(1)
             .jsonPath("$.exercises[0].exercise.name").isEqualTo("Dip")
             .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.exercises[0].sets").isArray
             .jsonPath("$.exercises[0].sets[0].repetitions").isEqualTo(10)
             .jsonPath("$.exercises[0].sets[0].weight").isEqualTo(20.0f)
             .jsonPath("$.exercises[0].sets[1]").doesNotExist()
+            .jsonPath("$.exercises[1].id").isEqualTo("2")
+            .jsonPath("$.exercises[1].order").isEqualTo(2)
+            .jsonPath("$.exercises[1].exercise.name").isEqualTo("Deadlift")
+            .jsonPath("$.exercises[1].exercise.isBodyweight").isEqualTo(false)
+            .jsonPath("$.exercises[1].sets").isArray
             .jsonPath("$.exercises[1].sets[0].repetitions").isEqualTo(5)
             .jsonPath("$.exercises[1].sets[0].weight").isEqualTo(120.0f)
             .jsonPath("$.exercises[1].sets[1]").doesNotExist()
@@ -411,6 +429,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.bodyweight").isEqualTo(63.0f)
             .jsonPath("$.exercises").isArray
             .jsonPath("$.exercises[0].id").isEqualTo("1")
+            .jsonPath("$.exercises[0].order").isEqualTo(1)
             .jsonPath("$.exercises[0].exercise.name").isEqualTo("Dip")
             .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.exercises[0].sets").isArray
@@ -418,6 +437,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.exercises[0].sets[0].weight").isEqualTo(20.0f)
             .jsonPath("$.exercises[0].sets[1]").doesNotExist()
             .jsonPath("$.exercises[1].id").isEqualTo("2")
+            .jsonPath("$.exercises[1].order").isEqualTo(2)
             .jsonPath("$.exercises[1].exercise.name").isEqualTo("Deadlift")
             .jsonPath("$.exercises[1].exercise.isBodyweight").isEqualTo(false)
             .jsonPath("$.exercises[1].sets").isArray
@@ -430,7 +450,7 @@ class TrainingApiTests: AbstractApiTest() {
     @Test
     fun updateTraining_addExercise() {
         insertTrainingExercises(listOf(
-            TrainingExercise("1", Exercise("Dip", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Dip", true), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 20.0f)
             ))
         ))
@@ -439,10 +459,10 @@ class TrainingApiTests: AbstractApiTest() {
             "01.01.2025".toDate(),
             63.0f,
             listOf(
-                TrainingExerciseDto("1", ExerciseDto("Dip", true), listOf(
+                TrainingExerciseDto("1", 1, ExerciseDto("Dip", true), listOf(
                     TrainingExerciseSetDto(10, 20.0f)
                 )),
-                TrainingExerciseDto("", ExerciseDto("Pull Up", true), listOf(
+                TrainingExerciseDto("", 2, ExerciseDto("Pull Up", true), listOf(
                     TrainingExerciseSetDto(10, 5.0f)
                 ))
             )
@@ -461,19 +481,21 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.date").isEqualTo("2025-01-01")
             .jsonPath("$.bodyweight").isEqualTo(63.0f)
             .jsonPath("$.exercises").isArray
-            .jsonPath("$.exercises[0].id").isNotEmpty
-            .jsonPath("$.exercises[0].exercise.name").isEqualTo("Pull Up")
+            .jsonPath("$.exercises[0].id").isEqualTo("1")
+            .jsonPath("$.exercises[0].order").isEqualTo(1)
+            .jsonPath("$.exercises[0].exercise.name").isEqualTo("Dip")
             .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.exercises[0].sets").isArray
             .jsonPath("$.exercises[0].sets[0].repetitions").isEqualTo(10)
-            .jsonPath("$.exercises[0].sets[0].weight").isEqualTo(5.0f)
+            .jsonPath("$.exercises[0].sets[0].weight").isEqualTo(20.0f)
             .jsonPath("$.exercises[0].sets[1]").doesNotExist()
-            .jsonPath("$.exercises[1].id").isEqualTo("1")
-            .jsonPath("$.exercises[1].exercise.name").isEqualTo("Dip")
+            .jsonPath("$.exercises[1].id").isNotEmpty
+            .jsonPath("$.exercises[1].order").isEqualTo(2)
+            .jsonPath("$.exercises[1].exercise.name").isEqualTo("Pull Up")
             .jsonPath("$.exercises[1].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.exercises[1].sets").isArray
             .jsonPath("$.exercises[1].sets[0].repetitions").isEqualTo(10)
-            .jsonPath("$.exercises[1].sets[0].weight").isEqualTo(20.0f)
+            .jsonPath("$.exercises[1].sets[0].weight").isEqualTo(5.0f)
             .jsonPath("$.exercises[1].sets[1]").doesNotExist()
             .jsonPath("$.exercises[2]").doesNotExist()
 
@@ -489,6 +511,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.bodyweight").isEqualTo(63.0f)
             .jsonPath("$.exercises").isArray
             .jsonPath("$.exercises[0].id").isEqualTo("1")
+            .jsonPath("$.exercises[0].order").isEqualTo(1)
             .jsonPath("$.exercises[0].exercise.name").isEqualTo("Dip")
             .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.exercises[0].sets").isArray
@@ -496,6 +519,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.exercises[0].sets[0].weight").isEqualTo(20.0f)
             .jsonPath("$.exercises[0].sets[1]").doesNotExist()
             .jsonPath("$.exercises[1].id").isNotEmpty
+            .jsonPath("$.exercises[1].order").isEqualTo(2)
             .jsonPath("$.exercises[1].exercise.name").isEqualTo("Pull Up")
             .jsonPath("$.exercises[1].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.exercises[1].sets").isArray
@@ -509,10 +533,10 @@ class TrainingApiTests: AbstractApiTest() {
     fun updateTraining_deleteExercise() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", Exercise("Dip", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Dip", true), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 20.0f)
             )),
-            TrainingExercise("2", Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("2", 2, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 5.0f)
             ))
         ))
@@ -521,7 +545,7 @@ class TrainingApiTests: AbstractApiTest() {
             "01.01.2025".toDate(),
             63.0f,
             listOf(
-                TrainingExerciseDto("1", ExerciseDto("Dip", true), listOf(
+                TrainingExerciseDto("1", 1, ExerciseDto("Dip", true), listOf(
                     TrainingExerciseSetDto(10, 20.0f)
                 ))
             )
@@ -541,6 +565,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.bodyweight").isEqualTo(63.0f)
             .jsonPath("$.exercises").isArray
             .jsonPath("$.exercises[0].id").isEqualTo("1")
+            .jsonPath("$.exercises[0].order").isEqualTo(1)
             .jsonPath("$.exercises[0].exercise.name").isEqualTo("Dip")
             .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.exercises[0].sets").isArray
@@ -561,6 +586,7 @@ class TrainingApiTests: AbstractApiTest() {
             .jsonPath("$.bodyweight").isEqualTo(63.0f)
             .jsonPath("$.exercises").isArray
             .jsonPath("$.exercises[0].id").isEqualTo("1")
+            .jsonPath("$.exercises[0].order").isEqualTo(1)
             .jsonPath("$.exercises[0].exercise.name").isEqualTo("Dip")
             .jsonPath("$.exercises[0].exercise.isBodyweight").isEqualTo(true)
             .jsonPath("$.exercises[0].sets").isArray
@@ -574,10 +600,10 @@ class TrainingApiTests: AbstractApiTest() {
     fun deleteTraining() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", Exercise("Dip", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Dip", true), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 20.0f)
             )),
-            TrainingExercise("2", Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("2", 2, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
                 TrainingExerciseSet(10, 5.0f)
             ))
         ))
