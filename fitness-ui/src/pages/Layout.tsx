@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom"
-import ResponsiveAppBar from "../components/AppBar";
+import ResponsiveAppBar from "../components/ResponsiveAppBar";
 
 const Layout = () => {
     return (
