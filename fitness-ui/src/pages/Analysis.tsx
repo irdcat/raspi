@@ -7,8 +7,8 @@ import ResponsiveFilterBar from "../components/ResponsiveFilterBar";
 import { Metric, METRICS, Summary } from "../types";
 import { fetchExerciseSummary } from "../api/summaryApi";
 import { fetchExerciseNames } from "../api/exerciseApi";
-import { useDialogs } from "@toolpad/core";
 import { camelCaseToSpaced } from "../utils/stringUtils";
+import { useLocation } from "react-router-dom";
 
 type AnalysisFilters = {
     from: Date,
@@ -17,6 +17,8 @@ type AnalysisFilters = {
 }
 
 const Analysis = () => {
+    const { state } = useLocation();
+    const initialExerciseName = state !== null ? state.name : "";
     const [exerciseNames, setExerciseNames] = useState<Array<string>>([]);
     const [metric, setMetric] = useState<Metric>("volume");
     const [loading, setLoading] = useState(true);
@@ -27,9 +29,8 @@ const Analysis = () => {
     const [analysisFilters, setAnalysisFilters] = useState<AnalysisFilters>({
         from: subDays(new Date(), 180),
         to: new Date(),
-        exerciseName: ""
+        exerciseName: initialExerciseName !== null ? initialExerciseName : ""
     });
-    const dialogs = useDialogs();
 
     useEffect(() => {
         const fetchData = async () => {
