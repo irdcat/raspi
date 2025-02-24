@@ -25,6 +25,23 @@ export type Training = {
     exercises: Array<TrainingExercise>
 }
 
+export type TrainingExerciseSetFormData = {
+    repetitions: number,
+    weight: number
+}
+
+export type TrainingExerciseFormData = {
+    id: string,
+    exercise: Exercise,
+    sets: Array<TrainingExerciseSetFormData>
+}
+
+export type TrainingFormData = {
+    date: Date,
+    bodyweight: number,
+    exercises: Array<TrainingExerciseFormData>
+}
+
 export type SummaryParameters = {
     volume: number,
     averageVolume: number,

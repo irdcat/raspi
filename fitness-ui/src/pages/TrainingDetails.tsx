@@ -1,21 +1,18 @@
-import { Backdrop, Box, Button, CircularProgress, IconButton, Paper, TextField, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid2"
-import { format, parseISO } from "date-fns";
+import { Backdrop, Box, Button, CircularProgress, Paper } from "@mui/material";
+import { parseISO } from "date-fns";
 import { useEffect, useState } from "react";
-import { Training } from "../types";
+import { Training, TrainingFormData } from "../types";
 import { fetchTraining } from "../api/trainingApi";
-import ExerciseWithIcon from "../components/ExerciseWithIcon";
-import { LuPlus } from "react-icons/lu";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import TrainingDetailsFormInputs from "../components/TrainingDetailsFormInputs";
+import { FormProvider, useForm } from "react-hook-form";
+import FormInputTrainingDate from "../components/FormInputTrainingDate";
 
 const TrainingDetails = () => {
+    const navigate = useNavigate();
     const { dateString } = useParams();
     const [loading, setLoading] = useState(true);
-    const [training, setTraining] = useState<Training>({
-        date: new Date(),
-        bodyweight: 0,
-        exercises: []
-    });
+    const formMethods = useForm<TrainingFormData>();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,88 +22,47 @@ const TrainingDetails = () => {
             setLoading(true);
             const date = parseISO(dateString);
             const result = await fetchTraining(date);
-            setTraining(result!!);
+            if (result !== null) {
+                formMethods.setValue("date", result.date);
+                formMethods.setValue("bodyweight", result.bodyweight);
+                formMethods.setValue("exercises", result.exercises);
+            }
             setLoading(false);
         };
         fetchData();
     }, [dateString]);
 
+    const handleApply = (trainingFormData: TrainingFormData) => {
+        const training = trainingFormData as Training;
+        // TODO: Send a request
+        navigate("/trainings");
+    }
+
+    const handleCancel = () => {
+        navigate("/trainings");
+    }
+
     return (
         <>
             <Box sx={{ height: '100%', paddingX: '5px' }}>
-                <Box component={Paper} sx={{ height: '64px', padding: '16px' }}>
-                    <Typography sx={{ fontSize: '24px' }}>
-                        {format(training.date, "dd.MM.yyyy")}
-                    </Typography>
-                </Box>
-                <Box sx={{ height: 'calc(100% - 192px)', padding: '6px', overflowY: 'auto' }}>
-                    <Box sx={{ padding: '8px' }}>
-                        <Typography variant="h6">
-                            Details
-                        </Typography>
+                <FormProvider {...formMethods}>
+                    <Box component={Paper} sx={{ height: '64px', padding: '16px' }}>
+                        <FormInputTrainingDate name="date"/>
                     </Box>
-                    <Box sx={{ padding: '8px' }}>
-                        <TextField 
-                            fullWidth
-                            size="small" 
-                            label="Bodyweight (kg)"
-                            value={training.bodyweight}/>
+                    <Box sx={{ height: 'calc(100% - 192px)', padding: '6px', overflowY: 'auto' }}>
+                        <TrainingDetailsFormInputs/>
                     </Box>
-                    <Box sx={{ padding: '7px', display: 'flex' }}>
-                        <Typography sx={{ flexGrow: 1, alignSelf: 'center' }} variant="h6">
-                            Exercises
-                        </Typography>
-                        <IconButton
-                            tabIndex={-1} 
-                            color="success" 
-                            sx={{ border: '1px solid rgba(255, 255, 255, 0.23)', borderRadius: '4px' }}>
-                            <LuPlus/>
-                        </IconButton>
+                    <Box component={Paper} sx={{ height: '64px' }}>
+                        <Box sx={{ width: '100%', display: 'flex', padding: '14px', columnGap: '8px', flexDirection: 'row-reverse' }}>
+                            <Button onClick={formMethods.handleSubmit(handleApply)} variant="outlined" color="success">
+                                Apply
+                            </Button>
+                            <Button onClick={handleCancel} variant="outlined" color="error">
+                                Cancel
+                            </Button>
+                        </Box>
                     </Box>
-                    <Grid container spacing={2} sx={{ padding: '5px' }}>
-                        {training.exercises.map((trainingExercise, index) => (
-                            <Grid 
-                                key={index} 
-                                sx={{ border: '1px solid rgba(255, 255, 255, 0.23)', borderRadius: '4px', padding: '3px' }}
-                                size={{ xs: 12, md: 6 }}>
-                                <Box sx={{ display: 'flex', padding: '5px', columnGap: '5px' }}>
-                                    <ExerciseWithIcon 
-                                        exercise={trainingExercise.exercise} 
-                                        sx={{ flexGrow: 1, alignSelf: 'center' }}/>
-                                    <IconButton tabIndex={-1} color="success">
-                                        <LuPlus/>
-                                    </IconButton>
-                                </Box>
-                                {trainingExercise.sets.map((set, setIndex) => (
-                                    <Box 
-                                        key={setIndex} 
-                                        sx={{ display: 'flex', borderTop: '1px solid rgba(255, 255, 255, 0.23)', columnGap: '10px', padding: '5px', alignItems: 'center' }}>
-                                        <Box>
-                                            {setIndex + 1}.
-                                        </Box>
-                                        <Box sx={{ flexGrow: 1 }}>
-                                            <TextField fullWidth size="small" value={set.repetitions}/>
-                                        </Box>
-                                        <Box>x</Box>
-                                        <Box sx={{ flexGrow: 1 }}>
-                                            <TextField fullWidth size="small" value={set.weight}/>
-                                        </Box>
-                                    </Box>
-                                ))}
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Box>
-                <Box component={Paper} sx={{ height: '64px' }}>
-                    <Box sx={{ width: '100%', display: 'flex', padding: '14px', columnGap: '8px', flexDirection: 'row-reverse' }}>
-                        <Button variant="outlined" color="success">
-                            Apply
-                        </Button>
-                        <Button variant="outlined" color="error">
-                            Cancel
-                        </Button>
-                    </Box>
-                </Box>
+                </FormProvider>
             </Box>
             <Backdrop
                 sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer })}
