@@ -3,15 +3,16 @@ import EChartsReact from "echarts-for-react"
 import { Metric, Summary } from "../types"
 import { camelCaseToSpaced } from "../utils/stringUtils"
 
-const AnalysisChart = (props: { 
+const ExerciseAnalysisChart = (props: {
     data: Summary,
     metric: Metric,
+    baseOptions: EChartsOption
 }) => {
-    
-    const summaryToSeries = (summary: Summary, metric: Metric): SeriesOption[] => {
-        let series: SeriesOption[] = [];
-        let metricData: number[] = [];
 
+    const { data, metric, baseOptions } = props;
+    const toSeries = (summary: Summary, metric: Metric): SeriesOption[] => {
+
+        let metricData: number[] = [];        
         switch (metric) {
             case "volume":
                 metricData = Object.values(summary.parameters).map(p => p.volume);
@@ -29,50 +30,101 @@ const AnalysisChart = (props: {
                 metricData = Object.values(summary.parameters).map(p => p.averageIntensity);
                 break;
         }
-
-        if (summary.exercise.isBodyweight) {
-            let bodyweightData: number[] = [];
-            if (metric === "volume" || metric === "averageVolume") {
-                if (metric === "volume") {
-                    bodyweightData = Object.values(summary.parameters).map(p => p.bodyweightVolume);
-                } else {
-                    bodyweightData = Object.values(summary.parameters).map(p => p.averageBodyweightVolume)
-                }
-            } else {
-                bodyweightData = Object.values(summary.parameters).map(p => p.bodyweight);
-            }
-            let summedData: number[] = [];
-            for (let i = 0; i < metricData.length; i++) {
-                summedData[i] = metricData[i] + bodyweightData[i];
-            }
-            series = [{
-                name: `Bodyweight${metric === "volume" || metric === "averageVolume" ? ' Volume' : ''}`,
-                type: 'line',
-                stack: 'stack',
-                data: bodyweightData
-            }, {
-                name: `Added weight${metric === "volume" || metric === "averageVolume" ? ' volume' : ''}`,
-                type: 'line',
-                stack: 'stack',
-                areaStyle: {},
-                data: metricData
-            }, {
-                name: "Overall weight",
-                type: 'line',
-                data: summedData
-            }]
-        } else {
-            series = [{
-                name: camelCaseToSpaced(metric),
-                type: 'line',
-                data: metricData
-            }]
-        }
-
-        return series;
-    }
+        return [{
+            name: camelCaseToSpaced(metric),
+            type: 'line',
+            data: metricData
+        }]
+    };
 
     let options: EChartsOption = {
+        ...baseOptions,
+        series: toSeries(data, metric)
+    };
+
+    return (
+        <EChartsReact 
+            style={{ width: '100%', height: '100%' }} 
+            option={options} 
+            theme="dark"/>
+    );
+}
+
+const BodyweightExerciseAnalysisChart = (props: {
+    data: Summary,
+    metric: Metric,
+    baseOptions: EChartsOption
+}) => {
+
+    const { data, metric, baseOptions } = props;
+    const toSeries = (summary: Summary, metric: Metric): SeriesOption[] => {
+        let metricData: number[] = [];
+        let bodyweightData: number[] = [];
+        let summedData: number[] = [];
+
+        switch(metric) {
+            case "volume":
+                metricData = Object.values(summary.parameters).map(p => p.volume);
+                bodyweightData = Object.values(summary.parameters).map(p => p.bodyweightVolume)
+                break;
+            case "averageVolume":
+                metricData = Object.values(summary.parameters).map(p => p.averageVolume);
+                bodyweightData = Object.values(summary.parameters).map(p => p.averageBodyweightVolume)
+                break;
+            case "minIntensity":
+                metricData = Object.values(summary.parameters).map(p => p.minIntensity);
+                bodyweightData = Object.values(summary.parameters).map(p => p.bodyweight);
+                break;
+            case "maxIntensity":
+                metricData = Object.values(summary.parameters).map(p => p.maxIntensity);
+                bodyweightData = Object.values(summary.parameters).map(p => p.bodyweight);
+                break;
+            case "averageIntensity":
+                metricData = Object.values(summary.parameters).map(p => p.averageIntensity);
+                bodyweightData = Object.values(summary.parameters).map(p => p.bodyweight);
+                break;
+        }
+
+        summedData = metricData.map((v, i) => v + bodyweightData[i]);
+
+        return [{
+            name: `Bodyweight${metric === "volume" || metric === "averageVolume" ? ' Volume' : ''}`,
+            type: 'line',
+            stack: 'stack',
+            data: bodyweightData
+        }, {
+            name: `Added weight${metric === "volume" || metric === "averageVolume" ? ' volume' : ''}`,
+            type: 'line',
+            stack: 'stack',
+            areaStyle: {},
+            data: metricData
+        }, {
+            name: "Overall weight",
+            type: 'line',
+            data: summedData
+        }];
+    };
+
+    let options: EChartsOption = {
+        ...baseOptions,
+        series: toSeries(data, metric)
+    };
+
+    return (
+        <EChartsReact 
+            style={{ width: '100%', height: '100%' }} 
+            option={options} 
+            theme="dark"/>
+    );
+}
+
+const AnalysisChart = (props: { 
+    data: Summary,
+    metric: Metric,
+}) => {
+
+    const { data, metric } = props;
+    const baseOptions: EChartsOption = {
         grid: {
             top: 25,
             left: 60,
@@ -98,18 +150,16 @@ const AnalysisChart = (props: {
                 formatter: "{value} kg"
             },
             axisLine: {
-                show: true,
+                show: true
             }
-        },
-        series: summaryToSeries(props.data, props.metric)
-    }
+        }
+    };
 
-    return (
-        <EChartsReact 
-            style={{ width: '100%', height: '100%' }} 
-            option={options} 
-            theme="dark"/>
-    )
+    if (data.exercise.isBodyweight) {
+        return <BodyweightExerciseAnalysisChart data={data} metric={metric} baseOptions={baseOptions}/>
+    } else {
+        return <ExerciseAnalysisChart data={data} metric={metric} baseOptions={baseOptions}/>
+    }
 }
 
 export default AnalysisChart;
