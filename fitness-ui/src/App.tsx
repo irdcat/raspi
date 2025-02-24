@@ -50,8 +50,8 @@ const darkTheme = createTheme({
 const App = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <DialogsProvider>
-        <ThemeProvider theme={ darkTheme }>
+      <ThemeProvider theme={ darkTheme }>
+        <DialogsProvider>
           <CssBaseline/>
           <BrowserRouter>
             <Routes>
@@ -64,8 +64,8 @@ const App = () => {
               </Route>
             </Routes>
           </BrowserRouter>
-        </ThemeProvider>
-      </DialogsProvider>
+        </DialogsProvider>  
+      </ThemeProvider>
     </LocalizationProvider>
   );
 }
