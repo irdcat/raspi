@@ -61,7 +61,7 @@ const TrainingList = (props: {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {training.exercises.map((trainingExercise, exerciseIndex) => (
+                                    {training.exercises.sort((a, b) => a.order - b.order).map((trainingExercise, exerciseIndex) => (
                                         <TableRow key={`row-${index}-${exerciseIndex}`}>
                                             <TableCell>{trainingExercise.exercise.name}</TableCell>
                                             <TableCell>{trainingExercise.sets.map(s => `${s.repetitions}x${s.weight}`).join(" ")}</TableCell>

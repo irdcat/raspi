@@ -15,6 +15,7 @@ export type TrainingExerciseSet = {
 
 export type TrainingExercise = {
     id: string,
+    order: number,
     exercise: Exercise,
     sets: Array<TrainingExerciseSet>
 }

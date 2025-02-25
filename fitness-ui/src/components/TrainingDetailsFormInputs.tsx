@@ -19,6 +19,7 @@ const TrainingDetailsFormInputs = () => {
         if (result != null) {
             append({
                 id: "",
+                order: fields.length + 1,
                 exercise: result,
                 sets: []
             });
@@ -56,6 +57,7 @@ const TrainingDetailsFormInputs = () => {
                     <Grid2 key={field.id} size={{ xs: 12, md: 6 }}
                         sx={{ border: '1px solid rgba(255, 255, 255, 0.23)', borderRadius: '4px', padding: '3px' }}>
                         <Box sx={{ display: 'flex', padding: '5px', columnGap: '5px' }}>
+                            <input type="hidden" {...register(`exercises.${index}.order`)}/>
                             <FormInputExercise name={`exercises.${index}.exercise`}/>
                             <IconButton tabIndex={-1} color="error" onClick={onRemoveExercise(index)}>
                                 <LuX/>
