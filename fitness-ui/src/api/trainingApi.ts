@@ -46,7 +46,13 @@ export const createOrUpdateTraining = async(
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
-        body: JSON.stringify(adjustedTraining)
+        body: JSON.stringify(adjustedTraining, (key, value) => {
+            if (key === "date") {
+                return format(value, "yyyy-MM-dd");
+            } else {
+                return value;
+            }
+        })
     }).then(r => r.json())
 
     return response as Training | ApiError
