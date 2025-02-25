@@ -12,7 +12,7 @@ const FormInputTrainingExerciseSets = (props: {
 
     return (
         <>
-            <Box sx={{ padding: '7px', display: 'flex', borderTop: '1px solid rgba(255, 255, 255, 0.23)' }}>
+            <Box sx={{ padding: '7px', display: 'flex', borderTop: '2px solid rgba(255, 255, 255, 0.23)' }}>
                 <Typography sx={{ flexGrow: 1, alignSelf: 'center', fontSize: '20px' }}>Sets</Typography>
                 <IconButton tabIndex={-1} color="success" onClick={() => append({ repetitions: 0, weight: 0 })}>
                     <LuPlus/>
@@ -40,7 +40,7 @@ const FormInputTrainingExerciseSets = (props: {
                     <Box>x</Box>
                     <Box sx={{ flexGrow: 1}}>
                         <FormInputText
-                            name={`${name}[${index}].repetitions`}
+                            name={`${name}[${index}].weight`}
                             options={{ 
                                 required: { value: true, message: "Field is required" },
                                 validate: { positive: (v: number) => parseFloat(v.toString()) >= 0 || "Value must be positive real number" }

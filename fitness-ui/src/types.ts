@@ -19,7 +19,7 @@ export type TrainingExercise = {
     sets: Array<TrainingExerciseSet>
 }
 
-export type Training = {
+export interface Training {
     date: Date,
     bodyweight: number,
     exercises: Array<TrainingExercise>
@@ -67,6 +67,14 @@ export type Page<T> = {
     currentPage: number,
     pageSize: number,
     totalResults: number
+}
+
+export type ApiError = {
+    timestamp: Date,
+    path: string,
+    status: number,
+    error: string | null,
+    requestId: string
 }
 
 export const METRICS = [

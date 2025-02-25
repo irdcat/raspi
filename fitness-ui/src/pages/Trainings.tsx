@@ -6,7 +6,7 @@ import ResponsiveFilterBar from "../components/ResponsiveFilterBar";
 import TrainingList from "../components/TrainingsList";
 import { useEffect, useState } from "react";
 import { Training } from "../types";
-import { fetchTraining, fetchTrainings } from "../api/trainingApi";
+import { deleteTraining, fetchTraining, fetchTrainings, isTraining, isTrainingPage } from "../api/trainingApi";
 import { useDialogs } from "@toolpad/core";
 import DatePromptDialog from "../components/DatePromptDialog";
 import { useNavigate } from "react-router-dom";
@@ -30,14 +30,17 @@ const Trainings = () => {
     const dialogs = useDialogs();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            const result = await fetchTrainings(filters.from, filters.to, filters.page, pageSize);
+    const fetchData = async () => {
+        setLoading(true);
+        const result = await fetchTrainings(filters.from, filters.to, filters.page, pageSize);
+        if (isTrainingPage(result)) {
             setTrainings(result.content);
             setPageCount(Math.ceil(result.totalResults / pageSize));
-            setLoading(false);
-        };
+        }
+        setLoading(false);
+    };
+
+    useEffect(() => {
         fetchData();
     }, [filters]);
 
@@ -65,11 +68,26 @@ const Trainings = () => {
             return;
         }
         const training = await fetchTraining(promptResult);
-        if (training !== null) {
+        if (isTraining(training)) {
             await dialogs.alert("Training with the given date exists! Edit appropriate training instead.");
         } else {
             navigate(`/trainings/${format(promptResult, "yyyy-MM-dd")}`);
         }
+    }
+
+    const handleTrainingEdit = (date: Date) => {
+        const formattedDate = format(date, "yyyy-MM-dd");
+        navigate(`/trainings/${formattedDate}`);
+    }
+
+    const handleTrainingDelete = async (date: Date) => {
+        const dateString = format(date, "dd.MM.yyyy");
+        const result = await dialogs.confirm(`Are you sure you want to delete training from ${dateString}`);
+        if (!result) {
+            return;
+        }
+        await deleteTraining(date);
+        fetchData();
     }
 
     return (
@@ -112,7 +130,10 @@ const Trainings = () => {
                     </Box>
                 </Box>
                 <Box sx={{ height: 'calc(100% - 192px)', padding: '6px', overflowY: 'auto' }}>
-                    <TrainingList trainings={trainings}/>
+                    <TrainingList 
+                        onEdit={handleTrainingEdit} 
+                        onDelete={handleTrainingDelete} 
+                        trainings={trainings}/>
                 </Box>
                 <Box component={Paper} sx={{ paddingY: '16px', paddingX: '16px', height: '64px' }}>
                     <Pagination 

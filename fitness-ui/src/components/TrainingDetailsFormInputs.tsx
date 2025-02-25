@@ -4,15 +4,25 @@ import { LuPlus, LuX } from "react-icons/lu"
 import { useFieldArray, useFormContext } from "react-hook-form"
 import FormInputTrainingExerciseSets from "./FormInputTrainingExerciseSets"
 import FormInputExercise from "./FormInputExercise"
+import { useDialogs } from "@toolpad/core"
+import ExercisePromptDialog from "./ExercisePromptDialog"
 
 const TrainingDetailsFormInputs = () => {
     const { control, register } = useFormContext()
     const { fields, append, remove } = useFieldArray({
         control, name: "exercises"
-    })
+    });
+    const dialogs = useDialogs();
 
     const onAddExercise = async () => {
-        // TODO: Show dialog and append exercise based on result
+        const result = await dialogs.open(ExercisePromptDialog);
+        if (result != null) {
+            append({
+                id: "",
+                exercise: result,
+                sets: []
+            });
+        }
     }
 
     const onRemoveExercise = (index: number) => () => {

@@ -4,31 +4,17 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, IconButton, Paper, 
 import { format } from "date-fns";
 import { LuPencilLine, LuTrash2 } from "react-icons/lu";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useNavigate } from "react-router-dom";
-import { useDialogs } from "@toolpad/core";
 
-const TrainingList = (props: { trainings: Array<Training> }) => {
-    const { trainings } = props;
+const TrainingList = (props: { 
+    trainings: Array<Training>,
+    onEdit: (date: Date) => void,
+    onDelete: (date: Date) => void 
+}) => {
+    const { trainings, onEdit, onDelete } = props;
     const [expanded, setExpanded] = useState<number | false>(false);
-    const navigate = useNavigate();
-    const dialogs = useDialogs();
 
-    const handleExpansion = (panel: number) => (event: SyntheticEvent, isExpanded: boolean) => {
+    const handleExpansion = (panel: number) => (_: SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
-    }
-
-    const handleTrainingEdit = (date: Date) => {
-        const dateString = format(date, "yyyy-MM-dd");
-        navigate(`/trainings/${dateString}`);
-    }
-
-    const handleTrainingDelete = async (date: Date) => {
-        const dateString = format(date, "dd.MM.yyyy");
-        const result = await dialogs.confirm(`Are you sure you want to delete training from ${dateString}`);
-        if (!result) {
-            return;
-        }
-        // TODO: Delete training
     }
 
     return (
@@ -49,7 +35,7 @@ const TrainingList = (props: { trainings: Array<Training> }) => {
                                 <IconButton 
                                     sx={{ border: '1px solid gray', borderRadius: '4px' }}
                                     color="secondary"
-                                    onClick={() => handleTrainingEdit(training.date)}>
+                                    onClick={() => onEdit(training.date)}>
                                     <LuPencilLine/>
                                 </IconButton>
                             </Tooltip>
@@ -57,7 +43,7 @@ const TrainingList = (props: { trainings: Array<Training> }) => {
                                 <IconButton 
                                     sx={{ border: '1px solid gray', borderRadius: '4px' }}
                                     color="error"
-                                    onClick={() => handleTrainingDelete(training.date)}>
+                                    onClick={() => onDelete(training.date)}>
                                     <LuTrash2/>
                                 </IconButton>
                             </Tooltip>

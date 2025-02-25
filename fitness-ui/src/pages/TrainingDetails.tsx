@@ -2,17 +2,20 @@ import { Backdrop, Box, Button, CircularProgress, Paper } from "@mui/material";
 import { parseISO } from "date-fns";
 import { useEffect, useState } from "react";
 import { Training, TrainingFormData } from "../types";
-import { fetchTraining } from "../api/trainingApi";
+import { createOrUpdateTraining, fetchTraining, isTraining } from "../api/trainingApi";
 import { useNavigate, useParams } from "react-router-dom";
 import TrainingDetailsFormInputs from "../components/TrainingDetailsFormInputs";
 import { FormProvider, useForm } from "react-hook-form";
 import FormInputTrainingDate from "../components/FormInputTrainingDate";
+import { useDialogs } from "@toolpad/core";
 
 const TrainingDetails = () => {
     const navigate = useNavigate();
     const { dateString } = useParams();
     const [loading, setLoading] = useState(true);
     const formMethods = useForm<TrainingFormData>();
+    const { handleSubmit, setValue } = formMethods;
+    const dialogs = useDialogs();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,24 +25,29 @@ const TrainingDetails = () => {
             setLoading(true);
             const date = parseISO(dateString);
             const result = await fetchTraining(date);
-            if (result !== null) {
-                formMethods.setValue("date", result.date);
-                formMethods.setValue("bodyweight", result.bodyweight);
-                formMethods.setValue("exercises", result.exercises);
+            if (isTraining(result)) {
+                setValue("date", result.date);
+                setValue("bodyweight", result.bodyweight);
+                setValue("exercises", result.exercises);
+            } else {
+                setValue("date", date);
             }
             setLoading(false);
         };
         fetchData();
     }, [dateString]);
 
-    const handleApply = (trainingFormData: TrainingFormData) => {
+    const handleApply = async (trainingFormData: TrainingFormData) => {
         const training = trainingFormData as Training;
-        // TODO: Send a request
+        await createOrUpdateTraining(training);
         navigate("/trainings");
     }
 
-    const handleCancel = () => {
-        navigate("/trainings");
+    const handleCancel = async () => {
+        const result = await dialogs.confirm("Are you sure you want to cancel? Any unsaved changes will be lost!");
+        if (result) {
+            navigate("/trainings");
+        }
     }
 
     return (
@@ -54,7 +62,7 @@ const TrainingDetails = () => {
                     </Box>
                     <Box component={Paper} sx={{ height: '64px' }}>
                         <Box sx={{ width: '100%', display: 'flex', padding: '14px', columnGap: '8px', flexDirection: 'row-reverse' }}>
-                            <Button onClick={formMethods.handleSubmit(handleApply)} variant="outlined" color="success">
+                            <Button onClick={handleSubmit(handleApply)} variant="outlined" color="success">
                                 Apply
                             </Button>
                             <Button onClick={handleCancel} variant="outlined" color="error">

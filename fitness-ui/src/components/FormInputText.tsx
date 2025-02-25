@@ -11,6 +11,7 @@ const FormInputText = (props: {
 
     return (
         <Controller
+            defaultValue={''}
             name={name}
             control={control}
             render={({
