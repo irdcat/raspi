@@ -1,168 +1,157 @@
-import { Box, Button, ButtonGroup, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import useWindowDimensions from "../hooks/useWindowDimensions";
-import { useState } from "react";
+import { Backdrop, Box, CircularProgress, IconButton, Pagination, Paper, Tooltip } from "@mui/material";
+import { format, subDays } from "date-fns";
+import { DatePicker, DateValidationError, PickerChangeHandlerContext } from "@mui/x-date-pickers";
+import { LuDownload, LuPlus, LuUpload } from "react-icons/lu";
+import ResponsiveFilterBar from "../components/ResponsiveFilterBar";
+import TrainingList from "../components/TrainingsList";
+import { useCallback, useEffect, useState } from "react";
+import { Training } from "../types";
+import { deleteTraining, fetchTraining, fetchTrainings, isTraining, isTrainingPage } from "../api/trainingApi";
+import { useDialogs } from "@toolpad/core";
+import DatePromptDialog from "../components/DatePromptDialog";
 import { useNavigate } from "react-router-dom";
-import TrainingsApi from "../api/TrainingsApi";
-import { useAsyncEffect } from "../hooks/useAsyncEffect";
-import Training from "../model/Training";
-import { ButtonActivatedDialog } from "../components/dialogs/ButtonActivatedDialog";
-import TrainingForm from "../components/forms/TrainingForm";
-import TrainingFormData from "../model/TrainingFormData";
-import { ButtonActivatedActionDialog } from "../components/dialogs/ButtonActivatedActionDialog";
 
-export const Trainings = () => {
-    const [trainingList, setTrainingList] = useState(new Array<Training>());
+type Filters = {
+    from: Date,
+    to: Date,
+    page: number
+}
+
+const Trainings = () => {
+    const pageSize = 25;
+    const [trainings, setTrainings] = useState<Array<Training>>([]);
+    const [pageCount, setPageCount] = useState(1);
+    const [loading, setLoading] = useState(true);
+    const [filters, setFilters] = useState<Filters>({
+        from: subDays(new Date(), 180),
+        to: new Date(),
+        page: 1
+    });
+    const dialogs = useDialogs();
     const navigate = useNavigate();
-    const { height } = useWindowDimensions();
 
-    useAsyncEffect(async () => {
-        await TrainingsApi.get()
-            .then(trainings => trainings.sort((a, b) => b.date.getTime() - a.date.getTime()))
-            .then(trainings => setTrainingList(trainings))
-    }, []);
+    const fetchData = useCallback(async () => {
+        setLoading(true);
+        const result = await fetchTrainings(filters.from, filters.to, filters.page, pageSize);
+        if (isTrainingPage(result)) {
+            setTrainings(result.content);
+            setPageCount(Math.ceil(result.totalResults / pageSize));
+        }
+        setLoading(false);
+    }, [filters]);
 
-    const onClickSummary = (id: string) => {
-        navigate(`/trainings/${id}`);
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+
+    const handlePageChange = (e: React.ChangeEvent<unknown>, page: number) => {
+        setFilters(prevFilters => ({
+            ...prevFilters,
+            page: page
+        }));
     }
 
-    const onAddTraining = (training: Training) => {
-        TrainingsApi
-            .add(training)
-            .then(added => [...trainingList, added])
-            .then(trainings => trainings.sort((a, b) => b.date.getTime() - a.date.getTime()))
-            .then(trainings => setTrainingList(trainings));
+    const handleDateChange = (fieldName: keyof Omit<Filters, "page">) => 
+        (value: Date | null, _: PickerChangeHandlerContext<DateValidationError>) => {
+            if (value == null) {
+                return;
+            }
+            setFilters(prevFilter => ({
+                ...prevFilter,
+                [fieldName]: value
+            }));
+        }
+
+    const handleTrainingAdd = async () => {
+        const promptResult = await dialogs.open(DatePromptDialog);
+        if (promptResult === null) {
+            return;
+        }
+        const training = await fetchTraining(promptResult);
+        if (isTraining(training)) {
+            await dialogs.alert("Training with the given date exists! Edit appropriate training instead.");
+        } else {
+            navigate(`/trainings/${format(promptResult, "yyyy-MM-dd")}`);
+        }
     }
 
-    const onEditTraining = (training: Training) => {
-        TrainingsApi
-            .update(training.id, training)
-            .then(updated => {
-                const newList = [...trainingList];
-                newList[trainingList.findIndex(t => t.id === updated.id)] = updated;
-                let sorted = newList.sort((a, b) => b.date.getTime() - a.date.getTime());
-                setTrainingList(sorted);
-            });
+    const handleTrainingEdit = (date: Date) => {
+        const formattedDate = format(date, "yyyy-MM-dd");
+        navigate(`/trainings/${formattedDate}`);
     }
 
-    const onDeleteTraining = (id: string) => {
-        TrainingsApi
-            .delete(id)
-            .then(deleted => setTrainingList(trainingList.filter(t => t.id !== deleted.id)));
+    const handleTrainingDelete = async (date: Date) => {
+        const dateString = format(date, "dd.MM.yyyy");
+        const result = await dialogs.confirm(`Are you sure you want to delete training from ${dateString}`);
+        if (!result) {
+            return;
+        }
+        await deleteTraining(date);
+        fetchData();
     }
 
     return (
-        <Box sx={{ px: 3 }}>
-            <Box sx={{ display: "flex", paddingY: 2, paddingX: 1 }}>
-                <Typography variant="h6" color="white" sx={{ flexGrow: 1 }}>
-                    Trainings
-                </Typography>
-                <ButtonActivatedDialog title="Add Training" buttonColor="primary" buttonLabel="Add" buttonVariant="outlined">
-                    {(close) =>
-                        <TrainingForm
-                            onSubmit={(formData: TrainingFormData) => {
-                                onAddTraining({
-                                    id: "",
-                                    templateId: formData.templateId,
-                                    date: formData.date,
-                                    bodyWeight: formData.bodyWeight,
-                                    exercises: formData.exercises
-                                        .map((trainingExercise, index) => ({
-                                            order: index,
-                                            exerciseId: trainingExercise.exerciseId,
-                                            sets: trainingExercise.sets
-                                                .map(trainingExerciseSet => ({
-                                                    reps: trainingExerciseSet.reps,
-                                                    weight: trainingExerciseSet.weight
-                                                }))
-                                        }))
-                                })
-                                close();
-                            }} />
-                    }
-                </ButtonActivatedDialog>
+        <>
+            <Box sx={{ height: '100%', paddingX: '5px' }}>
+                <Box component={Paper} sx={{ height: '64px', paddingY: '12px', paddingX: '4px', display: 'flex', columnGap: '2px' }}>
+                    <ResponsiveFilterBar>
+                        <DatePicker
+                            slotProps={{ textField: { size: "small" } }}
+                            label="From"
+                            name="from"
+                            value={filters.from}
+                            onChange={handleDateChange("from")}/>
+                        <DatePicker
+                            slotProps={{ textField: { size: "small" } }}
+                            label="To"
+                            name="to"
+                            value={filters.to}
+                            onChange={handleDateChange("to")}/> 
+                    </ResponsiveFilterBar>
+                    <Box sx={{ display: 'flex', columnGap: '4px' }}>
+                        <Tooltip title="Import" arrow>
+                            <IconButton sx={{ border: '1px solid gray', borderRadius: '4px', height: '40px' }}>
+                                <LuUpload/>
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Export" arrow>
+                            <IconButton sx={{ border: '1px solid gray', borderRadius: '4px', height: '40px' }}>
+                                <LuDownload/>
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Add" arrow>
+                            <IconButton 
+                                sx={{ border: '1px solid gray', borderRadius: '4px', height: '40px' }}
+                                onClick={async () => await handleTrainingAdd()}
+                                color="success">
+                                <LuPlus/>
+                            </IconButton>
+                        </Tooltip>
+                    </Box>
+                </Box>
+                <Box sx={{ height: 'calc(100% - 192px)', padding: '6px', overflowY: 'auto' }}>
+                    <TrainingList 
+                        onEdit={handleTrainingEdit} 
+                        onDelete={handleTrainingDelete} 
+                        trainings={trainings}/>
+                </Box>
+                <Box component={Paper} sx={{ paddingY: '16px', paddingX: '16px', height: '64px' }}>
+                    <Pagination 
+                        size="medium" 
+                        count={pageCount} 
+                        variant="outlined" 
+                        shape="rounded"
+                        page={filters.page}
+                        onChange={handlePageChange}/>
+                </Box>
             </Box>
-            <TableContainer sx={{ maxHeight: height - 160 }} component={Paper}>
-                <Table stickyHeader aria-label="trainings table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>
-                                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                                    Date
-                                </Typography>
-                            </TableCell>
-                            <TableCell>
-                                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                                    Body Weight (kg)
-                                </Typography>
-                            </TableCell>
-                            <TableCell align="right">
-                                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                                    Actions
-                                </Typography>
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {trainingList.map((training) => (
-                            <TableRow key={training.id} sx={{ '&:lastchild td, &:last-child th': { border: 0 } }}>
-                                <TableCell>
-                                    {training.date.toDateString()}
-                                </TableCell>
-                                <TableCell>
-                                    {training.bodyWeight}
-                                </TableCell>
-                                <TableCell align="right">
-                                    <ButtonGroup variant="outlined">
-                                        <Button onClick={() => onClickSummary(training.id)} color="success">Summary</Button>
-                                        <ButtonActivatedDialog title="Edit Training" buttonColor="secondary" buttonVariant="outlined" buttonLabel="Edit">
-                                            {(close) =>
-                                                <TrainingForm
-                                                    onSubmit={(formData: TrainingFormData) => {
-                                                        onEditTraining({
-                                                            id: training.id,
-                                                            templateId: training.templateId,
-                                                            date: formData.date,
-                                                            bodyWeight: formData.bodyWeight,
-                                                            exercises: formData.exercises
-                                                                .map((trainingExercise, index) => ({
-                                                                    order: index,
-                                                                    exerciseId: trainingExercise.exerciseId,
-                                                                    sets: trainingExercise.sets
-                                                                        .map(trainingExerciseSet => ({
-                                                                            reps: trainingExerciseSet.reps,
-                                                                            weight: trainingExerciseSet.weight
-                                                                        }))
-                                                                }))
-                                                        })
-                                                        close();
-                                                    }}
-                                                    initialValues={{
-                                                        templateId: training.templateId,
-                                                        date: training.date,
-                                                        bodyWeight: training.bodyWeight,
-                                                        exercises: training.exercises.map(te => ({
-                                                            exerciseId: te.exerciseId,
-                                                            sets: te.sets
-                                                        }))
-                                                    }} />
-                                            }
-                                        </ButtonActivatedDialog>
-                                        <ButtonActivatedActionDialog
-                                            title="Delete Training"
-                                            text="Are you sure you want to delete training?"
-                                            cancelLabel="Cancel"
-                                            confirmLabel="Delete"
-                                            buttonColor="error"
-                                            buttonLabel="Delete"
-                                            onConfirm={() => onDeleteTraining(training.id)}
-                                        />
-                                    </ButtonGroup>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Box>
+            <Backdrop
+                sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer })}
+                open={loading}>
+                <CircularProgress color="inherit"/>    
+            </Backdrop>
+        </>
     )
 }
+
+export default Trainings;

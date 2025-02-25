@@ -1,127 +1,81 @@
-import { Box, Button, ButtonGroup, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom";
-import useWindowDimensions from "../hooks/useWindowDimensions";
-import ExercisesApi from "../api/ExercisesApi";
-import { useAsyncEffect } from "../hooks/useAsyncEffect";
-import Exercise from "../model/Exercise";
-import { ButtonActivatedDialog } from "../components/dialogs/ButtonActivatedDialog";
-import ExerciseFormData from "../model/ExerciseFormData";
-import ExerciseForm from "../components/forms/ExerciseForm";
-import { ButtonActivatedActionDialog } from "../components/dialogs/ButtonActivatedActionDialog";
+import { Backdrop, Box, CircularProgress, Pagination, Paper, TextField } from "@mui/material";
+import CountedExerciseList from "../components/CountedExerciseList";
+import { useEffect, useState } from "react";
+import { CountedExercise } from "../types";
+import { fetchCountedExercises } from "../api/exerciseApi";
 
-export const Exercises = () => {
-    const [ exerciseList, setExerciseList ] = useState(new Array<Exercise>());
-    const navigate = useNavigate();
-    const { height } = useWindowDimensions();
+type Filters = {
+    name: string,
+    page: number
+}
 
-    useAsyncEffect(async () => {
-        await ExercisesApi.get()
-            .then(exercises => setExerciseList(exercises));
-    }, []);
+const Exercises = () => {
+    const pageSize = 25;
+    const [countedExercises, setCountedExercises] = useState<Array<CountedExercise>>([])
+    const [pageCount, setPageCount] = useState(1);
+    const [loading, setLoading] = useState(true);
+    const [filters, setFilters] = useState<Filters>({
+        name: "",
+        page: 1
+    });
 
-    const handleSummaryClick = (id: string) => {
-        navigate(`/exercises/${id}`)
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            const result = await fetchCountedExercises(filters.name, filters.page, pageSize);
+            setCountedExercises(result.content);
+            setPageCount(Math.ceil(result.totalResults / pageSize));
+            setLoading(false);
+        };
+        fetchData();
+    }, [filters])
+
+    const handlePageChange = (e: React.ChangeEvent<unknown>, page: number) => {
+        setFilters(prevFilters => ({
+            ...prevFilters,
+            page: page
+        }));
     }
 
-    const onAddExercise = (exercise: Exercise) => {
-        ExercisesApi
-            .add(exercise)
-            .then(e => setExerciseList([...exerciseList, e]));
-    }
-
-    const onEditExercise = (exercise: Exercise) => {
-        ExercisesApi
-            .update(exercise.id, exercise)
-            .then(updated => {
-                const newList = [...exerciseList];
-                newList[exerciseList.findIndex(e => e.id === updated.id)] = updated;
-                setExerciseList(newList);
-            });
-    }
-
-    const onDeleteExercise = (id: string) => {
-        ExercisesApi
-            .delete(id)
-            .then(deleted => setExerciseList(exerciseList.filter(e => e.id !== deleted.id)));
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFilters(prevFilters => ({
+            ...prevFilters,
+            name: e.target.value
+        }));
     }
 
     return (
-        <Box sx={{ px: 3 }}>
-            <Box sx={{ display: "flex", paddingY: 2, paddingX: 1 }}>
-                <Typography variant="h6" color="white" sx={{ flexGrow: 1 }}>
-                    Exercises
-                </Typography>
-                <ButtonActivatedDialog title="Add Exercise" buttonColor="primary" buttonLabel="Add" buttonVariant="outlined">
-                    {(close) =>
-                    <ExerciseForm 
-                        onSubmit={(formData: ExerciseFormData) => {
-                            onAddExercise({id: "", name: formData.name, isBodyWeight: formData.isBodyWeight});
-                            close();
-                            }}/>
-                    }
-                </ButtonActivatedDialog>
+        <>
+            <Box sx={{ height: '100%', paddingX: '7px' }}>
+                <Box component={Paper} sx={{ height: '64px', paddingY: '13px', paddingX: '6px', display: 'flex', columnGap: 1 }}>
+                    <TextField
+                        fullWidth
+                        size="small"
+                        label="Search"
+                        name="search"
+                        value={filters.name}
+                        onChange={handleNameChange}/>
+                </Box>
+                <Box sx={{ padding: 1, overflowY: 'auto', height: 'calc(100% - 192px)' }}>
+                    <CountedExerciseList exercises={countedExercises}/>
+                </Box>
+                <Box component={Paper} sx={{ paddingY: '16px', paddingX: '16px', height: '64px' }}>
+                    <Pagination 
+                        size="medium" 
+                        count={pageCount} 
+                        variant="outlined" 
+                        shape="rounded" 
+                        page={filters.page}
+                        onChange={handlePageChange}/>
+                </Box>
             </Box>
-            <TableContainer sx={{ maxHeight: height - 160 }} component={Paper}>
-                <Table stickyHeader>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>
-                                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                                    Name
-                                </Typography>
-                            </TableCell>
-                            <TableCell>
-                                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                                    Uses body weight
-                                </Typography>
-                            </TableCell>
-                            <TableCell align="right">
-                                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                                    Actions
-                                </Typography>
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody sx={{ overflowY: "scroll" }}>
-                        { exerciseList.map((exercise) => (
-                            <TableRow key={ exercise.id } sx={{ '&:lastchild td, &:last-child th': { border: 0 } }}>
-                                <TableCell>{ exercise.name }</TableCell>
-                                <TableCell>
-                                    { exercise.isBodyWeight ? "Yes" : "No" }
-                                </TableCell>
-                                <TableCell align="right">
-                                    <ButtonGroup variant="outlined">
-                                        <Button onClick={() => handleSummaryClick(exercise.id)} color="success">Summary</Button>
-                                        <ButtonActivatedDialog title="Edit Exercise" buttonColor="secondary" buttonVariant="outlined" buttonLabel="Edit">
-                                            {(close) =>
-                                            <ExerciseForm 
-                                                onSubmit={(formData: ExerciseFormData) => {
-                                                    onEditExercise({id: exercise.id, name: formData.name, isBodyWeight: formData.isBodyWeight});
-                                                    close();
-                                                }}
-                                                initialValues={{
-                                                    name: exercise.name,
-                                                    isBodyWeight: exercise.isBodyWeight
-                                                }}/>
-                                            }
-                                        </ButtonActivatedDialog>
-                                        <ButtonActivatedActionDialog
-                                            title="Delete Exercise"
-                                            text="Are you sure you want to delete exercise?"
-                                            cancelLabel="Cancel"
-                                            confirmLabel="Delete"
-                                            buttonColor="error"
-                                            buttonLabel="Delete"
-                                            onConfirm={() => onDeleteExercise(exercise.id)}
-                                            />
-                                    </ButtonGroup>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Box>
+            <Backdrop
+                sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer })}
+                open={loading}>
+                <CircularProgress color="inherit"/>    
+            </Backdrop>
+        </>
     )
 }
+
+export default Exercises;
