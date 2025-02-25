@@ -4,7 +4,7 @@ import { DatePicker, DateValidationError, PickerChangeHandlerContext } from "@mu
 import { LuDownload, LuPlus, LuUpload } from "react-icons/lu";
 import ResponsiveFilterBar from "../components/ResponsiveFilterBar";
 import TrainingList from "../components/TrainingsList";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Training } from "../types";
 import { deleteTraining, fetchTraining, fetchTrainings, isTraining, isTrainingPage } from "../api/trainingApi";
 import { useDialogs } from "@toolpad/core";
@@ -30,7 +30,7 @@ const Trainings = () => {
     const dialogs = useDialogs();
     const navigate = useNavigate();
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         setLoading(true);
         const result = await fetchTrainings(filters.from, filters.to, filters.page, pageSize);
         if (isTrainingPage(result)) {
@@ -38,11 +38,11 @@ const Trainings = () => {
             setPageCount(Math.ceil(result.totalResults / pageSize));
         }
         setLoading(false);
-    };
+    }, [filters]);
 
     useEffect(() => {
         fetchData();
-    }, [filters]);
+    }, [fetchData]);
 
     const handlePageChange = (e: React.ChangeEvent<unknown>, page: number) => {
         setFilters(prevFilters => ({

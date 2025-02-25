@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Popover } from "@mui/material";
+import { Box, Button, Popover } from "@mui/material";
 import { ReactElement, useState } from "react";
 import { LuFilter } from "react-icons/lu";
 

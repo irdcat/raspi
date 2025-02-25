@@ -1,6 +1,6 @@
 import { DialogProps } from "@toolpad/core";
 import { Exercise } from "../types";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, TextField } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import FormInputText from "./FormInputText";
 import FormInputCheckbox from "./FormInputCheckbox";

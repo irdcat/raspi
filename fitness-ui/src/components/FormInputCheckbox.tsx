@@ -6,7 +6,7 @@ const FormInputCheckbox = (props: {
     label?: string
 }) => {
     const { name, label } = props;
-    const { control, register } = useFormContext();
+    const { control } = useFormContext();
 
     return (
         <Controller

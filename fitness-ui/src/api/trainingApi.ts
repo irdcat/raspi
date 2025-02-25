@@ -62,7 +62,7 @@ export const deleteTraining = async (
         method: 'delete'
     });
 
-    if (response.status != 204) {
+    if (response.status !== 204) {
         return await response.json() as ApiError;
     }
 }
