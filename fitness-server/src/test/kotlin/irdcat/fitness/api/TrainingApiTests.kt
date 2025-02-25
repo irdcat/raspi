@@ -23,13 +23,13 @@ class TrainingApiTests: AbstractApiTest() {
     fun getTraining_ok() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "2025-01-01".toLocalDate(), listOf(
                 TrainingExerciseSet(10, 5.0f)
             )),
-            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "2025-01-01".toLocalDate(), listOf(
                 TrainingExerciseSet(5, 120.0f)
             )),
-            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "02.01.2025".toDate(), listOf(
+            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "2025-01-02".toLocalDate(), listOf(
                 TrainingExerciseSet(10, 6.0f)
             ))
         ))
@@ -68,13 +68,13 @@ class TrainingApiTests: AbstractApiTest() {
     fun getTraining_notFound() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "2025-01-01".toLocalDate(), listOf(
                 TrainingExerciseSet(10, 5.0f)
             )),
-            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "2025-01-01".toLocalDate(), listOf(
                 TrainingExerciseSet(5, 120.0f)
             )),
-            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "02.01.2025".toDate(), listOf(
+            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "2025-01-02".toLocalDate(), listOf(
                 TrainingExerciseSet(10, 6.0f)
             ))
         ))
@@ -98,13 +98,13 @@ class TrainingApiTests: AbstractApiTest() {
     fun getTrainings_resultsInOnePage() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "2025-01-01".toLocalDate(), listOf(
                 TrainingExerciseSet(10, 5.0f)
             )),
-            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "2025-01-01".toLocalDate(), listOf(
                 TrainingExerciseSet(5, 120.0f)
             )),
-            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "02.01.2025".toDate(), listOf(
+            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "2025-01-02".toLocalDate(), listOf(
                 TrainingExerciseSet(10, 6.0f)
             ))
         ))
@@ -168,13 +168,13 @@ class TrainingApiTests: AbstractApiTest() {
     fun getTrainings_resultsInTwoPages() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "2025-01-01".toLocalDate(), listOf(
                 TrainingExerciseSet(10, 5.0f)
             )),
-            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "2025-01-01".toLocalDate(), listOf(
                 TrainingExerciseSet(5, 120.0f)
             )),
-            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "02.01.2025".toDate(), listOf(
+            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "2025-01-02".toLocalDate(), listOf(
                 TrainingExerciseSet(10, 6.0f)
             ))
         ))
@@ -260,7 +260,7 @@ class TrainingApiTests: AbstractApiTest() {
     fun createTraining() {
 
         val newTrainingDto = TrainingDto(
-            "04.01.2025".toDate(),
+            "2025-01-04".toLocalDate(),
             65.0f,
             listOf(
                 TrainingExerciseDto(
@@ -361,16 +361,16 @@ class TrainingApiTests: AbstractApiTest() {
     fun updateTraining_modifyExercise() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "2025-01-01".toLocalDate(), listOf(
                 TrainingExerciseSet(10, 5.0f)
             )),
-            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "2025-01-01".toLocalDate(), listOf(
                 TrainingExerciseSet(5, 120.0f)
             ))
         ))
 
         val newTrainingDto = TrainingDto(
-            "01.01.2025".toDate(),
+            "2025-01-01".toLocalDate(),
             63.0f,
             listOf(
                 TrainingExerciseDto(
@@ -450,13 +450,13 @@ class TrainingApiTests: AbstractApiTest() {
     @Test
     fun updateTraining_addExercise() {
         insertTrainingExercises(listOf(
-            TrainingExercise("1", 1, Exercise("Dip", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Dip", true), 63.0f, "2025-01-01".toLocalDate(), listOf(
                 TrainingExerciseSet(10, 20.0f)
             ))
         ))
 
         val newTrainingDto = TrainingDto(
-            "01.01.2025".toDate(),
+            "2025-01-01".toLocalDate(),
             63.0f,
             listOf(
                 TrainingExerciseDto("1", 1, ExerciseDto("Dip", true), listOf(
@@ -533,16 +533,16 @@ class TrainingApiTests: AbstractApiTest() {
     fun updateTraining_deleteExercise() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", 1, Exercise("Dip", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Dip", true), 63.0f, "2025-01-01".toLocalDate(), listOf(
                 TrainingExerciseSet(10, 20.0f)
             )),
-            TrainingExercise("2", 2, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("2", 2, Exercise("Pull Up", true), 63.0f, "2025-01-01".toLocalDate(), listOf(
                 TrainingExerciseSet(10, 5.0f)
             ))
         ))
 
         val newTrainingDto = TrainingDto(
-            "01.01.2025".toDate(),
+            "2025-01-01".toLocalDate(),
             63.0f,
             listOf(
                 TrainingExerciseDto("1", 1, ExerciseDto("Dip", true), listOf(
@@ -600,10 +600,10 @@ class TrainingApiTests: AbstractApiTest() {
     fun deleteTraining() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", 1, Exercise("Dip", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("1", 1, Exercise("Dip", true), 63.0f, "2025-01-01".toLocalDate(), listOf(
                 TrainingExerciseSet(10, 20.0f)
             )),
-            TrainingExercise("2", 2, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf(
+            TrainingExercise("2", 2, Exercise("Pull Up", true), 63.0f, "2025-01-01".toLocalDate(), listOf(
                 TrainingExerciseSet(10, 5.0f)
             ))
         ))

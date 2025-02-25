@@ -18,9 +18,9 @@ class ExerciseApiTests: AbstractApiTest() {
     fun getExerciseNames() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf()),
-            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf()),
-            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "02.01.2025".toDate(), listOf())
+            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "2025-01-01".toLocalDate(), listOf()),
+            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "2025-01-01".toLocalDate(), listOf()),
+            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "2025-01-02".toLocalDate(), listOf())
         ))
 
         webTestClient()
@@ -41,9 +41,9 @@ class ExerciseApiTests: AbstractApiTest() {
     fun getCountedExercises_resultsInOnePage() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf()),
-            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf()),
-            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "02.01.2025".toDate(), listOf())
+            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "2025-01-01".toLocalDate(), listOf()),
+            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "2025-01-01".toLocalDate(), listOf()),
+            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "2025-01-02".toLocalDate(), listOf())
         ))
 
         webTestClient()
@@ -77,9 +77,9 @@ class ExerciseApiTests: AbstractApiTest() {
     fun getCountedExercises_resultsInTwoPages() {
 
         insertTrainingExercises(listOf(
-            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "01.01.2025".toDate(), listOf()),
-            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "01.01.2025".toDate(), listOf()),
-            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "02.01.2025".toDate(), listOf())
+            TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "2025-01-01".toLocalDate(), listOf()),
+            TrainingExercise("2", 2, Exercise("Deadlift", false), 63.0f, "2025-01-01".toLocalDate(), listOf()),
+            TrainingExercise("3", 1, Exercise("Pull Up", true), 63.0f, "2025-01-02".toLocalDate(), listOf())
         ))
 
         webTestClient()

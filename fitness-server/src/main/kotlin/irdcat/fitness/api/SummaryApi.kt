@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
-import java.util.Date
+import java.time.LocalDate
 
 @RestController
 @RequestMapping("/api/summary", produces = [APPLICATION_JSON_VALUE])
@@ -26,8 +26,8 @@ class SummaryApi(
 
     @GetMapping("/exercise")
     fun getExerciseSummary(
-        @RequestParam @DateTimeFormat(iso = ISO.DATE) from: Date,
-        @RequestParam @DateTimeFormat(iso = ISO.DATE) to: Date,
+        @RequestParam @DateTimeFormat(iso = ISO.DATE) from: LocalDate,
+        @RequestParam @DateTimeFormat(iso = ISO.DATE) to: LocalDate,
         @RequestParam name: String): Mono<ExerciseSummaryDto> {
 
         logger.info("Requested exercise summary [name={}, from={}, to={}]", name, from, to)
@@ -36,8 +36,8 @@ class SummaryApi(
 
     @GetMapping("/bodyweight")
     fun getBodyweightSummary(
-        @RequestParam @DateTimeFormat(iso = ISO.DATE) from: Date,
-        @RequestParam @DateTimeFormat(iso = ISO.DATE) to: Date): Mono<BodyweightSummaryDto> {
+        @RequestParam @DateTimeFormat(iso = ISO.DATE) from: LocalDate,
+        @RequestParam @DateTimeFormat(iso = ISO.DATE) to: LocalDate): Mono<BodyweightSummaryDto> {
 
         logger.info("Requested bodyweight summary [from={}, to={}]", from, to)
         return summaryService.calculateBodyweightSummary(from, to)

@@ -9,9 +9,7 @@ import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.test.web.reactive.server.WebTestClient
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.util.Date
+import java.time.LocalDate
 
 @AutoConfigureWebTestClient
 abstract class AbstractApiTest: AbstractIntegrationTest() {
@@ -23,8 +21,6 @@ abstract class AbstractApiTest: AbstractIntegrationTest() {
 
     @Autowired
     private lateinit var reactiveMongoTemplate: ReactiveMongoTemplate
-
-    private val df = SimpleDateFormat("dd.MM.yyyy")
 
     protected fun webTestClient(): WebTestClient = webTestClient
 
@@ -41,12 +37,5 @@ abstract class AbstractApiTest: AbstractIntegrationTest() {
             .block()
     }
 
-    protected fun String.toDate(): Date {
-        val date = df.parse(this)
-        val localDate = LocalDateTime.ofInstant(date.toInstant(), ZoneOffset.UTC)
-        val localPlusHour = localDate.plusHours(1)
-        val instant = localPlusHour.atZone(ZoneOffset.UTC).toInstant()
-        val result = Date.from(instant)
-        return result
-    }
+    protected fun String.toLocalDate(): LocalDate = LocalDate.parse(this)
 }

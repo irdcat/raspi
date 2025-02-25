@@ -23,7 +23,7 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import reactor.util.function.Tuples
-import java.util.Date
+import java.time.LocalDate
 import java.util.UUID
 
 @Service
@@ -45,7 +45,7 @@ class TrainingService(
         const val ORDER = "order"
     }
 
-    fun findTrainingsBetweenDates(from: Date, to: Date, page: Long, pageSize: Long): Mono<Page<TrainingDto>> {
+    fun findTrainingsBetweenDates(from: LocalDate, to: LocalDate, page: Long, pageSize: Long): Mono<Page<TrainingDto>> {
 
         val matchOperation = matchBetweenDates(from, to)
         val sortByOrderOperation = sort(Direction.ASC, ORDER)
@@ -88,7 +88,7 @@ class TrainingService(
             .doOnNext { logger.debug("Training Page: [page={}, size={}, total={}]", it.currentPage, it.pageSize, it.totalResults) }
     }
 
-    fun findByDate(date: Date): Mono<TrainingDto> {
+    fun findByDate(date: LocalDate): Mono<TrainingDto> {
 
         val matchOperation = matchByDate(date)
         val groupOperation = groupByDate()
@@ -161,7 +161,7 @@ class TrainingService(
             .map(TrainingDto::fromTrainingExercises)
     }
 
-    fun deleteByDate(date: Date): Mono<Void> {
+    fun deleteByDate(date: LocalDate): Mono<Void> {
 
         return date.toMono()
             .map { findByDateCriteria(date) }
@@ -171,13 +171,13 @@ class TrainingService(
             .then()
     }
 
-    private fun matchBetweenDates(from: Date, to: Date): MatchOperation {
+    private fun matchBetweenDates(from: LocalDate, to: LocalDate): MatchOperation {
 
         val dateCriteria = Criteria.where(DATE).gte(from).lte(to)
         return match(dateCriteria)
     }
 
-    private fun matchByDate(date: Date): MatchOperation {
+    private fun matchByDate(date: LocalDate): MatchOperation {
 
         val dateCriteria = findByDateCriteria(date)
         return match(dateCriteria)
@@ -205,7 +205,7 @@ class TrainingService(
             .and(EXERCISES).`as`(EXERCISES)
     }
 
-    private fun findByDateCriteria(date: Date): Criteria {
+    private fun findByDateCriteria(date: LocalDate): Criteria {
 
         return Criteria.where(DATE).isEqualTo(date)
     }

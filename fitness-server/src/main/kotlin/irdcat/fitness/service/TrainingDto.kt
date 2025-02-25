@@ -2,12 +2,12 @@ package irdcat.fitness.service
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonFormat.Shape
-import java.util.Date
+import java.time.LocalDate
 
 data class TrainingDto(
 
     @field: JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
-    val date: Date,
+    val date: LocalDate,
 
     val bodyweight: Float,
 

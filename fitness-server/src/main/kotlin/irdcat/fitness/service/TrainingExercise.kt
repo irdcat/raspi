@@ -2,7 +2,7 @@ package irdcat.fitness.service
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
-import java.util.Date
+import java.time.LocalDate
 
 @Document
 data class TrainingExercise(
@@ -16,7 +16,7 @@ data class TrainingExercise(
 
     val bodyweight: Float,
 
-    val date: Date,
+    val date: LocalDate,
 
     val sets: List<TrainingExerciseSet>
 )

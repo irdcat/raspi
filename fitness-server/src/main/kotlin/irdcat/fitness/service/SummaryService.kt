@@ -21,7 +21,8 @@ import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Service
 class SummaryService(
@@ -30,7 +31,6 @@ class SummaryService(
 
     companion object {
         private val logger = LoggerFactory.getLogger(this::class.java)
-        private val dateFormatter = SimpleDateFormat("yyyy-MM-dd")
 
         const val GROUP_KEY = "_id"
         const val DATA = "data"
@@ -62,7 +62,7 @@ class SummaryService(
         const val PARAMETERS_AVERAGE_BODYWEIGHT_VOLUME = "parameters.averageBodyweightVolume"
     }
 
-    fun calculateExerciseSummary(from: Date, to: Date, name: String): Mono<ExerciseSummaryDto> {
+    fun calculateExerciseSummary(from: LocalDate, to: LocalDate, name: String): Mono<ExerciseSummaryDto> {
 
         val matchOperation = matchBetweenDatesAndExerciseName(from, to, name)
         val unwindOperation = unwind(SETS)
@@ -84,7 +84,7 @@ class SummaryService(
             projectByExercise)
 
         data class IntermediateParametersAggregation(
-            val date: Date,
+            val date: LocalDate,
             val parameters: ExerciseSummaryParametersDto
         )
 
@@ -106,14 +106,14 @@ class SummaryService(
                         } else {
                             i.parameters.copy(bodyweightVolume = null, averageBodyweightVolume = null)
                         }
-                        dateFormatter.format(i.date) to mappedParams
+                        i.date.format(DateTimeFormatter.ISO_DATE) to mappedParams
                     }
                 )
             }
             .doOnNext { logger.debug("Exercise Summary: [name={}, dataPoints={}]", it.exercise.name, it.parameters.size) }
     }
 
-    fun calculateBodyweightSummary(from: Date, to: Date): Mono<BodyweightSummaryDto> {
+    fun calculateBodyweightSummary(from: LocalDate, to: LocalDate): Mono<BodyweightSummaryDto> {
 
         val matchOperation = matchBetweenDates(from, to)
         val groupOperation = groupBodyweightsByDate()
@@ -127,26 +127,26 @@ class SummaryService(
             sortOperation)
 
         data class IntermediateAggregation(
-            val date: Date,
+            val date: LocalDate,
             val parameter: Float
         )
 
         logger.debug("Bodyweight Summary Aggregation: {}", aggregation)
         return reactiveMongoTemplate
             .aggregate(aggregation, TrainingExercise::class.java, IntermediateAggregation::class.java)
-            .map { Pair(dateFormatter.format(it.date), it.parameter.toFloat()) }
+            .map { Pair(it.date.format(DateTimeFormatter.ISO_DATE), it.parameter.toFloat()) }
             .collectList()
             .map { BodyweightSummaryDto(it.toMap()) }
             .doOnNext { logger.debug("Bodyweight Summary: [dataPoints={}]", it.parameters.size) }
     }
 
-    private fun matchBetweenDates(from: Date, to: Date): MatchOperation {
+    private fun matchBetweenDates(from: LocalDate, to: LocalDate): MatchOperation {
 
         val criteria = Criteria.where(DATE).gte(from).lte(to)
         return match(criteria)
     }
 
-    private fun matchBetweenDatesAndExerciseName(from: Date, to: Date, name: String): MatchOperation {
+    private fun matchBetweenDatesAndExerciseName(from: LocalDate, to: LocalDate, name: String): MatchOperation {
 
         val criteria = Criteria
             .where(DATE).gte(from).lte(to)

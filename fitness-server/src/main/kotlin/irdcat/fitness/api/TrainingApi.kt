@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
-import java.util.Date
+import java.time.LocalDate
 
 @RestController
 @RequestMapping("/api/trainings")
@@ -37,8 +37,8 @@ class TrainingApi(
 
     @GetMapping(produces = [APPLICATION_JSON_VALUE])
     fun findBetweenDates(
-        @RequestParam @DateTimeFormat(iso = ISO.DATE) from: Date,
-        @RequestParam @DateTimeFormat(iso = ISO.DATE) to: Date,
+        @RequestParam @DateTimeFormat(iso = ISO.DATE) from: LocalDate,
+        @RequestParam @DateTimeFormat(iso = ISO.DATE) to: LocalDate,
         @RequestParam(RequestParameters.PAGE, defaultValue = "0") page: Long,
         @RequestParam(RequestParameters.SIZE, defaultValue = "20") pageSize: Long): Mono<Page<TrainingDto>> {
 
@@ -49,7 +49,7 @@ class TrainingApi(
 
     @GetMapping("/{date}", produces = [APPLICATION_JSON_VALUE])
     fun findByDate(
-        @PathVariable @DateTimeFormat(iso = ISO.DATE) date: Date): Mono<TrainingDto> {
+        @PathVariable @DateTimeFormat(iso = ISO.DATE) date: LocalDate): Mono<TrainingDto> {
 
         logger.info("Requested training [date={}]", date)
         return trainingService
@@ -66,7 +66,7 @@ class TrainingApi(
     @DeleteMapping("/{date}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteTrainingByDate(
-        @PathVariable @DateTimeFormat(iso = ISO.DATE) date: Date): Mono<Void> {
+        @PathVariable @DateTimeFormat(iso = ISO.DATE) date: LocalDate): Mono<Void> {
 
         logger.info("Deleting training at {}", date)
         return trainingService.deleteByDate(date)
