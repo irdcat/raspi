@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation.sort
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
 
 @Service
 class ExerciseService(
@@ -77,6 +78,7 @@ class ExerciseService(
         return resultsMono
             .zipWith(countMono)
             .map { Page(it.t1, page, pageSize, it.t2.count) }
+            .switchIfEmpty(Page(listOf<CountedExerciseDto>(), page, pageSize, 0).toMono())
             .doOnNext { logger.debug("CountedExercise Page: [page={}, size={}, totalResults={}]", it.currentPage, it.pageSize, it.totalResults) }
     }
 

@@ -20,7 +20,7 @@ class SummaryApiTests: AbstractApiTest() {
     }
 
     @Test
-    fun getBodyweightSummary() {
+    fun getBodyweightSummary_ok() {
 
         insertTrainingExercises(listOf(
             TrainingExercise("1", 1, Exercise("Pull Up", true), 63.0f, "2025-01-01".toLocalDate(), listOf()),
@@ -51,6 +51,61 @@ class SummaryApiTests: AbstractApiTest() {
         assertEquals(result.parameters.size, 2)
         assertEquals(result.parameters["2025-01-01"], 63.0f)
         assertEquals(result.parameters["2025-01-02"], 64.0f)
+    }
+
+    @Test
+    fun getBodyweightSummary_empty() {
+
+        val nullableResult = webTestClient()
+            .get()
+            .uri { builder ->
+                builder
+                    .path("/api/summary/bodyweight")
+                    .queryParam("from", "2025-01-01")
+                    .queryParam("to", "2025-01-02")
+                    .build()
+            }
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isOk
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .returnResult(BodyweightSummaryDto::class.java)
+            .responseBody
+            .next()
+            .block()
+
+        assertNotNull(nullableResult)
+        val result = nullableResult!!
+        assertEquals(result.parameters.size, 0)
+    }
+
+    @Test
+    fun getExerciseSummary_empty() {
+
+        val nullableResult = webTestClient()
+            .get()
+            .uri { builder ->
+                builder
+                    .path("/api/summary/exercise")
+                    .queryParam("from", "2025-01-01")
+                    .queryParam("to", "2025-01-02")
+                    .queryParam("name", "Pull Up")
+                    .build()
+            }
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isOk
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .returnResult(ExerciseSummaryDto::class.java)
+            .responseBody
+            .next()
+            .block()
+
+        assertNotNull(nullableResult)
+        val result = nullableResult!!
+        assertEquals(result.exercise.name, "Pull Up")
+        assertEquals(result.exercise.isBodyweight, false)
+        assertEquals(result.parameters.size, 0)
     }
 
     @Test

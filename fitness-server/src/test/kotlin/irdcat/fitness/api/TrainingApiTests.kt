@@ -95,6 +95,31 @@ class TrainingApiTests: AbstractApiTest() {
     }
 
     @Test
+    fun getTrainings_empty() {
+
+        webTestClient()
+            .get()
+            .uri { builder ->
+                builder
+                    .path("/api/trainings")
+                    .queryParam("from", "2025-01-01")
+                    .queryParam("to", "2025-01-02")
+                    .queryParam(RequestParameters.PAGE, 0)
+                    .queryParam(RequestParameters.SIZE, 25)
+                    .build()
+            }
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isOk
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.currentPage").isEqualTo(0)
+            .jsonPath("$.pageSize").isEqualTo(25)
+            .jsonPath("$.totalResults").isEqualTo(0)
+            .jsonPath("$.content").isEmpty
+    }
+
+    @Test
     fun getTrainings_resultsInOnePage() {
 
         insertTrainingExercises(listOf(
