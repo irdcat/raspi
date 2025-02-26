@@ -38,6 +38,29 @@ class ExerciseApiTests: AbstractApiTest() {
     }
 
     @Test
+    fun getCountedExercises_empty() {
+
+        webTestClient()
+            .get()
+            .uri { builder ->
+                builder
+                    .path("/api/exercises/counted")
+                    .queryParam(RequestParameters.PAGE, 0)
+                    .queryParam(RequestParameters.SIZE, 25)
+                    .build()
+            }
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isOk
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.currentPage").isEqualTo(0)
+            .jsonPath("$.pageSize").isEqualTo(25)
+            .jsonPath("$.totalResults").isEqualTo(0)
+            .jsonPath("$.content").isEmpty
+    }
+
+    @Test
     fun getCountedExercises_resultsInOnePage() {
 
         insertTrainingExercises(listOf(

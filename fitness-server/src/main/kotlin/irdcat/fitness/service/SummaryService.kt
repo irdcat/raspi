@@ -20,7 +20,7 @@ import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
-import java.text.SimpleDateFormat
+import reactor.kotlin.core.publisher.toMono
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -110,6 +110,7 @@ class SummaryService(
                     }
                 )
             }
+            .switchIfEmpty(ExerciseSummaryDto(ExerciseDto(name, false), mapOf<String, ExerciseSummaryParametersDto>()).toMono())
             .doOnNext { logger.debug("Exercise Summary: [name={}, dataPoints={}]", it.exercise.name, it.parameters.size) }
     }
 

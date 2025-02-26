@@ -85,6 +85,7 @@ class TrainingService(
         return resultsMono
             .zipWith(countMono)
             .map { Page(it.t1, page, pageSize, it.t2.count) }
+            .switchIfEmpty(Page(listOf<TrainingDto>(), page, pageSize, 0).toMono())
             .doOnNext { logger.debug("Training Page: [page={}, size={}, total={}]", it.currentPage, it.pageSize, it.totalResults) }
     }
 
