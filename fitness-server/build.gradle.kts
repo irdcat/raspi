@@ -20,7 +20,7 @@ java {
 }
 
 dependencies {
-	compileOnly("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.7.3")
+	compileOnly("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.2")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
