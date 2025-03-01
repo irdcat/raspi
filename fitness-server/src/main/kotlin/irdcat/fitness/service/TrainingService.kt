@@ -45,17 +45,41 @@ class TrainingService(
         const val ORDER = "order"
     }
 
-    fun findTrainingsBetweenDates(from: LocalDate, to: LocalDate, page: Long, pageSize: Long): Mono<Page<TrainingDto>> {
+    fun findPagedTrainingsBetweenDates(
+        from: LocalDate,
+        to: LocalDate,
+        page: Long,
+        pageSize: Long
+    ): Mono<Page<TrainingDto>> {
+
+        val trainings = findTrainingsBetweenDates(from, to, (page*pageSize).toLong(), pageSize.toLong())
+        val count = countTrainingsBetweenDates(from, to)
+
+        return trainings
+            .collectList()
+            .zipWith(count)
+            .map { Page(it.t1, page, pageSize, it.t2) }
+            .switchIfEmpty(Page(listOf<TrainingDto>(), page, pageSize, 0).toMono())
+            .doOnNext {
+                logger.debug("Training Page: [page={}, size={}, total={}]",
+                    it.currentPage, it.pageSize, it.totalResults)
+            }
+    }
+
+    private fun findTrainingsBetweenDates(
+        from: LocalDate,
+        to: LocalDate,
+        skip: Long,
+        limit: Long
+    ): Flux<TrainingDto> {
 
         val matchOperation = matchBetweenDates(from, to)
         val sortByOrderOperation = sort(Direction.ASC, ORDER)
         val groupOperation = groupByDate()
         val projectionOperation = projectGroupedByDate()
         val sortOperation = sort(Direction.DESC, DATE)
-        val skipOperation = skip((page * pageSize).toLong())
-        val limitOperation = limit(pageSize.toLong())
-        val groupCountingOperation = group()
-            .count().`as`(COUNT)
+        val skipOperation = skip(skip)
+        val limitOperation = limit(limit)
 
         val aggregation = newAggregation(
             matchOperation,
@@ -66,6 +90,20 @@ class TrainingService(
             skipOperation,
             limitOperation)
 
+        return reactiveMongoTemplate
+            .aggregate(aggregation, TrainingExercise::class.java, TrainingDto::class.java)
+    }
+
+    private fun countTrainingsBetweenDates(
+        from: LocalDate,
+        to: LocalDate
+    ): Mono<Long> {
+
+        val matchOperation = matchBetweenDates(from, to)
+        val groupOperation = groupByDate()
+        val groupCountingOperation = group()
+            .count().`as`(COUNT)
+
         val countingAggregation = newAggregation(
             matchOperation,
             groupOperation,
@@ -73,20 +111,10 @@ class TrainingService(
 
         data class CountIntermediate(val count: Long)
 
-        val resultsMono = reactiveMongoTemplate
-            .aggregate(aggregation, TrainingExercise::class.java, TrainingDto::class.java)
-            .collectList()
-        val countMono = reactiveMongoTemplate
+        return reactiveMongoTemplate
             .aggregate(countingAggregation, TrainingExercise::class.java, CountIntermediate::class.java)
             .next()
-
-        logger.debug("Find between dates aggregation: {}", aggregation)
-        logger.debug("Find between dates counting aggregation: {}", countingAggregation)
-        return resultsMono
-            .zipWith(countMono)
-            .map { Page(it.t1, page, pageSize, it.t2.count) }
-            .switchIfEmpty(Page(listOf<TrainingDto>(), page, pageSize, 0).toMono())
-            .doOnNext { logger.debug("Training Page: [page={}, size={}, total={}]", it.currentPage, it.pageSize, it.totalResults) }
+            .map { it.count }
     }
 
     fun findByDate(date: LocalDate): Mono<TrainingDto> {
@@ -112,20 +140,20 @@ class TrainingService(
 
     fun createOrUpdate(trainingDto: TrainingDto): Mono<TrainingDto> {
 
-        val exerciseIdsFlux = trainingDto.toMono()
-            .map(TrainingDto::toTrainingExercises)
-            .flatMapMany { Flux.fromIterable(it) }
-            .map(TrainingExercise::id)
+        val deleted = deleteRequestedExercises(trainingDto)
+        val updated = updateRequestedExercises(trainingDto)
+        val added = addRequestedExercises(trainingDto)
 
-        val criteria = findByDateCriteria(trainingDto.date)
-        val query = Query().addCriteria(criteria)
-
-        val existingExerciseIdsMono = reactiveMongoTemplate
-            .find(query, TrainingExercise::class.java)
-            .map(TrainingExercise::id)
+        return deleted
+            .thenMany(updated)
+            .mergeWith(added)
             .collectList()
+            .map(TrainingDto::fromTrainingExercises)
+    }
 
-        val addedExercisesFlux = trainingDto.toMono()
+    private fun addRequestedExercises(trainingDto: TrainingDto): Flux<TrainingExercise> {
+
+        return trainingDto.toMono()
             .map(TrainingDto::toTrainingExercises)
             .flatMapMany { Flux.fromIterable(it) }
             .filter { it.id.isNullOrEmpty() }
@@ -134,10 +162,23 @@ class TrainingService(
             .doOnNext { logger.debug("Attempting to add {} exercises.", it.size) }
             .flatMapMany { reactiveMongoTemplate.insert(it, TrainingExercise::class.java) }
             .doOnNext { logger.debug("Added: {}", it) }
+    }
 
-        val updatedExercisesFlux = exerciseIdsFlux
+    private fun updateRequestedExercises(trainingDto: TrainingDto): Flux<TrainingExercise> {
+
+        val existingExerciseIds = trainingDto.toMono()
+            .map { Criteria.where(DATE).isEqualTo(it.date) }
+            .map { Query(it) }
+            .flatMapMany { reactiveMongoTemplate.find(it, TrainingExercise::class.java) }
+            .map(TrainingExercise::id)
             .collectList()
-            .zipWith(existingExerciseIdsMono)
+
+        return trainingDto.toMono()
+            .map(TrainingDto::toTrainingExercises)
+            .flatMapMany { Flux.fromIterable(it) }
+            .map(TrainingExercise::id)
+            .collectList()
+            .zipWith(existingExerciseIds)
             .map { it.t1.intersect(it.t2) }
             .doOnNext { logger.debug("Attempting to update {} exercises", it.size) }
             .zipWith(trainingDto.toMono())
@@ -146,20 +187,30 @@ class TrainingService(
             .flatMapMany { Flux.fromIterable(it) }
             .flatMap { reactiveMongoTemplate.save(it) }
             .doOnNext { logger.debug("Updated: {} ", it) }
+    }
 
-        return exerciseIdsFlux
+    private fun deleteRequestedExercises(trainingDto: TrainingDto): Mono<Void> {
+
+        val existingExerciseIds = trainingDto.toMono()
+            .map { Criteria.where(DATE).isEqualTo(it.date) }
+            .map { Query(it) }
+            .flatMapMany { reactiveMongoTemplate.find(it, TrainingExercise::class.java) }
+            .map(TrainingExercise::id)
             .collectList()
-            .zipWith(existingExerciseIdsMono)
+
+        return trainingDto.toMono()
+            .map(TrainingDto::toTrainingExercises)
+            .flatMapMany { Flux.fromIterable(it) }
+            .map(TrainingExercise::id)
+            .collectList()
+            .zipWith(existingExerciseIds)
             .map { it.t2.subtract(it.t1) }
             .doOnNext { logger.debug("Attempting to delete {} exercises.", it.size) }
             .map { Criteria.where(ID).`in`(it) }
             .map { Query().addCriteria(it) }
             .flatMap { reactiveMongoTemplate.remove(it, TrainingExercise::class.java) }
             .doOnNext { logger.debug("Deleted {} exercises.", it.deletedCount) }
-            .thenMany(updatedExercisesFlux)
-            .mergeWith(addedExercisesFlux)
-            .collectList()
-            .map(TrainingDto::fromTrainingExercises)
+            .then()
     }
 
     fun deleteByDate(date: LocalDate): Mono<Void> {
@@ -168,7 +219,7 @@ class TrainingService(
             .map { findByDateCriteria(date) }
             .map { Query().addCriteria(it) }
             .flatMap { reactiveMongoTemplate.remove(it, TrainingExercise::class.java) }
-            .doOnNext { logger.debug("Deleted {} exercises.", it.deletedCount) }
+            .doOnNext { logger.debug("Deleted {} exercises associated with {}.", it.deletedCount, date) }
             .then()
     }
 

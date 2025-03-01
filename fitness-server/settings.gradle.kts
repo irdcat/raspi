@@ -6,6 +6,7 @@ pluginManagement {
     val springBootVersion: String by settings
     val springDependencyMgmtVersion: String by settings
     val koverVersion: String by settings
+    val detektVersion: String by settings
 
     plugins {
         kotlin("jvm") version jvmKotlinVersion
@@ -13,5 +14,6 @@ pluginManagement {
         id("org.springframework.boot") version springBootVersion
         id("io.spring.dependency-management") version springDependencyMgmtVersion
         id("org.jetbrains.kotlinx.kover") version koverVersion
+        id("io.gitlab.arturbosch.detekt") version detektVersion
     }
 }
