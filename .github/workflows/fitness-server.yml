@@ -50,7 +50,7 @@ jobs:
       - name: Upload Docker context artifact
         uses: actions/upload-artifact@master
         with:
-          name: dockerContext
+          name: fitness-server-docker-context
           path: fitness-server/build/dockerContext
           if-no-files-found: error
 
@@ -73,7 +73,7 @@ jobs:
       - name: Download Docker Context artifact
         uses: actions/download-artifact@master
         with:
-          name: dockerContext
+          name: fitness-server-docker-context
           path: .
 
       - name: Build and push
