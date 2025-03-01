@@ -31,6 +31,10 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('fitness-server/**') }}
           restore-keys: ${{ runner.os }}-gradle-
 
+      - name: Static Analysis
+        working-directory: ./fitness-server
+        run: ./gradlew detekt
+
       - name: Test
         working-directory: ./fitness-server
         run: ./gradlew test --stacktrace

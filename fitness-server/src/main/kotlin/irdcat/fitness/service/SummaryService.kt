@@ -110,8 +110,16 @@ class SummaryService(
                     }
                 )
             }
-            .switchIfEmpty(ExerciseSummaryDto(ExerciseDto(name, false), mapOf<String, ExerciseSummaryParametersDto>()).toMono())
-            .doOnNext { logger.debug("Exercise Summary: [name={}, dataPoints={}]", it.exercise.name, it.parameters.size) }
+            .switchIfEmpty(
+                ExerciseSummaryDto(
+                    ExerciseDto(name, false),
+                    mapOf<String, ExerciseSummaryParametersDto>()
+                ).toMono())
+            .doOnNext {
+                logger.debug(
+                    "Exercise Summary: [name={}, dataPoints={}]",
+                    it.exercise.name, it.parameters.size)
+            }
     }
 
     fun calculateBodyweightSummary(from: LocalDate, to: LocalDate): Mono<BodyweightSummaryDto> {

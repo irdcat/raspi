@@ -79,7 +79,11 @@ class ExerciseService(
             .zipWith(countMono)
             .map { Page(it.t1, page, pageSize, it.t2.count) }
             .switchIfEmpty(Page(listOf<CountedExerciseDto>(), page, pageSize, 0).toMono())
-            .doOnNext { logger.debug("CountedExercise Page: [page={}, size={}, totalResults={}]", it.currentPage, it.pageSize, it.totalResults) }
+            .doOnNext {
+                logger.debug(
+                    "CountedExercise Page: [page={}, size={}, totalResults={}]",
+                    it.currentPage, it.pageSize, it.totalResults)
+            }
     }
 
     private fun sanitizeRegexCriteria(value: String): String {

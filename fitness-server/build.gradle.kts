@@ -4,6 +4,7 @@ plugins {
 	id("org.springframework.boot")
 	id("io.spring.dependency-management")
 	id("org.jetbrains.kotlinx.kover")
+	id("io.gitlab.arturbosch.detekt")
 }
 
 group = "irdcat"
@@ -11,6 +12,14 @@ version = "0.0.1-SNAPSHOT"
 
 repositories {
 	mavenCentral()
+}
+
+configurations.matching { it.name == "detekt" }.all {
+	resolutionStrategy.eachDependency {
+		if (requested.group == "org.jetbrains.kotlin") {
+			useVersion(io.gitlab.arturbosch.detekt.getSupportedKotlinVersion())
+		}
+	}
 }
 
 java {
@@ -44,7 +53,9 @@ dependencies {
 
 kotlin {
 	compilerOptions {
-		freeCompilerArgs.addAll("-Xjsr305=strict")
+		freeCompilerArgs.addAll(
+			"-Xjsr305=strict"
+		)
 	}
 }
 
@@ -61,6 +72,10 @@ kover {
 			}
 		}
 	}
+}
+
+detekt {
+	config.setFrom(files("detekt.yaml"))
 }
 
 tasks.withType<Test> {

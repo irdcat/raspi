@@ -44,7 +44,7 @@ class TrainingApi(
 
         logger.info("Requested trainings [from={}, to={}, page={}, size={}]", from, to, page, pageSize)
         return trainingService
-            .findTrainingsBetweenDates(from, to, page, pageSize)
+            .findPagedTrainingsBetweenDates(from, to, page, pageSize)
     }
 
     @GetMapping("/{date}", produces = [APPLICATION_JSON_VALUE])
