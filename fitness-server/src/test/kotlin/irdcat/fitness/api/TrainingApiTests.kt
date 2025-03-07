@@ -641,18 +641,6 @@ class TrainingApiTests: AbstractApiTest() {
             .expectStatus().isNoContent
             .expectBody().isEmpty
 
-        webTestClient()
-            .get()
-            .uri("/api/trainings/2025-01-01")
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isNotFound
-            .expectHeader().contentType(MediaType.APPLICATION_JSON)
-            .expectBody()
-            .jsonPath("$.timestamp").isNotEmpty
-            .jsonPath("$.path").isEqualTo("/api/trainings/2025-01-01")
-            .jsonPath("$.status").isEqualTo(404)
-            .jsonPath("$.error").isNotEmpty
-            .jsonPath("$.requestId").isNotEmpty
+        assertCollectionIsEmpty(TrainingExercise::class.java)
     }
 }
