@@ -47,7 +47,7 @@ const FormInputTrainingExerciseSets = (props: {
                                 }}/>
                     </Box>
                     <Box>
-                        <IconButton color="error" onClick={() => remove(index)}>
+                        <IconButton tabIndex={-1} color="error" onClick={() => remove(index)}>
                             <LuX/>
                         </IconButton>
                     </Box>
