@@ -87,6 +87,16 @@ class TrainingApi(
         return trainingService.exportToYaml()
     }
 
+    @GetMapping("/export/json")
+    @ResponseBody
+    fun exportJson(serverHttpResponse: ServerHttpResponse): Mono<Resource> {
+        serverHttpResponse.apply {
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=trainings.json")
+            headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
+        }
+        return trainingService.exportToJson()
+    }
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(TrainingNotFoundException::class)
     fun trainingNotFound(

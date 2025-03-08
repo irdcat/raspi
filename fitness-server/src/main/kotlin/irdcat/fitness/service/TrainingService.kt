@@ -1,5 +1,11 @@
 package irdcat.fitness.service
 
+import com.fasterxml.jackson.core.JsonFactory
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.StreamWriteFeature
+import com.fasterxml.jackson.core.json.JsonWriteFeature
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
@@ -48,9 +54,15 @@ class TrainingService(
         private val yamlFactory = YAMLFactory.builder()
             .disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER)
             .build()
+        private val jsonFactory = JsonFactory.builder()
+            .build()
         private val yamlMapper = YAMLMapper(yamlFactory)
             .registerKotlinModule()
             .registerModule(JavaTimeModule())
+        private val jsonMapper = JsonMapper(jsonFactory)
+            .registerKotlinModule()
+            .registerModule(JavaTimeModule())
+            .enable(SerializationFeature.INDENT_OUTPUT)
 
         const val GROUP_KEY = "_id"
         const val ID = "_id"
@@ -243,6 +255,34 @@ class TrainingService(
 
     fun exportToYaml(): Mono<Resource> {
 
+        return getAllTrainings()
+            .collectList()
+            .map {
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                yamlMapper.writeValue(byteArrayOutputStream, it)
+                byteArrayOutputStream.flush()
+                val byteArrayInputStream = ByteArrayInputStream(byteArrayOutputStream.toByteArray())
+                InputStreamResource(byteArrayInputStream) as Resource
+            }
+            .subscribeOn(Schedulers.boundedElastic())
+    }
+
+    fun exportToJson(): Mono<Resource> {
+
+        return getAllTrainings()
+            .collectList()
+            .map {
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                jsonMapper.writeValue(byteArrayOutputStream, it)
+                byteArrayOutputStream.flush()
+                val byteArrayInputStream = ByteArrayInputStream(byteArrayOutputStream.toByteArray())
+                InputStreamResource(byteArrayInputStream) as Resource
+            }
+            .subscribeOn(Schedulers.boundedElastic())
+    }
+
+    private fun getAllTrainings(): Flux<TrainingDto> {
+
         val sortByOrderOperation = sort(Direction.ASC, ORDER)
         val groupOperation = groupByDate()
         val projectionOperation = projectGroupedByDate()
@@ -256,15 +296,6 @@ class TrainingService(
 
         return reactiveMongoTemplate
             .aggregate(aggregation, TrainingExercise::class.java, TrainingDto::class.java)
-            .collectList()
-            .map {
-                val byteArrayOutputStream = ByteArrayOutputStream()
-                yamlMapper.writeValue(byteArrayOutputStream, it)
-                byteArrayOutputStream.flush()
-                val byteArrayInputStream = ByteArrayInputStream(byteArrayOutputStream.toByteArray())
-                InputStreamResource(byteArrayInputStream) as Resource
-            }
-            .subscribeOn(Schedulers.boundedElastic())
     }
 
     private fun matchBetweenDates(from: LocalDate, to: LocalDate): MatchOperation {
