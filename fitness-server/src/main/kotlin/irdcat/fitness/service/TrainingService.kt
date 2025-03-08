@@ -303,6 +303,23 @@ class TrainingService(
             .subscribeOn(Schedulers.boundedElastic())
     }
 
+    fun importFromJson(file: FilePart): Mono<Void> {
+
+        return file.toMono()
+            .flatMapMany(FilePart::content)
+            .map { it.asInputStream() }
+            .toMono()
+            .map { jsonMapper.readValue(it, object: TypeReference<List<TrainingDto>>(){}) }
+            .flatMapMany(Flux<TrainingDto>::fromIterable)
+            .flatMapIterable(TrainingDto::toTrainingExercises)
+            .map { it.copy(id = UUID.randomUUID().toString()) }
+            .collectList()
+            .flatMapMany { reactiveMongoTemplate.insert(it, TrainingExercise::class.java) }
+            .doOnNext { logger.debug("Imported training exercise: {}", it) }
+            .then()
+            .subscribeOn(Schedulers.boundedElastic())
+    }
+
     private fun getAllTrainings(): Flux<TrainingDto> {
 
         val sortByOrderOperation = sort(Direction.ASC, ORDER)

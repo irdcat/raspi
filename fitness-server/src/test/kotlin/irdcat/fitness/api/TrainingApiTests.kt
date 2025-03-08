@@ -757,33 +757,81 @@ class TrainingApiTests: AbstractApiTest() {
     fun importFromYaml() {
         val multipartBodyBuilder = MultipartBodyBuilder()
         multipartBodyBuilder
-            .part("file", object: ByteArrayResource("""
-            - date: "2025-01-01"
-              bodyweight: 63.0
-              exercises:
-              - id: "1"
-                order: 1
-                exercise:
-                  name: "Dip"
-                  isBodyweight: true
-                sets:
-                - repetitions: 10
-                  weight: 20.0
-              - id: "2"
-                order: 2
-                exercise:
-                  name: "Pull Up"
-                  isBodyweight: true
-                sets:
-                - repetitions: 10
-                  weight: 5.0
-            """.trimIndent().toByteArray()){})
+            .part("file",
+                object: ByteArrayResource("""
+                - date: "2025-01-01"
+                  bodyweight: 63.0
+                  exercises:
+                  - id: "1"
+                    order: 1
+                    exercise:
+                      name: "Dip"
+                      isBodyweight: true
+                    sets:
+                    - repetitions: 10
+                      weight: 20.0
+                  - id: "2"
+                    order: 2
+                    exercise:
+                      name: "Pull Up"
+                      isBodyweight: true
+                    sets:
+                    - repetitions: 10
+                      weight: 5.0
+                """.trimIndent().toByteArray()){})
             .contentType(MediaType.APPLICATION_YAML)
             .filename("trainings.yaml")
 
         webTestClient()
             .post()
             .uri("/api/trainings/import/yaml")
+            .contentType(MediaType.MULTIPART_FORM_DATA)
+            .body(BodyInserters.fromMultipartData(multipartBodyBuilder.build()))
+            .exchange()
+            .expectStatus().isNoContent
+            .expectBody().isEmpty
+    }
+
+    @Test
+    fun importFromJson() {
+        val multipartBodyBuilder = MultipartBodyBuilder()
+        multipartBodyBuilder
+            .part("file",
+                object: ByteArrayResource("""
+                    [{
+                        "date": "2025-01-01",
+                        "bodyweight": 63.0,
+                        "exercises": [{
+                            "id": "1",
+                            "order": 1,
+                            "exercise": {
+                                "name": "Dip",
+                                "isBodyweight": true
+                            },
+                            "sets": [{
+                                "repetitions": 10,
+                                "weight": 20.0
+                            }]
+                        }, {
+                            "id": "2",
+                            "order": 2,
+                            "exercise": {
+                                "name": "Pull Up",
+                                "isBodyweight": true
+                            },
+                            "sets": [{
+                                "repetitions": 10,
+                                "weight": 5.0
+                            }]
+                        }]
+                    }]
+                """.trimIndent().toByteArray()){})
+            .contentType(MediaType.APPLICATION_JSON)
+            .filename("trainings.json")
+
+        webTestClient()
+            .post()
+            .uri("/api/trainings/import/json")
             .contentType(MediaType.MULTIPART_FORM_DATA)
             .body(BodyInserters.fromMultipartData(multipartBodyBuilder.build()))
             .exchange()
