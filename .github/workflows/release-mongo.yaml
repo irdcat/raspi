@@ -5,7 +5,7 @@ on:
     tags:
       - 'mongo-[0-9]*\.[0-9]*\.[0-9]*'
 
-concurrency: mongo-release
+concurrency: helm-release
 
 jobs:
   initialise:
@@ -17,7 +17,7 @@ jobs:
         id: extract_version
         run: |
           VERSION=$(echo "$GITHUB_REF" | sed -E 's/refs\/tags\/mongo-(.*)/\1/')
-          echo "::set-output name=version::$VERSION"
+          echo "version::$VERSION" >> $GITHUB_OUTPUT
           echo "Extracted version: $VERSION"
 
   helm-package:
