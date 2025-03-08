@@ -10,13 +10,14 @@ import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.test.web.reactive.server.WebTestClient
 import reactor.test.StepVerifier
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 
 @AutoConfigureWebTestClient
 abstract class AbstractApiTest: AbstractIntegrationTest() {
 
-    private val logger = LoggerFactory.getLogger(this.javaClass)
+    companion object {
+        private val logger = LoggerFactory.getLogger(this::class.java)
+    }
 
     @Autowired
     private lateinit var webTestClient: WebTestClient

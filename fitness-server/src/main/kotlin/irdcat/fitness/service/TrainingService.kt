@@ -1,8 +1,15 @@
 package irdcat.fitness.service
 
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.mongodb.BasicDBObject
 import irdcat.fitness.exception.TrainingNotFoundException
 import org.slf4j.LoggerFactory
+import org.springframework.core.io.InputStreamResource
+import org.springframework.core.io.Resource
 import org.springframework.data.domain.Sort.Direction
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.aggregation.Aggregation.group
@@ -21,8 +28,11 @@ import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import reactor.core.scheduler.Schedulers
 import reactor.kotlin.core.publisher.toMono
 import reactor.util.function.Tuples
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.time.LocalDate
 import java.util.UUID
 
@@ -33,6 +43,14 @@ class TrainingService(
 
     companion object {
         private val logger = LoggerFactory.getLogger(this::class.java)
+        // WRITE_DOC_START_MARKER has to be disabled at factory level
+        // https://github.com/FasterXML/jackson-dataformats-text/issues/215
+        private val yamlFactory = YAMLFactory.builder()
+            .disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER)
+            .build()
+        private val yamlMapper = YAMLMapper(yamlFactory)
+            .registerKotlinModule()
+            .registerModule(JavaTimeModule())
 
         const val GROUP_KEY = "_id"
         const val ID = "_id"
@@ -221,6 +239,32 @@ class TrainingService(
             .flatMap { reactiveMongoTemplate.remove(it, TrainingExercise::class.java) }
             .doOnNext { logger.debug("Deleted {} exercises associated with {}.", it.deletedCount, date) }
             .then()
+    }
+
+    fun exportToYaml(): Mono<Resource> {
+
+        val sortByOrderOperation = sort(Direction.ASC, ORDER)
+        val groupOperation = groupByDate()
+        val projectionOperation = projectGroupedByDate()
+        val sortOperation = sort(Direction.DESC, DATE)
+
+        val aggregation = newAggregation(
+            sortByOrderOperation,
+            groupOperation,
+            projectionOperation,
+            sortOperation)
+
+        return reactiveMongoTemplate
+            .aggregate(aggregation, TrainingExercise::class.java, TrainingDto::class.java)
+            .collectList()
+            .map {
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                yamlMapper.writeValue(byteArrayOutputStream, it)
+                byteArrayOutputStream.flush()
+                val byteArrayInputStream = ByteArrayInputStream(byteArrayOutputStream.toByteArray())
+                InputStreamResource(byteArrayInputStream) as Resource
+            }
+            .subscribeOn(Schedulers.boundedElastic())
     }
 
     private fun matchBetweenDates(from: LocalDate, to: LocalDate): MatchOperation {
