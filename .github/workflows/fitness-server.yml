@@ -37,7 +37,7 @@ jobs:
 
       - name: Test
         working-directory: ./fitness-server
-        run: ./gradlew test --stacktrace
+        run: ./gradlew test
 
       - name: Coverage
         working-directory: ./fitness-server
