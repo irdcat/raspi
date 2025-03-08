@@ -693,4 +693,59 @@ class TrainingApiTests: AbstractApiTest() {
             
         """.trimIndent())
     }
+
+    @Test
+    fun exportToJson() {
+
+        insertTrainingExercises(listOf(
+            TrainingExercise("1", 1, Exercise("Dip", true), 63.0f, "2025-01-01".toLocalDate(), listOf(
+                TrainingExerciseSet(10, 20.0f)
+            )),
+            TrainingExercise("2", 2, Exercise("Pull Up", true), 63.0f, "2025-01-01".toLocalDate(), listOf(
+                TrainingExerciseSet(10, 5.0f)
+            ))
+        ))
+
+        val result = webTestClient()
+            .get()
+            .uri("/api/trainings/export/json")
+            .accept(MediaType.APPLICATION_OCTET_STREAM)
+            .exchange()
+            .expectHeader().contentType(MediaType.APPLICATION_OCTET_STREAM)
+            .expectHeader().contentDisposition(attachment().filename("trainings.json").build())
+            .expectBody()
+            .returnResult()
+            .responseBodyContent!!
+            .toString(Charsets.UTF_8)
+
+        assertEquals(result, """
+            [ {
+              "date" : "2025-01-01",
+              "bodyweight" : 63.0,
+              "exercises" : [ {
+                "id" : "1",
+                "order" : 1,
+                "exercise" : {
+                  "name" : "Dip",
+                  "isBodyweight" : true
+                },
+                "sets" : [ {
+                  "repetitions" : 10,
+                  "weight" : 20.0
+                } ]
+              }, {
+                "id" : "2",
+                "order" : 2,
+                "exercise" : {
+                  "name" : "Pull Up",
+                  "isBodyweight" : true
+                },
+                "sets" : [ {
+                  "repetitions" : 10,
+                  "weight" : 5.0
+                } ]
+              } ]
+            } ]
+        """.trimIndent())
+    }
 }
