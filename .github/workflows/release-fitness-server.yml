@@ -17,8 +17,7 @@ jobs:
         id: extract_version
         run: |
           VERSION=$(echo "${GITHUB_REF}" | sed -E 's/refs\/tags\/fitness-server-(.*)/\1/')
-          echo "::set-output name=version::$VERSION"
-          echo "version::$VERSION" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Extracted version: $VERSION"
 
   gradle-build:

@@ -17,7 +17,7 @@ jobs:
         id: extract_version
         run: |
           VERSION=$(echo "$GITHUB_REF" | sed -E 's/refs\/tags\/mongo-(.*)/\1/')
-          echo "version::$VERSION" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Extracted version: $VERSION"
 
   helm-package:
