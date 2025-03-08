@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.StreamWriteFeature
 import com.fasterxml.jackson.core.json.JsonWriteFeature
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
@@ -13,9 +14,11 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.mongodb.BasicDBObject
 import irdcat.fitness.exception.TrainingNotFoundException
+import kotlinx.coroutines.reactive.collect
 import org.slf4j.LoggerFactory
 import org.springframework.core.io.InputStreamResource
 import org.springframework.core.io.Resource
+import org.springframework.core.io.buffer.DataBuffer
 import org.springframework.data.domain.Sort.Direction
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.aggregation.Aggregation.group
@@ -31,6 +34,7 @@ import org.springframework.data.mongodb.core.aggregation.ProjectionOperation
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.isEqualTo
+import org.springframework.http.codec.multipart.FilePart
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -41,6 +45,7 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.time.LocalDate
 import java.util.UUID
+import java.util.stream.Collectors
 
 @Service
 class TrainingService(
@@ -278,6 +283,23 @@ class TrainingService(
                 val byteArrayInputStream = ByteArrayInputStream(byteArrayOutputStream.toByteArray())
                 InputStreamResource(byteArrayInputStream) as Resource
             }
+            .subscribeOn(Schedulers.boundedElastic())
+    }
+
+    fun importFromYaml(file: FilePart): Mono<Void> {
+
+        return file.toMono()
+            .flatMapMany(FilePart::content)
+            .map { it.asInputStream() }
+            .toMono()
+            .map { yamlMapper.readValue(it, object: TypeReference<List<TrainingDto>>(){}) }
+            .flatMapMany(Flux<TrainingDto>::fromIterable)
+            .flatMapIterable(TrainingDto::toTrainingExercises)
+            .map { it.copy(id = UUID.randomUUID().toString()) }
+            .collectList()
+            .flatMapMany { reactiveMongoTemplate.insert(it, TrainingExercise::class.java) }
+            .doOnNext { logger.debug("Imported training exercise: {}", it) }
+            .then()
             .subscribeOn(Schedulers.boundedElastic())
     }
 

@@ -10,8 +10,12 @@ import irdcat.fitness.service.TrainingExerciseSet
 import irdcat.fitness.service.TrainingExerciseSetDto
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.springframework.core.io.ByteArrayResource
 import org.springframework.http.ContentDisposition.attachment
 import org.springframework.http.MediaType
+import org.springframework.http.client.MultipartBodyBuilder
+import org.springframework.mock.web.MockMultipartFile
+import org.springframework.web.reactive.function.BodyInserters
 import kotlin.test.assertEquals
 
 @Suppress("LargeClass", "LongMethod")
@@ -747,5 +751,43 @@ class TrainingApiTests: AbstractApiTest() {
               } ]
             } ]
         """.trimIndent())
+    }
+
+    @Test
+    fun importFromYaml() {
+        val multipartBodyBuilder = MultipartBodyBuilder()
+        multipartBodyBuilder
+            .part("file", object: ByteArrayResource("""
+            - date: "2025-01-01"
+              bodyweight: 63.0
+              exercises:
+              - id: "1"
+                order: 1
+                exercise:
+                  name: "Dip"
+                  isBodyweight: true
+                sets:
+                - repetitions: 10
+                  weight: 20.0
+              - id: "2"
+                order: 2
+                exercise:
+                  name: "Pull Up"
+                  isBodyweight: true
+                sets:
+                - repetitions: 10
+                  weight: 5.0
+            """.trimIndent().toByteArray()){})
+            .contentType(MediaType.APPLICATION_YAML)
+            .filename("trainings.yaml")
+
+        webTestClient()
+            .post()
+            .uri("/api/trainings/import/yaml")
+            .contentType(MediaType.MULTIPART_FORM_DATA)
+            .body(BodyInserters.fromMultipartData(multipartBodyBuilder.build()))
+            .exchange()
+            .expectStatus().isNoContent
+            .expectBody().isEmpty
     }
 }
