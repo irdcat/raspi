@@ -105,6 +105,12 @@ class TrainingApi(
         return file.flatMap(trainingService::importFromYaml)
     }
 
+    @PostMapping("/import/json", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun importJson(@RequestPart("file", required = true) file: Mono<FilePart>): Mono<Void> {
+        return file.flatMap(trainingService::importFromJson)
+    }
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(TrainingNotFoundException::class)
     fun trainingNotFound(
