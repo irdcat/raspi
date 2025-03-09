@@ -43,6 +43,32 @@ export type TrainingFormData = {
     exercises: Array<TrainingExerciseFormData>
 }
 
+export type TrainingTemplateExercise = {
+    exercise: Exercise,
+    setCount: number
+}
+
+export type TrainingTemplate = {
+    id: string,
+    name: string,
+    group: string,
+    description: string,
+    exercises: Array<TrainingTemplateExercise>
+}
+
+export type TrainingTemplateExerciseFormData = {
+    exercise: Exercise,
+    setCount: number
+}
+
+export type TrainingTemplateFormData = {
+    id: string,
+    name: string,
+    group: string,
+    description: string,
+    exercises: Array<TrainingTemplateExerciseFormData>
+}
+
 export type SummaryParameters = {
     volume: number,
     averageVolume: number,

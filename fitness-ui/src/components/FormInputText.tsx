@@ -4,9 +4,10 @@ import { Controller, RegisterOptions, useFormContext } from "react-hook-form"
 const FormInputText = (props: {
     name: string,
     label?: string,
-    options?: RegisterOptions
+    options?: RegisterOptions,
+    multiline?: boolean
 }) => {
-    const { name, label, options } = props;
+    const { name, label, options, multiline } = props;
     const { control, register } = useFormContext();
 
     return (
@@ -26,7 +27,8 @@ const FormInputText = (props: {
                     onChange={onChange}
                     value={value}
                     fullWidth
-                    label={label}/>
+                    label={label}
+                    multiline={multiline}/>
             )}/>
     )
 }

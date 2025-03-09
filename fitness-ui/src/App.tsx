@@ -10,6 +10,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import TrainingDetails from './pages/TrainingDetails';
 import { DialogsProvider } from '@toolpad/core';
+import Templates from './pages/Templates';
+import TemplateDetails from './pages/TemplateDetails';
 
 const darkTheme = createTheme({
   palette: {
@@ -61,6 +63,8 @@ const App = () => {
                 <Route path="trainings/:dateString" element={<TrainingDetails/>}/>
                 <Route path="exercises" element={<Exercises/>}/>
                 <Route path="analysis" element={<Analysis/>}/>
+                <Route path="templates" element={<Templates/>}/>
+                <Route path="templates/:id" element={<TemplateDetails/>}/>
               </Route>
             </Routes>
           </BrowserRouter>
