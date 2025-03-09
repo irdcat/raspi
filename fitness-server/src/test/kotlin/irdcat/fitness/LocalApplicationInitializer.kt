@@ -6,6 +6,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import irdcat.fitness.service.TrainingExercise
+import irdcat.fitness.service.TrainingTemplate
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.context.annotation.Configuration
@@ -30,12 +31,13 @@ class LocalApplicationInitializer(
             .registerKotlinModule()
             .registerModule(JavaTimeModule())
 
-        private const val TEST_DATA_FILE_NAME = "test-data.yaml"
+        private const val TEST_EXERCISES_FILE_NAME = "test-exercises.yaml"
+        private const val TEST_TEMPLATES_FILE_NAME = "test-templates.yaml"
     }
 
     override fun afterPropertiesSet() {
         val applicationStartDate = LocalDate.now()
-        TEST_DATA_FILE_NAME.toMono()
+        TEST_EXERCISES_FILE_NAME.toMono()
             .map { this.javaClass.classLoader.getResourceAsStream(it) }
             .map { yaml.readValue(it, object: TypeReference<List<TrainingExercise>>() {}) }
             .flatMapMany { it.toFlux() }
@@ -48,5 +50,12 @@ class LocalApplicationInitializer(
             .flatMapMany { reactiveMongoTemplate.insert(it, TrainingExercise::class.java) }
             .count()
             .subscribe { logger.info("Initialized DB with {} training exercises", it) }
+        
+        TEST_TEMPLATES_FILE_NAME.toMono()
+            .map { this.javaClass.classLoader.getResourceAsStream(it) }
+            .map { yaml.readValue(it, object: TypeReference<List<TrainingTemplate>>() {}) }
+            .flatMapMany { reactiveMongoTemplate.insert(it, TrainingTemplate::class.java) }
+            .count()
+            .subscribe { logger.info("Initialized DB with {} training templates", it) }
     }
 }

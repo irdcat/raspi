@@ -4,6 +4,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, IconButton, Paper, 
 import { format } from "date-fns";
 import { LuPencilLine, LuTrash2 } from "react-icons/lu";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExerciseWithIcon from "./ExerciseWithIcon";
 
 const TrainingList = (props: { 
     trainings: Array<Training>,
@@ -63,8 +64,12 @@ const TrainingList = (props: {
                                 <TableBody>
                                     {training.exercises.sort((a, b) => a.order - b.order).map((trainingExercise, exerciseIndex) => (
                                         <TableRow key={`row-${index}-${exerciseIndex}`}>
-                                            <TableCell>{trainingExercise.exercise.name}</TableCell>
-                                            <TableCell>{trainingExercise.sets.map(s => `${s.repetitions}x${s.weight}`).join(" ")}</TableCell>
+                                            <TableCell>
+                                                <ExerciseWithIcon exercise={trainingExercise.exercise}/>
+                                            </TableCell>
+                                            <TableCell>
+                                                {trainingExercise.sets.map(s => `${s.repetitions}x${s.weight}`).join(" ")}
+                                            </TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>

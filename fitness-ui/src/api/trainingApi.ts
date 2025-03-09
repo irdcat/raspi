@@ -78,8 +78,5 @@ export const isTraining = (object: any): object is Training => {
 }
 
 export const isTrainingPage = (object: any): object is Page<Training> => {
-    return ("content" in object 
-        && "currentPage" in object 
-        && "pageSize" in object 
-        && "totalResults" in object);
+    return !("requestId" in object)
 }

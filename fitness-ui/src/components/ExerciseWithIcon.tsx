@@ -8,7 +8,7 @@ const ExerciseWithIcon = (props: BoxProps & { exercise: Exercise }) => {
     return (
         <Box {...props as BoxProps}>
             <Box sx={{ width: '100%', display: 'flex', columnGap: '4px' }}>
-                <Box sx={{ padding: '1px' }}>
+                <Box sx={{ padding: '1px', alignSelf: 'center' }}>
                     {exercise.isBodyweight ? <GiMuscleUp/> : <GiWeight/>}
                 </Box>
                 <Box sx={{ flexGrow: 1 }}>

@@ -1,0 +1,241 @@
+- id: '1'
+  name: FWB Strength
+  group: FWB Entry
+  description: Strength day of Entry FWB workout. Focuses on intensity rather than volume.
+  exercises:
+    - exercise:
+        name: Squat
+        isBodyweight: false
+      setCount: 4
+    - exercise:
+        name: Romanian Deadlift
+        isBodyweight: false
+      setCount: 4
+    - exercise:
+        name: Dip
+        isBodyweight: true
+      setCount: 4
+    - exercise:
+        name: Pull Up
+        isBodyweight: true
+      setCount: 4
+    - exercise:
+        name: Overhead Press
+        isBodyweight: false
+      setCount: 4
+- id: '2'
+  name: FWB Volume
+  group: FWB Entry
+  description: Volume day of Entry FWB workout. Focuses on volume rather than intensity.
+  exercises:
+    - exercise:
+        name: Squat
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Romanian Deadlift
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Dip
+        isBodyweight: true
+      setCount: 3
+    - exercise:
+        name: Seated Row (Machine)
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Overhead Press
+        isBodyweight: false
+      setCount: 3
+- id: '3'
+  name: Lower (Quad emphasis)
+  group: Upper/Lower
+  description: Lower day of Upper/Lower workout which emphasises quad muscles.
+  exercises:
+    - exercise:
+        name: Squat
+        isBodyweight: false
+      setCount: 4
+    - exercise:
+        name: Bulgarian Split Squat
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Leg Extension (Machine)
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Hip Thrust (Machine)
+        isBodyweight: false
+      setCount: 3
+- id: '4'
+  name: Lower (Hamstring emphasis)
+  group: Upper/Lower
+  description: Lower day of Upper/Lower workout which emphasises hamstring muscles
+  exercises:
+    - exercise:
+        name: Deadlift
+        isBodyweight: false
+      setCount: 4
+    - exercise:
+        name: Lunge
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Hamstring Leg Curl (Machine)
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Hip Thrust (Machine)
+        isBodyweight: false
+      setCount: 3
+- id: '5'
+  name: Upper (Chest emphasis)
+  group: Upper/Lower
+  description: Upper day of Upper/Lower workout which emphasises chest muscles
+  exercises:
+    - exercise:
+        name: Dip
+        isBodyweight: true
+      setCount: 4
+    - exercise:
+        name: Barbell Row
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Overhead Press
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Chest Press (Machine)
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Tricep Cable Pushdown (Machine)
+        isBodyweight: false
+      setCount: 3
+- id: '6'
+  name: Upper (Back emphasis)
+  group: Upper/Lower
+  description: Upper day of Upper/Lower workout which emphasises back muscles
+  exercises:
+    - exercise:
+        name: Pull Up
+        isBodyweight: true
+      setCount: 4
+    - exercise:
+        name: Incline Bench Press (Machine)
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Seated Row (Machine)
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Face Pull
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Bicep Cable Curl (Machine)
+        isBodyweight: false
+      setCount: 3
+- id: '7'
+  name: Pull emphasis
+  group: PPL/FWB Hybrid
+  description: FWB Day that emphasises Pulling movements
+  exercises:
+    - exercise:
+        name: Deadlift
+        isBodyweight: false
+      setCount: 4
+    - exercise:
+        name: Barbell Row
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Lat Pullover
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Incline Bench Press (Machine)
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Bulgarian Split Squat
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Face Pull
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Bicep Cable Curl (Machine)
+        isBodyweight: false
+      setCount: 3
+- id: '8'
+  name: Push Emphasis
+  group: PPL/FWB Hybrid
+  description: FWB Day that emphasises Pushing movements
+  exercises:
+    - exercise:
+        name: Bench Press
+        isBodyweight: false
+      setCount: 4
+    - exercise:
+        name: Overhead Press
+        isBodyweight: false
+      setCount: 4
+    - exercise:
+        name: Seated Row (Machine)
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Leg Press (Machine)
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Hamstring Curl (Machine)
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Lateral Raise
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Tricep Cable Pushdown
+        isBodyweight: false
+      setCount: 3
+- id: '9'
+  name: Leg emphasis
+  group: PPL/FWB Hybrid
+  description: FWB Day that emphasises Leg movements
+  exercises:
+    - exercise:
+        name: Squat
+        isBodyweight: false
+      setCount: 4
+    - exercise:
+        name: Romanian Deadlift
+        isBodyweight: false
+      setCount: 4
+    - exercise:
+        name: Bench Press
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Seated Cable Row (Machine)
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Seated Overhead Press (Machine)
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Seated Biceps Curl (Machine)
+        isBodyweight: false
+      setCount: 3
+    - exercise:
+        name: Seated Tricep Pushdown (Machine)
+        isBodyweight: false
+      setCount: 3
