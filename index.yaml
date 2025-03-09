@@ -63,6 +63,16 @@ entries:
     version: 0.0.1
   fitness-ui:
   - apiVersion: v2
+    appVersion: 1.1.0
+    created: "2025-03-09T20:58:07.496842168Z"
+    description: A Helm chart for fitness-ui
+    digest: e9609a2e78234a32a20c6e3776571f9b567b45dc3bb81bfac32cc2315c8ff830
+    name: fitness-ui
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/fitness-ui/fitness-ui-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v2
     appVersion: 1.0.0
     created: "2025-02-26T20:00:18.603902655Z"
     description: A Helm chart for fitness-ui
@@ -165,4 +175,4 @@ entries:
     urls:
     - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/mongo/mongo-0.0.1.tgz
     version: 0.0.1
-generated: "2025-03-08T14:31:08.574693769Z"
+generated: "2025-03-09T20:58:07.49651907Z"
