@@ -32,6 +32,16 @@ export const fetchTraining = async(
     return response as Training | ApiError;
 };
 
+export const trainingExists = async(
+    date: Date
+): Promise<boolean> => {
+
+    const formattedDate = format(date, "yyyy-MM-dd");
+    const url = `${BASE_URL}/${formattedDate}`;
+    const response = await fetch(url, { method: 'head' });
+    return response.status === 200;
+}
+
 export const createOrUpdateTraining = async(
     training: Training
 ): Promise<Training | ApiError> => {

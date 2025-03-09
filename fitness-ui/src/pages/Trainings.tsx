@@ -6,10 +6,10 @@ import ResponsiveFilterBar from "../components/ResponsiveFilterBar";
 import TrainingList from "../components/TrainingsList";
 import { useCallback, useEffect, useState } from "react";
 import { Training } from "../types";
-import { deleteTraining, fetchTraining, fetchTrainings, isTraining, isTrainingPage } from "../api/trainingApi";
+import { deleteTraining, fetchTraining, fetchTrainings, isTraining, isTrainingPage, trainingExists } from "../api/trainingApi";
 import { useDialogs } from "@toolpad/core";
-import DatePromptDialog from "../components/DatePromptDialog";
 import { useNavigate } from "react-router-dom";
+import TrainingCreationDialog from "../components/TrainingCreationDialog";
 
 type Filters = {
     from: Date,
@@ -63,21 +63,35 @@ const Trainings = () => {
         }
 
     const handleTrainingAdd = async () => {
-        const promptResult = await dialogs.open(DatePromptDialog);
+        const promptResult = await dialogs.open(TrainingCreationDialog);
         if (promptResult === null) {
             return;
         }
-        const training = await fetchTraining(promptResult);
-        if (isTraining(training)) {
+        const exists = await trainingExists(promptResult.date);
+        if (exists) {
             await dialogs.alert("Training with the given date exists! Edit appropriate training instead.");
         } else {
-            navigate(`/trainings/${format(promptResult, "yyyy-MM-dd")}`);
+            const formattedDate = format(promptResult.date, "yyyy-MM-dd");
+            let training: Training = {
+                date: promptResult.date,
+                bodyweight: 0,
+                exercises: promptResult.template.exercises.map((e, i) => ({
+                    id: "",
+                    order: i,
+                    exercise: e.exercise,
+                    sets: new Array(e.setCount).fill({ repetitions: 0, weight: 0 })
+                }))
+            };
+            navigate(`/trainings/${formattedDate}`, { state: { training: training } });
         }
     }
 
-    const handleTrainingEdit = (date: Date) => {
+    const handleTrainingEdit = async (date: Date) => {
         const formattedDate = format(date, "yyyy-MM-dd");
-        navigate(`/trainings/${formattedDate}`);
+        const training = await fetchTraining(date);
+        if (isTraining(training)) {
+            navigate(`/trainings/${formattedDate}`, { state: { training: training } });
+        }
     }
 
     const handleTrainingDelete = async (date: Date) => {
