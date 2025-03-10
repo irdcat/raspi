@@ -1,10 +1,12 @@
 import { SyntheticEvent, useState } from "react";
 import { Training } from "../types";
-import { Accordion, AccordionDetails, AccordionSummary, Box, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { format } from "date-fns";
 import { LuPencilLine, LuTrash2 } from "react-icons/lu";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExerciseWithIcon from "./ExerciseWithIcon";
+import TooltipedIconButton from "./TooltipedIconButton";
+import EmptyState from "./EmptyState";
 
 const TrainingList = (props: { 
     trainings: Array<Training>,
@@ -16,6 +18,14 @@ const TrainingList = (props: {
 
     const handleExpansion = (panel: number) => (_: SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
+    }
+
+    if (trainings.length === 0) {
+        return (
+            <EmptyState 
+                title="No trainings found"
+                message="Change the filters or hit the gym"/>
+        )
     }
 
     return (
@@ -32,22 +42,12 @@ const TrainingList = (props: {
                     </AccordionSummary>
                     <AccordionDetails>
                         <Box sx={{ display: 'flex', columnGap: '4px' }}>
-                            <Tooltip title="Edit" arrow>
-                                <IconButton 
-                                    sx={{ border: '1px solid gray', borderRadius: '4px' }}
-                                    color="secondary"
-                                    onClick={() => onEdit(training.date)}>
-                                    <LuPencilLine/>
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Delete" arrow>
-                                <IconButton 
-                                    sx={{ border: '1px solid gray', borderRadius: '4px' }}
-                                    color="error"
-                                    onClick={() => onDelete(training.date)}>
-                                    <LuTrash2/>
-                                </IconButton>
-                            </Tooltip>
+                            <TooltipedIconButton tooltipTitle="Edit" color="secondary" onClick={() => onEdit(training.date)}>
+                                <LuPencilLine/>
+                            </TooltipedIconButton>    
+                            <TooltipedIconButton tooltipTitle="Delete" color="error" onClick={() => onDelete(training.date)}>
+                                <LuTrash2/>
+                            </TooltipedIconButton>
                         </Box>
                         <TableContainer component={Paper}>
                             <Table sx={{ tableLayout: 'fixed' }}>

@@ -2,6 +2,7 @@ import { ListItem, ListItemButton, Box, Typography, List } from "@mui/material";
 import { CountedExercise } from "../types";
 import ExerciseWithIcon from "./ExerciseWithIcon";
 import { useNavigate } from "react-router-dom";
+import EmptyState from "./EmptyState";
 
 const CountedExerciseList = (props: { exercises: Array<CountedExercise> }) => {
     const { exercises } = props;
@@ -9,6 +10,14 @@ const CountedExerciseList = (props: { exercises: Array<CountedExercise> }) => {
 
     const onExerciseClick = (exerciseName: string) => () => {
         navigate("/analysis", { state: { name: exerciseName } });
+    }
+
+    if (exercises.length === 0) {
+        return (
+            <EmptyState 
+                title="No exercises found" 
+                message="Change the filters or hit the gym"/>
+        )
     }
 
     return (

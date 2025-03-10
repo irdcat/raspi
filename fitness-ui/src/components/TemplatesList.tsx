@@ -1,9 +1,11 @@
 import { SyntheticEvent, useState } from "react";
 import { TrainingTemplate } from "../types"
-import { Accordion, AccordionDetails, AccordionSummary, Box, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExerciseWithIcon from "./ExerciseWithIcon";
 import { LuPencilLine, LuTrash2 } from "react-icons/lu";
+import TooltipedIconButton from "./TooltipedIconButton";
+import EmptyState from "./EmptyState";
 
 const TemplatesList = (props: {
     templates: Array<TrainingTemplate>,
@@ -15,6 +17,14 @@ const TemplatesList = (props: {
 
     const handleExpansion = (panel: string) => (_: SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false)
+    }
+    
+    if (templates.length === 0) {
+        return (
+            <EmptyState 
+                title="No templates found" 
+                message="Create new templates"/>
+        )
     }
 
     return (
@@ -47,22 +57,12 @@ const TemplatesList = (props: {
                             </Typography>
                         </Box>
                         <Box sx={{ display: 'flex', columnGap: '4px' }}>
-                            <Tooltip title="Edit" arrow>
-                                <IconButton 
-                                    sx={{ border: '1px solid gray', borderRadius: '4px' }}
-                                    color="secondary"
-                                    onClick={() => onEdit(template.id)}>
-                                    <LuPencilLine/>
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Delete" arrow>
-                                <IconButton 
-                                    sx={{ border: '1px solid gray', borderRadius: '4px' }}
-                                    color="error"
-                                    onClick={() => onDelete(template.id)}>
-                                    <LuTrash2/>
-                                </IconButton>
-                            </Tooltip>
+                            <TooltipedIconButton tooltipTitle="Edit" color="secondary" onClick={() => onEdit(template.id)}>
+                                <LuPencilLine/>
+                            </TooltipedIconButton>
+                            <TooltipedIconButton tooltipTitle="Delete" color="error" onClick={() => onDelete(template.id)}>
+                                <LuTrash2/>
+                            </TooltipedIconButton>
                         </Box>
                         <TableContainer>
                             <Table sx={{ tableLayout: 'fixed' }}>

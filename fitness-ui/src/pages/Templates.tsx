@@ -1,4 +1,4 @@
-import { Backdrop, Box, CircularProgress, IconButton, Paper, Tooltip } from "@mui/material"
+import { Backdrop, Box, CircularProgress, Paper } from "@mui/material"
 import { useCallback, useEffect, useState } from "react";
 import { TrainingTemplate } from "../types";
 import TemplatesList from "../components/TemplatesList";
@@ -6,6 +6,7 @@ import { deleteTemplate, fetchTemplates, isTemplateArray } from "../api/template
 import { LuDownload, LuPlus, LuUpload } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { useDialogs } from "@toolpad/core";
+import TooltipedIconButton from "../components/TooltipedIconButton";
 
 const Templates = () => {
     const navigate = useNavigate();
@@ -48,24 +49,15 @@ const Templates = () => {
             <Box sx={{ height: '100%', paddingX: '5px' }}>
                 <Box component={Paper} sx={{ height: '64px', paddingY: '12px', paddingX: '4px', display: 'flex', justifyContent: 'flex-end', columnGap: '2px' }}>
                     <Box sx={{ display: 'flex', columnGap: '4px' }}>
-                        <Tooltip title="Import" arrow>
-                            <IconButton sx={{ border: '1px solid gray', borderRadius: '4px', height: '40px' }}>
-                                <LuUpload/>
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Export" arrow>
-                            <IconButton sx={{ border: '1px solid gray', borderRadius: '4px', height: '40px' }}>
-                                <LuDownload/>
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Add" arrow>
-                            <IconButton 
-                                sx={{ border: '1px solid gray', borderRadius: '4px', height: '40px' }}
-                                color="success"
-                                onClick={handleTemplateAdd}>
-                                <LuPlus/>
-                            </IconButton>
-                        </Tooltip>
+                        <TooltipedIconButton tooltipTitle="Import">
+                            <LuUpload/>
+                        </TooltipedIconButton>
+                        <TooltipedIconButton tooltipTitle="Export">
+                            <LuDownload/>
+                        </TooltipedIconButton>
+                        <TooltipedIconButton tooltipTitle="Add" color="success" onClick={handleTemplateAdd}>
+                            <LuPlus/>
+                        </TooltipedIconButton>
                     </Box>
                 </Box>
                 <Box sx={{ height: 'calc(100% - 128px)', padding: '6px', overflowY: 'auto' }}>

@@ -1,5 +1,6 @@
 import { EChartsOption } from "echarts"
 import EChartsReact from "echarts-for-react"
+import EmptyState from "./EmptyState"
 
 const BodyweightChart = (props: { data: Map<Date, number> }) => {
     const { data } = props
@@ -43,6 +44,10 @@ const BodyweightChart = (props: { data: Map<Date, number> }) => {
             type: 'line',
             data: Object.values(data)
         }
+    }
+
+    if (data.size === 0) {
+        return <EmptyState title="No data found" message="Change the filters of hit the gym"/>
     }
 
     return (

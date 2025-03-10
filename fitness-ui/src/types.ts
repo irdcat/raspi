@@ -113,3 +113,10 @@ export const METRICS = [
 ] as const;
 
 export type Metric = (typeof METRICS)[number];
+
+export const FILE_TYPES = [
+    "json",
+    "yaml"
+] as const;
+
+export type FileType = (typeof FILE_TYPES)[number];

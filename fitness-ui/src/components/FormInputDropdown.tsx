@@ -4,7 +4,7 @@ import { Controller, useFormContext } from "react-hook-form";
 const FormInputDropdown = (props: {
     name: string,
     label?: string,
-    options: Array<any>,
+    options: readonly any[],
     getOptionValue: (o: any) => any,
     getOptionLabel: (o: any) => string,
     defaultValue?: any

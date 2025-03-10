@@ -1,5 +1,5 @@
 import { addHours, format } from "date-fns";
-import { ApiError, Page, Training } from "../types"
+import { ApiError, FileType, Page, Training } from "../types"
 
 const BASE_URL = "/api/trainings";
 type TrainingPage = Page<Training>;
@@ -80,6 +80,20 @@ export const deleteTraining = async (
 
     if (response.status !== 204) {
         return await response.json() as ApiError;
+    }
+}
+
+export const exportTrainings = async (
+    format: FileType
+): Promise<Blob | ApiError> => {
+    
+    const url = `${BASE_URL}/export/${format.toString()}`
+    const response = await fetch(url);
+
+    if (response.status === 200) {
+        return await response.blob()
+    } else {
+        return await response.json() as ApiError
     }
 }
 
