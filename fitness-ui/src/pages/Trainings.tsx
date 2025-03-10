@@ -1,4 +1,4 @@
-import { Backdrop, Box, CircularProgress, IconButton, Pagination, Paper, Tooltip } from "@mui/material";
+import { Backdrop, Box, CircularProgress, Pagination, Paper } from "@mui/material";
 import { format, subDays } from "date-fns";
 import { DatePicker, DateValidationError, PickerChangeHandlerContext } from "@mui/x-date-pickers";
 import { LuDownload, LuPlus, LuUpload } from "react-icons/lu";
@@ -6,10 +6,12 @@ import ResponsiveFilterBar from "../components/ResponsiveFilterBar";
 import TrainingList from "../components/TrainingsList";
 import { useCallback, useEffect, useState } from "react";
 import { Training } from "../types";
-import { deleteTraining, fetchTraining, fetchTrainings, isTraining, isTrainingPage, trainingExists } from "../api/trainingApi";
+import { deleteTraining, exportTrainings, fetchTraining, fetchTrainings, isTraining, isTrainingPage, trainingExists } from "../api/trainingApi";
 import { useDialogs } from "@toolpad/core";
 import { useNavigate } from "react-router-dom";
 import TrainingCreationDialog from "../components/TrainingCreationDialog";
+import ExportPromptDialog from "../components/ExportPromptDialog";
+import TooltipedIconButton from "../components/TooltipedIconButton";
 
 type Filters = {
     from: Date,
@@ -104,6 +106,21 @@ const Trainings = () => {
         fetchData();
     }
 
+    const handleTrainingExport = async () => {
+        const promptResult = await dialogs.open(ExportPromptDialog, { title: "Export Trainings" });
+        if (promptResult === null) {
+            return;
+        }
+        const blob = await exportTrainings(promptResult.fileType);
+        if (!("requestId" in blob)) {
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = `trainings.${promptResult.fileType.toString()}`
+            link.click();
+            link.remove();
+        }
+    }
+
     return (
         <>
             <Box sx={{ height: '100%', paddingX: '5px' }}>
@@ -123,24 +140,15 @@ const Trainings = () => {
                             onChange={handleDateChange("to")}/> 
                     </ResponsiveFilterBar>
                     <Box sx={{ display: 'flex', columnGap: '4px' }}>
-                        <Tooltip title="Import" arrow>
-                            <IconButton sx={{ border: '1px solid gray', borderRadius: '4px', height: '40px' }}>
-                                <LuUpload/>
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Export" arrow>
-                            <IconButton sx={{ border: '1px solid gray', borderRadius: '4px', height: '40px' }}>
-                                <LuDownload/>
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Add" arrow>
-                            <IconButton 
-                                sx={{ border: '1px solid gray', borderRadius: '4px', height: '40px' }}
-                                onClick={async () => await handleTrainingAdd()}
-                                color="success">
-                                <LuPlus/>
-                            </IconButton>
-                        </Tooltip>
+                        <TooltipedIconButton tooltipTitle="Import">
+                            <LuUpload/>
+                        </TooltipedIconButton>
+                        <TooltipedIconButton onClick={handleTrainingExport} tooltipTitle="Export">
+                            <LuDownload/>
+                        </TooltipedIconButton>
+                        <TooltipedIconButton color="success" onClick={handleTrainingAdd} tooltipTitle="Add">
+                            <LuPlus/>
+                        </TooltipedIconButton>
                     </Box>
                 </Box>
                 <Box sx={{ height: 'calc(100% - 192px)', padding: '6px', overflowY: 'auto' }}>

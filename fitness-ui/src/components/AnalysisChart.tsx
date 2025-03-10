@@ -2,6 +2,7 @@ import { EChartsOption, SeriesOption } from "echarts"
 import EChartsReact from "echarts-for-react"
 import { Metric, Summary } from "../types"
 import { camelCaseToSpaced } from "../utils/stringUtils"
+import EmptyState from "./EmptyState"
 
 const ExerciseAnalysisChart = (props: {
     data: Summary,
@@ -155,7 +156,9 @@ const AnalysisChart = (props: {
         }
     };
 
-    if (data.exercise.isBodyweight) {
+    if (data.parameters.size === 0) {
+        return <EmptyState title="No data found" message="Change the filters or hit the gym"/>
+    } else if (data.exercise.isBodyweight) {
         return <BodyweightExerciseAnalysisChart data={data} metric={metric} baseOptions={baseOptions}/>
     } else {
         return <ExerciseAnalysisChart data={data} metric={metric} baseOptions={baseOptions}/>
