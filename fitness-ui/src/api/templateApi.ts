@@ -1,4 +1,4 @@
-import { ApiError, TrainingTemplate } from "../types";
+import { ApiError, FileType, TrainingTemplate } from "../types";
 
 const BASE_URL = "/api/templates";
 
@@ -43,6 +43,20 @@ export const deleteTemplate = async (id: string): Promise<void | ApiError> => {
         method: 'delete'
     });
     if (response.status !== 204) {
+        return await response.json() as ApiError;
+    }
+}
+
+export const exportTemplates = async (
+    format: FileType
+): Promise<Blob | ApiError> => {
+
+    const url = `${BASE_URL}/export/${format.toString()}`
+    const response = await fetch(url);
+
+    if (response.status === 200) {
+        return await response.blob();
+    } else {
         return await response.json() as ApiError;
     }
 }
