@@ -61,6 +61,23 @@ export const exportTemplates = async (
     }
 }
 
+export const importTemplates = async (
+    file: File
+): Promise<void | ApiError> => {
+
+    const url = `${BASE_URL}/import/${file.name.split('.').pop()}`
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await fetch(url, {
+        method: "post",
+        body: formData
+    });
+
+    if (response.status !== 204) {
+        return await response.json() as ApiError;
+    }
+}
+
 export const isTemplateArray = (object: any): object is Array<TrainingTemplate> => {
     return !("requestId" in object);
 }
