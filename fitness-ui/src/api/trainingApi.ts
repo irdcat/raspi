@@ -97,6 +97,23 @@ export const exportTrainings = async (
     }
 }
 
+export const importTrainings = async (
+    file: File
+): Promise<void | ApiError> => {
+
+    const url = `${BASE_URL}/import/${file.name.split('.').pop()}`
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await fetch(url, {
+        method: "post",
+        body: formData
+    });
+
+    if (response.status !== 204) {
+        return await response.json() as ApiError;
+    }
+}
+
 export const isTraining = (object: any): object is Training => {
     return ("date" in object && "bodyweight" in object && "exercises" in object);
 }

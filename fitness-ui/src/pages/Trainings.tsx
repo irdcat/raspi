@@ -6,12 +6,13 @@ import ResponsiveFilterBar from "../components/ResponsiveFilterBar";
 import TrainingList from "../components/TrainingsList";
 import { useCallback, useEffect, useState } from "react";
 import { Training } from "../types";
-import { deleteTraining, exportTrainings, fetchTraining, fetchTrainings, isTraining, isTrainingPage, trainingExists } from "../api/trainingApi";
+import { deleteTraining, exportTrainings, fetchTraining, fetchTrainings, importTrainings, isTraining, isTrainingPage, trainingExists } from "../api/trainingApi";
 import { useDialogs } from "@toolpad/core";
 import { useNavigate } from "react-router-dom";
 import TrainingCreationDialog from "../components/TrainingCreationDialog";
 import ExportPromptDialog from "../components/ExportPromptDialog";
 import TooltipedIconButton from "../components/TooltipedIconButton";
+import ImportPromptDialog from "../components/ImportPromptDialog";
 
 type Filters = {
     from: Date,
@@ -106,6 +107,14 @@ const Trainings = () => {
         fetchData();
     }
 
+    const handleTrainingImport = async () => {
+        const promptResult = await dialogs.open(ImportPromptDialog, { title: "Import Trainings", accept: ".json,.yaml" });
+        if (promptResult === null) {
+            return;
+        }
+        await importTrainings(promptResult.file);
+    }
+
     const handleTrainingExport = async () => {
         const promptResult = await dialogs.open(ExportPromptDialog, { title: "Export Trainings" });
         if (promptResult === null) {
@@ -140,7 +149,7 @@ const Trainings = () => {
                             onChange={handleDateChange("to")}/> 
                     </ResponsiveFilterBar>
                     <Box sx={{ display: 'flex', columnGap: '4px' }}>
-                        <TooltipedIconButton tooltipTitle="Import">
+                        <TooltipedIconButton onClick={handleTrainingImport} tooltipTitle="Import">
                             <LuUpload/>
                         </TooltipedIconButton>
                         <TooltipedIconButton onClick={handleTrainingExport} tooltipTitle="Export">
