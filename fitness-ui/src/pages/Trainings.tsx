@@ -113,6 +113,7 @@ const Trainings = () => {
             return;
         }
         await importTrainings(promptResult.file);
+        fetchData();
     }
 
     const handleTrainingExport = async () => {

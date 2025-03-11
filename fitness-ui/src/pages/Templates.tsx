@@ -2,12 +2,13 @@ import { Backdrop, Box, CircularProgress, Paper } from "@mui/material"
 import { useCallback, useEffect, useState } from "react";
 import { TrainingTemplate } from "../types";
 import TemplatesList from "../components/TemplatesList";
-import { deleteTemplate, exportTemplates, fetchTemplates, isTemplateArray } from "../api/templateApi";
+import { deleteTemplate, exportTemplates, fetchTemplates, importTemplates, isTemplateArray } from "../api/templateApi";
 import { LuDownload, LuPlus, LuUpload } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { useDialogs } from "@toolpad/core";
 import TooltipedIconButton from "../components/TooltipedIconButton";
 import ExportPromptDialog from "../components/ExportPromptDialog";
+import ImportPromptDialog from "../components/ImportPromptDialog";
 
 const Templates = () => {
     const navigate = useNavigate();
@@ -45,6 +46,15 @@ const Templates = () => {
         fetchData();
     }
 
+    const handleTemplateImport = async () => {
+        const promptResult = await dialogs.open(ImportPromptDialog, { title: "Inport Templates", accept: ".json,.yaml" });
+        if (promptResult === null) {
+            return;
+        }
+        await importTemplates(promptResult.file);
+        fetchData();
+    }
+
     const handleTemplateExport = async () => {
         const promptResult = await dialogs.open(ExportPromptDialog, { title: "Export Templates" });
         if (promptResult === null) {
@@ -65,7 +75,7 @@ const Templates = () => {
             <Box sx={{ height: '100%', paddingX: '5px' }}>
                 <Box component={Paper} sx={{ height: '64px', paddingY: '12px', paddingX: '4px', display: 'flex', justifyContent: 'flex-end', columnGap: '2px' }}>
                     <Box sx={{ display: 'flex', columnGap: '4px' }}>
-                        <TooltipedIconButton tooltipTitle="Import">
+                        <TooltipedIconButton onClick={handleTemplateImport} tooltipTitle="Import">
                             <LuUpload/>
                         </TooltipedIconButton>
                         <TooltipedIconButton onClick={handleTemplateExport} tooltipTitle="Export">
