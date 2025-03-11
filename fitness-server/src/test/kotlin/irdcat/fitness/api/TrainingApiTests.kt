@@ -667,6 +667,7 @@ class TrainingApiTests: AbstractApiTest() {
             .uri("/api/trainings/export/yaml")
             .accept(MediaType.APPLICATION_OCTET_STREAM)
             .exchange()
+            .expectStatus().isOk
             .expectHeader().contentType(MediaType.APPLICATION_OCTET_STREAM)
             .expectHeader().contentDisposition(attachment().filename("trainings.yaml").build())
             .expectBody()
@@ -715,6 +716,7 @@ class TrainingApiTests: AbstractApiTest() {
             .uri("/api/trainings/export/json")
             .accept(MediaType.APPLICATION_OCTET_STREAM)
             .exchange()
+            .expectStatus().isOk
             .expectHeader().contentType(MediaType.APPLICATION_OCTET_STREAM)
             .expectHeader().contentDisposition(attachment().filename("trainings.json").build())
             .expectBody()
@@ -757,8 +759,7 @@ class TrainingApiTests: AbstractApiTest() {
     fun importFromYaml() {
         val multipartBodyBuilder = MultipartBodyBuilder()
         multipartBodyBuilder
-            .part("file",
-                object: ByteArrayResource("""
+            .part("file", ByteArrayResource("""
                 - date: "2025-01-01"
                   bodyweight: 63.0
                   exercises:
@@ -778,7 +779,7 @@ class TrainingApiTests: AbstractApiTest() {
                     sets:
                     - repetitions: 10
                       weight: 5.0
-                """.trimIndent().toByteArray()){})
+                """.trimIndent().toByteArray()))
             .contentType(MediaType.APPLICATION_YAML)
             .filename("trainings.yaml")
 
