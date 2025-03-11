@@ -2,11 +2,12 @@ import { Backdrop, Box, CircularProgress, Paper } from "@mui/material"
 import { useCallback, useEffect, useState } from "react";
 import { TrainingTemplate } from "../types";
 import TemplatesList from "../components/TemplatesList";
-import { deleteTemplate, fetchTemplates, isTemplateArray } from "../api/templateApi";
+import { deleteTemplate, exportTemplates, fetchTemplates, isTemplateArray } from "../api/templateApi";
 import { LuDownload, LuPlus, LuUpload } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { useDialogs } from "@toolpad/core";
 import TooltipedIconButton from "../components/TooltipedIconButton";
+import ExportPromptDialog from "../components/ExportPromptDialog";
 
 const Templates = () => {
     const navigate = useNavigate();
@@ -44,6 +45,21 @@ const Templates = () => {
         fetchData();
     }
 
+    const handleTemplateExport = async () => {
+        const promptResult = await dialogs.open(ExportPromptDialog, { title: "Export Templates" });
+        if (promptResult === null) {
+            return;
+        }
+        const blob = await exportTemplates(promptResult.fileType);
+        if (!("requestId" in blob)) {
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = `templates.${promptResult.fileType.toString()}`
+            link.click();
+            link.remove();
+        }
+    }
+
     return (
         <>
             <Box sx={{ height: '100%', paddingX: '5px' }}>
@@ -52,7 +68,7 @@ const Templates = () => {
                         <TooltipedIconButton tooltipTitle="Import">
                             <LuUpload/>
                         </TooltipedIconButton>
-                        <TooltipedIconButton tooltipTitle="Export">
+                        <TooltipedIconButton onClick={handleTemplateExport} tooltipTitle="Export">
                             <LuDownload/>
                         </TooltipedIconButton>
                         <TooltipedIconButton tooltipTitle="Add" color="success" onClick={handleTemplateAdd}>

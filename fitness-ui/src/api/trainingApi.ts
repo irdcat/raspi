@@ -91,9 +91,9 @@ export const exportTrainings = async (
     const response = await fetch(url);
 
     if (response.status === 200) {
-        return await response.blob()
+        return await response.blob();
     } else {
-        return await response.json() as ApiError
+        return await response.json() as ApiError;
     }
 }
 
