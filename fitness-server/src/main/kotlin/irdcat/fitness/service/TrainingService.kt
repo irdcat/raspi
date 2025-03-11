@@ -1,10 +1,6 @@
 package irdcat.fitness.service
 
 import com.fasterxml.jackson.core.JsonFactory
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.StreamWriteFeature
-import com.fasterxml.jackson.core.json.JsonWriteFeature
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
@@ -14,11 +10,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.mongodb.BasicDBObject
 import irdcat.fitness.exception.TrainingNotFoundException
-import kotlinx.coroutines.reactive.collect
 import org.slf4j.LoggerFactory
-import org.springframework.core.io.InputStreamResource
 import org.springframework.core.io.Resource
-import org.springframework.core.io.buffer.DataBuffer
 import org.springframework.data.domain.Sort.Direction
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.aggregation.Aggregation.group
@@ -41,11 +34,8 @@ import reactor.core.publisher.Mono
 import reactor.core.scheduler.Schedulers
 import reactor.kotlin.core.publisher.toMono
 import reactor.util.function.Tuples
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
 import java.time.LocalDate
 import java.util.UUID
-import java.util.stream.Collectors
 
 @Service
 class TrainingService(
@@ -261,63 +251,40 @@ class TrainingService(
     fun exportToYaml(): Mono<Resource> {
 
         return getAllTrainings()
-            .collectList()
-            .map {
-                val byteArrayOutputStream = ByteArrayOutputStream()
-                yamlMapper.writeValue(byteArrayOutputStream, it)
-                byteArrayOutputStream.flush()
-                val byteArrayInputStream = ByteArrayInputStream(byteArrayOutputStream.toByteArray())
-                InputStreamResource(byteArrayInputStream) as Resource
-            }
+            .toResourceMono(yamlMapper)
             .subscribeOn(Schedulers.boundedElastic())
     }
 
     fun exportToJson(): Mono<Resource> {
 
         return getAllTrainings()
-            .collectList()
-            .map {
-                val byteArrayOutputStream = ByteArrayOutputStream()
-                jsonMapper.writeValue(byteArrayOutputStream, it)
-                byteArrayOutputStream.flush()
-                val byteArrayInputStream = ByteArrayInputStream(byteArrayOutputStream.toByteArray())
-                InputStreamResource(byteArrayInputStream) as Resource
-            }
+            .toResourceMono(jsonMapper)
             .subscribeOn(Schedulers.boundedElastic())
     }
 
     fun importFromYaml(file: FilePart): Mono<Void> {
 
-        return file.toMono()
-            .flatMapMany(FilePart::content)
-            .map { it.asInputStream() }
-            .toMono()
-            .map { yamlMapper.readValue(it, object: TypeReference<List<TrainingDto>>(){}) }
-            .flatMapMany(Flux<TrainingDto>::fromIterable)
-            .flatMapIterable(TrainingDto::toTrainingExercises)
-            .map { it.copy(id = UUID.randomUUID().toString()) }
-            .collectList()
-            .flatMapMany { reactiveMongoTemplate.insert(it, TrainingExercise::class.java) }
-            .doOnNext { logger.debug("Imported training exercise: {}", it) }
-            .then()
+        return file
+            .toMappedFlux(yamlMapper, TrainingDto::class.java)
+            .import()
             .subscribeOn(Schedulers.boundedElastic())
     }
 
     fun importFromJson(file: FilePart): Mono<Void> {
 
-        return file.toMono()
-            .flatMapMany(FilePart::content)
-            .map { it.asInputStream() }
-            .toMono()
-            .map { jsonMapper.readValue(it, object: TypeReference<List<TrainingDto>>(){}) }
-            .flatMapMany(Flux<TrainingDto>::fromIterable)
-            .flatMapIterable(TrainingDto::toTrainingExercises)
+        return file
+            .toMappedFlux(jsonMapper, TrainingDto::class.java)
+            .import()
+            .subscribeOn(Schedulers.boundedElastic())
+    }
+
+    private fun Flux<TrainingDto>.import(): Mono<Void> {
+        return flatMapIterable(TrainingDto::toTrainingExercises)
             .map { it.copy(id = UUID.randomUUID().toString()) }
             .collectList()
             .flatMapMany { reactiveMongoTemplate.insert(it, TrainingExercise::class.java) }
             .doOnNext { logger.debug("Imported training exercise: {}", it) }
             .then()
-            .subscribeOn(Schedulers.boundedElastic())
     }
 
     private fun getAllTrainings(): Flux<TrainingDto> {

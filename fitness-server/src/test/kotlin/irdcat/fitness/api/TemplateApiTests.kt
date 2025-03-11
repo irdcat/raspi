@@ -8,7 +8,13 @@ import irdcat.fitness.service.TrainingTemplateExercise
 import irdcat.fitness.service.TrainingTemplateExerciseDto
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.springframework.core.io.ByteArrayResource
+import org.springframework.http.ContentDisposition
+import org.springframework.http.ContentDisposition.attachment
 import org.springframework.http.MediaType
+import org.springframework.http.client.MultipartBodyBuilder
+import org.springframework.web.reactive.function.BodyInserters
+import kotlin.test.assertEquals
 
 class TemplateApiTests: AbstractApiTest() {
 
@@ -258,5 +264,136 @@ class TemplateApiTests: AbstractApiTest() {
             .expectBody().isEmpty
 
         assertCollectionIsEmpty(TrainingTemplateExercise::class.java)
+    }
+
+    @Test
+    fun exportToYaml() {
+        insertTrainingTemplates(listOf(
+            TrainingTemplate("1", "Lower", "Upper/Lower", "Lower day", listOf(
+                TrainingTemplateExercise(Exercise("Squat", false), 5)
+            ))
+        ))
+
+        val result = webTestClient()
+            .get()
+            .uri("/api/templates/export/yaml")
+            .accept(MediaType.APPLICATION_OCTET_STREAM)
+            .exchange()
+            .expectHeader().contentType(MediaType.APPLICATION_OCTET_STREAM)
+            .expectHeader().contentDisposition(attachment().filename("templates.yaml").build())
+            .expectBody()
+            .returnResult()
+            .responseBodyContent!!
+            .toString(Charsets.UTF_8)
+
+        assertEquals(result, """
+            - id: "1"
+              name: "Lower"
+              group: "Upper/Lower"
+              description: "Lower day"
+              exercises:
+              - exercise:
+                  name: "Squat"
+                  isBodyweight: false
+                setCount: 5
+            
+        """.trimIndent())
+    }
+
+    @Test
+    fun exportToJson() {
+        insertTrainingTemplates(listOf(
+            TrainingTemplate("1", "Lower", "Upper/Lower", "Lower day", listOf(
+                TrainingTemplateExercise(Exercise("Squat", false), 5)
+            ))
+        ))
+
+        val result = webTestClient()
+            .get()
+            .uri("/api/templates/export/json")
+            .accept(MediaType.APPLICATION_OCTET_STREAM)
+            .exchange()
+            .expectHeader().contentType(MediaType.APPLICATION_OCTET_STREAM)
+            .expectHeader().contentDisposition(attachment().filename("templates.json").build())
+            .expectBody()
+            .returnResult()
+            .responseBodyContent!!
+            .toString(Charsets.UTF_8)
+
+        assertEquals(result, """
+            [ {
+              "id" : "1",
+              "name" : "Lower",
+              "group" : "Upper/Lower",
+              "description" : "Lower day",
+              "exercises" : [ {
+                "exercise" : {
+                  "name" : "Squat",
+                  "isBodyweight" : false
+                },
+                "setCount" : 5
+              } ]
+            } ]
+        """.trimIndent())
+    }
+
+    @Test
+    fun importFromYaml() {
+        val multipartBodyBuilder = MultipartBodyBuilder()
+        multipartBodyBuilder
+            .part("file", ByteArrayResource("""
+                - id: "1"
+                  name: "Lower"
+                  group: "Upper/Lower"
+                  description: "Lower day"
+                  exercises:
+                  - exercise:
+                      name: "Squat"
+                      isBodyweight: false
+                    setCount: 5
+            """.trimIndent().toByteArray()))
+            .contentType(MediaType.APPLICATION_YAML)
+            .filename("templates.yaml")
+
+        webTestClient()
+            .post()
+            .uri("/api/templates/import/yaml")
+            .contentType(MediaType.MULTIPART_FORM_DATA)
+            .body(BodyInserters.fromMultipartData(multipartBodyBuilder.build()))
+            .exchange()
+            .expectStatus().isNoContent
+            .expectBody().isEmpty
+    }
+
+    @Test
+    fun importFromJson() {
+        val multipartBodyBuilder = MultipartBodyBuilder()
+        multipartBodyBuilder
+            .part("file", ByteArrayResource("""
+                [ {
+                  "id" : "1",
+                  "name" : "Lower",
+                  "group" : "Upper/Lower",
+                  "description" : "Lower day",
+                  "exercises" : [ {
+                    "exercise" : {
+                      "name" : "Squat",
+                      "isBodyweight" : false
+                    },
+                    "setCount" : 5
+                  } ]
+                } ]
+            """.trimIndent().toByteArray()))
+            .contentType(MediaType.APPLICATION_JSON)
+            .filename("templates.json")
+
+        webTestClient()
+            .post()
+            .uri("/api/templates/import/json")
+            .contentType(MediaType.MULTIPART_FORM_DATA)
+            .body(BodyInserters.fromMultipartData(multipartBodyBuilder.build()))
+            .exchange()
+            .expectStatus().isNoContent
+            .expectBody().isEmpty
     }
 }
