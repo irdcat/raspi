@@ -2,6 +2,6 @@ components:
   - name: fitness-server
     version: 1.2.0
   - name: fitness-ui
-    version: 1.2.0
+    version: 1.2.1
   - name: mongo
     version: 1.0.1
