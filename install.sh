@@ -40,7 +40,11 @@ install_component() {
     local name="$1"
     local version="$2"
     echo "Installing $name (Version: $version)"
-    helm upgrade --install "$name" "$HELM_REPO_NAME/$name" --version "$version" --namespace default
+    helm upgrade \
+        --install "$name" "$HELM_REPO_NAME/$name" \
+        --version "$version" \ 
+        --namespace default \
+        --wait
 
     if [[ $? -eq 0 ]]; then
         echo "✅ Successfully installed $name"
