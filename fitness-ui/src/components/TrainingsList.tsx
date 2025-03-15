@@ -62,13 +62,15 @@ const TrainingList = (props: {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {training.exercises.sort((a, b) => a.order - b.order).map((trainingExercise, exerciseIndex) => (
+                                    {training.exercises.toSorted((a, b) => a.order - b.order).map((trainingExercise, exerciseIndex) => (
                                         <TableRow key={`row-${index}-${exerciseIndex}`}>
                                             <TableCell>
                                                 <ExerciseWithIcon exercise={trainingExercise.exercise}/>
                                             </TableCell>
                                             <TableCell>
-                                                {trainingExercise.sets.map(s => `${s.repetitions}x${s.weight}`).join(" ")}
+                                                {trainingExercise.exercise.isBodyweight ? 
+                                                    trainingExercise.sets.map(s => `${s.repetitions}x(+${s.weight})`).join(" ") :
+                                                    trainingExercise.sets.map(s => `${s.repetitions}x${s.weight}`).join(" ")}
                                             </TableCell>
                                         </TableRow>
                                     ))}
