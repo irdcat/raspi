@@ -89,7 +89,7 @@ const BodyweightExerciseAnalysisChart = (props: {
         summedData = metricData.map((v, i) => v + bodyweightData[i]);
 
         return [{
-            name: `Bodyweight${metric === "volume" || metric === "averageVolume" ? ' Volume' : ''}`,
+            name: `Bodyweight${metric === "volume" || metric === "averageVolume" ? ' volume' : ''}`,
             type: 'line',
             stack: 'stack',
             data: bodyweightData
@@ -100,7 +100,7 @@ const BodyweightExerciseAnalysisChart = (props: {
             areaStyle: {},
             data: metricData
         }, {
-            name: "Overall weight",
+            name: `Overall weight${metric === "volume" || metric === "averageVolume" ? ' volume' : ''}`,
             type: 'line',
             data: summedData
         }];
