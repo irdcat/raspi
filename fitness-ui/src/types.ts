@@ -45,7 +45,9 @@ export type TrainingFormData = {
 
 export type TrainingTemplateExercise = {
     exercise: Exercise,
-    setCount: number
+    setCount: number,
+    minReps: number | null,
+    maxReps: number | null
 }
 
 export type TrainingTemplate = {
@@ -58,7 +60,9 @@ export type TrainingTemplate = {
 
 export type TrainingTemplateExerciseFormData = {
     exercise: Exercise,
-    setCount: number
+    setCount: number,
+    minReps: number | null,
+    maxReps: number | null
 }
 
 export type TrainingTemplateFormData = {

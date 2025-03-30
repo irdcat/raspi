@@ -1,11 +1,22 @@
 import { SyntheticEvent, useState } from "react";
-import { TrainingTemplate } from "../types"
+import { TrainingTemplate, TrainingTemplateExercise } from "../types"
 import { Accordion, AccordionDetails, AccordionSummary, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExerciseWithIcon from "./ExerciseWithIcon";
 import { LuPencilLine, LuTrash2 } from "react-icons/lu";
 import TooltipedIconButton from "./TooltipedIconButton";
 import EmptyState from "./EmptyState";
+
+const renderRepRange = (trainingTemplateExercise: TrainingTemplateExercise): string => {
+    const { minReps, maxReps } = trainingTemplateExercise;
+    if (minReps === null && maxReps === null) {
+        return "";
+    } else {
+        const minRepsString = minReps === null ? "" : minReps.toString();
+        const maxRepsString = maxReps === null ? "" : maxReps.toString();
+        return `${minRepsString} - ${maxRepsString}`;
+    }
+}
 
 const TemplatesList = (props: {
     templates: Array<TrainingTemplate>,
@@ -78,6 +89,11 @@ const TemplatesList = (props: {
                                                 Sets
                                             </Typography>
                                         </TableCell>
+                                        <TableCell>
+                                            <Typography variant="body2" fontWeight="bold">
+                                                Rep range
+                                            </Typography>
+                                        </TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -89,6 +105,11 @@ const TemplatesList = (props: {
                                             <TableCell>
                                                 <Typography>
                                                     {templateExercise.setCount}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Typography>
+                                                    { renderRepRange(templateExercise) }
                                                 </Typography>
                                             </TableCell>
                                         </TableRow>
