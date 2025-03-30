@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: auth-server
+
+server:
+  port: 8081
+
+logging:
+  level:
+    root: INFO
+    irdcat.auth: DEBUG
+    org.springframework.security: TRACE
+
+springdoc:
+  show-oauth2-endpoints: true
