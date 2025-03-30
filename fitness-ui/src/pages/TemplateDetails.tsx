@@ -48,7 +48,9 @@ const TemplateDetails = () => {
         if (result != null) {
             append({
                 exercise: result,
-                setCount: 0
+                setCount: 0,
+                minReps: null,
+                maxReps: null
             });
         }
     }
@@ -136,6 +138,26 @@ const TemplateDetails = () => {
                                                     || "Value must be positive real number" 
                                             }
                                         }}/>
+                                    <Box sx={{ display: 'flex', paddingY: '5px', columnGap: '5px' }}>
+                                        <FormInputText
+                                            name={`exercises.${index}.minReps`}
+                                            label="Min reps"
+                                            options={{
+                                                validate: {
+                                                    positive: (v: number) => parseInt(v.toString()) >= 0 
+                                                        || "Value must be positive integer"
+                                                }
+                                            }}/>
+                                        <FormInputText
+                                            name={`exercises.${index}.maxReps`}
+                                            label="Max reps"
+                                            options={{
+                                                validate: {
+                                                    positive: (v: number) => parseInt(v.toString()) >= 0
+                                                        || "Value must be positive integer"
+                                                }
+                                            }}/>
+                                    </Box>
                                 </Grid2>
                             ))}
                         </Grid2>

@@ -1,5 +1,6 @@
 package irdcat.fitness.service
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.json.JsonMapper
@@ -42,10 +43,12 @@ class TrainingTemplateService(
         private val yamlMapper = YAMLMapper(yamlFactory)
             .registerKotlinModule()
             .registerModule(JavaTimeModule())
+            .setSerializationInclusion(JsonInclude.Include.NON_NULL)
         private val jsonMapper = JsonMapper(jsonFactory)
             .registerKotlinModule()
             .registerModule(JavaTimeModule())
             .enable(SerializationFeature.INDENT_OUTPUT)
+            .setSerializationInclusion(JsonInclude.Include.NON_NULL)
     }
 
     fun findAllTemplates(): Flux<TrainingTemplateDto> {

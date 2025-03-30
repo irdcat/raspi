@@ -2,7 +2,9 @@ package irdcat.fitness.service
 
 data class TrainingTemplateExerciseDto(
     val exercise: ExerciseDto,
-    val setCount: Int
+    val setCount: Int,
+    val minReps: Int? = null,
+    val maxReps: Int? = null
 ) {
     companion object {
         fun fromTrainingTemplateExercise(
@@ -10,7 +12,9 @@ data class TrainingTemplateExerciseDto(
 
             return TrainingTemplateExerciseDto(
                 ExerciseDto.fromExercise(trainingTemplateExercise.exercise),
-                trainingTemplateExercise.setCount
+                trainingTemplateExercise.setCount,
+                trainingTemplateExercise.minReps,
+                trainingTemplateExercise.maxReps
             )
         }
     }
@@ -18,7 +22,9 @@ data class TrainingTemplateExerciseDto(
     fun toTrainingTemplateExercise(): TrainingTemplateExercise {
         return TrainingTemplateExercise(
             exercise.toExercise(),
-            setCount
+            setCount,
+            minReps,
+            maxReps
         )
     }
 }
