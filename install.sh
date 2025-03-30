@@ -42,7 +42,7 @@ install_component() {
     echo "Installing $name (Version: $version)"
     helm upgrade \
         --install "$name" "$HELM_REPO_NAME/$name" \
-        --version "$version" \ 
+        --version "$version" \
         --namespace default \
         --wait
 
