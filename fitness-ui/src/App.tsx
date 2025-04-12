@@ -55,7 +55,7 @@ const App = () => {
       <ThemeProvider theme={ darkTheme }>
         <DialogsProvider>
           <CssBaseline/>
-          <BrowserRouter>
+          <BrowserRouter basename="/fitness">
             <Routes>
               <Route path="/" element={<Layout/>}>
                 <Route index element={<Bodyweight/>}/>

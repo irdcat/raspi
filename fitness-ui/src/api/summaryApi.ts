@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { BodyweightSummary, Summary } from "../types";
 
-const BASE_URL = "/api/summary";
+const BASE_URL = "/fitness/api/summary";
 
 export const fetchExerciseSummary = async (
     from: Date,
