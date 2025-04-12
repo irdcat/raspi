@@ -1,10 +1,10 @@
 plugins {
-	kotlin("jvm")
-	kotlin("plugin.spring")
-	id("org.springframework.boot")
-	id("io.spring.dependency-management")
-	id("org.jetbrains.kotlinx.kover")
-	id("io.gitlab.arturbosch.detekt")
+	kotlin("jvm") version "2.1.10"
+	kotlin("plugin.spring") version "2.1.10"
+	id("org.springframework.boot") version "3.4.3"
+	id("io.spring.dependency-management") version "1.1.7"
+	id("org.jetbrains.kotlinx.kover") version "0.9.1"
+	id("io.gitlab.arturbosch.detekt") version "1.23.8"
 }
 
 group = "irdcat"
@@ -28,8 +28,6 @@ java {
 	}
 }
 
-val springDocVersion: String by project
-
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
@@ -38,8 +36,8 @@ dependencies {
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-	implementation("org.springdoc:springdoc-openapi-starter-webflux-api:${springDocVersion}")
-	implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:${springDocVersion}")
+	implementation("org.springdoc:springdoc-openapi-starter-webflux-api:2.8.5")
+	implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.5")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-testcontainers")
 	testImplementation("io.projectreactor:reactor-test")
