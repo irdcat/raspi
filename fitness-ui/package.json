@@ -10,7 +10,7 @@
     "@mui/icons-material": "^6.4.8",
     "@mui/material": "^6.4.8",
     "@mui/x-date-pickers": "^7.28.3",
-    "@toolpad/core": "^0.13.0",
+    "@toolpad/core": "^0.14.0",
     "@types/node": "^22.14.1",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.2",
