@@ -90,7 +90,7 @@ export type Summary = {
 }
 
 export type BodyweightSummary = {
-    parameters: Map<Date, number>
+    parameters: { [key: string]: number }
 }
 
 export type Page<T> = {
