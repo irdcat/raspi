@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config-map
+  labels:
+    {{ include "mongo-express.printSharedLabels" . | nindent 4 }}
+data:
+  ME_CONFIG_MONGODB_URL: mongodb://{{ .Values.mongo.service }}.{{ .Values.mongo.namespace }}.svc.cluster.local:{{ .Values.mongo.port }}
+  ME_CONFIG_SITE_BASEURL: /mongo

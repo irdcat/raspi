@@ -3,32 +3,28 @@ kind: Deployment
 metadata:
   name: {{ .Release.Name }}
   labels:
-  {{- include "fitness-server.printSharedLabels" . | nindent 4 }}
+    {{ include "mongo-express.printSharedLabels" . | nindent 4 }}
 spec:
   replicas: 1
-  strategy: 
+  strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: fitness-server
+      app: mongo-express
   template:
     metadata:
       labels:
-        app: fitness-server
-        {{- include "fitness-server.printSharedLabels" . | nindent 8 }}
+        app: mongo-express
+        {{ include "mongo-express.printSharedLabels" . | nindent 8 }}
     spec:
       containers:
         - name: server
-          image: irdcat/fitness-server:{{ .Chart.AppVersion }}
-          command: ["java"]
-          args:
-            - -jar
-            - server.jar
+          image: mongo-express:{{ .Chart.AppVersion }}
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-config-map
           ports:
-            - containerPort: 8080
+            - containerPort: 8081
           resources:
             requests:
               memory: {{ .Values.resources.requests.memory }}
