@@ -1,4 +1,6 @@
 spring:
+  webflux:
+    base-path: /fitness
   data:
     mongodb:
       database: fitness

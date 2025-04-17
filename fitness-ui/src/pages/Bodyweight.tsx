@@ -1,22 +1,24 @@
 import BodyweightChart from "../components/BodyweightChart";
-import { Backdrop, Box, CircularProgress, Paper } from "@mui/material";
+import { Backdrop, Box, Checkbox, CircularProgress, FormControlLabel, Paper } from "@mui/material";
 import { DatePicker, DateValidationError, PickerChangeHandlerContext } from "@mui/x-date-pickers";
 import { subDays } from "date-fns";
 import ResponsiveFilterBar from "../components/ResponsiveFilterBar";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { fetchBodyweightSummary } from "../api/summaryApi";
 
 type Filters = {
     from: Date,
-    to: Date
+    to: Date,
+    fillGaps: boolean
 };
 
 const Bodyweight = () => {
-    const [bodyweights, setBodyweights] = useState<Map<Date, number>>(new Map());
+    const [bodyweights, setBodyweights] = useState<{ [key: string]: number }>({});
     const [loading, setLoading] = useState(true);
     const [filters, setFilters] = useState<Filters>({
         from: subDays(new Date(), 180),
-        to: new Date()
+        to: new Date(),
+        fillGaps: true
     });
 
     useEffect(() => {
@@ -40,6 +42,13 @@ const Bodyweight = () => {
             }));
         }
 
+    const handleFillGapsChange = (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
+        setFilters((prevFilters) => ({
+            ...prevFilters,
+            fillGaps: checked
+        }));
+    }
+
     return (
         <>
             <Box sx={{ height: '100%', paddingX: '7px' }}>
@@ -57,10 +66,14 @@ const Bodyweight = () => {
                             name="to"
                             value={filters.to}
                             onChange={handleDateChange("to")}/>
+                        <FormControlLabel
+                            label="Fill Gaps"
+                            name="fillGaps"
+                            control={<Checkbox checked={filters.fillGaps} onChange={handleFillGapsChange}/>}/>
                     </ResponsiveFilterBar>
                 </Box>
                 <Box sx={{ height: 'calc(100% - 128px)', padding: '6px' }}>
-                    <BodyweightChart data={bodyweights}/>
+                    <BodyweightChart data={bodyweights} fillGaps={filters.fillGaps}/>
                 </Box>
             </Box>
             <Backdrop 
