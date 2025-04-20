@@ -255,4 +255,18 @@ entries:
     urls:
     - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/mongo/mongo-0.0.1.tgz
     version: 0.0.1
-generated: "2025-04-17T09:31:47.396841097Z"
+  mongo-express:
+  - apiVersion: v2
+    appVersion: 1.0.2
+    created: "2025-04-20T19:07:05.101958961Z"
+    description: Helm chart for Mongo-Express deployment
+    digest: f9be9b1189763883f85ad1438070230eb8316905b6969687959af41f581c1fa0
+    maintainers:
+    - email: kamil.adamiec97@gmail.com
+      name: Kamil Adamiec
+    name: mongo-express
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/mongo-express/mongo-express-1.0.0.tgz
+    version: 1.0.0
+generated: "2025-04-20T19:07:05.101570295Z"
