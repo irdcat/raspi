@@ -5,12 +5,12 @@ import { FormProvider, useForm } from "react-hook-form";
 import FormInputText from "./FormInputText";
 import FormInputCheckbox from "./FormInputCheckbox";
 
-const ExercisePromptDialog = (props: DialogProps<undefined, Exercise | null>) => {
-    const { open, onClose } = props;
+const ExercisePromptDialog = (props: DialogProps<Exercise | undefined, Exercise | null>) => {
+    const { open, onClose, payload } = props;
     const formMethods = useForm<Exercise>({
         defaultValues: {
-            name: "",
-            isBodyweight: false
+            name: payload?.name ?? "",
+            isBodyweight: payload?.isBodyweight ?? false
         }
     });
     const { handleSubmit } = formMethods;
