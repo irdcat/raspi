@@ -2,7 +2,7 @@ import { useDialogs } from "@toolpad/core";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { TrainingTemplate, TrainingTemplateFormData } from "../types";
-import { Backdrop, Box, Button, CircularProgress, Grid2, IconButton, Paper, Typography } from "@mui/material";
+import { Backdrop, Box, Button, CircularProgress, Grid, IconButton, Paper, Typography } from "@mui/material";
 import { createTemplate, fetchTemplateById, isTemplate, updateTemplate } from "../api/templateApi";
 import FormInputText from "../components/FormInputText";
 import FormInputExercise from "../components/FormInputExercise";
@@ -116,9 +116,9 @@ const TemplateDetails = () => {
                                 <LuPlus/>
                             </IconButton>
                         </Box>
-                        <Grid2 container spacing={2} sx={{ padding: '5px' }}>
+                        <Grid container spacing={2} sx={{ padding: '5px' }}>
                             {fields.map((field, index) => (
-                                <Grid2 key={field.id} size={{ xs: 12, md: 6 }}>
+                                <Grid key={field.id} size={{ xs: 12, md: 6 }}>
                                     <Box sx={{ display: 'flex', padding: '5px', columnGap: '5px' }}>
                                         <FormInputExercise name={`exercises.${index}.exercise`}/>
                                         <IconButton tabIndex={-1} color="error" onClick={() => remove(index)}>
@@ -158,9 +158,9 @@ const TemplateDetails = () => {
                                                 }
                                             }}/>
                                     </Box>
-                                </Grid2>
+                                </Grid>
                             ))}
-                        </Grid2>
+                        </Grid>
                     </Box>
                     <Box component={Paper} sx={{ height: '64px' }}>
                         <Box sx={{ width: '100%', display: 'flex', padding: '14px', columnGap: '8px', flexDirection: 'row-reverse' }}>

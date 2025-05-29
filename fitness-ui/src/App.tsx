@@ -7,7 +7,7 @@ import Trainings from './pages/Trainings';
 import Analysis from './pages/Analysis';
 import Exercises from './pages/Exercises';
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import TrainingDetails from './pages/TrainingDetails';
 import { DialogsProvider } from '@toolpad/core';
 import Templates from './pages/Templates';
