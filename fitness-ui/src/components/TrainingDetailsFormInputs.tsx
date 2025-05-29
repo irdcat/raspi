@@ -1,15 +1,16 @@
 import { Box, Grid2, IconButton, Typography } from "@mui/material"
 import FormInputText from "./FormInputText"
-import { LuPlus, LuX } from "react-icons/lu"
+import { LuPencilLine, LuPlus, LuX } from "react-icons/lu"
 import { useFieldArray, useFormContext } from "react-hook-form"
 import FormInputTrainingExerciseSets from "./FormInputTrainingExerciseSets"
 import FormInputExercise from "./FormInputExercise"
 import { useDialogs } from "@toolpad/core"
 import ExercisePromptDialog from "./ExercisePromptDialog"
+import { TrainingExercise } from "../types"
 
 const TrainingDetailsFormInputs = () => {
-    const { control, register } = useFormContext()
-    const { fields, append, remove } = useFieldArray({
+    const { control, register, getValues } = useFormContext()
+    const { fields, append, remove, insert } = useFieldArray({
         control, name: "exercises"
     });
     const dialogs = useDialogs();
@@ -22,6 +23,19 @@ const TrainingDetailsFormInputs = () => {
                 order: fields.length + 1,
                 exercise: result,
                 sets: []
+            });
+        }
+    }
+
+    const onEditExercise = async (index: number) => {
+        const field = getValues("exercises")[index] as TrainingExercise;
+        const result = await dialogs.open(ExercisePromptDialog, field.exercise);
+        if (result != null) {
+            insert(index, {
+                id: field.id,
+                order: field.order,
+                exercise: result,
+                sets: field.sets
             });
         }
     }
@@ -59,6 +73,9 @@ const TrainingDetailsFormInputs = () => {
                         <Box sx={{ display: 'flex', padding: '5px', columnGap: '5px' }}>
                             <input type="hidden" {...register(`exercises.${index}.order`)}/>
                             <FormInputExercise name={`exercises.${index}.exercise`}/>
+                            <IconButton tabIndex={-1} color="secondary" onClick={() => onEditExercise(index)}>
+                                <LuPencilLine/>
+                            </IconButton>
                             <IconButton tabIndex={-1} color="error" onClick={onRemoveExercise(index)}>
                                 <LuX/>
                             </IconButton>
