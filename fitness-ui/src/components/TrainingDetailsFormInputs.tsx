@@ -1,4 +1,4 @@
-import { Box, Grid2, IconButton, Typography } from "@mui/material"
+import { Box, Grid, IconButton, Typography } from "@mui/material"
 import FormInputText from "./FormInputText"
 import { LuPencilLine, LuPlus, LuX } from "react-icons/lu"
 import { useFieldArray, useFormContext } from "react-hook-form"
@@ -66,9 +66,9 @@ const TrainingDetailsFormInputs = () => {
                     <LuPlus/>
                 </IconButton>
             </Box>
-            <Grid2 container spacing={2} sx={{ padding: '5px' }}>
+            <Grid container spacing={2} sx={{ padding: '5px' }}>
                 {fields.map((field, index) => (
-                    <Grid2 key={field.id} size={{ xs: 12, md: 6 }}
+                    <Grid key={field.id} size={{ xs: 12, md: 6 }}
                         sx={{ border: '1px solid rgba(255, 255, 255, 0.23)', borderRadius: '4px', padding: '3px' }}>
                         <Box sx={{ display: 'flex', padding: '5px', columnGap: '5px' }}>
                             <input type="hidden" {...register(`exercises.${index}.order`)}/>
@@ -81,9 +81,9 @@ const TrainingDetailsFormInputs = () => {
                             </IconButton>
                         </Box>
                         <FormInputTrainingExerciseSets name={`exercises.${index}.sets`}/>
-                    </Grid2>
+                    </Grid>
                 ))}
-            </Grid2>
+            </Grid>
         </>
     )
 }
