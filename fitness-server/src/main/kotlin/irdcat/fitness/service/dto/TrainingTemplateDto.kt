@@ -1,4 +1,6 @@
-package irdcat.fitness.service
+package irdcat.fitness.service.dto
+
+import irdcat.fitness.service.model.TrainingTemplate
 
 data class TrainingTemplateDto(
     val id: String,

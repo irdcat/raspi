@@ -27,7 +27,15 @@ const CountedExerciseList = (props: { exercises: Array<CountedExercise> }) => {
                     <ListItemButton onClick={onExerciseClick(countedExercise.exercise.name)}>
                         <Box sx={{ display: 'flex', width: '100%', columnGap: 1, padding: '3px' }}>
                             <ExerciseWithIcon exercise={countedExercise.exercise} sx={{ flexGrow: 1 }}/>
-                            <Box>
+                            { 
+                                countedExercise.best === null ? <></> :
+                                <Box sx={{ textAlign: 'right' }}>
+                                    <Typography sx={{ display: 'inline', color: 'text.secondary', fontWeight: 'semibold', fontSize: '14px' }}>
+                                        1RM: {countedExercise.best} kg
+                                    </Typography>
+                                </Box>
+                            }
+                            <Box sx={{ width: '30px', textAlign: 'right' }}>
                                 <Typography sx={{ color: 'text.secondary'}}>
                                     {countedExercise.count}
                                 </Typography>

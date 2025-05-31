@@ -3,7 +3,7 @@ package irdcat.fitness.api
 import irdcat.fitness.Constants.RequestParameters
 import irdcat.fitness.exception.TrainingNotFoundException
 import irdcat.fitness.service.Page
-import irdcat.fitness.service.TrainingDto
+import irdcat.fitness.service.dto.TrainingDto
 import irdcat.fitness.service.TrainingService
 import org.slf4j.LoggerFactory
 import org.springframework.core.io.Resource

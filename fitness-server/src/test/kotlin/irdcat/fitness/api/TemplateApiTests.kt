@@ -1,15 +1,14 @@
 package irdcat.fitness.api
 
-import irdcat.fitness.service.Exercise
-import irdcat.fitness.service.ExerciseDto
-import irdcat.fitness.service.TrainingTemplate
-import irdcat.fitness.service.TrainingTemplateDto
-import irdcat.fitness.service.TrainingTemplateExercise
-import irdcat.fitness.service.TrainingTemplateExerciseDto
+import irdcat.fitness.service.model.Exercise
+import irdcat.fitness.service.dto.ExerciseDto
+import irdcat.fitness.service.model.TrainingTemplate
+import irdcat.fitness.service.dto.TrainingTemplateDto
+import irdcat.fitness.service.model.TrainingTemplateExercise
+import irdcat.fitness.service.dto.TrainingTemplateExerciseDto
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.core.io.ByteArrayResource
-import org.springframework.http.ContentDisposition
 import org.springframework.http.ContentDisposition.attachment
 import org.springframework.http.MediaType
 import org.springframework.http.client.MultipartBodyBuilder

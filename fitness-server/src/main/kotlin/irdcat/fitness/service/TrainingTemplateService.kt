@@ -10,6 +10,8 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import irdcat.fitness.exception.TrainingTemplateNotFoundException
+import irdcat.fitness.service.dto.TrainingTemplateDto
+import irdcat.fitness.service.model.TrainingTemplate
 import org.slf4j.LoggerFactory
 import org.springframework.core.io.Resource
 import org.springframework.data.mongodb.core.FindAndReplaceOptions

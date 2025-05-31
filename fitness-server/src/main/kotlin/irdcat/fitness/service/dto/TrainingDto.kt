@@ -1,7 +1,8 @@
-package irdcat.fitness.service
+package irdcat.fitness.service.dto
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonFormat.Shape
+import irdcat.fitness.service.model.TrainingExercise
 import java.time.LocalDate
 
 data class TrainingDto(

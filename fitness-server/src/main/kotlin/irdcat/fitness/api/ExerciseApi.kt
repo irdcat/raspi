@@ -1,7 +1,7 @@
 package irdcat.fitness.api
 
 import irdcat.fitness.Constants.RequestParameters
-import irdcat.fitness.service.CountedExerciseDto
+import irdcat.fitness.service.dto.CountedExerciseDto
 import irdcat.fitness.service.ExerciseService
 import irdcat.fitness.service.Page
 import org.slf4j.LoggerFactory

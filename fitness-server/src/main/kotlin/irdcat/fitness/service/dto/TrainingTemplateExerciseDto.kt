@@ -1,4 +1,6 @@
-package irdcat.fitness.service
+package irdcat.fitness.service.dto
+
+import irdcat.fitness.service.model.TrainingTemplateExercise
 
 data class TrainingTemplateExerciseDto(
     val exercise: ExerciseDto,
@@ -8,7 +10,8 @@ data class TrainingTemplateExerciseDto(
 ) {
     companion object {
         fun fromTrainingTemplateExercise(
-            trainingTemplateExercise: TrainingTemplateExercise): TrainingTemplateExerciseDto {
+            trainingTemplateExercise: TrainingTemplateExercise
+        ): TrainingTemplateExerciseDto {
 
             return TrainingTemplateExerciseDto(
                 ExerciseDto.fromExercise(trainingTemplateExercise.exercise),

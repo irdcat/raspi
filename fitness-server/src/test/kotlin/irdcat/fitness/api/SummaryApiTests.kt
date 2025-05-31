@@ -1,11 +1,11 @@
 package irdcat.fitness.api
 
-import irdcat.fitness.service.BodyweightSummaryDto
-import irdcat.fitness.service.Exercise
-import irdcat.fitness.service.ExerciseSummaryDto
-import irdcat.fitness.service.ExerciseSummaryParametersDto
-import irdcat.fitness.service.TrainingExercise
-import irdcat.fitness.service.TrainingExerciseSet
+import irdcat.fitness.service.dto.BodyweightSummaryDto
+import irdcat.fitness.service.model.Exercise
+import irdcat.fitness.service.dto.ExerciseSummaryDto
+import irdcat.fitness.service.dto.ExerciseSummaryParametersDto
+import irdcat.fitness.service.model.TrainingExercise
+import irdcat.fitness.service.model.TrainingExerciseSet
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach

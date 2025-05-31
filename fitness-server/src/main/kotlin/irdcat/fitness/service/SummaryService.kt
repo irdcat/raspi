@@ -1,6 +1,11 @@
 package irdcat.fitness.service
 
 import com.mongodb.BasicDBObject
+import irdcat.fitness.service.dto.BodyweightSummaryDto
+import irdcat.fitness.service.dto.ExerciseDto
+import irdcat.fitness.service.dto.ExerciseSummaryDto
+import irdcat.fitness.service.dto.ExerciseSummaryParametersDto
+import irdcat.fitness.service.model.TrainingExercise
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Sort.Direction
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
@@ -122,7 +127,7 @@ class SummaryService(
             }
     }
 
-    fun calculateBodyweightSummary(from: LocalDate, to: LocalDate): Mono<BodyweightSummaryDto> {
+    fun calculateBodyweightSummary(from: LocalDate, to: LocalDate): Mono<irdcat.fitness.service.dto.BodyweightSummaryDto> {
 
         val matchOperation = matchBetweenDates(from, to)
         val groupOperation = groupBodyweightsByDate()
