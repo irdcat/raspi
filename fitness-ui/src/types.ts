@@ -5,6 +5,7 @@ export type Exercise = {
 
 export type CountedExercise = {
     exercise: Exercise,
+    best: number | null,
     count: number
 };
 

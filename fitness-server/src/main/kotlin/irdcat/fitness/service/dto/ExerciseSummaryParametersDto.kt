@@ -1,4 +1,4 @@
-package irdcat.fitness.service
+package irdcat.fitness.service.dto
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonInclude.Include

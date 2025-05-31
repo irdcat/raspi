@@ -1,4 +1,4 @@
-package irdcat.fitness.service
+package irdcat.fitness.service.model
 
 data class Exercise(
 

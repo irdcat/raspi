@@ -1,8 +1,8 @@
 package irdcat.fitness.api
 
 import irdcat.fitness.AbstractIntegrationTest
-import irdcat.fitness.service.TrainingExercise
-import irdcat.fitness.service.TrainingTemplate
+import irdcat.fitness.service.model.TrainingExercise
+import irdcat.fitness.service.model.TrainingTemplate
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient

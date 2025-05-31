@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import irdcat.fitness.service.TrainingExercise
-import irdcat.fitness.service.TrainingTemplate
+import irdcat.fitness.service.model.TrainingExercise
+import irdcat.fitness.service.model.TrainingTemplate
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.context.annotation.Configuration

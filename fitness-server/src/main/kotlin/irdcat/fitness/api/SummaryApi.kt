@@ -1,7 +1,7 @@
 package irdcat.fitness.api
 
-import irdcat.fitness.service.BodyweightSummaryDto
-import irdcat.fitness.service.ExerciseSummaryDto
+import irdcat.fitness.service.dto.BodyweightSummaryDto
+import irdcat.fitness.service.dto.ExerciseSummaryDto
 import irdcat.fitness.service.SummaryService
 import org.slf4j.LoggerFactory
 import org.springframework.format.annotation.DateTimeFormat

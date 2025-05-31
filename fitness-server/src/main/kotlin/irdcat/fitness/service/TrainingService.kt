@@ -10,6 +10,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.mongodb.BasicDBObject
 import irdcat.fitness.exception.TrainingNotFoundException
+import irdcat.fitness.service.dto.TrainingDto
+import irdcat.fitness.service.model.TrainingExercise
 import org.slf4j.LoggerFactory
 import org.springframework.core.io.Resource
 import org.springframework.data.domain.Sort.Direction

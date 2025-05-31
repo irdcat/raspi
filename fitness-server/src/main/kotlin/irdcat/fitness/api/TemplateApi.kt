@@ -1,7 +1,7 @@
 package irdcat.fitness.api
 
 import irdcat.fitness.exception.TrainingTemplateNotFoundException
-import irdcat.fitness.service.TrainingTemplateDto
+import irdcat.fitness.service.dto.TrainingTemplateDto
 import irdcat.fitness.service.TrainingTemplateService
 import org.slf4j.LoggerFactory
 import org.springframework.core.io.Resource

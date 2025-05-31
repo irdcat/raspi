@@ -1,20 +1,19 @@
 package irdcat.fitness.api
 
 import irdcat.fitness.Constants.RequestParameters
-import irdcat.fitness.service.Exercise
-import irdcat.fitness.service.ExerciseDto
-import irdcat.fitness.service.TrainingDto
-import irdcat.fitness.service.TrainingExercise
-import irdcat.fitness.service.TrainingExerciseDto
-import irdcat.fitness.service.TrainingExerciseSet
-import irdcat.fitness.service.TrainingExerciseSetDto
+import irdcat.fitness.service.model.Exercise
+import irdcat.fitness.service.dto.ExerciseDto
+import irdcat.fitness.service.dto.TrainingDto
+import irdcat.fitness.service.model.TrainingExercise
+import irdcat.fitness.service.dto.TrainingExerciseDto
+import irdcat.fitness.service.model.TrainingExerciseSet
+import irdcat.fitness.service.dto.TrainingExerciseSetDto
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.http.ContentDisposition.attachment
 import org.springframework.http.MediaType
 import org.springframework.http.client.MultipartBodyBuilder
-import org.springframework.mock.web.MockMultipartFile
 import org.springframework.web.reactive.function.BodyInserters
 import kotlin.test.assertEquals
 

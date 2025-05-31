@@ -6,3 +6,7 @@ spring:
       database: fitness
       host: localhost
       port: ${mongodb.container.port}
+
+logging:
+  level:
+    irdcat.fitness.service: DEBUG
