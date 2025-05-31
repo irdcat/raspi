@@ -189,4 +189,46 @@ class ExerciseApiTests: AbstractApiTest() {
             .jsonPath("$.content[0].count").isEqualTo(1)
             .jsonPath("$.content[1]").doesNotExist()
     }
+
+    @Test
+    fun getCountedExercise_excludeMaxIfOtherSetWithSameWeightAndMoreThanOneRepExists() {
+
+        insertTrainingExercises(listOf(
+            TrainingExercise("1", 0, Exercise("Deadlift", false), 60.0f, "2025-01-01".toLocalDate(), listOf(
+                TrainingExerciseSet(1, 110.0f),
+                TrainingExerciseSet(1, 115.0f),
+                TrainingExerciseSet(1, 120.0f)
+            )),
+            TrainingExercise("2", 0, Exercise("Deadlift", false), 60.0f, "2025-01-03".toLocalDate(), listOf(
+                TrainingExerciseSet(3, 110.0f),
+                TrainingExerciseSet(3, 115.0f),
+                TrainingExerciseSet(3, 120.0f)
+            ))
+        ))
+
+        webTestClient()
+            .get()
+            .uri { builder ->
+                builder
+                    .path("/api/exercises/counted")
+                    .queryParam("name", "Deadlift")
+                    .queryParam(RequestParameters.PAGE, 0)
+                    .queryParam(RequestParameters.SIZE, 1)
+                    .build()
+            }
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isOk
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.currentPage").isEqualTo(0)
+            .jsonPath("$.pageSize").isEqualTo(1)
+            .jsonPath("$.totalResults").isEqualTo(1)
+            .jsonPath("$.content").isArray
+            .jsonPath("$.content[0].exercise.name").isEqualTo("Deadlift")
+            .jsonPath("$.content[0].exercise.isBodyweight").isEqualTo(false)
+            .jsonPath("$.content[0].best").doesNotExist()
+            .jsonPath("$.content[0].count").isEqualTo(2)
+            .jsonPath("$.content[1]").doesNotExist()
+    }
 }
