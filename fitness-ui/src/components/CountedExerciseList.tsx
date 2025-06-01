@@ -9,7 +9,7 @@ const CountedExerciseList = (props: { exercises: Array<CountedExercise> }) => {
     const navigate = useNavigate();
 
     const onExerciseClick = (exerciseName: string) => () => {
-        navigate("/analysis", { state: { name: exerciseName } });
+        navigate(`/analysis/${exerciseName}`);
     }
 
     if (exercises.length === 0) {

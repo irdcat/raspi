@@ -1,26 +1,78 @@
-import { Autocomplete, Backdrop, Box, CircularProgress, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { Backdrop, Box, CircularProgress, Paper, Typography } from "@mui/material";
 import { DatePicker, DateValidationError, PickerChangeHandlerContext } from "@mui/x-date-pickers";
-import { subDays } from "date-fns";
-import { SyntheticEvent, useEffect, useState } from "react";
-import AnalysisChart from "../components/AnalysisChart";
+import { parse, subDays } from "date-fns";
+import { useEffect, useState } from "react";
 import ResponsiveFilterBar from "../components/ResponsiveFilterBar";
-import { Metric, METRICS, Summary } from "../types";
+import { IntensityMetrics, Summary, VolumeMetrics } from "../types";
 import { fetchExerciseSummary } from "../api/summaryApi";
-import { fetchExerciseNames } from "../api/exerciseApi";
-import { camelCaseToSpaced } from "../utils/stringUtils";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import ExerciseMetricsChart from "../components/ExerciseMetricsChart";
 
 type AnalysisFilters = {
     from: Date,
     to: Date,
-    exerciseName: string,
+}
+
+const summaryToExerciseVolumeMetrics = (summary: Summary): Map<Date, VolumeMetrics> => {
+    return new Map(Object.entries(summary.parameters)
+        .map(([date, parameters]) => {
+            const metrics: VolumeMetrics = {
+                avg: parameters.averageVolume,
+                sum: parameters.volume
+            };
+            return [parse(date, "yyyy-MM-dd", new Date()), metrics] 
+        }))
+}
+
+const summaryToExerciseIntensityMetrics = (summary: Summary): Map<Date, IntensityMetrics> => {
+    return new Map(Object.entries(summary.parameters)
+        .map(([date, parameters]) => {
+            const metrics: IntensityMetrics = {
+                avg: parameters.averageIntensity,
+                min: parameters.minIntensity,
+                max: parameters.maxIntensity
+            };
+            return [parse(date, "yyyy-MM-dd", new Date()), metrics]
+        }));
+}
+
+const summaryToBodyweightVolumeMetrics = (summary: Summary): Map<Date, VolumeMetrics> => {
+    const isPopulated = summary.exercise.isBodyweight
+    
+    if (!isPopulated) {
+        return new Map();
+    }
+
+    return new Map(Object.entries(summary.parameters)
+        .map(([date, parameters]) => {
+            const metrics: VolumeMetrics = {
+                avg: parameters.averageBodyweightVolume!!,
+                sum: parameters.bodyweightVolume!!
+            };
+            return [parse(date, "yyyy-MM-dd", new Date()), metrics] 
+        }))
+}
+
+const summaryToBodyweightIntensityMetrics = (summary: Summary): Map<Date, IntensityMetrics> => {
+    const isPopulated = summary.exercise.isBodyweight
+    
+    if (!isPopulated) {
+        return new Map();
+    }
+    
+    return new Map(Object.entries(summary.parameters)
+        .map(([date, parameters]) => {
+            const metrics: IntensityMetrics = {
+                avg: parameters.bodyweight,
+                min: parameters.bodyweight,
+                max: parameters.bodyweight
+            };
+            return [parse(date, "yyyy-MM-dd", new Date()), metrics]
+        }));
 }
 
 const Analysis = () => {
-    const { state } = useLocation();
-    const initialExerciseName = state !== null ? state.name : "";
-    const [exerciseNames, setExerciseNames] = useState<Array<string>>([]);
-    const [metric, setMetric] = useState<Metric>("volume");
+    const { exerciseName } = useParams();
     const [loading, setLoading] = useState(true);
     const [summary, setSummary] = useState<Summary>({
         exercise: { name: "", isBodyweight: false },
@@ -28,40 +80,29 @@ const Analysis = () => {
     });
     const [analysisFilters, setAnalysisFilters] = useState<AnalysisFilters>({
         from: subDays(new Date(), 180),
-        to: new Date(),
-        exerciseName: initialExerciseName !== null ? initialExerciseName : ""
+        to: new Date()
     });
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            const result = await fetchExerciseNames();
-            setExerciseNames(result);
-            setLoading(false);
-        };
-        fetchData();
-    }, [])
-
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            const { exerciseName, from, to } = analysisFilters;
+            const { from, to } = analysisFilters;
             if (exerciseName === "") {
                 setSummary({ 
                     exercise: { name: "", isBodyweight: false },
-                     parameters: new Map() 
+                    parameters: new Map() 
                 });
                 setLoading(false);
                 return;
             }
-            const result = await fetchExerciseSummary(from, to, exerciseName);
+            const result = await fetchExerciseSummary(from, to, exerciseName!!);
             setSummary(result);
             setLoading(false);
         };
         fetchData();
-    }, [analysisFilters]);
+    }, [analysisFilters, exerciseName]);
 
-    const handleDateChange = (fieldName: keyof Omit<AnalysisFilters, "exerciseName">) =>
+    const handleDateChange = (fieldName: keyof AnalysisFilters) =>
         (value: Date | null, _: PickerChangeHandlerContext<DateValidationError>) => {
             if (value == null) {
                 return;
@@ -72,19 +113,10 @@ const Analysis = () => {
             }))
         }
 
-    const handleExerciseChange = (e: SyntheticEvent, value: string | null) => {
-        if (value === null) {
-            value = "";
-        }
-        setAnalysisFilters(prevFilters => ({
-            ...prevFilters,
-            exerciseName: value
-        }));
-    }
-
-    const handleMetricChange = (e: SelectChangeEvent<Metric>) => {
-        setMetric(e.target.value as Metric);
-    }
+    const exerciseVolumeMetrics = summaryToExerciseVolumeMetrics(summary);
+    const bodyweightVolumeMetrics = summaryToBodyweightVolumeMetrics(summary);
+    const exerciseIntensityMetrics = summaryToExerciseIntensityMetrics(summary);
+    const bodyweightIntensitymetrics = summaryToBodyweightIntensityMetrics(summary);
 
     return (
         <>
@@ -103,32 +135,18 @@ const Analysis = () => {
                             name="to"
                             value={analysisFilters.to}
                             onChange={handleDateChange("to")}/>
-                        <Autocomplete
-                            options={exerciseNames}
-                            value={analysisFilters.exerciseName}
-                            onChange={handleExerciseChange}
-                            renderInput={params => (
-                                <TextField {...params}
-                                    label="Exercise"
-                                    size="small"
-                                    sx={{ minWidth: '200px' }}/>
-                            )}/>
-                        <FormControl size="small">
-                            <InputLabel>Metric</InputLabel>
-                            <Select 
-                                sx={{ minWidth: '200px' }} 
-                                value={metric} 
-                                label="Metric"
-                                onChange={handleMetricChange}>
-                                {METRICS.map((m, index) => (
-                                    <MenuItem value={m} key={index}>{camelCaseToSpaced(m)}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
                     </ResponsiveFilterBar>
                 </Box>
-                <Box sx={{ height: 'calc(100% - 128px)', padding: '6px' }}>
-                    <AnalysisChart data={summary} metric={metric}/>
+                <Box>
+                    <Typography variant="h5">
+                        {exerciseName}
+                    </Typography>
+                </Box>
+                <Box sx={{ height: 'calc(50% - 70px)', padding: '8px' }}>
+                    <ExerciseMetricsChart parameters={exerciseVolumeMetrics} bodyweight={bodyweightVolumeMetrics}/>
+                </Box>
+                <Box sx={{ height: 'calc(50% - 70px)', padding: '8px' }}>
+                    <ExerciseMetricsChart parameters={exerciseIntensityMetrics} bodyweight={bodyweightIntensitymetrics}/>
                 </Box>
             </Box>
             <Backdrop 

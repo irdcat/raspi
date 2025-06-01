@@ -119,6 +119,17 @@ export const METRICS = [
 
 export type Metric = (typeof METRICS)[number];
 
+export interface IntensityMetrics {
+    min: number,
+    max: number,
+    avg: number
+};
+
+export interface VolumeMetrics {
+    avg: number,
+    sum: number
+};
+
 export const FILE_TYPES = [
     "json",
     "yaml"
