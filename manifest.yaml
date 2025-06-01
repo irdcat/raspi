@@ -1,8 +1,8 @@
 components:
   - name: fitness-server
-    version: 1.4.0
+    version: 1.4.1
   - name: fitness-ui
-    version: 1.4.0
+    version: 1.4.1
   - name: mongo
     version: 1.0.1
   - name: mongo-express
