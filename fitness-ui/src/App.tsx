@@ -62,7 +62,7 @@ const App = () => {
                 <Route path="trainings" element={<Trainings/>}/>
                 <Route path="trainings/:dateString" element={<TrainingDetails/>}/>
                 <Route path="exercises" element={<Exercises/>}/>
-                <Route path="analysis" element={<Analysis/>}/>
+                <Route path="analysis/:exerciseName" element={<Analysis/>}/>
                 <Route path="templates" element={<Templates/>}/>
                 <Route path="templates/:id" element={<TemplateDetails/>}/>
               </Route>
