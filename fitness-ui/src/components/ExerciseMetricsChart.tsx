@@ -140,99 +140,89 @@ const toVolumeSeries = (
     }
 }
 
-const VolumeMetricsChart = (props: {
-    baseOptions: EChartsOption,
-    parameters: Map<Date, VolumeMetrics>,
-    bodyweight: Map<Date, VolumeMetrics>
-}) => {
-    const { baseOptions, parameters, bodyweight } = props;
-    const options: EChartsOption = {
-        ...baseOptions,
-        title: {
-            text: "Volume"
-        },
-        series: toVolumeSeries(parameters, bodyweight)
-    }
-
-    return <EChartsReact style={{ width: '100%', height: '100%' }} option={options} theme="dark"/>
-}
-
-const IntensityMetricsChart = (props: {
-    baseOptions: EChartsOption,
-    parameters: Map<Date, IntensityMetrics>, 
-    bodyweight: Map<Date, IntensityMetrics> 
-}) => {
-    const { baseOptions, parameters, bodyweight } = props;
-    const options: EChartsOption = {
-        ...baseOptions,
-        title: {
-            text: "Intensity"
-        },
-        series: toIntensitySeries(parameters, bodyweight)
-    }
-
-    return <EChartsReact style={{ width: '100%', height: '100%' }} option={options} theme="dark"/>
-}
 
 const ExerciseMetricsChart = (props: {
-    parameters: Map<Date, VolumeMetrics> | Map<Date, IntensityMetrics>,
-    bodyweight: Map<Date, VolumeMetrics> | Map<Date, IntensityMetrics>
+    volumeParameters: Map<Date, VolumeMetrics>,
+    volumeBodyweight: Map<Date, VolumeMetrics>,
+    intensityParameters: Map<Date, IntensityMetrics>,
+    intensityBodyweight: Map<Date, IntensityMetrics>
 }) => {
-    const { parameters, bodyweight } = props
+    const { volumeParameters, volumeBodyweight, intensityParameters, intensityBodyweight } = props
 
-    if (parameters.size === 0) {
+    if (volumeParameters.size === 0 || intensityParameters.size === 0) {
         return <EmptyState title="No data found" message="Change the filters or hit the gym"/>
     }
 
-    const baseOptions: EChartsOption = {
-        grid: {
-            top: 40,
-            left: 65,
-            right: 20,
-            bottom: 25
-        },
-        legend: {
-            show: true
+    const option: EChartsOption = {
+        title: {
+            text: "Volume & Intensity",
+            left: 'center',
+            top: 10
         },
         tooltip: {
             trigger: 'axis',
             axisPointer: {
-                type: 'cross'
+                animation: false
             }
         },
-        xAxis: {
-            data: Array.from(parameters.keys()).map(d => format(d, "yyyy-MM-dd")),
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            },
+            right: 10,
+            top: 7
+        },
+        axisPointer: {
+            link: [{
+                xAxisIndex: 'all'
+            }]
+        },
+        grid: [{
+            left: 60,
+            right: 50,
+            height: '40%'
+        }, {
+            left: 60,
+            right: 50,
+            top: '55%',
+            height: '40%'
+        }],
+        xAxis: [{
+            type: 'category',
+            boundaryGap: false,
+            data: Array.from(volumeParameters.keys()).map(d => format(d, "yyyy-MM-dd")),
             axisTick: {
                 alignWithLabel: true
             }
-        },
-        yAxis: {
+        }, {
+            gridIndex: 1,
+            type: 'category',
+            boundaryGap: false,
+            data: Array.from(intensityParameters.keys()).map(d => format(d, "yyyy-MM-dd")),
+            axisTick: {
+                alignWithLabel: true
+            }
+        }],
+        yAxis: [{
+            name: "Volume (kg)",
             type: 'value',
-            alignTicks: true,
-            axisLabel: {
-                formatter: "{value} kg"
-            },
             axisLine: {
                 show: true
             }
-        }
-    }
+        }, {
+            gridIndex: 1,
+            name: "Intensity (kg)",
+            type: 'value',
+            axisLine: {
+                show: true
+            }
+        }],
+        series: toIntensitySeries(intensityParameters, intensityBodyweight)
+            .map(s => ({ ...s, xAxisIndex: 1, yAxisIndex: 1} as SeriesOption))
+            .concat(toVolumeSeries(volumeParameters, volumeBodyweight))
+    };
 
-    if ("sum" in parameters.values().next().value!!) {
-        const volumeParameters = parameters as Map<Date, VolumeMetrics>
-        const volumeBodyweights = bodyweight as Map<Date, VolumeMetrics>
-        return <VolumeMetricsChart
-                    baseOptions={baseOptions} 
-                    parameters={volumeParameters} 
-                    bodyweight={volumeBodyweights}/>
-    } else {
-        const intensityParameters = parameters as Map<Date, IntensityMetrics>
-        const intensityBodyweights = bodyweight as Map<Date, IntensityMetrics>
-        return <IntensityMetricsChart 
-                    baseOptions={baseOptions} 
-                    parameters={intensityParameters} 
-                    bodyweight={intensityBodyweights}/>
-    }
+    return <EChartsReact option={option} style={{ width: '100%', height: '100%' }} theme="dark"/>
 }
 
 export default ExerciseMetricsChart;
