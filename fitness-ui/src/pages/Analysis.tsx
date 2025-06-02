@@ -142,11 +142,12 @@ const Analysis = () => {
                         {exerciseName}
                     </Typography>
                 </Box>
-                <Box sx={{ height: 'calc(50% - 70px)', padding: '8px' }}>
-                    <ExerciseMetricsChart parameters={exerciseVolumeMetrics} bodyweight={bodyweightVolumeMetrics}/>
-                </Box>
-                <Box sx={{ height: 'calc(50% - 70px)', padding: '8px' }}>
-                    <ExerciseMetricsChart parameters={exerciseIntensityMetrics} bodyweight={bodyweightIntensitymetrics}/>
+                <Box sx={{ height: 'calc(100% - 128px)', padding: '8px' }}>
+                    <ExerciseMetricsChart 
+                        volumeParameters={exerciseVolumeMetrics} 
+                        volumeBodyweight={bodyweightVolumeMetrics}
+                        intensityParameters={exerciseIntensityMetrics}
+                        intensityBodyweight={bodyweightIntensitymetrics}/>
                 </Box>
             </Box>
             <Backdrop 
