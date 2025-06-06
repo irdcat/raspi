@@ -1,4 +1,5 @@
 import argparse
+import os
 import subprocess
 from dataclasses import dataclass
 import yaml
@@ -8,20 +9,43 @@ HELM_REPO_NAME="raspi"
 HELM_REPO_URL="https://irdcat.github.io/raspi/"
 
 @dataclass
+class HelmRepository:
+    name: str
+    url: str
+
+@dataclass
 class Component:
     name: str
     version: str
 
-def parse_yaml(filename: str) -> list[Component]:
+@dataclass
+class InstalledComponent:
+    chart: str
+    namespace: str
+
+def parse_installed(yaml_string: str) -> list[InstalledComponent]:
+    data = yaml.safe_load(yaml_string)
+    return [InstalledComponent(chart=item['chart'], namespace=item['namespace']) for item in data]
+
+def parse_manifest(filename: str) -> list[Component]:
     with open(filename, 'r') as file:
         data = yaml.safe_load(file)
     return [Component(name=item['name'], version=item['version']) for item in data['components']]
 
-def install_component(component: Component):
+def parse_helm_repositories(yaml_string: str) -> list[HelmRepository]:
+    data = yaml.safe_load(yaml_string)
+    return [HelmRepository(name=item['name'], url=item['url']) for item in data]
+
+def component_install(component: Component):
+    if (component_installed(component)):
+        print("{name} {version} is already installed. Aborting.".format(name=component.name, version=component.version))
+        return
+    
     print("Installing {name} (Version: {version})".format(
         name = component.name,
         version = component.version
     ))
+    
     upgrade = subprocess.run([
         "helm", "upgrade",
         "--install", component.name, "{repo}/{name}".format(repo=HELM_REPO_NAME, name=component.name),
@@ -29,27 +53,36 @@ def install_component(component: Component):
         "--namespace", "default",
         "--wait",
         "--atomic"])
+    
     if (upgrade.returncode == 0):
         print("✅ Successfully installed {name}".format(name=component.name))
     else:
         print("❌ Failed to install {name}".format(name=component.name))
 
+def component_installed(component: Component) -> bool:
+    output = subprocess.check_output(["helm", "list", "-o", "yaml"])
+    installed_components = parse_installed(output)
+    checked_component_chart = "{name}-{version}".format(name=component.name, version=component.version)
+    for installed_component in installed_components:
+        if installed_component.chart == checked_component_chart:
+            return True
+    return False
+
 def helm_repository_exists(name: str) -> bool:
-    exists = subprocess.run([
-        "helm", "repo", "list", "|",
-        "grep", "-q", name
-    ])
-    return exists.returncode == 0
+    output = subprocess.check_output(["helm", "repo", "list", "-o", "yaml"])
+    helm_repositories = parse_helm_repositories(output)
+    for helm_repository in helm_repositories:
+        if helm_repository.name == name:
+            return True
+    return False
 
 def helm_repository_add(name: str, url: str):
-    add = subprocess.run([
-        "helm", "repo", "add", name, url
-    ])
+    subprocess.run(["helm", "repo", "add", name, url])
 
 def update_helm_repositories():
     if not helm_repository_exists(HELM_REPO_NAME):
         helm_repository_add(HELM_REPO_NAME, HELM_REPO_URL)
-    subprocess.run(["helm", "repo", "update"])
+    subprocess.run(["helm", "repo", "update"], stdout=open(os.devnull, 'wb'));
 
 
 parser = argparse.ArgumentParser(
@@ -86,10 +119,10 @@ action = parsed.action
 update_helm_repositories()
 if (action == 'single'):
     component = Component(parsed.name, parsed.version)
-    install_component(component)
+    component_install(component)
 elif (action == 'manifest'):
-    components = parse_yaml(parsed.manifest_file)
+    components = parse_manifest(parsed.manifest_file)
     for component in components:
-        install_component(component)
+        component_install(component)
 else:
     print("Unknown command " + action)
