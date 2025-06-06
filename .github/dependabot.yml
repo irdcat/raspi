@@ -5,8 +5,12 @@ updates:
     schedule:
       interval: 'daily'
     open-pull-requests-limit: 5
+    labels:
+      - fitness-ui
   - package-ecosystem: 'gradle'
     directory: ./fitness-server
     schedule:
       interval: 'daily'
     open-pull-requests-limit: 5
+    labels:
+      - fitness-server
