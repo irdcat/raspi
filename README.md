@@ -107,18 +107,23 @@ $ helm repo add raspi-helm https://irdcat.github.io/raspi/
 Services can be installed using `install.sh` that is located in a root directory of this project.
 Script supports two mutually exclusive ways of installing components.
 
+### Installation script requirements
+
+- Python 3
+- Helm 3
+
 ### Installing single component
 
 To install single component use following command:
 
 ```
-$ ./install.sh --name <component_name> --version <component_version>
+$ ./install.sh single <component_name> <component_version>
 ```
 
 Example usage:
 
 ```
-$ ./install.sh --name fitness-server --version 0.0.1
+$ ./install.sh single fitness-server 0.0.1
 ```
 
 ### Installing components from the manifest
@@ -140,13 +145,13 @@ components:
 To install components using the manifest use following command:
 
 ```
-$ ./install.sh --from-manifest <manifest_file>
+$ ./install.sh manifest <manifest_file>
 ```
 
 Example usage:
 
 ```
-$ ./install.sh --from-manifest manifest.yaml
+$ ./install.sh manifest manifest.yaml
 ```
 
 ## Local Development
