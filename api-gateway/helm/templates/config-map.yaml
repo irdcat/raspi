@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config-map
+  labels:
+    {{ include "api-gateway.printSharedLabels" . | nindent 4 }}
+data:
+  SPRING_PROFILES_ACTIVE: {{ join "," .Values.spring.profiles }},helm-config
+  application-helm-config.yaml: |
+    application:
+      services:
+        {{- range .Values.gateway.routes }}
+        - name: {{ .name }}
+          prefix: {{ .prefix }}
+          redirectTo: {{ .redirect.service }}.{{ .redirect.namespace }}.svc.cluster.local
+          {{- if .rewrite }}
+          rewriteSpec:
+            source: {{ .rewrite.source }}
+            target: {{ .rewrite.target }}
+          {{- end }}
+        {{- end }}

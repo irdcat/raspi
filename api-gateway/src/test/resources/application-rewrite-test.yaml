@@ -1,0 +1,8 @@
+application:
+  services:
+    - name: test-service
+      prefix: /test
+      redirectTo: http://localhost:8083
+      rewriteSpec:
+        source: "/test(/|$)(.*)"
+        target: "/$2"

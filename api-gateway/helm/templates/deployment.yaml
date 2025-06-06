@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    {{- include "api-gateway.printSharedLabels" . | nindent 4 }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+        {{- include "api-gateway.printSharedLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: server
+          image: irdcat/api-gateway:{{ .Chart.AppVersion }}
+          command: ["java"]
+          args:
+            - -jar
+            - server.jar
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-config-map
+          ports:
+              - containerPort: 8080
+          resources:
+            requests:
+              memory: {{ .Values.resources.requests.memory }}
+              cpu: {{ .Values.resources.requests.cpu }}
