@@ -9,7 +9,7 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.1.0",
     "@mui/material": "^7.1.0",
-    "@mui/x-date-pickers": "^8.5.0",
+    "@mui/x-date-pickers": "^8.5.1",
     "@toolpad/core": "^0.15.0",
     "@types/node": "^22.15.29",
     "@types/react": "^19.1.6",
