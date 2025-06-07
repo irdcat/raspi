@@ -1,0 +1,7 @@
+spring:
+  webflux:
+    base-path: /mongo
+
+application:
+  mongo:
+    url: localhost:${mongo.db.container.port}

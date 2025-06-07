@@ -2,6 +2,7 @@ package irdcat.mongo.status
 
 import com.mongodb.BasicDBObject
 import com.mongodb.reactivestreams.client.MongoClient
+import com.mongodb.reactivestreams.client.MongoDatabase
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
@@ -10,12 +11,19 @@ import reactor.kotlin.core.publisher.toMono
 internal class ServerStatusService(
     private val mongoClient: MongoClient
 ) {
-    private val SERVER_STATUS_COMMAND = BasicDBObject("serverStatus", 1)
+    companion object {
+        private val SERVER_STATUS_COMMAND = BasicDBObject("serverStatus", 1)
+    }
 
-    fun serverStatus(): Mono<ServerStatus> {
-        return mongoClient.getDatabase("admin")
+    private fun MongoClient.getAdminDatabase() = getDatabase("admin")
+
+    private fun MongoDatabase.getServerStatus() = runCommand(SERVER_STATUS_COMMAND)
+
+    fun getServerStatus(): Mono<ServerStatusDto> {
+        return mongoClient
+            .getAdminDatabase()
             .toMono()
-            .flatMap { it.runCommand(SERVER_STATUS_COMMAND).toMono() }
-            .map { it.toServerStatus() }
+            .flatMap { it.getServerStatus().toMono() }
+            .map { it.toServerStatusDto() }
     }
 }
