@@ -13,21 +13,25 @@ internal data class ServerStatusDto(
 ) {
     data class Connections(
         val current: Int,
-        val available: Int)
+        val available: Int
+    )
 
     data class GlobalLock(
         val activeClients: ClientMetrics,
-        val currentQueue: ClientMetrics) {
+        val currentQueue: ClientMetrics
+    ) {
 
         data class ClientMetrics(
             val total: Int,
             val readers: Int,
-            val writers: Int)
+            val writers: Int
+        )
     }
 
     data class OperationCounters(
         val insert: Long,
         val query: Long,
         val update: Long,
-        val delete: Long)
+        val delete: Long
+    )
 }

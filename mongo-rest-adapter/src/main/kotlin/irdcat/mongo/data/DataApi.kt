@@ -1,9 +1,16 @@
 package irdcat.mongo.data
 
+import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatusCode
 import org.springframework.http.MediaType
+import org.springframework.http.server.reactive.ServerHttpResponse
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -24,6 +31,15 @@ internal class DataApi(
     fun getDatabase(@PathVariable name: String) =
         dataService.getDatabase(name)
 
+    @PostMapping("/database/{name}")
+    fun addDatabase(@PathVariable name: String) =
+        dataService.addDatabase(name)
+
+    @DeleteMapping("/database/{name}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteDatabase(@PathVariable name: String) =
+        dataService.deleteDatabase(name)
+
     @GetMapping("/database/{dbName}/collection")
     fun getCollections(@PathVariable dbName: String) =
         dataService.getCollections(dbName)
@@ -31,4 +47,23 @@ internal class DataApi(
     @GetMapping("/database/{dbName}/collection/{collectionName}")
     fun getCollection(@PathVariable dbName: String, @PathVariable collectionName: String) =
         dataService.getCollection(dbName, collectionName)
+
+    @PostMapping("/database/{dbName}/collection/{collectionName}")
+    fun addCollection(@PathVariable dbName: String, @PathVariable collectionName: String) =
+        dataService.addCollection(dbName, collectionName)
+
+    @DeleteMapping("/database/{dbName}/collection/{collectionName}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteCollection(@PathVariable dbName: String, @PathVariable collectionName: String) =
+        dataService.deleteCollection(dbName, collectionName)
+
+    @ExceptionHandler(DataApiException::class)
+    fun handleDataApiException(ex: DataApiException, response: ServerHttpResponse) =
+        DataApiError.from(ex)
+            .apply { response.statusCode = HttpStatusCode.valueOf(status) }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception::class)
+    fun handleException(ex: Exception) =
+        GenericError(500, ex.message.orEmpty())
 }

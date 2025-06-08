@@ -5,3 +5,4 @@ internal data class DatabaseDto(
     val sizeOnDisk: Long?,
     val empty: Boolean?
 )
+
