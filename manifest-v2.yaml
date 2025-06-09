@@ -1,0 +1,25 @@
+components:
+  - name: api-gateway
+    version: 0.0.1
+  - name: raspi-ui
+    version: 0.0.1
+
+  - name: fitness-server
+    version: 1.4.1
+  - name: fitness-ui
+    version: 1.4.3
+
+  - name: mongo-rest-adapter
+    version: 0.0.1
+  - name: mongo-ui
+    version: 0.0.1
+
+  - name: auth-server
+    version: 0.0.1
+  - name: auth-ui
+    version: 0.0.1
+
+  - name: mongo
+    version: 1.0.1
+  - name: vault
+    version: 1.0.0
