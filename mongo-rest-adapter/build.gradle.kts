@@ -3,19 +3,29 @@ plugins {
 	kotlin("plugin.spring") version "1.9.25"
 	id("org.springframework.boot") version "3.5.0"
 	id("io.spring.dependency-management") version "1.1.7"
+	id("org.jetbrains.kotlinx.kover") version "0.9.1"
+	id("io.gitlab.arturbosch.detekt") version "1.23.8"
 }
 
 group = "irdcat"
 version = "0.0.1-SNAPSHOT"
 
+repositories {
+	mavenCentral()
+}
+
+configurations.matching { it.name == "detekt" }.all {
+	resolutionStrategy.eachDependency {
+		if (requested.group == "org.jetbrains.kotlin") {
+			useVersion(io.gitlab.arturbosch.detekt.getSupportedKotlinVersion())
+		}
+	}
+}
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
 	}
-}
-
-repositories {
-	mavenCentral()
 }
 
 dependencies {
@@ -38,10 +48,46 @@ dependencies {
 
 kotlin {
 	compilerOptions {
-		freeCompilerArgs.addAll("-Xjsr305=strict")
+		freeCompilerArgs.addAll(
+			"-Xjsr305=strict"
+		)
 	}
+}
+
+kover {
+	reports {
+		filters {
+			excludes {
+				classes("irdcat.fitness.FitnessApplicationKt")
+			}
+		}
+		verify {
+			rule {
+				minBound(85)
+			}
+		}
+	}
+}
+
+detekt {
+	config.setFrom(files("detekt.yaml"))
 }
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.register<Task>("runLocal") {
+	dependsOn(tasks.bootTestRun)
+}
+
+tasks.register<Copy>("buildDockerContext") {
+	dependsOn(tasks.bootJar)
+
+	val bootJarOutput = tasks.bootJar.get().outputs.files.singleFile
+
+	from("Dockerfile")
+	from(bootJarOutput)
+	rename(bootJarOutput.name, "mongo-rest-adapter.jar")
+	into(project.layout.buildDirectory.dir("dockerContext"))
 }

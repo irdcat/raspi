@@ -1,10 +1,12 @@
 package irdcat.mongo.data
 
-import com.mongodb.reactivestreams.client.MongoDatabase
+import com.mongodb.client.model.Filters
+import com.mongodb.reactivestreams.client.MongoCollection
 import org.bson.Document
 import org.bson.UuidRepresentation
 import org.bson.internal.UuidHelper
 import org.bson.types.Binary
+import reactor.core.publisher.Mono
 
 private const val NAME = "name"
 private const val TYPE = "type"
@@ -17,6 +19,7 @@ private const val READ_ONLY = "readOnly"
 private const val UUID = "uuid"
 private const val V = "v"
 private const val KEY = "key"
+private const val ID = "_id"
 
 internal fun Document.toDatabaseDto() =
     DatabaseDto(
@@ -52,3 +55,6 @@ internal fun Document.toCollectionIndex() =
 
 internal fun Binary.toUuid() =
     UuidHelper.decodeBinaryToUuid(data, type, UuidRepresentation.JAVA_LEGACY)
+
+internal fun <T> MongoCollection<T>.findById(id: String) =
+    find(Filters.eq(ID, id)).let { Mono.from(it) }

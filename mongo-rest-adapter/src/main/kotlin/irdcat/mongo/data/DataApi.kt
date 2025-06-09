@@ -1,7 +1,6 @@
 package irdcat.mongo.data
 
 import org.springframework.http.HttpStatus
-import org.springframework.http.HttpStatusCode
 import org.springframework.http.MediaType
 import org.springframework.http.server.reactive.ServerHttpResponse
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -57,13 +56,21 @@ internal class DataApi(
     fun deleteCollection(@PathVariable dbName: String, @PathVariable collectionName: String) =
         dataService.deleteCollection(dbName, collectionName)
 
+    @GetMapping("/database/{dbName}/collection/{collectionName}/document")
+    fun getDocuments(@PathVariable dbName: String, @PathVariable collectionName: String) =
+        dataService.getDocuments(dbName, collectionName)
+
+    @GetMapping("/database/{dbName}/collection/{collectionName}/document/{id}")
+    fun getDocument(@PathVariable dbName: String, @PathVariable collectionName: String, @PathVariable id: String) =
+        dataService.getDocument(dbName, collectionName, id)
+
     @ExceptionHandler(DataApiException::class)
     fun handleDataApiException(ex: DataApiException, response: ServerHttpResponse) =
         DataApiError.from(ex)
-            .apply { response.statusCode = HttpStatusCode.valueOf(status) }
+            .applyToResponse(response)
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception::class)
-    fun handleException(ex: Exception) =
-        GenericError(500, ex.message.orEmpty())
+    fun handleException(ex: Exception, response: ServerHttpResponse) =
+        GenericError(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.message.orEmpty())
+            .applyToResponse(response)
 }

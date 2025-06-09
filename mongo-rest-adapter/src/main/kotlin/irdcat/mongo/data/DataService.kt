@@ -71,6 +71,17 @@ internal class DataService(
             .map(MongoCollection<Document>::drop)
             .flatMap { Mono.from(it) }
 
+    fun getDocuments(dbName: String, collectionName: String) =
+        mongoClient
+            .safeGetCollection(dbName, collectionName)
+            .flatMapMany { it.find().toFlux() }
+
+    fun getDocument(dbName: String, collectionName: String, id: String) =
+        mongoClient
+            .safeGetCollection(dbName, collectionName)
+            .flatMap { it.findById(id) }
+            .switchIfEmpty(error(DocumentNotFoundException(dbName, collectionName, id)))
+
     private fun MongoClient.safeGetDatabase(name: String) =
         mongoClient
             .listDatabaseNames()
