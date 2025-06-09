@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: mongo-rest-adapter
+  main:
+    allow-bean-defintion-overriding: true
+  server:
+    port: 8080
+springdoc:
+  pathsToMatch: /api
+  swagger-ui:
+    path: /swagger-ui.html
