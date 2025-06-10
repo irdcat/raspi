@@ -12,7 +12,7 @@
     "@mui/x-date-pickers": "^8.5.1",
     "@toolpad/core": "^0.15.0",
     "@types/node": "^24.0.0",
-    "@types/react": "^19.1.6",
+    "@types/react": "^19.1.7",
     "@types/react-dom": "^19.1.6",
     "date-fns": "^4.1.0",
     "echarts": "^5.6.0",
