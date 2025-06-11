@@ -47,6 +47,6 @@
   },
   "devDependencies": {
     "ajv": "^8.17.1",
-    "react-refresh": "^0.11.0"
+    "react-refresh": "^0.17.0"
   }
 }
