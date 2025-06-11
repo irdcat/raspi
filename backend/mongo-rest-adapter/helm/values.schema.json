@@ -44,8 +44,7 @@
       "required": [
         "service",
         "namespace",
-        "port",
-        "database"
+        "port"
       ],
       "properties": {
         "service": {

@@ -1,0 +1,5 @@
+domain: raspi.local
+resources:
+  requests:
+    memory: 100Mi
+    cpu: 50m

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    {{- include "mongo-ui.printSharedLabels" . | nindent 4 }}
+spec:
+  replicas: 1
+  strategy: 
+    type: Recreate
+  selector:
+    matchLabels:
+      app: mongo-ui
+  template:
+    metadata:
+      name: {{ .Release.Name }}-pod
+      labels:
+        app: mongo-ui
+        {{- include "mongo-ui.printSharedLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: ui
+          image: irdcat/mongo-ui:{{ .Chart.AppVersion }}
+          command: ["nginx"]
+          args:
+            - -g
+            - "daemon off;"
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: {{ .Values.resources.requests.memory }}
+              cpu: {{ .Values.resources.requests.cpu }}

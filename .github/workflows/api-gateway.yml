@@ -1,11 +1,11 @@
-name: Fitness Server
+name: API Gateway
 
 on:
   pull_request:
     branches: ["master"]
     paths:
-      - backend/fitness-server/**
-      - .github/workflows/fitness-server.yml
+      - backend/api-gateway/**
+      - .github/workflows/api-gateway.yml
 
 jobs:
   gradle-build:
@@ -21,37 +21,37 @@ jobs:
           java-version: '21'
           cache: 'gradle'
           cache-dependency-path: |
-            backend/fitness-server/*.gradle*
-            backend/fitness-server/**/gradle-wrapper.properties
+            backend/api-gateway/*.gradle*
+            backend/api-gateway/**/gradle-wrapper.properties
 
       - name: Setup Gradle cache
         uses: actions/cache@v3
         with:
           path: ~/.gradle
-          key: ${{ runner.os }}-gradle-${{ hashFiles('backend/fitness-server/**') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('backend/api-gateway/**') }}
           restore-keys: ${{ runner.os }}-gradle-
 
       - name: Static Analysis
-        working-directory: ./backend/fitness-server
+        working-directory: ./backend/api-gateway
         run: ./gradlew detekt
 
       - name: Test
-        working-directory: ./backend/fitness-server
+        working-directory: ./backend/api-gateway
         run: ./gradlew test
 
       - name: Coverage
-        working-directory: ./backend/fitness-server
+        working-directory: ./backend/api-gateway
         run: ./gradlew koverLog
 
       - name: Docker Context
-        working-directory: ./backend/fitness-server
+        working-directory: ./backend/api-gateway
         run: ./gradlew buildDockerContext
 
       - name: Upload Docker context artifact
         uses: actions/upload-artifact@master
         with:
-          name: fitness-server-docker-context
-          path: backend/fitness-server/build/dockerContext
+          name: api-gateway-docker-context
+          path: backend/api-gateway/build/dockerContext
           if-no-files-found: error
 
   docker-build:
@@ -73,7 +73,7 @@ jobs:
       - name: Download Docker Context artifact
         uses: actions/download-artifact@master
         with:
-          name: fitness-server-docker-context
+          name: api-gateway-docker-context
           path: .
 
       - name: Build and push
@@ -82,7 +82,7 @@ jobs:
           context: .
           platforms: linux/arm64
           push: false
-          tags: ${{secrets.DOCKER_USER}}/fitness-server:latest
+          tags: ${{secrets.DOCKER_USER}}/api-gateway:latest
 
   helm-check:
     runs-on: ubuntu-latest
@@ -97,8 +97,8 @@ jobs:
 
       - name: Helm Lint
         run: helm lint .
-        working-directory: ./backend/fitness-server/helm
+        working-directory: ./backend/api-gateway/helm
         
       - name: Helm Template
         run: helm template raspi .
-        working-directory: ./backend/fitness-server/helm
+        working-directory: ./backend/api-gateway/helm

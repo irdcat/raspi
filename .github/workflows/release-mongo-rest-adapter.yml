@@ -1,9 +1,8 @@
-name: Release Fitness UI
-
+name: Release Mongo REST Adapter
 on:
   push:
     tags:
-      - 'fitness-ui-[0-9]*\.[0-9]*\.[0-9]*'
+      - 'mongo-rest-adapter-[0-9]*\.[0-9]*\.[0-9]*'
 
 concurrency: helm-release
 
@@ -16,51 +15,55 @@ jobs:
       - name: Extract version from the tag
         id: extract_version
         run: |
-          VERSION=$(echo "${GITHUB_REF}" | sed -E 's/refs\/tags\/fitness-ui-(.*)/\1/')
+          VERSION=$(echo "${GITHUB_REF}" | sed -E 's/refs\/tags\/mongo-rest-adapter-(.*)/\1/')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Extracted version: $VERSION"
-  
-  npm-build:
+
+  gradle-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
-          node-version: 20
-          cache: 'npm'
-          cache-dependency-path: frontend/fitness-ui/package-lock.json
+          distribution: 'corretto'
+          java-version: '21'
+          cache: 'gradle'
+          cache-dependency-path: |
+            backend/mongo-rest-adapter/*.gradle*
+            backend/mongo-rest-adapter/**/gradle-wrapper.properties
 
-      - name: Setup NPM cache
+      - name: Setup Gradle cache
         uses: actions/cache@v3
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('frontend/fitness-ui/**') }}
-          restore-keys: ${{ runner.os }}-npm-
+          path: ~/.gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('backend/mongo-rest-adapter/**') }}
+          restore-keys: ${{ runner.os }}-gradle-
       
-      - name: Install Node dependencies
-        working-directory: ./frontend/fitness-ui
-        run: npm install --omit=dev --prefer-offline --no-audit --no-fund --progress=false --loglevel error --force
+      - name: Test
+        working-directory: ./backend/mongo-rest-adapter/
+        run: ./gradlew test
 
-      - name: Build
-        working-directory: ./frontend/fitness-ui
-        run: npm run build
+      - name: Coverage
+        working-directory: ./backend/mongo-rest-adapter/
+        run: ./gradlew koverLog
 
-      - name: Upload Docker context artifact
+      - name: Docker Context
+        working-directory: ./backend/mongo-rest-adapter/
+        run: ./gradlew buildDockerContext
+
+      - name: Upload Docker Context artifact
         uses: actions/upload-artifact@master
         with:
-          name: fitness-ui-docker-context
-          path: | 
-            frontend/fitness-ui/build/
-            frontend/fitness-ui/Dockerfile
-            frontend/fitness-ui/nginx.conf
+          name: mongo-rest-adapter-docker-context
+          path: backend/mongo-rest-adapter/build/dockerContext
           if-no-files-found: error
-
+  
   docker-build:
-    needs:
-      - npm-build
+    needs: 
+      - gradle-build
       - initialise
     runs-on: ubuntu-latest
     steps:
@@ -76,7 +79,7 @@ jobs:
       - name: Download Docker Context artifact
         uses: actions/download-artifact@master
         with:
-          name: fitness-ui-docker-context
+          name: mongo-rest-adapter-docker-context
           path: .
 
       - name: Build and push
@@ -85,35 +88,35 @@ jobs:
           context: .
           platforms: linux/arm64
           push: true
-          tags: ${{secrets.DOCKER_USER}}/fitness-ui:${{needs.initialise.outputs.version}}
-
+          tags: ${{secrets.DOCKER_USER}}/mongo-rest-adapter:${{needs.initialise.outputs.version}}
+  
   helm-package:
     needs: initialise
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
+      
       - name: Setup Helm
         uses: azure/setup-helm@v4.2.0
         with:
           version: "3.16.1"
-
+      
       - name: Helm Lint
         run: helm lint .
-        working-directory: ./frontend/fitness-ui/helm
-      
+        working-directory: ./backend/mongo-rest-adapter//helm
+
       - name: Helm Package
-        working-directory: ./frontend/fitness-ui/helm
         run: |
           VERSION=${{needs.initialise.outputs.version}}
           helm package . --app-version $VERSION --version $VERSION --destination ./package
+        working-directory: ./backend/mongo-rest-adapter//helm
 
       - name: Upload Helm artifact
         uses: actions/upload-artifact@master
         with:
-          name: fitness-ui-chart
-          path: ./frontend/fitness-ui/helm/package
+          name: mongo-rest-adapter-chart
+          path: ./backend/mongo-rest-adapter//helm/package
           if-no-files-found: error
 
   helm-release:
@@ -125,18 +128,18 @@ jobs:
         with:
           ref: 'helm-registry'
           fetch-depth: 0
-
+      
       - name: Setup Helm
         uses: azure/setup-helm@v4.2.0
         with:
           version: "3.16.1"
-
+      
       - name: Download Helm artifact
         uses: actions/download-artifact@master
         with:
-          name: fitness-ui-chart
-          path: ./temp/fitness-ui
-  
+          name: mongo-rest-adapter-chart
+          path: ./temp/mongo-rest-adapter
+
       - name: Update Charts
         shell: bash
         working-directory: temp
@@ -158,3 +161,4 @@ jobs:
           git add index.yaml
           git commit -m "Updated ref: $GITHUB_SHA"
           git push
+        

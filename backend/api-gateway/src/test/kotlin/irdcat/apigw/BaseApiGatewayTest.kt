@@ -7,7 +7,6 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.reactive.server.WebTestClient
 
 @SpringBootTest
-@ActiveProfiles("test")
 @AutoConfigureWebTestClient
 abstract class BaseApiGatewayTest {
 

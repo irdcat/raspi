@@ -13,7 +13,7 @@ import kotlin.test.Test
 
 @ActiveProfiles(profiles = ["rewrite-test", "test"])
 @EnableWireMock(
-    ConfigureWireMock(name = "test-service", port = 8083)
+    ConfigureWireMock(name = "test-service", port = 8089)
 )
 class RewriteRouteTest: BaseApiGatewayTest() {
 
