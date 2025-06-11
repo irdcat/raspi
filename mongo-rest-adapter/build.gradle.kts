@@ -38,6 +38,7 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.8")
 	implementation(platform("org.mongodb:mongodb-driver-bom:5.5.0"))
 	implementation("org.mongodb:mongodb-driver-reactivestreams")
+	implementation("de.undercouch:bson4jackson:2.18.0")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
 	testImplementation("org.testcontainers:mongodb")

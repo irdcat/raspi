@@ -1,12 +1,22 @@
 package irdcat.mongo.data
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.mongodb.client.model.Filters
 import com.mongodb.reactivestreams.client.MongoCollection
+import de.undercouch.bson4jackson.BsonFactory
+import org.bson.BsonBinaryWriter
 import org.bson.Document
 import org.bson.UuidRepresentation
+import org.bson.codecs.DocumentCodec
+import org.bson.codecs.EncoderContext
 import org.bson.internal.UuidHelper
+import org.bson.io.BasicOutputBuffer
 import org.bson.types.Binary
 import reactor.core.publisher.Mono
+import java.io.ByteArrayInputStream
 
 private const val NAME = "name"
 private const val TYPE = "type"
@@ -58,3 +68,21 @@ internal fun Binary.toUuid() =
 
 internal fun <T> MongoCollection<T>.findById(id: String) =
     find(Filters.eq(ID, id)).let { Mono.from(it) }
+
+private val objectMapper = ObjectMapper(BsonFactory())
+    .registerModule(JavaTimeModule())
+    .registerKotlinModule()
+
+internal fun Document.toObject(): Any {
+    val outputBuffer = BasicOutputBuffer()
+    val bsonBinaryWriter = BsonBinaryWriter(outputBuffer)
+    DocumentCodec().encode(
+        bsonBinaryWriter,
+        this,
+        EncoderContext.builder()
+            .isEncodingCollectibleDocument(true)
+            .build()
+    )
+    val stream = ByteArrayInputStream(outputBuffer.toByteArray())
+    return objectMapper.readTree(stream)
+}
