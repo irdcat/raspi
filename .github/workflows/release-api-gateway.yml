@@ -103,7 +103,7 @@ jobs:
           version: "3.16.1"
       
       - name: Helm Lint
-        run: helm lint .
+        run: helm lint . -f test-values.yaml
         working-directory: ./backend/api-gateway//helm
 
       - name: Helm Package

@@ -1,0 +1,18 @@
+gateway:
+  routes:
+    - name: fitness-server
+      prefix: /fitness/api
+      redirect:
+        service: fitness-server-service
+        namespace: default
+      rewrite:
+        source: "/fitness/api(/|$)(.*)"
+        target: "/api/$2"
+    - name: mongo-rest-adapter
+      prefix: /mongo/api
+      redirect:
+        service: mongo-rest-adapter-service
+        namespace: default
+      rewrite:
+        source: "/mongo/api(/|$)(.*)"
+        target: "/api/$2"

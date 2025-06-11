@@ -12,7 +12,7 @@ data:
         {{- range .Values.gateway.routes }}
         - name: {{ .name }}
           prefix: {{ .prefix }}
-          redirectTo: {{ .redirect.service }}.{{ .redirect.namespace }}.svc.cluster.local
+          redirectTo: {{ .redirect.service }}.{{ .redirect.namespace }}.svc.cluster.local:80
           {{- if .rewrite }}
           rewriteSpec:
             source: {{ .rewrite.source }}
