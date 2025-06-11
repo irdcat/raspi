@@ -1,16 +1,40 @@
 version: 2
 updates:
+  # Frontend
   - package-ecosystem: 'npm'
-    directory: ./fitness-ui
+    directory: ./frontend/fitness-ui
     schedule:
       interval: 'daily'
     open-pull-requests-limit: 5
     labels:
       - fitness-ui
+  - package-ecosystem: 'npm'
+    directory: ./frontend/mongo-ui
+    schedule:
+      interval: 'daily'
+    open-pull-requests-limit: 5
+    labels:
+      - mongo-ui
+
+  # Backend
   - package-ecosystem: 'gradle'
-    directory: ./fitness-server
+    directory: ./backend/api-gateway
+    schedule:
+      interval: 'daily'
+    open-pull-requests-limit: 5
+    labels:
+      - api-gateway
+  - package-ecosystem: 'gradle'
+    directory: ./backend/fitness-server
     schedule:
       interval: 'daily'
     open-pull-requests-limit: 5
     labels:
       - fitness-server
+  - package-ecosystem: 'gradle'
+    directory: ./backend/mongo-rest-adapter
+    schedule:
+      interval: 'daily'
+    open-pull-requests-limit: 5
+    labels:
+      - mongo-rest-adapter

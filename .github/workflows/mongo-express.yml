@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: ["master"]
     paths: 
-      - mongo-express/**
+      - backend/mongo-express/**
       - .github/workflows/mongo-express.yml
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
           version: "3.16.1"
       - name: Helm Lint
         run: helm lint .
-        working-directory: ./mongo-express/helm
+        working-directory: ./backend/mongo-express/helm
       - name: Helm Template
         run: helm template raspi .
-        working-directory: ./mongo-express/helm
+        working-directory: ./backend/mongo-express/helm

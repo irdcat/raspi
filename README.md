@@ -117,13 +117,13 @@ Script supports two mutually exclusive ways of installing components.
 To install single component use following command:
 
 ```
-$ ./install.sh single <component_name> <component_version>
+$ ./scripts/install.sh single <component_name> <component_version>
 ```
 
 Example usage:
 
 ```
-$ ./install.sh single fitness-server 0.0.1
+$ ./scripts/install.sh single fitness-server 0.0.1
 ```
 
 ### Installing components from the manifest
@@ -145,13 +145,13 @@ components:
 To install components using the manifest use following command:
 
 ```
-$ ./install.sh manifest <manifest_file>
+$ ./scripts/install.sh manifest <manifest_file>
 ```
 
 Example usage:
 
 ```
-$ ./install.sh manifest manifest.yaml
+$ ./scripts/install.sh manifest manifest.yaml
 ```
 
 ## Local Development

@@ -33,33 +33,33 @@ jobs:
           java-version: '21'
           cache: 'gradle'
           cache-dependency-path: |
-            fitness-server/*.gradle*
-            fitness-server/**/gradle-wrapper.properties
+            backend/fitness-server/*.gradle*
+            backend/fitness-server/**/gradle-wrapper.properties
 
       - name: Setup Gradle cache
         uses: actions/cache@v3
         with:
           path: ~/.gradle
-          key: ${{ runner.os }}-gradle-${{ hashFiles('fitness-server/**') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('backend/fitness-server/**') }}
           restore-keys: ${{ runner.os }}-gradle-
       
       - name: Test
-        working-directory: ./fitness-server
+        working-directory: ./backend/fitness-server/
         run: ./gradlew test
 
       - name: Coverage
-        working-directory: ./fitness-server
+        working-directory: ./backend/fitness-server/
         run: ./gradlew koverLog
 
       - name: Docker Context
-        working-directory: ./fitness-server
+        working-directory: ./backend/fitness-server/
         run: ./gradlew buildDockerContext
 
       - name: Upload Docker Context artifact
         uses: actions/upload-artifact@master
         with:
           name: fitness-server-docker-context
-          path: fitness-server/build/dockerContext
+          path: backend/fitness-server/build/dockerContext
           if-no-files-found: error
   
   docker-build:
@@ -105,19 +105,19 @@ jobs:
       
       - name: Helm Lint
         run: helm lint .
-        working-directory: ./fitness-server/helm
+        working-directory: ./backend/fitness-server//helm
 
       - name: Helm Package
         run: |
           VERSION=${{needs.initialise.outputs.version}}
           helm package . --app-version $VERSION --version $VERSION --destination ./package
-        working-directory: ./fitness-server/helm
+        working-directory: ./backend/fitness-server//helm
 
       - name: Upload Helm artifact
         uses: actions/upload-artifact@master
         with:
           name: fitness-server-chart
-          path: ./fitness-server/helm/package
+          path: ./backend/fitness-server//helm/package
           if-no-files-found: error
 
   helm-release:

@@ -34,10 +34,10 @@ jobs:
 
       - name: Helm Lint
         run: helm lint .
-        working-directory: ./mongo/helm
+        working-directory: ./backend/mongo/helm
 
       - name: Helm Package
-        working-directory: ./mongo/helm
+        working-directory: ./backend/mongo/helm
         run: |
           VERSION=${{ needs.initialise.outputs.version }}
           helm package . --version $VERSION --destination ./package
@@ -46,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: mongo-chart
-          path: ./mongo/helm/package
+          path: ./backend/mongo/helm/package
           if-no-files-found: error
 
   helm-release:
