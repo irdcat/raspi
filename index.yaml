@@ -393,6 +393,16 @@ entries:
     version: 0.0.1
   mongo-ui:
   - apiVersion: v2
+    appVersion: 0.0.2
+    created: "2025-06-11T20:48:06.131058869Z"
+    description: A Helm chart for mongo-ui
+    digest: 2839eaf8c6c2050acaffcf5c3c8d2630a2e97698d1baacc0ce0eb421c0e192e2
+    name: mongo-ui
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/mongo-ui/mongo-ui-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
     appVersion: 0.0.1
     created: "2025-06-11T20:25:51.612462802Z"
     description: A Helm chart for mongo-ui
@@ -402,4 +412,4 @@ entries:
     urls:
     - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/mongo-ui/mongo-ui-0.0.1.tgz
     version: 0.0.1
-generated: "2025-06-11T20:45:24.136333916Z"
+generated: "2025-06-11T20:48:06.13077313Z"
