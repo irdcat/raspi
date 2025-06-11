@@ -75,11 +75,13 @@ internal class DataService(
         mongoClient
             .safeGetCollection(dbName, collectionName)
             .flatMapMany { it.find().toFlux() }
+            .map { it.toObject() }
 
     fun getDocument(dbName: String, collectionName: String, id: String) =
         mongoClient
             .safeGetCollection(dbName, collectionName)
             .flatMap { it.findById(id) }
+            .map { it.toObject() }
             .switchIfEmpty(error(DocumentNotFoundException(dbName, collectionName, id)))
 
     private fun MongoClient.safeGetDatabase(name: String) =
