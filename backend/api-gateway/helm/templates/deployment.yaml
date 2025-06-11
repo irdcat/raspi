@@ -33,3 +33,11 @@ spec:
             requests:
               memory: {{ .Values.resources.requests.memory }}
               cpu: {{ .Values.resources.requests.cpu }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: api-gateway
+              subPath: application-helm-config.yaml
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ .Release.Name }}-config-map
