@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   api-gateway:
   - apiVersion: v2
+    appVersion: 0.0.2
+    created: "2025-06-11T20:42:46.171205184Z"
+    description: A Helm chart for api-gateway
+    digest: 832089a0734ac6491cd5968e4dfef32ca2939e688c728095c670cb21cb4da211
+    name: api-gateway
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/api-gateway/api-gateway-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
     appVersion: 0.0.1
     created: "2025-06-11T19:18:17.867613251Z"
     description: A Helm chart for api-gateway
@@ -382,4 +392,4 @@ entries:
     urls:
     - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/mongo-ui/mongo-ui-0.0.1.tgz
     version: 0.0.1
-generated: "2025-06-11T20:25:51.612119645Z"
+generated: "2025-06-11T20:42:46.170871432Z"
