@@ -360,4 +360,15 @@ entries:
     urls:
     - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/mongo-express/mongo-express-1.0.0.tgz
     version: 1.0.0
-generated: "2025-06-11T19:18:17.867232302Z"
+  mongo-rest-adapter:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2025-06-11T20:23:32.90393327Z"
+    description: A Helm chart for mongo-rest-adapter
+    digest: 4dc834c56350bac4ed8e8365bd5a1a15e1f2b96b14aa2861398e6fc12c797a87
+    name: mongo-rest-adapter
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/mongo-rest-adapter/mongo-rest-adapter-0.0.1.tgz
+    version: 0.0.1
+generated: "2025-06-11T20:23:32.902922441Z"
