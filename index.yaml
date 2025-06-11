@@ -371,4 +371,15 @@ entries:
     urls:
     - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/mongo-rest-adapter/mongo-rest-adapter-0.0.1.tgz
     version: 0.0.1
-generated: "2025-06-11T20:23:32.902922441Z"
+  mongo-ui:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2025-06-11T20:25:51.612462802Z"
+    description: A Helm chart for mongo-ui
+    digest: 81a19076e46bf153c44f209cfa306878a571d069b4aa7673a6a3f94765aac007
+    name: mongo-ui
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/mongo-ui/mongo-ui-0.0.1.tgz
+    version: 0.0.1
+generated: "2025-06-11T20:25:51.612119645Z"
