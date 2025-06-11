@@ -17,6 +17,7 @@ class HelmRepository:
 class Component:
     name: str
     version: str
+    config: any
 
 @dataclass
 class InstalledComponent:
@@ -30,7 +31,20 @@ def parse_installed(yaml_string: str) -> list[InstalledComponent]:
 def parse_manifest(filename: str) -> list[Component]:
     with open(filename, 'r') as file:
         data = yaml.safe_load(file)
-    return [Component(name=item['name'], version=item['version']) for item in data['components']]
+
+    components: list[Component] = []
+    for item in data.get('components', []):
+        try:
+            config = item.get('config')
+        except:
+            config = None
+        components.append(Component(
+            name=item.get('name'), 
+            version=item.get('version'),
+            config=config
+        ))
+
+    return components
 
 def parse_helm_repositories(yaml_string: str) -> list[HelmRepository]:
     data = yaml.safe_load(yaml_string)
@@ -45,19 +59,54 @@ def component_install(component: Component):
         name = component.name,
         version = component.version
     ))
-    
-    upgrade = subprocess.run([
+
+    component_config_save(component)
+
+    exe_with_args = [
         "helm", "upgrade",
         "--install", component.name, "{repo}/{name}".format(repo=HELM_REPO_NAME, name=component.name),
         "--version", component.version,
         "--namespace", "default",
         "--wait",
-        "--atomic"])
+        "--atomic"
+    ]
+    
+    if (component.config is not None):
+        exe_with_args.append("-f")
+        exe_with_args.append(f"__{component.name}_config.yaml")
+
+    upgrade = subprocess.run(exe_with_args)
+    component_config_cleanup(component)
     
     if (upgrade.returncode == 0):
         print("✅ Successfully installed {name}".format(name=component.name))
     else:
         print("❌ Failed to install {name}".format(name=component.name))
+
+def component_config_save(component: Component):
+    if (component.config is None):
+        return
+    
+    filename = f"__{component.name}_config.yaml"
+    
+    with open(filename, 'w') as config_file:
+        yaml.dump(component.config, config_file, default_flow_style=False)
+
+def component_config_cleanup(component: Component):
+    if (component.config is None):
+        return
+    
+    filename = f"__{component.name}_config.yaml"
+
+    try:
+        os.remove(filename)
+        print(f"Cleanup of {component.name} temparary data is done!")
+    except FileNotFoundError:
+        print(f"Attempt to cleanup {component.name} temporary data that was not created.")
+    except PermissionError:
+        print(f"Unsufficient permissions to cleanup {component.name} temporary data.")
+    except Exception as e:
+        print(f"Unknown error while removing {component.name} tempoarary data.")
 
 def component_installed(component: Component) -> bool:
     output = subprocess.check_output(["helm", "list", "-o", "yaml"])
@@ -111,7 +160,7 @@ manifest_install_subparser.add_argument(
     help='Manifest defined in a YAML format')
 
 args = sys.argv
-args.remove('install.py')
+args.remove('./scripts/install.py')
 
 parsed = parser.parse_args(args)
 action = parsed.action
