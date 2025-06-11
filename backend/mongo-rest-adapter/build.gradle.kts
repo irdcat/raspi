@@ -34,7 +34,7 @@ dependencies {
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-	implementation("org.springdoc:springdoc-openapi-starter-webflux-api:2.8.8")
+	implementation("org.springdoc:springdoc-openapi-starter-webflux-api:2.8.9")
 	implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.8")
 	implementation(platform("org.mongodb:mongodb-driver-bom:5.5.1"))
 	implementation("org.mongodb:mongodb-driver-reactivestreams")
