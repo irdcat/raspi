@@ -43,7 +43,7 @@ dependencies {
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
 	testImplementation("io.rest-assured:rest-assured")
-	testImplementation("org.wiremock.integrations:wiremock-spring-boot:3.6.0")
+	testImplementation("org.wiremock.integrations:wiremock-spring-boot:3.10.0")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
