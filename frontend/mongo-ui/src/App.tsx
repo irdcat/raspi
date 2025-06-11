@@ -5,7 +5,6 @@ import { DialogsProvider } from '@toolpad/core';
 import Layout from './pages/Layout';
 import Home from './pages/Home';
 import Database from './pages/Database';
-import { Collections } from '@mui/icons-material';
 import Collection from './pages/Collection';
 
 const darkTheme = createTheme({
