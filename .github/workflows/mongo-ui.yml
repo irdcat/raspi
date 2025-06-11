@@ -33,7 +33,7 @@ jobs:
         run: npm install --omit=dev --prefer-offline --no-audit --no-fund --progress=false --loglevel error --force
 
       - name: Build
-        working-directory: ./mongo-ui
+        working-directory: ./frontend/mongo-ui
         run: npm run build
 
       - name: Upload Docker context artifact
