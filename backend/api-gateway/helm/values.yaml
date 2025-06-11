@@ -8,18 +8,3 @@ resources:
 spring:
   profiles:
     - default
-gateway:
-  routes:
-    - name: fitness-server
-      prefix: /fitness/api
-      redirect:
-        service: fitness-server-service
-        namespace: default
-      rewrite:
-        source: "/fitness/api(/|$)(.*)"
-        target: "/api/$2"
-    - name: mongo-express
-      prefix: /mongo
-      redirect:
-        service: mongo-express-service
-        namespace: default

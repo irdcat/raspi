@@ -8,4 +8,4 @@ command -v helm >/dev/null 2>&1 || {
     echo >&2 "Helm is required!"
 }
 
-python3 install.py $@
+python3 ./scripts/install.py $@
