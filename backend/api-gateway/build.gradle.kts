@@ -37,7 +37,7 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 	implementation("org.springframework.cloud:spring-cloud-starter-gateway-server-webflux")
 	implementation("org.springdoc:springdoc-openapi-starter-webflux-api:2.8.9")
-	implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.8")
+	implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.9")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
