@@ -1,5 +1,16 @@
 apiVersion: v1
 entries:
+  api-gateway:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2025-06-11T19:18:17.867613251Z"
+    description: A Helm chart for api-gateway
+    digest: 5aba7d42b500813a718cfc20ef883c1f5035a64ecb5fadead244ac2343b5b464
+    name: api-gateway
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/api-gateway/api-gateway-0.0.1.tgz
+    version: 0.0.1
   fitness-server:
   - apiVersion: v2
     appVersion: 1.4.1
@@ -349,4 +360,4 @@ entries:
     urls:
     - https://raw.githubusercontent.com/irdcat/raspi/helm-registry/mongo-express/mongo-express-1.0.0.tgz
     version: 1.0.0
-generated: "2025-06-02T21:56:52.39702345Z"
+generated: "2025-06-11T19:18:17.867232302Z"
