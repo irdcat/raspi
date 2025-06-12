@@ -36,8 +36,10 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /home/apigw/api-gateway
-              subPath: application-helm-config.yaml
       volumes:
         - name: config-volume
           configMap:
             name: {{ .Release.Name }}-config-map
+            items:
+              - key: application-helm-config.yaml
+                path: application-helm-config.yaml

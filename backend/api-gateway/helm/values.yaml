@@ -4,7 +4,3 @@ resources:
   requests:
     memory: 500Mi
     cpu: 100m
-
-spring:
-  profiles:
-    - default
