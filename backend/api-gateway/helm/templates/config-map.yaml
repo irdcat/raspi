@@ -5,7 +5,7 @@ metadata:
   labels:
     {{ include "api-gateway.printSharedLabels" . | nindent 4 }}
 data:
-  SPRING_PROFILES_ACTIVE: {{ join "," .Values.spring.profiles }},helm-config
+  SPRING_PROFILES_ACTIVE: "default,helm-config"
   application-helm-config.yaml: |
     application:
       services:
@@ -14,8 +14,8 @@ data:
           prefix: {{ .prefix }}
           redirectTo: {{ .redirect.service }}.{{ .redirect.namespace }}.svc.cluster.local:80
           {{- if .rewrite }}
-          rewriteSpec:
+          rewriteSpec: 
             source: {{ .rewrite.source }}
             target: {{ .rewrite.target }}
           {{- end }}
-        {{- end }}
+        {{- end}}
