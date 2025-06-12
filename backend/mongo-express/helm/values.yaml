@@ -1,9 +1,0 @@
-domain: raspi.local
-resources:
-  requests:
-    cpu: 100m
-    memory: 100Mi
-mongo:
-  service: mongo-service
-  namespace: default
-  port: 27017
