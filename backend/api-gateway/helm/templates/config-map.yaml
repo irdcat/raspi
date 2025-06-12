@@ -21,7 +21,9 @@ data:
           redirectTo: http://{{ .redirect.service }}.{{ .redirect.namespace }}.svc.cluster.local
           {{- if .rewrite }}
           rewriteSpec: 
-            source: {{ .rewrite.source }}
-            target: {{ .rewrite.target }}
+            {{- range .rewrite }}
+            - source: {{ .source }}
+              target: {{ .target }}
+            {{- end }}
           {{- end }}
         {{- end}}

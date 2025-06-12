@@ -3,7 +3,7 @@ package irdcat.apigw
 import kotlin.test.Test
 import org.springframework.test.context.ActiveProfiles
 
-@ActiveProfiles(profiles = ["test", "basic-test"])
+@ActiveProfiles(profiles = ["test", "rewrite-test"])
 class SpringContextTest: BaseApiGatewayTest() {
 
 	@Test
