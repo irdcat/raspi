@@ -1,7 +1,7 @@
 import { addHours, format } from "date-fns";
 import { ApiError, FileType, Page, Training } from "../types"
 
-const BASE_URL = "/fitness/api/trainings";
+const BASE_URL = "/v2/fitness/api/trainings";
 type TrainingPage = Page<Training>;
 
 export const fetchTrainings = async (

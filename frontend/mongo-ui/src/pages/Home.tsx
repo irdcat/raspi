@@ -149,8 +149,8 @@ const ServerStatusView = (props: {
 }
 
 const Home = () => {
-    const serverStatusFetchData = useFetchData<ServerStatus>("/api/status");
-    const databasesFetchData = useFetchData<Array<DatabaseMetadata>>("/api/database");
+    const serverStatusFetchData = useFetchData<ServerStatus>("/v2/mongo/api/status");
+    const databasesFetchData = useFetchData<Array<DatabaseMetadata>>("/v2/mongo/api/database");
     
     return (
         <Box sx={{ width: '100%', height: '100%', display: 'flex', columnGap: '4px', padding: '10px' }}>

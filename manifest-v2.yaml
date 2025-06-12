@@ -1,6 +1,6 @@
 components:
   - name: api-gateway
-    version: 0.0.2
+    version: 0.0.4
     config:
       gateway:
         routes:
@@ -26,12 +26,12 @@ components:
   - name: fitness-server
     version: 1.4.2
   - name: fitness-ui
-    version: 1.4.3
+    version: 1.4.4
 
   - name: mongo-rest-adapter
     version: 0.0.1
   - name: mongo-ui
-    version: 0.0.2
+    version: 0.0.3
 
 #  - name: auth-server
 #    version: 0.0.1

@@ -1,6 +1,6 @@
 import { CountedExercise, Page } from "../types";
 
-const BASE_URL = "/fitness/api/exercises";
+const BASE_URL = "/v2/fitness/api/exercises";
 type CountedExercisePage = Page<CountedExercise>;
 
 export const fetchCountedExercises = async (
