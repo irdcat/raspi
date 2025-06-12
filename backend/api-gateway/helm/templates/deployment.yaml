@@ -24,9 +24,6 @@ spec:
           args:
             - -jar
             - server.jar
-          envFrom:
-            - configMapRef:
-                name: {{ .Release.Name }}-config-map
           ports:
               - containerPort: 8080
           resources:
@@ -35,11 +32,8 @@ spec:
               cpu: {{ .Values.resources.requests.cpu }}
           volumeMounts:
             - name: config-volume
-              mountPath: /home/apigw/api-gateway
+              mountPath: /home/apigw/api-gateway/config
       volumes:
         - name: config-volume
           configMap:
             name: {{ .Release.Name }}-config-map
-            items:
-              - key: application-helm-config.yaml
-                path: application-helm-config.yaml

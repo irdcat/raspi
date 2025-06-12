@@ -1,6 +1,6 @@
 components:
   - name: api-gateway
-    version: 0.0.8
+    version: 0.0.9
     config:
       gateway:
         routes:
