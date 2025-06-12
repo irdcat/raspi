@@ -1,6 +1,6 @@
 components:
   - name: api-gateway
-    version: 0.0.9
+    version: 0.0.10
     config:
       gateway:
         routes:
@@ -10,16 +10,16 @@ components:
               service: fitness-server-service
               namespace: default
             rewrite:
-              source: "/fitness/api(/|$)(.*)"
-              target: "/api/$2"
+              source: "/fitness/api/(?<segment>.*)"
+              target: "/api/{segment}"
           - name: mongo-rest-adapter
             prefix: /mongo/api
             redirect:
               service: mongo-rest-adapter-service
               namespace: default
             rewrite:
-              source: "/mongo/api(/|$)(.*)"
-              target: "/api/$2"
+              source: "/mongo/api/(?<segment>.*)"
+              target: "/api/$\\{segment}"
 #  - name: raspi-ui
 #    version: 0.0.1
 

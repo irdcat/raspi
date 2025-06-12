@@ -20,7 +20,7 @@ class ApiGatewayConfiguration {
             props.services.reversed().mapIndexed { index, item ->
                 log.info("Configuring route $index $item")
                 route(item.name) {
-                    path("${item.prefix}/*").or().path(item.prefix)
+                    path("${item.prefix}/**").or().path(item.prefix)
                     filters {
                         item.rewriteSpec?.let {
                             rewritePath(it.source, it.target)
@@ -30,5 +30,8 @@ class ApiGatewayConfiguration {
                     uri(item.redirectTo)
                 }
             }
+        }
+        .apply {
+            routes.subscribe { log.info("Route: {}", it) }
         }
 }

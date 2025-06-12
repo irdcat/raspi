@@ -30,9 +30,25 @@ class RewriteRouteTest: BaseApiGatewayTest() {
             .get()
             .uri("/test/hello")
             .exchange()
-            //.expectStatus().isOk
+            .expectStatus().isOk
 
         getRequestedFor(urlPathEqualTo("/hello"))
+            .let(testService::verify)
+    }
+
+    @Test
+    fun longerPathIsProperlyRewritten() {
+        get("/hello/world")
+            .willReturn(ok())
+            .let(testService::stubFor)
+
+        webTestClient()
+            .get()
+            .uri("/test/hello/world")
+            .exchange()
+            .expectStatus().isOk
+
+        getRequestedFor(urlPathEqualTo("/hello/world"))
             .let(testService::verify)
     }
 }
