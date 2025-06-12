@@ -1,9 +1,0 @@
-apiVersion: v2
-name: mongo-express
-description: Helm chart for Mongo-Express deployment
-maintainers:
-  - name: Kamil Adamiec
-    email: kamil.adamiec97@gmail.com
-type: application
-version: 0.1.0
-appVersion: "1.0.2"
