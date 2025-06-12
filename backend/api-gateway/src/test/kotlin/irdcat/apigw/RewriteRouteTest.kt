@@ -5,6 +5,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.get
 import com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor
 import com.github.tomakehurst.wiremock.client.WireMock.ok
 import com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo
+import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ActiveProfiles
 import org.wiremock.spring.ConfigureWireMock
 import org.wiremock.spring.EnableWireMock
@@ -15,40 +16,105 @@ import kotlin.test.Test
 @EnableWireMock(
     ConfigureWireMock(name = "test-service", port = 8089)
 )
+@DirtiesContext
 class RewriteRouteTest: BaseApiGatewayTest() {
 
     @InjectWireMock("test-service")
     private lateinit var testService: WireMockServer
 
     @Test
-    fun pathIsProperlyRewritten() {
-        get("/hello")
+    fun rewriteGetDatabases() {
+        get("/api/database")
             .willReturn(ok())
             .let(testService::stubFor)
 
         webTestClient()
             .get()
-            .uri("/test/hello")
+            .uri("/test/api/database")
             .exchange()
             .expectStatus().isOk
 
-        getRequestedFor(urlPathEqualTo("/hello"))
+        getRequestedFor(urlPathEqualTo("/api/database"))
             .let(testService::verify)
     }
 
     @Test
-    fun longerPathIsProperlyRewritten() {
-        get("/hello/world")
+    fun rewriteGetDatabase() {
+        get("/api/database/test")
             .willReturn(ok())
             .let(testService::stubFor)
 
         webTestClient()
             .get()
-            .uri("/test/hello/world")
+            .uri("/test/api/database/test")
             .exchange()
             .expectStatus().isOk
 
-        getRequestedFor(urlPathEqualTo("/hello/world"))
+        getRequestedFor(urlPathEqualTo("/api/database/test"))
+            .let(testService::verify)
+    }
+
+    @Test
+    fun rewriteGetCollections() {
+        get("/api/database/test/collection")
+            .willReturn(ok())
+            .let(testService::stubFor)
+
+        webTestClient()
+            .get()
+            .uri("/test/api/database/test/collection")
+            .exchange()
+            .expectStatus().isOk
+
+        getRequestedFor(urlPathEqualTo("/api/database/test/collection"))
+            .let(testService::verify)
+    }
+
+    @Test
+    fun rewriteGetCollection() {
+        get("/api/database/test/collection/test")
+            .willReturn(ok())
+            .let(testService::stubFor)
+
+        webTestClient()
+            .get()
+            .uri("/test/api/database/test/collection/test")
+            .exchange()
+            .expectStatus().isOk
+
+        getRequestedFor(urlPathEqualTo("/api/database/test/collection/test"))
+            .let(testService::verify)
+    }
+
+    @Test
+    fun rewriteGetDocuments() {
+        get("/api/database/test/collection/test/document")
+            .willReturn(ok())
+            .let(testService::stubFor)
+
+        webTestClient()
+            .get()
+            .uri("/test/api/database/test/collection/test/document")
+            .exchange()
+            .expectStatus().isOk
+
+        getRequestedFor(urlPathEqualTo("/api/database/test/collection/test/document"))
+            .let(testService::verify)
+    }
+
+    @Test
+    fun rewriteGetDocument() {
+        get("/api/database/test/collection/test/document/test")
+            .willReturn(ok())
+            .let(testService::stubFor)
+
+        webTestClient()
+            .get()
+            .uri("/test/api/database/test/collection/test/document/test")
+            .exchange()
+            .expectStatus().isOk
+
+        getRequestedFor(urlPathEqualTo("/api/database/test/collection/test/document/test"))
             .let(testService::verify)
     }
 }

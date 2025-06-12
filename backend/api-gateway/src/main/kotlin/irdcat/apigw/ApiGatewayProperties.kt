@@ -15,6 +15,6 @@ data class ApiGatewayProperties(
         val name: String,
         val prefix: String,
         val redirectTo: String,
-        val rewriteSpec: RewriteSpec?
+        val rewriteSpec: Array<RewriteSpec>?
     )
 }

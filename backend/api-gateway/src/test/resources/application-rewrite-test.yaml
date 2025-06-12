@@ -4,5 +4,15 @@ application:
       prefix: /test
       redirectTo: http://localhost:8089
       rewriteSpec:
-        source: "/test(/|$)(.*)"
-        target: "/$2"
+        - source: /test/api/database
+          target: /api/database
+        - source: /test/api/database/(?<dbname>.*)
+          target: /api/database/$\{dbname}
+        - source: /test/api/database/(<dbname>.*)/collection
+          target: /api/database/$\{dbname}/collection
+        - source: /test/api/database/(<dbname>.*)/collection/(?<colname>.*)
+          target: /api/database/$\{dbname}/collection/$\{colname}
+        - source: /test/api/database/(<dbname>.*)/collection/(<colname>.*)/document
+          target: /api/database/$\{dbname}/collection/$\{colname}/document
+        - source: /test/api/database/(<dbname>.*)/collection/(<colname>.*)/document/(?<docname>.*)
+          target: /api/database/$\{dbname}/collection/$\{colname}/document/$\{docname}
