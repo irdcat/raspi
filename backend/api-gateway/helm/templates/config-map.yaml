@@ -5,8 +5,14 @@ metadata:
   labels:
     {{ include "api-gateway.printSharedLabels" . | nindent 4 }}
 data:
-  SPRING_PROFILES_ACTIVE: "default,helm-config"
-  application-helm-config.yaml: |
+  application.yaml: |
+    spring:
+      application:
+        name: api-gateway
+      main:
+        allow-bean-definition-overriding: true
+    server:
+      port: 8080
     application:
       services:
         {{- range .Values.gateway.routes }}
