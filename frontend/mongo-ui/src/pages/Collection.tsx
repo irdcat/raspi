@@ -58,7 +58,7 @@ const DocumentsView = (props: {
 
 const Collection = () => {
     const { db, col } = useParams();
-    const documentsFetchData = useFetchData<Array<any>>(`/api/database/${db}/collection/${col}/document`)
+    const documentsFetchData = useFetchData<Array<any>>(`/v2/mongo/api/database/${db}/collection/${col}/document`)
 
     return (
         <Box sx={{ width: '100%', height: '100%', padding: '10px' }}>

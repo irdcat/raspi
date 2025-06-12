@@ -1,6 +1,6 @@
 import { ApiError, FileType, TrainingTemplate } from "../types";
 
-const BASE_URL = "/fitness/api/templates";
+const BASE_URL = "/v2/fitness/api/templates";
 
 export const fetchTemplates = async (): Promise<Array<TrainingTemplate> | ApiError> => {
     const response = await fetch(BASE_URL)

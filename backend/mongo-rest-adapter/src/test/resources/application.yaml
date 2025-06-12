@@ -1,6 +1,6 @@
 spring:
   webflux:
-    base-path: /mongo
+    base-path: /v2/mongo
 
 application:
   mongo:

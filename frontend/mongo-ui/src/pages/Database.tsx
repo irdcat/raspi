@@ -68,7 +68,7 @@ const CollectionsView = (props: {
 
 const Database = () => {
     const { db } = useParams();
-    const collectionsFetchData = useFetchData<Array<CollectionMetadata>>(`/api/database/${db}/collection`)
+    const collectionsFetchData = useFetchData<Array<CollectionMetadata>>(`/v2/mongo/api/database/${db}/collection`)
 
     return (
         <Box sx={{ width: '100%', height: '100%', padding: '10px' }}>
