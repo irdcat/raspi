@@ -1,9 +1,12 @@
 package irdcat.apigw
 
 import com.github.tomakehurst.wiremock.WireMockServer
+import com.github.tomakehurst.wiremock.client.WireMock
+import com.github.tomakehurst.wiremock.client.WireMock.equalTo
 import com.github.tomakehurst.wiremock.client.WireMock.get
 import com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor
 import com.github.tomakehurst.wiremock.client.WireMock.ok
+import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ActiveProfiles
@@ -115,6 +118,26 @@ class RewriteRouteTest: BaseApiGatewayTest() {
             .expectStatus().isOk
 
         getRequestedFor(urlPathEqualTo("/api/database/test/collection/test/document/test"))
+            .let(testService::verify)
+    }
+
+    @Test
+    fun rewriteGetDocument_queryParam() {
+        get(urlEqualTo("/api/database/test/collection/test/document/test?test=1234"))
+            .willReturn(ok())
+            .let(testService::stubFor)
+
+        webTestClient()
+            .get()
+            .uri { builder ->
+                builder.path("/test/api/database/test/collection/test/document/test")
+                    .queryParam("test", "1234")
+                    .build()
+            }
+            .exchange()
+            .expectStatus().isOk
+
+        getRequestedFor(urlEqualTo("/api/database/test/collection/test/document/test?test=1234"))
             .let(testService::verify)
     }
 }
