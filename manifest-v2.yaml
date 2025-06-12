@@ -10,17 +10,17 @@ components:
               service: fitness-server-service
               namespace: default
             rewrite:
-              - source: /fitness/api/summary/(<type>.*)
+              - source: /fitness/api/summary/(?<type>.*)
                 target: /api/summary/$\{type}
-              - source: /fitness/api/exercises/(<sub>.*)
+              - source: /fitness/api/exercises/(?<sub>.*)
                 target: /api/exercises/$\{sub}
               - source: /fitness/api/trainings
                 target: /api/trainings
-              - source: /fitness/api/trainings/(<date>.*)
+              - source: /fitness/api/trainings/(?<date>.*)
                 target: /api/training/$\{date}
               - source: /fitness/api/templates
                 target: /api/templates
-              - source: /fitness/api/templates/(<id>.*)
+              - source: /fitness/api/templates/(?<id>.*)
                 target: /api/templates/$\{id}
           - name: mongo-rest-adapter
             prefix: /mongo/api
@@ -28,6 +28,8 @@ components:
               service: mongo-rest-adapter-service
               namespace: default
             rewrite:
+              - source: /mongo/api/status
+                target: /api/status
               - source: /mongo/api/database
                 target: /api/database
               - source: /mongo/api/database/(?<dbname>.*)
