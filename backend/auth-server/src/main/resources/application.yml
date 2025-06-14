@@ -1,6 +1,8 @@
 spring:
   application:
     name: auth-server
+  main:
+    allow-bean-definition-overriding: "true"
 
 server:
   port: 8081
@@ -12,4 +14,6 @@ logging:
     org.springframework.security: TRACE
 
 springdoc:
+  swagger-ui:
+    path: /swagger/swagger-ui.html
   show-oauth2-endpoints: true
