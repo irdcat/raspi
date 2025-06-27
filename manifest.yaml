@@ -48,7 +48,7 @@ components:
   - name: fitness-server
     version: 1.4.2
   - name: fitness-ui
-    version: 1.4.4
+    version: 1.4.5
 
   - name: mongo-rest-adapter
     version: 0.0.1
