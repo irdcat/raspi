@@ -4,9 +4,10 @@ import { LuPlus, LuX } from "react-icons/lu";
 import FormInputText from "./FormInputText";
 
 const FormInputTrainingExerciseSets = (props: {
-    name: string
+    name: string,
+    isBodyweight: boolean
 }) => {
-    const { name } = props;
+    const { name, isBodyweight } = props;
     const { control } = useFormContext();
     const { fields, append, remove } = useFieldArray({ control, name });
 
@@ -43,7 +44,10 @@ const FormInputTrainingExerciseSets = (props: {
                             name={`${name}[${index}].weight`}
                             options={{ 
                                 required: { value: true, message: "Field is required" },
-                                validate: { positive: (v: number) => parseFloat(v.toString()) >= 0 || "Value must be positive real number" }
+                                validate: { positive: (v: number) => 
+                                    parseFloat(v.toString()) >= 0 || isBodyweight 
+                                        || "Value must be positive real number" 
+                                }
                                 }}/>
                     </Box>
                     <Box>

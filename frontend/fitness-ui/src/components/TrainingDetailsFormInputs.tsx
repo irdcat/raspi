@@ -80,7 +80,9 @@ const TrainingDetailsFormInputs = () => {
                                 <LuX/>
                             </IconButton>
                         </Box>
-                        <FormInputTrainingExerciseSets name={`exercises.${index}.sets`}/>
+                        <FormInputTrainingExerciseSets 
+                            name={`exercises.${index}.sets`} 
+                            isBodyweight={(getValues("exercises")[index] as TrainingExercise).exercise.isBodyweight}/>
                     </Grid>
                 ))}
             </Grid>
