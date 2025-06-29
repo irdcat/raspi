@@ -19,11 +19,13 @@ const toIntensitySeries =(
             name: "Bodyweight",
             type: 'line',
             stack: 'stack min',
+            stackStrategy: 'all',
             data: Array.from(bodyweightMetrics.values()).map(m => m.min),
         }, {
             name: "Bodyweight",
             type: 'line',
             stack: 'stack avg',
+            stackStrategy: 'all',
             tooltip: {
                 show: false
             },
@@ -32,6 +34,7 @@ const toIntensitySeries =(
             name: "Bodyweight",
             type: 'line',
             stack: 'stack max',
+            stackStrategy: 'all',
             tooltip: {
                 show: false
             },
@@ -40,6 +43,7 @@ const toIntensitySeries =(
             name: "Average (Added weight)",
             type: 'line',
             stack: 'stack avg',
+            stackStrategy: 'all',
             areaStyle: {},
             data: Array.from(exerciseMetrics.values()).map(m => m.avg)
         }, {
@@ -50,6 +54,7 @@ const toIntensitySeries =(
             name: "Min (Added weight)",
             type: 'line',
             stack: 'stack min',
+            stackStrategy: 'all',
             areaStyle: {},
             data: Array.from(exerciseMetrics.values()).map(m => m.min)
         }, {
@@ -60,6 +65,7 @@ const toIntensitySeries =(
             name: "Max (Added weight)",
             type: 'line',
             stack: 'stack max',
+            stackStrategy: 'all',
             areaStyle: {},
             data: Array.from(exerciseMetrics.values()).map(m => m.max)
         }, {
@@ -97,11 +103,13 @@ const toVolumeSeries = (
             name: "Bodyweight",
             type: 'line',
             stack: 'stack avg',
+            stackStrategy: 'all',
             data: Array.from(bodyweightMetrics.values()).map(m => m.avg)
         }, {
             name: "Bodyweight",
             type: 'line',
             stack: 'stack sum',
+            stackStrategy: 'all',
             tooltip: {
                 show: false
             },
@@ -110,6 +118,7 @@ const toVolumeSeries = (
             name: "Average (Added weight)",
             type: 'line',
             stack: 'stack avg',
+            stackStrategy: 'all',
             areaStyle: {},
             data: Array.from(exerciseMetrics.values()).map(m => m.avg)
         }, {
@@ -120,6 +129,7 @@ const toVolumeSeries = (
             name: "Sum (Added weight)",
             type: 'line',
             stack: 'stack sum',
+            stackStrategy: 'all',
             areaStyle: {},
             data: Array.from(exerciseMetrics.values()).map(m => m.sum)
         }, {
