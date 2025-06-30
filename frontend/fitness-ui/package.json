@@ -11,7 +11,7 @@
     "@mui/material": "^7.1.2",
     "@mui/x-date-pickers": "^8.5.3",
     "@toolpad/core": "^0.16.0",
-    "@types/node": "^24.0.4",
+    "@types/node": "^24.0.7",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "date-fns": "^4.1.0",
